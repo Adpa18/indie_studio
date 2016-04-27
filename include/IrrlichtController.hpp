@@ -18,10 +18,11 @@ class	IrrlichtController
 public:
     static const size_t    width = 640;
     static const size_t    height = 480;
-  static irr::IrrlichtDevice		*getDevice();
-  static irr::video::IVideoDriver	*getDriver();
-  static irr::scene::ISceneManager	*getSceneManager();
-  static irr::gui::IGUIEnvironment	*getGUIEnvironment();
+  static irr::IrrlichtDevice                *getDevice();
+  static irr::video::IVideoDriver           *getDriver();
+  static irr::scene::ISceneManager          *getSceneManager();
+  static irr::gui::IGUIEnvironment          *getGUIEnvironment();
+  static irr::scene::ISceneCollisionManager *getSceneCollisionManager();
 
 private:
     static irr::IrrlichtDevice *device;
