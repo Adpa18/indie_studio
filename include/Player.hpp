@@ -17,20 +17,12 @@
 class	Player	: public ACharacter, public irr::IEventReceiver
 {
 private:
-    bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
-    std::map<irr::EKEY_CODE, irr::EKEY_ACTION> _keycodes;
     int     _player;
-    irr::SEvent::SJoystickEvent  JoystickState;
 
 public:
   Player(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh,
       int player, std::map<irr::EKEY_CODE, irr::EKEY_ACTION> keycodes);
   virtual ~Player();
-
-public:
-  virtual bool  OnEvent(const irr::SEvent& event);
-  virtual bool  IsKeyDown(irr::EKEY_CODE keyCode) const;
-  const irr::SEvent::SJoystickEvent &GetJoystickState(void) const;
 };
 
 #endif

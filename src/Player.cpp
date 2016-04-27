@@ -24,24 +24,3 @@ Player::~Player()
 {
 
 }
-
-bool 	Player::OnEvent(const irr::SEvent &event)
-{
-  if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-    KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
-  }
-  if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == this->_player) {
-    this->JoystickState = event.JoystickEvent;
-  }
-  return (false);
-}
-
-const irr::SEvent::SJoystickEvent &Player::GetJoystickState(void) const
-{
-  return (this->JoystickState);
-}
-
-bool 	Player::IsKeyDown(irr::EKEY_CODE keyCode) const
-{
-	return (KeyIsDown[keyCode]);
-}
