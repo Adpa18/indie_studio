@@ -13,7 +13,8 @@ namespace UIElement
         GUI_ID_TRANSPARENCY_SCROLL_BAR,
         GUI_ID_QUIT_BUTTON,
         GUI_ID_NEW_WINDOW_BUTTON,
-        GUI_ID_FILE_OPEN_BUTTON
+        GUI_ID_FILE_OPEN_BUTTON,
+        GUI_ID_TEXT
     };
 }
 

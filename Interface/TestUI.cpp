@@ -184,7 +184,7 @@ int main()
     while(device->run() && driver)
         if (device->isWindowActive())
         {
-            driver->beginScene(true, true, SColor(0,200,200,200));
+            driver->beginScene(true, true, irr::video::SColor(0,200,200,200));
 
             env->drawAll();
 

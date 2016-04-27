@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed Apr 27 16:12:45 2016 Victor Gouet
+// Last update Wed Apr 27 19:03:07 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -14,7 +14,7 @@
 AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh)
 {
   std::string		const strMd2(mesh + ".md2");
-  std::string		const strBMP(mesh + ".bmp");
+  std::string		const strBMP(mesh + ".png");
 
   irr::scene::IAnimatedMesh *meshNode =
     IrrlichtController::getSceneManager()->getMesh(strMd2.c_str());
