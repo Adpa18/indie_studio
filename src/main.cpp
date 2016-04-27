@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 15:02:00 2016 Victor Gouet
+// Last update Wed Apr 27 15:19:27 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -13,16 +13,18 @@
 // # include "../include/ACharacter.hpp"
 
 #include "../include/Player.hpp"
+#include <iostream>
 
 int	main()
 {
   IrrlichtController::getDevice();
 
-  std::map<irr::EKEY_CODE, irr::EKEY_ACTION>	_keycodes;
+  // std::map<irr::EKEY_CODE, irr::EKEY_ACTION>	_keycodes;
 
   // _keycode[irr::] = ;
 
-  Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1, _keycodes);
+  Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1// , _keycodes
+		       );
 
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(0, 100.0f, .3f, 0, 0, 0, true, 3.f);//(0, irr::core::vector3df(0,30,-40), irr::core::vector3df(0,5,0));
 
@@ -36,6 +38,7 @@ int	main()
 
       // if (sydney.IsKeyDown(irr::KEY_KEY_W))
       // 	{
+      // 	  std::cout << "MONSIER" << std::endl;
       // 	  sydney->setPosition(sydney->getPosition() + 0.01);
       // 	}
 

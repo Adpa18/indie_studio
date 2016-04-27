@@ -4,8 +4,13 @@ project(cpp_indie_studio)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
+    include/ACharacter.hpp
     include/AGameObject.hpp
     include/IrrlichtController.hpp
+    include/Player.hpp
+    Interface/TestUI.cpp
+    Interface/UIManager.cpp
+    Interface/UIManager.hpp
     Irrlicht/irrlicht-1.8.3/include/aabbox3d.h
     Irrlicht/irrlicht-1.8.3/include/CDynamicMeshBuffer.h
     Irrlicht/irrlicht-1.8.3/include/CIndexBuffer.h
@@ -846,8 +851,10 @@ set(SOURCE_FILES
     Irrlicht/irrlicht-1.8.3/tools/IrrFontTool/newFontTool/CVectorFontTool.h
     Irrlicht/irrlicht-1.8.3/tools/IrrFontTool/newFontTool/main.cpp
     Irrlicht/irrlicht-1.8.3/tools/MeshConverter/main.cpp
+    src/ACharacter.cpp
     src/AGameObject.cpp
     src/IrrlichtController.cpp
-    src/main.cpp Interface/TestUI.cpp Interface/MyEventReceiver.cpp Interface/MyEventReceiver.hpp)
+    src/main.cpp
+    src/Player.cpp)
 
 add_executable(cpp_indie_studio ${SOURCE_FILES})
