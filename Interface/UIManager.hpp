@@ -19,14 +19,14 @@ public:
 public:
     irr::IrrlichtDevice *GetDevice() const;
     irr::gui::IGUISkin const *GetSkin() const;
-    irr::gui::IGUIFont const* GetFont() const;
+    irr::gui::IGUIFont const* GetFont(const irr::io::path& fileName) const;
     void SetFont(irr::gui::IGUIFont *font, irr::gui::EGUI_DEFAULT_FONT def) const;
 
     void AddButton(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
                    const wchar_t *text, const wchar_t *tip) const;
 
-    void AddStaticText(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
-                       const wchar_t *text, const wchar_t *tip) const;
+    void AddStaticText(const wchar_t *text, irr::core::rect<irr::s32> transform, bool hasBorder, bool wordWrap,
+                           irr::gui::IGUIElement *parent, irr::s32 id, bool fillBackground) const;
 
     void AddScrollbar(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
                       const wchar_t *text, const wchar_t *tip) const;

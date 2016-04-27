@@ -5,6 +5,7 @@
 #ifndef CPP_INDIE_STUDIO_UIEVENTRECEIVER_HPP
 #define CPP_INDIE_STUDIO_UIEVENTRECEIVER_HPP
 
+#include <iostream>
 #include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 #include "UIElements.hpp"
 #include "UIManager.hpp"
@@ -22,16 +23,11 @@ public:
         {
             irr::s32 id = event.GUIEvent.Caller->getID();
             irr::gui::IGUIEnvironment *env = m_device->getGUIEnvironment();
-
             switch (event.GUIEvent.EventType)
             {
                 case irr::gui::EGET_SCROLL_BAR_CHANGED:
-                    if (id == UIElement::GUI_ID_TRANSPARENCY_SCROLL_BAR)
-                    {
-                        irr::s32 pos = ((irr::gui::IGUIScrollBar *) event.GUIEvent.Caller)->getPos();
-                        m_manager.SetSkinTransparency(pos, env->getSkin());
-                    }
                     break;
+
                 case irr::gui::EGET_BUTTON_CLICKED:
                     switch (id)
                     {
@@ -41,45 +37,13 @@ public:
 
                         case UIElement::GUI_ID_NEW_WINDOW_BUTTON:
                         {
-                            /*Context.listbox->addItem(L"Window created");
-                            Context.counter += 30;
-                            if (Context.counter > 200)
-                                Context.counter = 0;
-
-                            IGUIWindow *window = env->addWindow(
-                                    rect<s32>(100 + Context.counter, 100 + Context.counter, 300 + Context.counter,
-                                              200 + Context.counter),
-                                    false, // modal?
-                                    L"Test window");
-
-                            env->addStaticText(L"Please close me",
-                                               rect<s32>(35, 35, 140, 50),
-                                               true, // border?
-                                               false, // wordwrap?
-                                               window);*/
+                            m_manager.GetElementFromID(UIElement::GUI_ID_TEXT)->setText(L"lalalalalalaaaaaa");
                         }
-                            return true;
-
-                        case UIElement::GUI_ID_FILE_OPEN_BUTTON:
-                            //Context.listbox->addItem(L"File open");
-                            // There are some options for the file open dialog
-                            // We set the title, make it a modal window, and make sure
-                            // that the working directory is restored after the dialog
-                            // is finished.
-                            env->addFileOpenDialog(L"Please choose a file.", true, 0, -1, true);
-                            return true;
-
-                        default:
-                            return false;
                     }
                     break;
 
                 case irr::gui::EGET_FILE_SELECTED:
                 {
-                    // show the model filename, selected in the file dialog
-                    /*IGUIFileOpenDialog *dialog =
-                            (IGUIFileOpenDialog *) event.GUIEvent.Caller;
-                    Context.listbox->addItem(dialog->getFileName());*/
                 }
                     break;
 
