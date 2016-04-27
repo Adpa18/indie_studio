@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 18:41:06 2016 Victor Gouet
+// Last update Wed Apr 27 19:23:46 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -42,16 +42,16 @@ int	main()
 
   BomberMap		map(10, 10);
 
-  Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1// , _keycodes
+  Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes);
 
-  Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/sydney", 1// , _keycodes
+  Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes2);
 
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-  (0, irr::core::vector3df(0,30,-40), irr::core::vector3df(0,5,0));
+  (0, irr::core::vector3df(0, 320, -250), irr::core::vector3df(0,5,0));
 
-  camera->setPosition(irr::core::vector3df(0, 100, -100));
+  //camera->setPosition(irr::core::vector3df(0, 100, -100));
   camera->setTarget(irr::core::vector3df(0, 0, 0));
 
 
