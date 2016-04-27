@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Wed Apr 27 20:01:50 2016 Victor Gouet
+// Last update Wed Apr 27 20:09:37 2016 Victor Gouet
 //
 
 #include "../include/BomberMap.hpp"
@@ -39,7 +39,7 @@ BomberMap::BomberMap(int width, int height)
 	    }
 	  else
 	    {
-	      
+	      _objects.push_back(new Wall(irr::core::vector3df(x + posX, 0, y + posY) * scale, Wall::Invicible));
 	    }
 	  ++x;
 	}

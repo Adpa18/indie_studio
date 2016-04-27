@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 19:23:46 2016 Victor Gouet
+// Last update Wed Apr 27 20:09:28 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -49,7 +49,9 @@ int	main()
 		       , eventGame, keycodes2);
 
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-  (0, irr::core::vector3df(0, 320, -250), irr::core::vector3df(0,5,0));
+  (0, irr::core::vector3df(0, 320
+			   , 0//-250
+			   ), irr::core::vector3df(0,5,0));
 
   //camera->setPosition(irr::core::vector3df(0, 100, -100));
   camera->setTarget(irr::core::vector3df(0, 0, 0));
