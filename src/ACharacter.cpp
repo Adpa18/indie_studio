@@ -1,9 +1,9 @@
 //
 // ACharacter.cpp for ACHARACTER in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
 // Last update Wed Apr 27 09:52:38 2016 Victor Gouet
 //
@@ -28,4 +28,14 @@ std::string const &	ACharacter::getName() const
 double		ACharacter::getMouveSpeed() const
 {
   return (mouveSpeed);
+}
+
+void 		ACharacter::move(int x, int y, int z)
+{
+	(*this)->setPosition((*this)->getPosition() + irr::core::vector3df(x * this->mouveSpeed, y * this->mouveSpeed, z * this->mouveSpeed));
+}
+
+void 		ACharacter::move(int x, int y)
+{
+	this->move(x, y, 0);
 }

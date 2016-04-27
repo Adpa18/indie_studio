@@ -1,9 +1,9 @@
 //
 // ACharacter.hpp for ACHARACTER in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
 // Last update Wed Apr 27 09:52:17 2016 Victor Gouet
 //
@@ -23,8 +23,10 @@ public:
   virtual ~ACharacter();
 
 public:
-  std::string const &	getName() const;
-  double		getMouveSpeed() const;	
+  std::string const &   getName() const;
+  double                getMouveSpeed() const;
+  void                  move(int x, int y, int z);
+  void                  move(int x, int y);
 
 private:
   std::string const	_name;

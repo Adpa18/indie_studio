@@ -1,1 +1,4 @@
 .idea
+bomberman
+*.o
+.clang-complete

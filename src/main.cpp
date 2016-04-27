@@ -1,9 +1,9 @@
 //
 // main.cpp for MAIN in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio/src
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
 // Last update Wed Apr 27 09:58:31 2016 Victor Gouet
 //
@@ -33,5 +33,5 @@ int	main()
     }
 
   IrrlichtController::getDevice()->drop();
-    
+
 }

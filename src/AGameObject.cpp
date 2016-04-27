@@ -1,9 +1,9 @@
 //
 // AGameObject.cpp for GAME OBJECT in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
 // Last update Tue Apr 26 21:29:37 2016 Victor Gouet
 //
@@ -34,6 +34,8 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
 
 AGameObject::~AGameObject()
 {
+    this->_node->removeAll();
+    this->_node->remove();
 }
 
 irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
