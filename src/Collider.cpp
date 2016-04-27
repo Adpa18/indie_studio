@@ -5,14 +5,14 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 18:29:31 2016 Adrien WERY
-** Last update	Wed Apr 27 20:12:18 2016 Adrien WERY
+** Last update	Wed Apr 27 21:22:08 2016 Adrien WERY
 */
 
 #include "../include/Collider.hpp"
 
-Collider::Collider()
+Collider::Collider(int flags) : _distance(13)
 {
-
+    this->_collMan = IrrlichtController::getSceneCollisionManager();
 }
 
 Collider::~Collider()
@@ -20,32 +20,47 @@ Collider::~Collider()
 
 }
 
-std::vector<irr::s32>   Collider::collid(irr::core::vector3df pos) const
+#include <iostream>
+
+int     Collider::collid(irr::core::vector3df pos, Collider::Direction dir)
 {
-    std::vector<irr::s32>                ids;
-    irr::core::line3d<irr::f32>         ray;
+    // TODO Chaner distance if != dir
+    irr::scene::ISceneNode              *selectedSceneNode;
+
+    if (dir & Direction::RIGHT && (selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + irr::core::vector3df(1, 0, 0) * this->_distance)))) {
+        this->_ids.push_back(selectedSceneNode->getID());
+        return (selectedSceneNode->getID());
+    }
+    if (dir & Direction::LEFT && (selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + irr::core::vector3df(-1, 0, 0) * this->_distance)))) {
+        this->_ids.push_back(selectedSceneNode->getID());
+        return (selectedSceneNode->getID());
+    }
+    if (dir & Direction::UP && (selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + irr::core::vector3df(0, 0, 1) * this->_distance)))) {
+        this->_ids.push_back(selectedSceneNode->getID());
+        return (selectedSceneNode->getID());
+    }
+    if (dir & Direction::DOWN && (selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + irr::core::vector3df(0, 0, -1) * this->_distance)))) {
+        this->_ids.push_back(selectedSceneNode->getID());
+        return (selectedSceneNode->getID());
+    }
+    this->_ids.clear();
+    return (-1);
+}
+
+irr::scene::ISceneNode  *Collider::hit(irr::core::line3d<irr::f32> ray) const
+{
     irr::core::triangle3df              hitTriangle;
     irr::core::vector3df                intersection;
-    irr::scene::ISceneCollisionManager  *collMan = IrrlichtController::getSceneCollisionManager();
 
-    ray.start = pos;
-    ray.end = ray.start + irr::core::vector3df(1, 0, 0) * this->distance;
-    ray.end = ray.start + irr::core::vector3df(-1, 0, 0) * this->distance;
-    ray.end = ray.start + irr::core::vector3df(0, 0, 1) * this->distance;
-    ray.end = ray.start + irr::core::vector3df(0, 0, -1) * this->distance;
-    irr::scene::ISceneNode * selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray, intersection, hitTriangle, CHARACTER | BOMB | OTHER, 0);
-    if (selectedSceneNode) {
-        ids.push_back(selectedSceneNode->getID());
-    }
-    return (ids);
+    return (this->_collMan->getSceneNodeAndCollisionPointFromRay(ray, intersection, hitTriangle, this->_flags, 0));
 }
 
 void                    Collider::setDistance(unsigned int distance)
 {
-    this->distance = distance;
+    this->_distance = distance;
 }
 
 unsigned int            Collider::getDistance() const
 {
-    return (this->distance);
+    return (this->_distance);
 }

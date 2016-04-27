@@ -42,7 +42,7 @@ int	main()
 
   BomberMap		map(10, 10);
 
-  Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/pikachu", 1// , _keycodes
+  Player	sydney("ROGER", irr::core::vector3df(-25, 0, 0), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes);
 
   Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/pikachu", 1// , _keycodes
@@ -60,7 +60,7 @@ int	main()
       IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
       sydney.compute();
-      pikashy.compute();
+    //   pikashy.compute();
 
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();
