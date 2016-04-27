@@ -10,10 +10,11 @@ int main()
 {
     EventGame   eventGame;
     std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes;
-    AGameObject *object = new Player("Richard", irr::core::vector3df(0, 0, 0), "./media/pikachu", 42, eventGame, keycodes);
+    AGameObject *object = new Player("Richard", irr::core::vector3df(5, 0, 0), "../media/pikachu", 42, eventGame, keycodes);
     irr::IrrlichtDevice *device = IrrlichtController::getDevice();
     irr::scene::ISceneManager *manager = IrrlichtController::getSceneManager();
     irr::video::IVideoDriver *driver = IrrlichtController::getDriver();
+    irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 320, -250), irr::core::vector3df(0,5,0));
 
     while (device->run())
     {

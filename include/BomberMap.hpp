@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Wed Apr 27 18:36:10 2016 Victor Gouet
+// Last update Wed Apr 27 19:12:56 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -17,6 +17,9 @@
 
 class	BomberMap
 {
+public:
+  static const size_t	scale = 50;
+
 public:
   BomberMap(std::string const &);
   BomberMap(int width, int height);

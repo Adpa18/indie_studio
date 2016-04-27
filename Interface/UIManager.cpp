@@ -47,3 +47,30 @@ irr::IrrlichtDevice *UIManager::GetDevice() const
 {
     return m_device;
 }
+
+irr::gui::IGUISkin const *UIManager::GetSkin() const
+{
+    return m_env->getSkin();
+}
+
+irr::gui::IGUIFont const *UIManager::GetFont(const irr::io::path& fileName) const
+{
+    return m_env->getFont(fileName);
+}
+
+void UIManager::SetFont(irr::gui::IGUIFont *font, irr::gui::EGUI_DEFAULT_FONT def) const
+{
+
+}
+
+void UIManager::AddButton(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
+                          const wchar_t *text, const wchar_t *tip) const
+{
+    m_env->addButton(transform, parent, id, text, tip);
+}
+
+void UIManager::AddStaticText(const wchar_t *text, irr::core::rect<irr::s32> transform, bool hasBorder, bool wordWrap,
+                              irr::gui::IGUIElement *parent, irr::s32 id, bool fillBackground) const
+{
+    m_env->addStaticText(text, transform, hasBorder, wordWrap, parent, id, fillBackground);
+}
