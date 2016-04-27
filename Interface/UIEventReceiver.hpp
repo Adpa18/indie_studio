@@ -5,40 +5,43 @@
 #ifndef CPP_INDIE_STUDIO_UIEVENTRECEIVER_HPP
 #define CPP_INDIE_STUDIO_UIEVENTRECEIVER_HPP
 
-#include "../Irrlicht/irrlicht-1.8.3/include/IEventReceiver.h"
+#include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
+#include "UIElements.hpp"
+#include "UIManager.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
 {
 public:
-    UIEventReceiver(SAppContext& context) : Context(context) {}
+    UIEventReceiver(UIManager const& manager) : m_manager(manager), m_device(manager.GetDevice())
+    {}
 
-    virtual bool OnEvent(const SEvent &event)
+    virtual bool OnEvent(const irr::SEvent &event)
     {
-        if (event.EventType == EET_GUI_EVENT)
+        if (event.EventType == irr::EET_GUI_EVENT)
         {
-            s32 id = event.GUIEvent.Caller->getID();
-            IGUIEnvironment *env = Context.device->getGUIEnvironment();
+            irr::s32 id = event.GUIEvent.Caller->getID();
+            irr::gui::IGUIEnvironment *env = m_device->getGUIEnvironment();
 
             switch (event.GUIEvent.EventType)
             {
-                case EGET_SCROLL_BAR_CHANGED:
-                    if (id == GUI_ID_TRANSPARENCY_SCROLL_BAR)
+                case irr::gui::EGET_SCROLL_BAR_CHANGED:
+                    if (id == UIElement::GUI_ID_TRANSPARENCY_SCROLL_BAR)
                     {
-                        s32 pos = ((IGUIScrollBar *) event.GUIEvent.Caller)->getPos();
-                        setSkinTransparency(pos, env->getSkin());
+                        irr::s32 pos = ((irr::gui::IGUIScrollBar *) event.GUIEvent.Caller)->getPos();
+                        m_manager.SetSkinTransparency(pos, env->getSkin());
                     }
                     break;
-                case EGET_BUTTON_CLICKED:
+                case irr::gui::EGET_BUTTON_CLICKED:
                     switch (id)
                     {
-                        case GUI_ID_QUIT_BUTTON:
-                            Context.device->closeDevice();
+                        case UIElement::GUI_ID_QUIT_BUTTON:
+                            m_device->closeDevice();
                             return true;
 
-                        case GUI_ID_NEW_WINDOW_BUTTON:
+                        case UIElement::GUI_ID_NEW_WINDOW_BUTTON:
                         {
-                            Context.listbox->addItem(L"Window created");
+                            /*Context.listbox->addItem(L"Window created");
                             Context.counter += 30;
                             if (Context.counter > 200)
                                 Context.counter = 0;
@@ -53,12 +56,12 @@ public:
                                                rect<s32>(35, 35, 140, 50),
                                                true, // border?
                                                false, // wordwrap?
-                                               window);
+                                               window);*/
                         }
                             return true;
 
-                        case GUI_ID_FILE_OPEN_BUTTON:
-                            Context.listbox->addItem(L"File open");
+                        case UIElement::GUI_ID_FILE_OPEN_BUTTON:
+                            //Context.listbox->addItem(L"File open");
                             // There are some options for the file open dialog
                             // We set the title, make it a modal window, and make sure
                             // that the working directory is restored after the dialog
@@ -71,12 +74,12 @@ public:
                     }
                     break;
 
-                case EGET_FILE_SELECTED:
+                case irr::gui::EGET_FILE_SELECTED:
                 {
                     // show the model filename, selected in the file dialog
-                    IGUIFileOpenDialog *dialog =
+                    /*IGUIFileOpenDialog *dialog =
                             (IGUIFileOpenDialog *) event.GUIEvent.Caller;
-                    Context.listbox->addItem(dialog->getFileName());
+                    Context.listbox->addItem(dialog->getFileName());*/
                 }
                     break;
 
@@ -89,7 +92,8 @@ public:
     }
 
 private:
-    SAppContext &Context;
+    UIManager m_manager;
+    irr::IrrlichtDevice *m_device;
 };
 
 
