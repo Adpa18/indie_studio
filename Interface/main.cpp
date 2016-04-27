@@ -10,9 +10,9 @@ int main()
     UIManager uiManager(IrrlichtController::getDevice());
     UIEventReceiver *uiEventReceiver = new UIEventReceiver(uiManager);
 
-    uiManager.AddButton(irr::core::rect<irr::s32>(0, 0, 170, 50), nullptr, UIElement::GUI_ID_NEW_WINDOW_BUTTON, L"Toto", L"TATA");
+    /*uiManager.AddButton(irr::core::rect<irr::s32>(0, 0, 170, 50), nullptr, UIElement::GUI_ID_NEW_WINDOW_BUTTON, L"Toto", L"TATA");
     uiManager.AddStaticText(L"Je code avec le cul", irr::core::rect<irr::s32>(100, 200, 300, 300), true, true, nullptr, UIElement::GUI_ID_TEXT,
-                            false);
+                            false);*/
 
     IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
 
