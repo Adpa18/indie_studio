@@ -6,14 +6,15 @@ SRC_DIR	=	src/
 
 IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
 
-SRC		=	$(SRC_DIR)main.cpp				\
-			$(SRC_DIR)IrrlichtController.cpp		\
+SRC		=	$(SRC_DIR)main.cpp					\
+			$(SRC_DIR)IrrlichtController.cpp	\
 			$(SRC_DIR)AGameObject.cpp			\
 			$(SRC_DIR)Player.cpp				\
 			$(SRC_DIR)ACharacter.cpp			\
 			$(SRC_DIR)Wall.cpp				\
 			$(SRC_DIR)/BomberMap.cpp			\
 			$(SRC_DIR)EventGame.cpp				\
+			$(SRC_DIR)Collider.cpp				\
 
 OBJ			=	$(SRC:%cpp=%o)
 

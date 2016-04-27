@@ -11,7 +11,7 @@
 #include "../include/AGameObject.hpp"
 #include <stdexcept>
 
-AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh)
+AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh, Collider *collider) : collider(collider)
 {
   std::string		const strMd2(mesh + ".md2");
   std::string		const strBMP(mesh + ".png");
@@ -30,6 +30,9 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
       _node->setPosition(pos);
       _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(strBMP.c_str()));
       _node->setMD2Animation(irr::scene::EMAT_STAND);
+      irr::scene::ITriangleSelector* selector = IrrlichtController::getSceneManager()->createTriangleSelector(_node);
+      _node->setTriangleSelector(selector);
+      selector->drop();
     }
 }
 
@@ -42,4 +45,9 @@ AGameObject::~AGameObject()
 irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
 {
   return (_node);
+}
+
+void        AGameObject::addCollider(Collider *collider)
+{
+    this->collider = collider;
 }
