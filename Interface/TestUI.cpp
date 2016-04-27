@@ -4,6 +4,7 @@
 
 #include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 #include "../Irrlicht/irrlicht-1.8.3/include/driverChoice.h"
+#include "../include/IrrlichtController.hpp"
 
 using namespace irr;
 
@@ -35,6 +36,7 @@ enum
     GUI_ID_TRANSPARENCY_SCROLL_BAR
 };
 
+// Changes alpha value for all the objects
 void setSkinTransparency(s32 alpha, irr::gui::IGUISkin * skin)
 {
     for (s32 i=0; i<irr::gui::EGDC_COUNT ; ++i)
@@ -131,13 +133,15 @@ private:
 int main()
 {
     // ask user for driver
-    video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-    if (driverType==video::EDT_COUNT)
-        return 1;
+    //video::E_DRIVER_TYPE driverType=driverChoiceConsole();
+    video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
+    //if (driverType==video::EDT_COUNT)
+    //    return 1;
 
     // create device and exit if creation failed
 
-    IrrlichtDevice * device = createDevice(driverType, core::dimension2d<u32>(640, 480));
+    //IrrlichtDevice * device = createDevice(driverType, core::dimension2d<u32>(640, 480));
+    IrrlichtDevice *device = IrrlichtController::getDevice();
 
     if (device == 0)
         return 1; // could not create selected driver.
@@ -152,6 +156,7 @@ int main()
         skin->setFont(font);
 
     skin->setFont(env->getBuiltInFont(), EGDF_TOOLTIP);
+
     env->addButton(rect<s32>(10,240,110,240 + 32), 0, GUI_ID_QUIT_BUTTON,
                    L"Quit", L"Exits Program");
     env->addButton(rect<s32>(10,280,110,280 + 32), 0, GUI_ID_NEW_WINDOW_BUTTON,

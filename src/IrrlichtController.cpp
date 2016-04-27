@@ -10,9 +10,12 @@
 
 #include "../include/IrrlichtController.hpp"
 
+// redeclare static member for cpp linkage
+irr::IrrlichtDevice *IrrlichtController::device = NULL;
+
 irr::IrrlichtDevice *IrrlichtController::getDevice()
 {
-  static irr::IrrlichtDevice *device = NULL;
+  //static irr::IrrlichtDevice *device = NULL;
 
   if (!device)
     {

@@ -22,6 +22,9 @@ public:
   static irr::video::IVideoDriver	*getDriver();
   static irr::scene::ISceneManager	*getSceneManager();
   static irr::gui::IGUIEnvironment	*getGUIEnvironment();
+
+private:
+    static irr::IrrlichtDevice *device;
 };
 
 #endif

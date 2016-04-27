@@ -5,7 +5,8 @@
 # Name of the executable created (.exe will be added automatically if necessary)
 Target := bomberman
 # List of source files, separated by spaces
-Sources := TestUI.cpp
+Sources := TestUI.cpp \
+            ../src/IrrlichtController.cpp
 
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := ../Irrlicht/irrlicht-1.8.3
@@ -14,9 +15,9 @@ BinPath = ./
 
 # general compiler settings (might need to be set when compiling the lib, too)
 # preprocessor flags, e.g. defines and include paths
-USERCPPFLAGS = 
+USERCPPFLAGS = -I ../include
 # compiler flags such as optimization flags
-USERCXXFLAGS = -O3 -ffast-math
+USERCXXFLAGS = -std=c++11 -O3 -ffast-math
 #USERCXXFLAGS = -g -Wall
 # linker flags such as additional libraries and link paths
 USERLDFLAGS =
