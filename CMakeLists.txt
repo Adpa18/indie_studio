@@ -855,6 +855,6 @@ set(SOURCE_FILES
     src/AGameObject.cpp
     src/IrrlichtController.cpp
     src/main.cpp
-    src/Player.cpp Interface/UIEventReceiver.cpp Interface/UIEventReceiver.hpp)
+    src/Player.cpp Interface/UIEventReceiver.cpp Interface/UIEventReceiver.hpp Interface/UIElements.hpp Interface/main.cpp Interface/main.hpp)
 
 add_executable(cpp_indie_studio ${SOURCE_FILES})
