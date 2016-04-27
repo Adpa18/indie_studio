@@ -5,7 +5,7 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 15:16:51 2016 Adrien WERY
-** Last update	Wed Apr 27 15:23:40 2016 Adrien WERY
+** Last update	Wed Apr 27 15:54:50 2016 Adrien WERY
 */
 
 #ifndef EVENT_HPP
@@ -24,7 +24,8 @@ public:
     virtual ~EventGame ();
     virtual bool  OnEvent(const irr::SEvent& event);
     virtual bool  IsKeyDown(irr::EKEY_CODE keyCode) const;
-    const irr::SEvent::SJoystickEvent &GetJoystickState(void) const;
+    const irr::SEvent::SJoystickEvent   &GetJoystickState(void) const;
+    irr::SJoystickInfo                  getJoystick(int id) const;
 };
 
 #endif /* !EVENT_HPP */
