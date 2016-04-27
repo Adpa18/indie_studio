@@ -33,16 +33,16 @@ LDFLAGS 	+= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
 
 $(NAME)	:	$(OBJ)
 	@$(CC) $(OBJ) $(LDFLAGS) -o $(DESTPATH)
-	@echo -e "\033[33m${NAME} Compiled\033[00m"
+	@echo -e "\e[33m${NAME} Compiled\e[00m"
 
 all	:	$(NAME)
 
 clean 	:
-	@echo -e "\033[31mRemoving Objects\033[00m"
+	@echo -e "\e[31mRemoving Objects\e[00m"
 	@$(RM) $(OBJ)
 
 fclean	:	clean
-	@echo -e "\033[31mRemoving ${NAME}\033[00m"
+	@echo -e "\e[31mRemoving ${NAME}\e[00m"
 	@$(RM) $(NAME)
 
 re		: fclean all
