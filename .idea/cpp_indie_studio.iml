@@ -11,9 +11,11 @@
       <sourceFolder url="file://$MODULE_DIR$/include/AGameObject.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/IrrlichtController.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/Player.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIEventReceiver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Interface/UIManager.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Interface/TestUI.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Interface/UIManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIEventReceiver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/tools/FileToHeader/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/tools/MeshConverter/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/tools/IrrFontTool/newFontTool/main.cpp" isTestSource="false" />

@@ -3,7 +3,6 @@
 //
 
 #include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
-#include "../Irrlicht/irrlicht-1.8.3/include/driverChoice.h"
 #include "../include/IrrlichtController.hpp"
 
 using namespace irr;
@@ -132,20 +131,12 @@ private:
 
 int main()
 {
-    // ask user for driver
-    //video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-    video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
-    //if (driverType==video::EDT_COUNT)
-    //    return 1;
-
-    // create device and exit if creation failed
-
-    //IrrlichtDevice * device = createDevice(driverType, core::dimension2d<u32>(640, 480));
     IrrlichtDevice *device = IrrlichtController::getDevice();
 
-    if (device == 0)
+    if (device == nullptr)
         return 1; // could not create selected driver.
-    device->setWindowCaption(L"Irrlicht Engine - User Interface Demo");
+
+    device->setWindowCaption(L"User Interface Demo");
     device->setResizable(true);
 
     video::IVideoDriver* driver = device->getVideoDriver();
