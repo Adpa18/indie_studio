@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 15:57:19 2016 Victor Gouet
+// Last update Wed Apr 27 17:09:44 2016 Victor Gouet
 //
 
 #ifndef PLAYER_HPP_
@@ -21,6 +21,7 @@ private:
   int     _player;
   EventGame	const &					_eventGame;
   std::map<irr::EKEY_CODE, irr::EKEY_CODE> const &	_keycodes;
+  int							anime;// = irr::scene::EMAT_STAND;
 
 public:
   Player(std::string const &name, irr::core::vector3df const &pos,

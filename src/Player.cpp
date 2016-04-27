@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed Apr 27 17:04:10 2016 Victor Gouet
+// Last update Wed Apr 27 17:09:32 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"
@@ -18,7 +18,7 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
   : ACharacter(name, pos, mesh),
     _player(player), _eventGame(eventGame), _keycodes(keycodes)
 {
-
+  anime = irr::scene::EMAT_STAND;
 }
 
 Player::~Player()
@@ -27,7 +27,7 @@ Player::~Player()
 
 void		Player::compute()
 {
-  static int anime = irr::scene::EMAT_STAND;
+  // static int anime = irr::scene::EMAT_STAND;
   bool			stand = true;
 
   const irr::u32 now = IrrlichtController::getDevice()->getTimer()->getTime();

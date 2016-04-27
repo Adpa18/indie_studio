@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 16:47:39 2016 Victor Gouet
+// Last update Wed Apr 27 17:08:25 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -30,6 +30,9 @@ int	main()
   Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1// , _keycodes
 		       , eventGame, keycodes);
 
+  Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/sydney", 1// , _keycodes
+		       , eventGame, keycodes);
+
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
   (0, irr::core::vector3df(0,30,-40), irr::core::vector3df(0,5,0));
 
@@ -42,6 +45,7 @@ int	main()
       IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
       sydney.compute();
+      pikashy.compute();
 
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();
