@@ -16,7 +16,7 @@
 class	ACharacter	: public AGameObject
 {
 private:
-  const double BASICSPEED = 0.3;
+  static const double BASICSPEED = 0.3;
 
 public:
   ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh);
