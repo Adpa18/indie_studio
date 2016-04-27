@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:35 2016 Victor Gouet
-// Last update Tue Apr 26 21:18:19 2016 Victor Gouet
+// Last update Wed Apr 27 15:20:42 2016 Victor Gouet
 //
 
 #ifndef IRRLICHTCONTROLLER_HPP_
