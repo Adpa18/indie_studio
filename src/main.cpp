@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 15:59:42 2016 Victor Gouet
+// Last update Wed Apr 27 16:47:39 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -30,10 +30,11 @@ int	main()
   Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1// , _keycodes
 		       , eventGame, keycodes);
 
-  irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(0, 100.0f, .3f, 0, 0, 0, true, 3.f);//(0, irr::core::vector3df(0,30,-40), irr::core::vector3df(0,5,0));
+  irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+  (0, irr::core::vector3df(0,30,-40), irr::core::vector3df(0,5,0));
 
-  camera->setPosition(irr::core::vector3df(50,50,-60));
-  camera->setTarget(irr::core::vector3df(-70,30,-60));
+  camera->setPosition(irr::core::vector3df(0, 100, -100));
+  camera->setTarget(irr::core::vector3df(0, 0, 0));
 
 
   while (IrrlichtController::getDevice()->run())
@@ -44,6 +45,8 @@ int	main()
 
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();
+
+      // camera->setTarget(sydney->getPosition());
 
       IrrlichtController::getDriver()->endScene();
     }

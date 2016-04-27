@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 15:46:17 2016 Victor Gouet
+// Last update Wed Apr 27 16:44:30 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -16,7 +16,7 @@
 class	ACharacter	: public AGameObject
 {
 private:
-  static const double BASICSPEED = 0.3;
+  static const double BASICSPEED = 10.0;
 
 public:
   ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh);
@@ -34,6 +34,9 @@ private:
   // std::vector<Bomb>	bombs;
   // Bonus			*bonus;
   double		mouveSpeed;
+
+protected:
+  irr::u32 then;
 };
 
 #endif

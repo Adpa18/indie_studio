@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed Apr 27 14:29:30 2016 Victor Gouet
+// Last update Wed Apr 27 16:12:45 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -29,6 +29,7 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
     {
       _node->setPosition(pos);
       _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(strBMP.c_str()));
+      _node->setMD2Animation(irr::scene::EMAT_STAND);
     }
 }
 
