@@ -9,6 +9,7 @@ IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
 SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)IrrlichtController.cpp	\
 			$(SRC_DIR)AGameObject.cpp			\
+			$(SRC_DIR)Player.cpp				\
 			$(SRC_DIR)ACharacter.cpp			\
 
 OBJ			=	$(SRC:%cpp=%o)
