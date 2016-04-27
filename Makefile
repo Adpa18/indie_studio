@@ -23,11 +23,13 @@ DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
 CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
 
-CPPFLAGS	=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
+CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
+
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	+= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
 
 %.o : %.cpp
 	@echo -e "Compiling $<"

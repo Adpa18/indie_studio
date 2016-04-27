@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 15:57:19 2016 Victor Gouet
+// Last update Wed Apr 27 17:09:44 2016 Victor Gouet
 //
 
 #ifndef PLAYER_HPP_
@@ -20,6 +20,7 @@ class	Player	: public ACharacter
 private:
   int     _player;
   EventGame	const &					_eventGame;
+  int							    anime;
   std::map<ACharacter::ACTION, irr::EKEY_CODE> const &	_keycodes;
 
 public:

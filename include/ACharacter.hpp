@@ -16,10 +16,10 @@
 class	ACharacter	: public AGameObject
 {
 public:
-    enum ACTION { IDLE = 0, LEFT, RIGHT, UP, BOTTOM, BOMB, ACT };
-    
+    enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
+
 private:
-  static const double BASICSPEED = 10.0;
+    static constexpr double BASICSPEED = 10.0;
 
 public:
   ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh);

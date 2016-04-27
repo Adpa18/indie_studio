@@ -5,7 +5,7 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 15:16:31 2016 Adrien WERY
-** Last update	Wed Apr 27 15:58:38 2016 Adrien WERY
+** Last update	Wed Apr 27 17:32:14 2016 Adrien WERY
 */
 
 #include "../include/EventGame.hpp"
@@ -43,12 +43,12 @@ bool 	EventGame::IsKeyDown(irr::EKEY_CODE keyCode) const
 	return (KeyIsDown[keyCode]);
 }
 
-irr::SJoystickInfo  EventGame::getJoystick(int id) const
+irr::SJoystickInfo  EventGame::getJoystick(unsigned int id) const
 {
     irr::core::array<irr::SJoystickInfo> joystickInfo;
 
     if(IrrlichtController::getDevice()->activateJoysticks(joystickInfo)) {
-        if (id >= 0 && id < joystickInfo.size()) {
+        if (id < joystickInfo.size()) {
             return (joystickInfo[id]);
         }
     }
