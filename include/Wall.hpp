@@ -5,21 +5,22 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Wed Apr 27 18:29:49 2016 Victor Gouet
+// Last update Wed Apr 27 19:57:44 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
 # define WALL_HPP_
 
+# include <string>
 # include "AGameObject.hpp"
 
 class	Wall : public AGameObject
 {
 public:
-  enum	State
+  enum 	State
     {
-      Invicible,
-      Destructible
+      Invicible,// = "media/caisseMetal",
+      Destructible// = "media/caisse"
     };
 
 public:

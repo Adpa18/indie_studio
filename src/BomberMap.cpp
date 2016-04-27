@@ -5,10 +5,11 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Wed Apr 27 19:18:34 2016 Victor Gouet
+// Last update Wed Apr 27 20:01:50 2016 Victor Gouet
 //
 
 #include "../include/BomberMap.hpp"
+#include <cstdlib>
 
 BomberMap::BomberMap(std::string const &)
 {
@@ -22,18 +23,24 @@ BomberMap::BomberMap(int width, int height)
   int		y;
   int		x;
 
+  srand(time(NULL));
   y = 0;
   while (y < height)
     {
       x = 0;
       while (x < width)
 	{
-	  IrrlichtController::getSceneManager()->addCubeSceneNode(20, NULL,
-								  0, irr::core::vector3df(x + posX, 0, y + posY) * scale);
-	  // _objects.push_back(
-			     // new Wall(irr::core::vector3df(x, 0, y) * scale,
-			     // 	      Wall::Destructible)
-			     // );
+	  if (x % 2 == 1 && y % 2 == 1)
+	    {
+	  _objects.push_back(new Wall(irr::core::vector3df(x + posX, 0, y + posY) * scale));
+	      // IrrlichtController::getSceneManager()->addCubeSceneNode(scale, NULL,
+	      // 							      0,
+	      // 							      irr::core::vector3df(x + posX, 0, y + posY) * scale);
+	    }
+	  else
+	    {
+	      
+	    }
 	  ++x;
 	}
       ++y;
