@@ -28,21 +28,21 @@ CPPFLAGS	+=	-O3 -ffast-math
 LDFLAGS 	+= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
 
 %.o : %.cpp
-	@echo "Compiling $<"
+	@echo -e "Compiling $<"
 	@$(CC) -c $(CPPFLAGS) $< -o $@
 
 $(NAME)	:	$(OBJ)
 	@$(CC) $(OBJ) $(LDFLAGS) -o $(DESTPATH)
-	@echo "\033[33m${NAME} Compiled\033[00m"
+	@echo -e "\033[33m${NAME} Compiled\033[00m"
 
 all	:	$(NAME)
 
 clean 	:
-	@echo "\033[31mRemoving Objects\033[00m"
+	@echo -e "\033[31mRemoving Objects\033[00m"
 	@$(RM) $(OBJ)
 
 fclean	:	clean
-	@echo "\033[31mRemoving ${NAME}\033[00m"
+	@echo -e "\033[31mRemoving ${NAME}\033[00m"
 	@$(RM) $(NAME)
 
 re		: fclean all
