@@ -17,11 +17,11 @@ public:
 
     // Encapsulates all the ui components
 public:
-    irr::gui::IGUISkin *GetSkin() const;
-    irr::gui::IGUIFont *GetFont() const;
+    irr::IrrlichtDevice *GetDevice() const;
+    irr::gui::IGUISkin const *GetSkin() const;
+    irr::gui::IGUIFont const* GetFont() const;
     void SetFont(irr::gui::IGUIFont *font, irr::gui::EGUI_DEFAULT_FONT def) const;
 
-    // TODO: Changer le id par une string et push dans une map
     void AddButton(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
                    const wchar_t *text, const wchar_t *tip) const;
 
@@ -37,7 +37,10 @@ public:
     void AddEditBox(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
                       const wchar_t *text, const wchar_t *tip) const;
 
-    irr::gui::IGUIElement *GetComponent(std::string const& component) const;
+    // Changes alpha value for all the objects
+    void SetSkinTransparency(irr::s32 alpha, irr::gui::IGUISkin * skin) const;
+
+    irr::gui::IGUIElement *GetElementFromID(irr::s32 id) const;
 
     // Exception class
 public:
@@ -52,9 +55,6 @@ private:
     irr::IrrlichtDevice *m_device;
     irr::video::IVideoDriver *m_videoDriver;
     irr::gui::IGUIEnvironment* m_env;
-
-    // Assigns string to int for id
-    std::map<std::string, irr::s32> m_componentIds;
 };
 
 

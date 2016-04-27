@@ -5,7 +5,9 @@
 # Name of the executable created (.exe will be added automatically if necessary)
 Target := bomberman
 # List of source files, separated by spaces
-Sources := TestUI.cpp \
+Sources := main.cpp \
+            UIEventReceiver.cpp \
+            UIManager.cpp \
             ../src/IrrlichtController.cpp
 
 # Path to Irrlicht directory, should contain include/ and lib/

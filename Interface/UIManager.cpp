@@ -28,7 +28,22 @@ UIManager::~UIManager()
 
 }
 
-irr::gui::IGUIElement *UIManager::GetComponent(std::string const &component) const
+irr::gui::IGUIElement *UIManager::GetElementFromID(irr::s32 id) const
 {
-    return m_env->getRootGUIElement()->getElementFromId(m_componentIds[component]);
+    return m_env->getRootGUIElement()->getElementFromId(id);
+}
+
+void UIManager::SetSkinTransparency(irr::s32 alpha, irr::gui::IGUISkin *skin) const
+{
+    for (irr::s32 i=0; i<irr::gui::EGDC_COUNT ; ++i)
+    {
+        irr::video::SColor col = skin->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
+        col.setAlpha(alpha);
+        skin->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
+    }
+}
+
+irr::IrrlichtDevice *UIManager::GetDevice() const
+{
+    return m_device;
 }
