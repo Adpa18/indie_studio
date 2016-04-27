@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Wed Apr 27 20:09:37 2016 Victor Gouet
+// Last update Wed Apr 27 20:16:33 2016 Victor Gouet
 //
 
 #include "../include/BomberMap.hpp"
@@ -32,14 +32,11 @@ BomberMap::BomberMap(int width, int height)
 	{
 	  if (x % 2 == 1 && y % 2 == 1)
 	    {
-	  _objects.push_back(new Wall(irr::core::vector3df(x + posX, 0, y + posY) * scale));
-	      // IrrlichtController::getSceneManager()->addCubeSceneNode(scale, NULL,
-	      // 							      0,
-	      // 							      irr::core::vector3df(x + posX, 0, y + posY) * scale);
+	       _objects.push_back(new Wall(irr::core::vector3df(x + posX, 0, y + posY) * scale, Wall::Invicible));
 	    }
 	  else
 	    {
-	      _objects.push_back(new Wall(irr::core::vector3df(x + posX, 0, y + posY) * scale, Wall::Invicible));
+	      _objects.push_back(new Wall(irr::core::vector3df(x + posX, 0, y + posY) * scale));
 	    }
 	  ++x;
 	}

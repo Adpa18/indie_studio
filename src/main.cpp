@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 20:09:28 2016 Victor Gouet
+// Last update Wed Apr 27 20:17:26 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -40,7 +40,7 @@ int	main()
       {ACharacter::DOWN, irr::KEY_KEY_S}
   };
 
-  BomberMap		map(10, 10);
+  BomberMap		map(11, 11);
 
   Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes);
