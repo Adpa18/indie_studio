@@ -1,69 +1,65 @@
-# Makefile for Irrlicht Examples
-# It's usually sufficient to change just the target name and source file list
-# and be sure that CXX is set to a valid compiler
+CC		=	g++
 
-# Name of the executable created (.exe will be added automatically if necessary)
-Target := bomberman
-# List of source files, separated by spaces
-Sources := src/main.cpp \
-	  src/IrrlichtController.cpp \
-	  src/AGameObject.cpp \
-	  src/ACharacter.cpp
-# Path to Irrlicht directory, should contain include/ and lib/
-IrrlichtHome := Irrlicht/irrlicht-1.8.3
-# Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
-BinPath = ./
+RM		= 	rm -rf
 
-# general compiler settings (might need to be set when compiling the lib, too)
-# preprocessor flags, e.g. defines and include paths
-USERCPPFLAGS = 
-# compiler flags such as optimization flags
-USERCXXFLAGS = -O3 -ffast-math
-#USERCXXFLAGS = -g -Wall
-# linker flags such as additional libraries and link paths
-USERLDFLAGS =
+SRC_DIR	=	src/
 
-####
-#no changes necessary below this line
-####
+IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
 
-CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS) -std=c++11
-CXXFLAGS = $(USERCXXFLAGS)
-LDFLAGS = $(USERLDFLAGS)
+SRC		=	$(SRC_DIR)main.cpp					\
+			$(SRC_DIR)IrrlichtController.cpp	\
+			$(SRC_DIR)AGameObject.cpp			\
+			$(SRC_DIR)ACharacter.cpp			\
 
-#default target is Linux
-all: all_linux
+OBJ			=	$(SRC:%cpp=%o)
 
-# target specific settings
-all_linux all_win32 static_win32: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
-all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
-all_linux clean_linux: SYSTEM=Linux
-all_win32 clean_win32 static_win32: SYSTEM=Win32-gcc
-all_win32 clean_win32 static_win32: SUF=.exe
-static_win32: CPPFLAGS += -D_IRR_STATIC_LIB_
-all_win32: LDFLAGS += -lopengl32 -lm
-static_win32: LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
-# name of the binary - only valid for targets which set SYSTEM
-DESTPATH = $(BinPath)/$(Target)$(SUF)
+NAME		=	bomberman
 
-all_linux all_win32 static_win32:
-	$(warning Building...)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(Sources) -o $(DESTPATH) $(LDFLAGS)
+BinPath 	=	./
 
-clean: clean_linux clean_win32
-	$(warning Cleaning...)
+DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
-clean_linux clean_win32:
-	@$(RM) $(DESTPATH)
+CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
 
-.PHONY: all all_win32 static_win32 clean clean_linux clean_win32
+CPPFLAGS	=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
 
-#multilib handling
+CPPFLAGS	+=	-O3 -ffast-math
+
+LDFLAGS 	+= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+
+%.o : %.cpp
+	@echo "Compiling $<"
+	@$(CC) -c $(CPPFLAGS) $< -o $@
+
+$(NAME)	:	$(OBJ)
+	@$(CC) $(OBJ) $(LDFLAGS) -o $(DESTPATH)
+	@echo "\033[33m${NAME} Compiled\033[00m"
+
+all	:	$(NAME)
+
+clean 	:
+	@echo "\033[31mRemoving Objects\033[00m"
+	@$(RM) $(OBJ)
+
+fclean	:	clean
+	@echo "\033[31mRemoving ${NAME}\033[00m"
+	@$(RM) $(NAME)
+
+re		: fclean all
+
+.PHONY	: all clean fclean re
+
+ifeq ($(OS),Windows_NT)
+SYSTEM=Win32-gcc
+SUF=.exe
+CPPFLAGS += -D_IRR_STATIC_LIB_ #static
+LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32 #static
+LDFLAGS += -lopengl32 -lm
+else
+LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
+SYSTEM=Linux
+endif
+
 ifeq ($(HOSTTYPE), x86_64)
 LIBSELECT=64
 endif
-#solaris real-time features
-ifeq ($(HOSTTYPE), sun4)
-LDFLAGS += -lrt
-endif
-
