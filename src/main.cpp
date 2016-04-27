@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 17:08:25 2016 Victor Gouet
+// Last update Wed Apr 27 18:41:06 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -14,6 +14,7 @@
 
 #include "../include/Player.hpp"
 #include "../include/EventGame.hpp"
+#include "../include/BomberMap.hpp"
 #include <iostream>
 
 
@@ -38,6 +39,8 @@ int	main()
       {ACharacter::UP, irr::KEY_KEY_Z},
       {ACharacter::DOWN, irr::KEY_KEY_S}
   };
+
+  BomberMap		map(10, 10);
 
   Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1// , _keycodes
 		       , eventGame, keycodes);

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Wed Apr 27 18:14:54 2016 Victor Gouet
+// Last update Wed Apr 27 18:36:10 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -13,7 +13,7 @@
 
 # include <vector>
 # include <string>
-# include "AGameObject.hpp"
+# include "Wall.hpp"
 
 class	BomberMap
 {

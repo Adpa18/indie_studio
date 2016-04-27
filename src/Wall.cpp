@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Wed Apr 27 18:30:10 2016 Victor Gouet
+// Last update Wed Apr 27 18:41:56 2016 Victor Gouet
 //
 
 #include "../include/Wall.hpp"
 
 Wall::Wall(irr::core::vector3df const &pos, State state)
-  : AGameObject(pos, ""), _state(state)
+  : AGameObject(pos, "media/sydney"), _state(state)
 {
   
 }
