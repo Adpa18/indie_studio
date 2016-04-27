@@ -41,3 +41,8 @@ irr::gui::IGUIEnvironment	*IrrlichtController::getGUIEnvironment()
 {
   return (getDevice()->getGUIEnvironment());
 }
+
+irr::scene::ISceneCollisionManager  *IrrlichtController::getSceneCollisionManager()
+{
+  return (getSceneManager()->getSceneCollisionManager());
+}
