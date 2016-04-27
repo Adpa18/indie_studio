@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Tue Apr 26 21:29:37 2016 Victor Gouet
+// Last update Wed Apr 27 14:29:30 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -34,8 +34,8 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
 
 AGameObject::~AGameObject()
 {
-    this->_node->removeAll();
-    this->_node->remove();
+    // this->_node->removeAll();
+    // this->_node->remove();
 }
 
 irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
