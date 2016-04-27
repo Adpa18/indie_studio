@@ -7,7 +7,8 @@ Target := bomberman
 # List of source files, separated by spaces
 Sources := src/main.cpp \
 	  src/IrrlichtController.cpp \
-	  src/AGameObject.cpp
+	  src/AGameObject.cpp \
+	  src/ACharacter.cpp
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := Irrlicht/irrlicht-1.8.3
 # Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
@@ -26,7 +27,7 @@ USERLDFLAGS =
 #no changes necessary below this line
 ####
 
-CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS)
+CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS) -std=c++11
 CXXFLAGS = $(USERCXXFLAGS)
 LDFLAGS = $(USERLDFLAGS)
 

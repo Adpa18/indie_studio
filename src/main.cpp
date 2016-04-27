@@ -5,16 +5,18 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Tue Apr 26 22:01:29 2016 Victor Gouet
+// Last update Wed Apr 27 09:58:31 2016 Victor Gouet
 //
 
-#include "../include/AGameObject.hpp"
+// #include "../include/AGameObject.hpp"
+
+# include "../include/ACharacter.hpp"
 
 int	main()
 {
   IrrlichtController::getDevice();
 
-  AGameObject	sydney(irr::core::vector3df(0, 0, 0), "media/sydney");
+  ACharacter	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney");
 
   IrrlichtController::getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0,30,-40), irr::core::vector3df(0,5,0));
 
