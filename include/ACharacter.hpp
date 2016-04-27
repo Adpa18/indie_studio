@@ -15,6 +15,9 @@
 
 class	ACharacter	: public AGameObject
 {
+public:
+    enum ACTION { IDLE = 0, LEFT, RIGHT, UP, BOTTOM, BOMB, ACT };
+    
 private:
   static const double BASICSPEED = 10.0;
 
@@ -37,6 +40,7 @@ private:
 
 protected:
   irr::u32 then;
+
 };
 
 #endif

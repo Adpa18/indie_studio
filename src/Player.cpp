@@ -14,7 +14,7 @@
 Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       std::string const &mesh, int player,
 	       EventGame const &eventGame,
-	       std::map<irr::EKEY_CODE, irr::EKEY_CODE> const &keycodes)
+	       std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes)
   : ACharacter(name, pos, mesh),
     _player(player), _eventGame(eventGame), _keycodes(keycodes)
 {
@@ -71,8 +71,8 @@ void		Player::compute()
       (*this)->setMD2Animation(irr::scene::EMAT_RUN);
       anime = irr::scene::EMAT_RUN;
     }
-  
-  
+
+
 
   (*this)->setPosition(nodePosition);
 }
