@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 15:19:27 2016 Victor Gouet
+// Last update Wed Apr 27 15:29:17 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -13,15 +13,17 @@
 // # include "../include/ACharacter.hpp"
 
 #include "../include/Player.hpp"
+#include "../include/EventGame.hpp"
 #include <iostream>
+
 
 int	main()
 {
   IrrlichtController::getDevice();
 
-  // std::map<irr::EKEY_CODE, irr::EKEY_ACTION>	_keycodes;
+  EventGame		eventGame;
 
-  // _keycode[irr::] = ;
+  IrrlichtController::getDevice()->setEventReceiver(&eventGame);
 
   Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/sydney", 1// , _keycodes
 		       );
@@ -36,13 +38,11 @@ int	main()
     {
       IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
-      // if (sydney.IsKeyDown(irr::KEY_KEY_W))
-      // 	{
-      // 	  std::cout << "MONSIER" << std::endl;
-      // 	  sydney->setPosition(sydney->getPosition() + 0.01);
-      // 	}
-
-      // sydney->setPosition(sydney->getPosition() + 0.01);
+      if (eventGame.IsKeyDown(irr::KEY_KEY_W))
+      	{
+      	  // std::cout << "MONSIER" << std::endl;
+      	  sydney->setPosition(sydney->getPosition() + 0.05);
+      	}
 
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();
