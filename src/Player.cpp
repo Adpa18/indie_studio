@@ -16,7 +16,7 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       EventGame const &eventGame,
 	       std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes)
   : ACharacter(name, pos, mesh),
-    _player(player), _eventGame(eventGame), _keycodes(keycodes), _dir(Collider::RIGHT)
+    _player(player), _eventGame(eventGame), _keycodes(keycodes), _dir(IrrlichtController::RIGHT)
 {
   anime = irr::scene::EMAT_STAND;
 }
@@ -34,34 +34,43 @@ void		Player::compute()
   then = now;
 
   irr::core::vector3df nodePosition = (*this)->getPosition();
+
   if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second))
     {
-      nodePosition.Z -= getMouveSpeed() * frameDeltaTime;
       stand = false;
       (*this)->setRotation(irr::core::vector3df(0, 90, 0));
-	  this->_dir = Collider::DOWN;
+	  this->_dir = IrrlichtController::DOWN;
+	  if (this->collid((*this)->getPosition(), IrrlichtController::DOWN) == -1) {
+		  nodePosition.Z -= getMouveSpeed() * frameDeltaTime;
+	  }
     }
   else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second))
     {
       stand = false;
-      nodePosition.Z += getMouveSpeed() * frameDeltaTime;
       (*this)->setRotation(irr::core::vector3df(0, -90, 0));
-	  this->_dir = Collider::UP;
+	  this->_dir = IrrlichtController::UP;
+	  if (this->collid((*this)->getPosition(), IrrlichtController::UP) == -1) {
+		  nodePosition.Z += getMouveSpeed() * frameDeltaTime;
+	  }
     }
 
-  if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second))
+  else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second))
     {
       stand = false;
-      nodePosition.X -= getMouveSpeed() * frameDeltaTime;
       (*this)->setRotation(irr::core::vector3df(0, 180, 0));
-	  this->_dir = Collider::LEFT;
+	  this->_dir = IrrlichtController::LEFT;
+	  if (this->collid((*this)->getPosition(), IrrlichtController::LEFT) == -1) {
+		  nodePosition.X -= getMouveSpeed() * frameDeltaTime;
+	  }
     }
   else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second))
     {
       stand = false;
-      nodePosition.X += getMouveSpeed() * frameDeltaTime;
       (*this)->setRotation(irr::core::vector3df(0, 0, 0));
-	  this->_dir = Collider::RIGHT;
+	  this->_dir = IrrlichtController::RIGHT;
+	  if (this->collid((*this)->getPosition(), IrrlichtController::RIGHT) == -1) {
+		  nodePosition.X += getMouveSpeed() * frameDeltaTime;
+	  }
     }
 
   if (stand && anime != irr::scene::EMAT_STAND)
@@ -74,7 +83,5 @@ void		Player::compute()
       (*this)->setMD2Animation(irr::scene::EMAT_RUN);
       anime = irr::scene::EMAT_RUN;
     }
-	if (this->collid((*this)->getPosition(), this->_dir) == -1) {
-		(*this)->setPosition(nodePosition);
-	}
+	(*this)->setPosition(nodePosition);
 }

@@ -1,9 +1,9 @@
 //
 // BomberMap.hpp for MAP in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
 // Last update Thu Apr 28 10:11:29 2016 Victor Gouet
 //
@@ -17,9 +17,6 @@
 
 class	BomberMap
 {
-public:
-  static const size_t	scale = 25;
-
 public:
   BomberMap(std::string const &);
   BomberMap();
