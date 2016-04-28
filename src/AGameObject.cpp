@@ -11,8 +11,9 @@
 #include "../include/AGameObject.hpp"
 #include <stdexcept>
 
-AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh, Collider *collider) : collider(collider)
+AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh, Collider *collider) : _collider(collider)
 {
+    static int i = 0;
   std::string		const strMd2(mesh + ".md2");
   std::string		const strBMP(mesh + ".png");
 
@@ -24,7 +25,7 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
       IrrlichtController::getDevice()->drop();
       throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
     }
-  _node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode);
+  _node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, ++i);
   if (_node)
     {
       _node->setPosition(pos);
@@ -38,6 +39,7 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
 
 AGameObject::~AGameObject()
 {
+    delete this->_collider;
     // this->_node->removeAll();
     // this->_node->remove();
 }
@@ -49,5 +51,10 @@ irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
 
 void        AGameObject::addCollider(Collider *collider)
 {
-    this->collider = collider;
+    this->_collider = collider;
+}
+
+int     AGameObject::collid(irr::core::vector3df pos,Collider::Direction dir) const
+{
+    return (this->_collider->collid(pos, dir));
 }

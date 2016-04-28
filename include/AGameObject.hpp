@@ -24,10 +24,10 @@ public:
 public:
   irr::scene::IAnimatedMeshSceneNode *operator->();
   void      addCollider(Collider *collider);
-
+  int       collid(irr::core::vector3df pos, Collider::Direction dir) const;
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;
-  Collider                              *collider;
+  Collider                              *_collider;
 };
 
 #endif

@@ -13,51 +13,32 @@
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
 {
-public:
-    UIEventReceiver(UIManager const& manager) : m_manager(manager), m_device(manager.GetDevice())
-    {}
-
-    virtual bool OnEvent(const irr::SEvent &event)
+    // TODO: move this to game manager
+    enum GameState
     {
-        if (event.EventType == irr::EET_GUI_EVENT)
-        {
-            irr::s32 id = event.GUIEvent.Caller->getID();
-            irr::gui::IGUIEnvironment *env = m_device->getGUIEnvironment();
-            switch (event.GUIEvent.EventType)
-            {
-                case irr::gui::EGET_SCROLL_BAR_CHANGED:
-                    break;
+        SPLASH_SCREEN,
+        MAIN_MENU,
+        PLAY,
+        PAUSE
+    };
 
-                case irr::gui::EGET_BUTTON_CLICKED:
-                    switch (id)
-                    {
-                        case UIElement::GUI_ID_QUIT_BUTTON:
-                            m_device->closeDevice();
-                            return true;
+public:
+    UIEventReceiver(UIManager const& manager);
 
-                        case UIElement::GUI_ID_NEW_WINDOW_BUTTON:
-                        {
-                            m_manager.GetElementFromID(UIElement::GUI_ID_TEXT)->setText(L"lalalalalalaaaaaa");
-                        }
-                    }
-                    break;
+public:
+    virtual bool OnEvent(const irr::SEvent &event);
 
-                case irr::gui::EGET_FILE_SELECTED:
-                {
-                }
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        return false;
-    }
+private:
+    void DisplayMainMenu();
+    void DisplaySplashScreen();
 
 private:
     UIManager m_manager;
     irr::IrrlichtDevice *m_device;
+
+    // Use to know current game state and previous one
+    GameState m_gameState;
+    GameState m_gameSatePrev;
 };
 
 

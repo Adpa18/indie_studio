@@ -16,7 +16,7 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       EventGame const &eventGame,
 	       std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes)
   : ACharacter(name, pos, mesh),
-    _player(player), _eventGame(eventGame), _keycodes(keycodes)
+    _player(player), _eventGame(eventGame), _keycodes(keycodes), _dir(Collider::RIGHT)
 {
   anime = irr::scene::EMAT_STAND;
 }
@@ -39,12 +39,14 @@ void		Player::compute()
       nodePosition.Z -= getMouveSpeed() * frameDeltaTime;
       stand = false;
       (*this)->setRotation(irr::core::vector3df(0, 90, 0));
+	  this->_dir = Collider::DOWN;
     }
   else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second))
     {
       stand = false;
       nodePosition.Z += getMouveSpeed() * frameDeltaTime;
       (*this)->setRotation(irr::core::vector3df(0, -90, 0));
+	  this->_dir = Collider::UP;
     }
 
   if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second))
@@ -52,12 +54,14 @@ void		Player::compute()
       stand = false;
       nodePosition.X -= getMouveSpeed() * frameDeltaTime;
       (*this)->setRotation(irr::core::vector3df(0, 180, 0));
+	  this->_dir = Collider::LEFT;
     }
   else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second))
     {
       stand = false;
       nodePosition.X += getMouveSpeed() * frameDeltaTime;
       (*this)->setRotation(irr::core::vector3df(0, 0, 0));
+	  this->_dir = Collider::RIGHT;
     }
 
   if (stand && anime != irr::scene::EMAT_STAND)
@@ -70,8 +74,7 @@ void		Player::compute()
       (*this)->setMD2Animation(irr::scene::EMAT_RUN);
       anime = irr::scene::EMAT_RUN;
     }
-
-
-
-  (*this)->setPosition(nodePosition);
+	if (this->collid((*this)->getPosition(), this->_dir) == -1) {
+		(*this)->setPosition(nodePosition);
+	}
 }

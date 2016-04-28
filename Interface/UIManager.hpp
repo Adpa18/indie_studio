@@ -42,6 +42,8 @@ public:
 
     irr::gui::IGUIElement *GetElementFromID(irr::s32 id) const;
 
+    void ClearEnv() const;
+
     // Exception class
 public:
     class UIException : public std::runtime_error
