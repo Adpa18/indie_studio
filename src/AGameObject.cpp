@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed Apr 27 19:03:07 2016 Victor Gouet
+// Last update Thu Apr 28 11:30:09 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -31,6 +31,8 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
       _node->setPosition(pos);
       _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(strBMP.c_str()));
       _node->setMD2Animation(irr::scene::EMAT_STAND);
+      _node->setMaterialFlag(irr::video::EMF_LIGHTING,true);
+      // _node->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
       irr::scene::ITriangleSelector* selector = IrrlichtController::getSceneManager()->createTriangleSelector(_node);
       _node->setTriangleSelector(selector);
       selector->drop();

@@ -5,19 +5,20 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:35 2016 Victor Gouet
-// Last update Wed Apr 27 15:20:42 2016 Victor Gouet
+// Last update Thu Apr 28 11:10:47 2016 Victor Gouet
 //
 
 #ifndef IRRLICHTCONTROLLER_HPP_
 # define IRRLICHTCONTROLLER_HPP_
 
+# include <X11/Xlib.h>
 # include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 
 class	IrrlichtController
 {
 public:
-    static const size_t    width = 640;
-    static const size_t    height = 480;
+    // static const size_t    width = 1080;
+    // static const size_t    height = 1080;
   static irr::IrrlichtDevice                *getDevice();
   static irr::video::IVideoDriver           *getDriver();
   static irr::scene::ISceneManager          *getSceneManager();

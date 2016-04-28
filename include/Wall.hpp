@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Wed Apr 27 19:57:44 2016 Victor Gouet
+// Last update Thu Apr 28 10:09:59 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Thu Apr 28 09:58:03 2016 Victor Gouet
+// Last update Thu Apr 28 10:11:29 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -22,7 +22,11 @@ public:
 
 public:
   BomberMap(std::string const &);
-  BomberMap(int width, int height);
+  BomberMap();
+
+private:
+  void			generateMap();
+  void		        generateGround();
 
 private:
   char			_patron[11][11] = {
