@@ -10,6 +10,9 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     DisplaySplashScreen();
 }
 
+/*
+ * \brief Should return continue if event is completely handled
+ */
 bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 {
 
@@ -24,7 +27,12 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 {
                     case UIElement::SPLASH_BUTTON_START:
                         m_gameState = MAIN_MENU;
-                        return true;
+                        break;
+
+                    case UIElement::MAIN_MENU_BUTTON_1P:
+                        m_gameState = MENU_MAP;
+                        break;
+
                 }
                 break;
 
@@ -38,10 +46,17 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     if (m_gameState == SPLASH_SCREEN && m_gameSatePrev != SPLASH_SCREEN)
     {
         DisplaySplashScreen();
+        return true;
     }
     if (m_gameState == MAIN_MENU && m_gameSatePrev != MAIN_MENU)
     {
         DisplayMainMenu();
+        return true;
+    }
+    if (m_gameState == MENU_MAP && m_gameSatePrev != MENU_MAP)
+    {
+        DisplayMapMenu();
+        return true;
     }
 
     return false;
@@ -51,18 +66,18 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 void UIEventReceiver::DisplayMainMenu()
 {
     m_manager.ClearEnv();
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.1, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.25, IrrlichtController::height / 2.0 + 50),
+    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.12, IrrlichtController::height / 2.0 - 50,
+                                                  IrrlichtController::width * 0.27, IrrlichtController::height / 2.0 + 50),
                         nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.30, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.45, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"Two players", L"");
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.50, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.65, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"Three players", L"");
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.70, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.85, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"Four players", L"");
+    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.32, IrrlichtController::height / 2.0 - 50,
+                                                  IrrlichtController::width * 0.47, IrrlichtController::height / 2.0 + 50),
+                        nullptr, UIElement::MAIN_MENU_BUTTON_2P, L"Two players", L"");
+    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.52, IrrlichtController::height / 2.0 - 50,
+                                                  IrrlichtController::width * 0.67, IrrlichtController::height / 2.0 + 50),
+                        nullptr, UIElement::MAIN_MENU_BUTTON_3P, L"Three players", L"");
+    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.72, IrrlichtController::height / 2.0 - 50,
+                                                  IrrlichtController::width * 0.87, IrrlichtController::height / 2.0 + 50),
+                        nullptr, UIElement::MAIN_MENU_BUTTON_4P, L"Four players", L"");
     m_gameSatePrev = m_gameState;
 }
 
@@ -74,4 +89,9 @@ void UIEventReceiver::DisplaySplashScreen()
             IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50), nullptr, UIElement::SPLASH_BUTTON_START, L"PRESS START", L"");
 
     m_gameSatePrev = m_gameState;
+}
+
+void UIEventReceiver::DisplayMapMenu()
+{
+    m_manager.ClearEnv();
 }

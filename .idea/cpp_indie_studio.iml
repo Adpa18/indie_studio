@@ -2,23 +2,25 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/media/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/IrrlichtController.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Player.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Collider.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Wall.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/ACharacter.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/AGameObject.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/ACharacter.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/IrrlichtController.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/EventGame.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Player.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/BomberMap.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/AGameObject.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/IrrlichtController.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/Collider.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/Wall.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/EventGame.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/Player.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/UIElements.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/UIManager.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/main.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/UIManager.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/TestUI.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/UIEventReceiver.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Interface/UIEventReceiver.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/BomberMap.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/ACharacter.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/IrrlichtController.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/tools/FileToHeader/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/tools/MeshConverter/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/tools/IrrFontTool/newFontTool/main.cpp" isTestSource="false" />
@@ -54,7 +56,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ISceneNodeFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IReferenceCounted.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IMesh.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/EDebugSceneTypes.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IMeshSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIWindow.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IVideoDriver.h" isTestSource="false" />
@@ -64,6 +65,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IXMLWriter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/triangle3d.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/SViewFrustum.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUITreeView.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUISpinBox.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleRingEmitter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/position2d.h" isTestSource="false" />
@@ -120,7 +122,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/SLight.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/vector3d.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/CDynamicMeshBuffer.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleCylinderEmitter.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/EDebugSceneTypes.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ECullingTypes.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/SParticle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IDynamicMeshBuffer.h" isTestSource="false" />
@@ -163,7 +165,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ISceneNodeAnimatorCollisionResponse.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/aabbox3d.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IMaterialRenderer.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/irrMath.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleCylinderEmitter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/irrAllocator.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/coreutil.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleSphereEmitter.h" isTestSource="false" />
@@ -177,12 +179,12 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIComboBox.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IDummyTransformationSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIEnvironment.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIEditBox.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIFontBitmap.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ISceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IBillboardSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IOSOperator.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/EGUIAlignment.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIColorSelectDialog.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/fast_atof.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ILightSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IAnimatedMeshSceneNode.h" isTestSource="false" />
@@ -190,7 +192,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/EDriverFeatures.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IBoneSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ITimer.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUITreeView.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/irrMath.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ICameraSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUISpriteBank.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IVertexBuffer.h" isTestSource="false" />
@@ -218,7 +220,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ISceneNodeAnimatorFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleBoxEmitter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/irrunpack.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIEditBox.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleFadeOutAffector.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IMeshBuffer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/heapsort.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ESceneNodeTypes.h" isTestSource="false" />
@@ -227,10 +229,10 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ISkinnedMesh.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/irrList.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/ESceneNodeAnimatorTypes.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IParticleFadeOutAffector.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IGUIColorSelectDialog.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/CIndexBuffer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/include/IAnimatedMesh.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CShadowVolumeSceneNode.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUITable.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUIEnvironment.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D8NormalMapRenderer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUIToolBar.h" isTestSource="false" />
@@ -290,7 +292,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COpenGLShaderMaterialRenderer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUICheckBox.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D9ParallaxMapRenderer.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COSOperator.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CNullDriver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CB3DMeshFileLoader.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CIrrDeviceConsole.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/S4DVertex.h" isTestSource="false" />
@@ -317,6 +319,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CSceneNodeAnimatorRotation.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CImageWriterPNG.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CCubeSceneNode.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COSOperator.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUISpriteBank.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CDepthBuffer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRGouraudWire.cpp" isTestSource="false" />
@@ -345,7 +348,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/C3DSMeshFileLoader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CMY3DMeshFileLoader.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CMeshManipulator.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D9Driver.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRTextureLightMapGouraud2_M4.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUIContextMenu.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CSoftwareTexture2.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRTextureGouraudNoZ.cpp" isTestSource="false" />
@@ -387,7 +390,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/rdppm.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jcdctmgr.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jerror.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/cjpeg.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jcmarker.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jidctflt.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jddctmgr.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jerror.h" isTestSource="false" />
@@ -409,6 +412,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/ansi2knr.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jdapimin.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/rdjpgcom.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/cjpeg.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jcarith.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jpeglib.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jccolor.c" isTestSource="false" />
@@ -419,7 +423,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/rdbmp.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jdmarker.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/ckconfig.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jcmarker.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jchuff.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jcsample.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/jpeglib/jdatasrc.c" isTestSource="false" />
@@ -734,7 +737,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUIImageList.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CFPSCounter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CSphereSceneNode.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRTextureLightMapGouraud2_M4.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CSkinnedMesh.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COpenGLCgMaterialRenderer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CParticleGravityAffector.h" isTestSource="false" />
@@ -756,7 +758,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D9Texture.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUIButton.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CPLYMeshWriter.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CNullDriver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CWaterSurfaceSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D9NormalMapRenderer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CDummyTransformationSceneNode.cpp" isTestSource="false" />
@@ -798,7 +799,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUITable.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CIrrDeviceSDL.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CIrrDeviceWin32.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUITable.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CIrrMeshWriter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D8MaterialRenderer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CParticleSphereEmitter.h" isTestSource="false" />
@@ -828,6 +828,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CDefaultGUIElementFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COpenGLDriver.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRTextureGouraudAlpha.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CD3D9Driver.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CIrrDeviceLinux.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CImageLoaderPCX.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COpenGLSLMaterialRenderer.h" isTestSource="false" />
@@ -842,6 +843,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COpenGLNormalMapRenderer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUIToolBar.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CSceneLoaderIrr.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CShadowVolumeSceneNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTriangleBBSelector.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CGUISpinBox.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTerrainTriangleSelector.h" isTestSource="false" />
@@ -859,7 +861,13 @@
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRTextureDetailMap2.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/CTRFlatWire.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Irrlicht/irrlicht-1.8.3/source/Irrlicht/COBJMeshWriter.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIElements.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIEventReceiver.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIManager.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/TestUI.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Interface/UIEventReceiver.hpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

@@ -13,7 +13,7 @@ namespace UIElement
     // Objects for main menu
     enum MainMenu
     {
-        MAIN_MENU_BUTTON_1P,
+        MAIN_MENU_BUTTON_1P = 100,
         MAIN_MENU_BUTTON_2P,
         MAIN_MENU_BUTTON_3P,
         MAIN_MENU_BUTTON_4P
@@ -21,7 +21,7 @@ namespace UIElement
 
     enum SplashScreen
     {
-        SPLASH_BUTTON_START
+        SPLASH_BUTTON_START = 1
     };
 }
 
