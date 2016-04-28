@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 19:23:46 2016 Victor Gouet
+// Last update Thu Apr 28 11:53:45 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -40,27 +40,59 @@ int	main()
       {ACharacter::DOWN, irr::KEY_KEY_S}
   };
 
-  BomberMap		map(10, 10);
+  BomberMap		map;
 
-  Player	sydney("ROGER", irr::core::vector3df(0, 0, 0), "media/pikachu", 1// , _keycodes
+  Player	sydney("ROGER", irr::core::vector3df(-100, 0, 100), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes);
+
+  sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
 
   Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes2);
 
+  pikashy->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
+
+  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeMaya();
+
+  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(0, 100.0f, .3f, 0, 0, 0, true, 3.f);
+
+
+
+  // FREE CAM
+  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(// 0,100.0f,1.2f
+  // 												      );
+  // camera->setPosition(irr::core::vector3df(0,0,0));
+
+
+  //camera->setFarValue(42000.0f);
+
+ //REAL CAM
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-  (0, irr::core::vector3df(0, 320, -250), irr::core::vector3df(0,5,0));
+  (0, irr::core::vector3df(0, 200
+  			   , -200
+  			   ), irr::core::vector3df(0,5,0));
 
   //camera->setPosition(irr::core::vector3df(0, 100, -100));
   camera->setTarget(irr::core::vector3df(0, 0, 0));
 
+  camera->setAutomaticCulling(irr::scene::EAC_OFF);
+  camera->setFarValue(2000);
+  camera->setNearValue(100);
+
+  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f, 1.0f,
+									     1.0f, 1.0f));
 
   while (IrrlichtController::getDevice()->run())
     {
       IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
+      if (eventGame.IsKeyDown(irr::KEY_ESCAPE))
+	{
+	  break;
+	}
+
       sydney.compute();
-      pikashy.compute();
+    //   pikashy.compute();
 
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();

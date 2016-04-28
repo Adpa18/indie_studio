@@ -15,6 +15,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
 {
   mouveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
+  this->addCollider(new Collider());
 }
 
 ACharacter::~ACharacter()
@@ -40,3 +41,8 @@ double		ACharacter::getMouveSpeed() const
 // {
 // 	this->move(x, y, 0);
 // }
+void ACharacter::setName(const std::string &string)
+{
+  _name = string;
+  (*this)->setName(string.c_str());
+}

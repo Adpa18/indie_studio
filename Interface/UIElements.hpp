@@ -5,16 +5,23 @@
 #ifndef CPP_INDIE_STUDIO_UIELEMENTS_HPP
 #define CPP_INDIE_STUDIO_UIELEMENTS_HPP
 
+// TODO: video playback handler
+
 // Holds all the element enum for the window
 namespace UIElement
 {
-    enum Object
+    // Objects for main menu
+    enum MainMenu
     {
-        GUI_ID_TRANSPARENCY_SCROLL_BAR,
-        GUI_ID_QUIT_BUTTON,
-        GUI_ID_NEW_WINDOW_BUTTON,
-        GUI_ID_FILE_OPEN_BUTTON,
-        GUI_ID_TEXT
+        MAIN_MENU_BUTTON_1P = 100,
+        MAIN_MENU_BUTTON_2P,
+        MAIN_MENU_BUTTON_3P,
+        MAIN_MENU_BUTTON_4P
+    };
+
+    enum SplashScreen
+    {
+        SPLASH_BUTTON_START = 1
     };
 }
 

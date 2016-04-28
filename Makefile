@@ -11,8 +11,8 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)AGameObject.cpp			\
 			$(SRC_DIR)Player.cpp				\
 			$(SRC_DIR)ACharacter.cpp			\
-			$(SRC_DIR)Wall.cpp				\
-			$(SRC_DIR)/BomberMap.cpp			\
+			$(SRC_DIR)Wall.cpp					\
+			$(SRC_DIR)BomberMap.cpp				\
 			$(SRC_DIR)EventGame.cpp				\
 			$(SRC_DIR)Collider.cpp				\
 

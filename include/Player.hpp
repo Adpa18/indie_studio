@@ -22,6 +22,7 @@ private:
   EventGame	const &					_eventGame;
   int							    anime;
   std::map<ACharacter::ACTION, irr::EKEY_CODE> const &	_keycodes;
+  Collider::Direction   _dir;
 
 public:
   Player(std::string const &name, irr::core::vector3df const &pos,

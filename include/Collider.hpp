@@ -5,7 +5,7 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 18:27:45 2016 Adrien WERY
-** Last update	Wed Apr 27 19:47:40 2016 Adrien WERY
+** Last update	Wed Apr 27 21:03:53 2016 Adrien WERY
 */
 
 #ifndef COLLIDER_HPP
@@ -15,14 +15,6 @@
 # include <vector>
 
 class Collider {
-private:
-    unsigned int    distance;
-public:
-    Collider ();
-    virtual ~Collider ();
-    std::vector<irr::s32>   collid(irr::core::vector3df pos) const;
-    void                    setDistance(unsigned int distance);
-    unsigned int            getDistance() const;
 public:
     enum Type {
         NONE = 0,
@@ -30,6 +22,26 @@ public:
         BOMB = 1 << 1,
         OTHER = 1 << 2
     };
+    enum Direction {
+        LEFT = 1 << 0,
+        RIGHT = 1 << 1,
+        UP = 1 << 2,
+        DOWN = 1 << 3
+    };
+private:
+    unsigned int        _distance;
+    int                 _flags;
+    std::vector<int>    _ids;
+    irr::scene::ISceneCollisionManager  *_collMan;
+public:
+    Collider (int flags = CHARACTER | BOMB | OTHER);
+    virtual ~Collider ();
+    int collid(irr::core::vector3df pos, Collider::Direction dir);
+    irr::scene::ISceneNode  *hit(irr::core::line3d<irr::f32> ray) const;
+
+
+    void                    setDistance(unsigned int distance);
+    unsigned int            getDistance() const;
 };
 
 #endif /* !COLLIDER_HPP */

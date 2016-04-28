@@ -27,13 +27,14 @@ public:
 
 public:
   std::string const &   getName() const;
+    void                setName(const std::string &);
   double                getMouveSpeed() const;
   virtual void		compute() = 0;
   // void                  move(int x, int y, int z);
   // void                  move(int x, int y);
 
 private:
-  std::string const	_name;
+  std::string _name;
   // std::vector<Bomb>	bombs;
   // Bonus			*bonus;
   double		mouveSpeed;

@@ -74,3 +74,8 @@ void UIManager::AddStaticText(const wchar_t *text, irr::core::rect<irr::s32> tra
 {
     m_env->addStaticText(text, transform, hasBorder, wordWrap, parent, id, fillBackground);
 }
+
+void UIManager::ClearEnv() const
+{
+    m_env->clear();
+}
