@@ -35,43 +35,77 @@ void		Player::compute()
 
   irr::core::vector3df nodePosition = (*this)->getPosition();
 
-  if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second))
-    {
-      stand = false;
-      (*this)->setRotation(irr::core::vector3df(0, 90, 0));
-	  this->_dir = IrrlichtController::DOWN;
-	  if (this->collid((*this)->getPosition(), IrrlichtController::DOWN) == -1) {
-		  nodePosition.Z -= getMouveSpeed() * frameDeltaTime;
-	  }
-    }
-  else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second))
-    {
-      stand = false;
-      (*this)->setRotation(irr::core::vector3df(0, -90, 0));
-	  this->_dir = IrrlichtController::UP;
-	  if (this->collid((*this)->getPosition(), IrrlichtController::UP) == -1) {
-		  nodePosition.Z += getMouveSpeed() * frameDeltaTime;
-	  }
-    }
+  // Joystick
+  const irr::SEvent::SJoystickEvent &joystickData = _eventGame.GetJoystickState(this->_player);
+  const irr::u16 povDegrees = joystickData.POV / 100;
+  const irr::f32 DEAD_ZONE = 0.05f;
+  irr::f32 moveHorizontal = 0.f;
+  irr::f32 moveVertical = 0.f;
 
-  else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second))
-    {
-      stand = false;
-      (*this)->setRotation(irr::core::vector3df(0, 180, 0));
-	  this->_dir = IrrlichtController::LEFT;
-	  if (this->collid((*this)->getPosition(), IrrlichtController::LEFT) == -1) {
-		  nodePosition.X -= getMouveSpeed() * frameDeltaTime;
-	  }
-    }
-  else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second))
-    {
-      stand = false;
-      (*this)->setRotation(irr::core::vector3df(0, 0, 0));
-	  this->_dir = IrrlichtController::RIGHT;
-	  if (this->collid((*this)->getPosition(), IrrlichtController::RIGHT) == -1) {
-		  nodePosition.X += getMouveSpeed() * frameDeltaTime;
-	  }
-    }
+	if (joystickData.NUMBER_OF_AXES != 0) {
+		moveHorizontal = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
+		if(fabs(moveHorizontal) < DEAD_ZONE) {
+			moveHorizontal = 0.f;
+		}
+		moveVertical = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
+		if(fabs(moveVertical) < DEAD_ZONE) {
+			moveVertical = 0.f;
+		}
+		if (povDegrees < 360) {
+			if(povDegrees > 0 && povDegrees < 180) {
+				moveHorizontal = 1.f;
+			} else if (povDegrees > 180) {
+				moveHorizontal = -1.f;
+			}
+			if(povDegrees > 90 && povDegrees < 270) {
+				moveVertical = -1.f;
+			} else if (povDegrees > 270 || povDegrees < 90) {
+				moveVertical = +1.f;
+			}
+		}
+		// nodePosition.X += getMoveSpeed() * frameDeltaTime * moveHorizontal;
+		// nodePosition.Z += getMoveSpeed() * frameDeltaTime * moveVertical;
+	} else {
+		// Arrows
+		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
+			moveVertical = -1.0f;
+		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
+			moveVertical = 1.0f;
+		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second)) {
+			moveHorizontal = -1.0f;
+		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
+			moveHorizontal = 1.0f;
+		}
+	}
+	if (moveHorizontal < 0.0f) {
+		stand = false;
+        (*this)->setRotation(irr::core::vector3df(0, 180, 0));
+		this->_dir = IrrlichtController::LEFT;
+		if (this->collid((*this)->getPosition(), IrrlichtController::LEFT) == -1) {
+			nodePosition.X -= getMoveSpeed() * frameDeltaTime;
+		}
+	} else if (moveHorizontal > 0.0f) {
+		stand = false;
+        (*this)->setRotation(irr::core::vector3df(0, 0, 0));
+		this->_dir = IrrlichtController::RIGHT;
+		if (this->collid((*this)->getPosition(), IrrlichtController::RIGHT) == -1) {
+			nodePosition.X += getMoveSpeed() * frameDeltaTime;
+		}
+	} else if (moveVertical > 0.0f) {
+		stand = false;
+        (*this)->setRotation(irr::core::vector3df(0, -90, 0));
+		this->_dir = IrrlichtController::UP;
+		if (this->collid((*this)->getPosition(), IrrlichtController::UP) == -1) {
+			nodePosition.Z += getMoveSpeed() * frameDeltaTime;
+		}
+	} else if (moveVertical < 0.0f) {
+		stand = false;
+        (*this)->setRotation(irr::core::vector3df(0, 90, 0));
+		this->_dir = IrrlichtController::DOWN;
+		if (this->collid((*this)->getPosition(), IrrlichtController::DOWN) == -1) {
+			nodePosition.Z -= getMoveSpeed() * frameDeltaTime;
+		}
+	}
 
   if (stand && anime != irr::scene::EMAT_STAND)
     {

@@ -27,7 +27,7 @@ public:
 
 public:
   std::string const &   getName() const;
-  double                getMouveSpeed() const;
+  double                getMoveSpeed() const;
   virtual void		compute() = 0;
   // void                  move(int x, int y, int z);
   // void                  move(int x, int y);
@@ -36,7 +36,7 @@ private:
   std::string const	_name;
   // std::vector<Bomb>	bombs;
   // Bonus			*bonus;
-  double		mouveSpeed;
+  double		moveSpeed;
 
 protected:
   irr::u32 then;
