@@ -12,17 +12,17 @@
 
 // redeclare static member for cpp linkage
 irr::IrrlichtDevice *IrrlichtController::device = NULL;
+size_t    IrrlichtController::width = 1920;
+size_t    IrrlichtController::height = 1080;
 
 irr::IrrlichtDevice *IrrlichtController::getDevice()
 {
-  //static irr::IrrlichtDevice *device = NULL;
-
   if (!device)
     {
       Display* disp = XOpenDisplay(NULL);
       Screen*  scrn = DefaultScreenOfDisplay(disp);
-      int height = scrn->height;
-      int width  = scrn->width;
+      height = scrn->height;
+      width  = scrn->width;
 
       // irr::createDevice(video::E_DRIVER_TYPE deviceType, const core::dimension2d<u32> &windowSize, u32 bits, , bool stencilbuffer, bool vsync, irr::IEventReceiver *receiver)
       device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,

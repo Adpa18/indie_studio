@@ -16,9 +16,10 @@ class UIEventReceiver : public irr::IEventReceiver
     // TODO: move this to game manager
     enum GameState
     {
-        SPLASH_SCREEN,
-        MAIN_MENU,
-        PLAY,
+        SPLASH_SCREEN = 1,
+        MAIN_MENU = 2,
+        MENU_MAP = 3,
+        PLAY = 4,
         PAUSE
     };
 
@@ -31,6 +32,7 @@ public:
 private:
     void DisplayMainMenu();
     void DisplaySplashScreen();
+    void DisplayMapMenu();
 
 private:
     UIManager m_manager;
