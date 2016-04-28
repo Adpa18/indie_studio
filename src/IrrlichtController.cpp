@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:22 2016 Victor Gouet
-// Last update Thu Apr 28 11:20:34 2016 Victor Gouet
+// Last update Thu Apr 28 17:15:34 2016 Matthieu Tavernier
 //
 
 #include "../include/IrrlichtController.hpp"

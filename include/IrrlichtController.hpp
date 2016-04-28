@@ -27,6 +27,14 @@ public:
 
 private:
     static irr::IrrlichtDevice *device;
+public:
+    static const size_t	scale = 25;
+    enum Direction {
+        LEFT = 1 << 0,
+        RIGHT = 1 << 1,
+        UP = 1 << 2,
+        DOWN = 1 << 3
+    };
 };
 
 #endif

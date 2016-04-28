@@ -42,7 +42,7 @@ int	main()
 
   BomberMap		map;
 
-  Player	sydney("ROGER", irr::core::vector3df(-100, 0, 100), "media/pikachu", 1// , _keycodes
+  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes);
 
   sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));

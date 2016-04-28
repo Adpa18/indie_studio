@@ -56,7 +56,7 @@ void        AGameObject::addCollider(Collider *collider)
     this->_collider = collider;
 }
 
-int     AGameObject::collid(irr::core::vector3df pos,Collider::Direction dir) const
+int     AGameObject::collid(irr::core::vector3df pos,IrrlichtController::Direction dir) const
 {
     return (this->_collider->collid(pos, dir));
 }
