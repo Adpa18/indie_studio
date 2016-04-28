@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Wed Apr 27 20:17:26 2016 Victor Gouet
+// Last update Thu Apr 28 00:02:49 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -48,14 +48,25 @@ int	main()
   Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/pikachu", 1// , _keycodes
 		       , eventGame, keycodes2);
 
-  irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-  (0, irr::core::vector3df(0, 320
-			   , 0//-250
-			   ), irr::core::vector3df(0,5,0));
+  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeMaya();
+
+  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(0, 100.0f, .3f, 0, 0, 0, true, 3.f);
+
+
+
+  // FREE CAM
+  irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(0,100.0f,1.2f);
+  camera->setPosition(irr::core::vector3df(0,0,0));
+ camera->setFarValue(42000.0f);
+
+ //REAL CAM
+  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+  // (0, irr::core::vector3df(0, 200
+  // 			   , -200
+  // 			   ), irr::core::vector3df(0,5,0));
 
   //camera->setPosition(irr::core::vector3df(0, 100, -100));
   camera->setTarget(irr::core::vector3df(0, 0, 0));
-
 
   while (IrrlichtController::getDevice()->run())
     {
