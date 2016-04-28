@@ -28,7 +28,7 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
