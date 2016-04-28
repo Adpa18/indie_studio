@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:22 2016 Victor Gouet
-// Last update Wed Apr 27 15:20:29 2016 Victor Gouet
+// Last update Thu Apr 28 11:20:34 2016 Victor Gouet
 //
 
 #include "../include/IrrlichtController.hpp"
@@ -19,9 +19,15 @@ irr::IrrlichtDevice *IrrlichtController::getDevice()
 
   if (!device)
     {
-      device = irr::createDevice(irr::video::EDT_SOFTWARE,
+      Display* disp = XOpenDisplay(NULL);
+      Screen*  scrn = DefaultScreenOfDisplay(disp);
+      int height = scrn->height;
+      int width  = scrn->width;
+
+      // irr::createDevice(video::E_DRIVER_TYPE deviceType, const core::dimension2d<u32> &windowSize, u32 bits, , bool stencilbuffer, bool vsync, irr::IEventReceiver *receiver)
+      device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
 				 irr::core::dimension2d<irr::u32>(width, height), 32,
-				 false, false, false, 0);
+				 true, false, false, 0);
     }
   return (device);
 }
