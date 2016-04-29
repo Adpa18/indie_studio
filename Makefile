@@ -15,6 +15,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)BomberMap.cpp				\
 			$(SRC_DIR)EventGame.cpp				\
 			$(SRC_DIR)Collider.cpp				\
+			$(SRC_DIR)Bomb.cpp				\
 
 OBJ			=	$(SRC:%cpp=%o)
 
@@ -24,7 +25,7 @@ BinPath 	=	./
 
 DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
-CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
+CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
@@ -32,7 +33,7 @@ CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+LDFLAGS 	= -lpthread -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
 
 %.o : %.cpp
 	@echo -e "Compiling $<"

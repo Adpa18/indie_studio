@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Thu Apr 28 11:53:45 2016 Victor Gouet
+// Last update Fri Apr 29 10:09:55 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -15,12 +15,13 @@
 #include "../include/Player.hpp"
 #include "../include/EventGame.hpp"
 #include "../include/BomberMap.hpp"
+#include "../include/Bomb.hpp"
 #include <iostream>
 
 
 int	main()
 {
-  IrrlichtController::getDevice();
+  IrrlichtController::getDevice(false);
 
   EventGame		eventGame;
 
@@ -76,21 +77,29 @@ int	main()
   camera->setTarget(irr::core::vector3df(0, 0, 0));
 
   camera->setAutomaticCulling(irr::scene::EAC_OFF);
-  camera->setFarValue(2000);
-  camera->setNearValue(100);
+  camera->setFarValue(1000);
+  camera->setNearValue(10);
 
   IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f, 1.0f,
 									     1.0f, 1.0f));
+
+  Bomb	bomb;
+
 
   while (IrrlichtController::getDevice()->run())
     {
       IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
       if (eventGame.IsKeyDown(irr::KEY_ESCAPE))
-	{
-	  break;
-	}
-
+      	{
+      	  break;
+      	}
+      else if (eventGame.IsKeyDown(irr::KEY_SPACE))
+      	{
+      	  std::cout << "POSSSS" << std::endl;
+	  if (!bomb.isUse())
+	    bomb << sydney->getPosition();
+      	}
       sydney.compute();
     //   pikashy.compute();
 

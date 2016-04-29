@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 16:44:30 2016 Victor Gouet
+// Last update Thu Apr 28 16:20:52 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -34,7 +34,7 @@ public:
 
 private:
   std::string const	_name;
-  // std::vector<Bomb>	bombs;
+  // std::vector<Bomb *>	bombs;
   // Bonus			*bonus;
   double		mouveSpeed;
 
