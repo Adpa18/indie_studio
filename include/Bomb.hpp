@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Fri Apr 29 10:47:20 2016 Victor Gouet
+// Last update Fri Apr 29 13:30:56 2016 Victor Gouet
 //
 
 #ifndef BOMB_HPP_
@@ -33,7 +33,7 @@ public:
   void			operator<<(irr::core::vector3df const &);
 
 private:
-  void		        onExplosion();
+  virtual void		        willExplose();
 
 private:
   void			run();

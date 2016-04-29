@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Apr 29 11:41:39 2016 Victor Gouet
+// Last update Fri Apr 29 13:33:44 2016 Victor Gouet
 //
 
 #include "../include/Bomb.hpp"
@@ -45,12 +45,9 @@ Bomb::~Bomb()
   delete threadBomb;
 }
 
-void			Bomb::onExplosion()
+void			Bomb::willExplose()
 {
-  if (!alive)
-    return ;
   (*this)->setVisible(false);
-  use = false;
 }
 
 void				Bomb::run()
@@ -59,7 +56,7 @@ void				Bomb::run()
     {
       std::unique_lock<std::mutex>	lk(_mutex);
 
-      while (!use)
+      while (!use && alive)
 	condVar.wait(lk);
       if (alive == false)
 	{
@@ -68,7 +65,10 @@ void				Bomb::run()
 	}
       (*this)->setVisible(true);
       sleep(3);
-      onExplosion();      
+      if (!alive)
+	return ;
+      willExplose();      
+      use = false;
     }
 }
 
