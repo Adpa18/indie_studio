@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Fri Apr 29 10:09:55 2016 Victor Gouet
+// Last update Fri Apr 29 13:42:32 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -15,7 +15,7 @@
 #include "../include/Player.hpp"
 #include "../include/EventGame.hpp"
 #include "../include/BomberMap.hpp"
-#include "../include/Bomb.hpp"
+#include "../include/FireBomb.hpp"
 #include <iostream>
 
 
@@ -83,7 +83,7 @@ int	main()
   IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f, 1.0f,
 									     1.0f, 1.0f));
 
-  Bomb	bomb;
+  FireBomb	bomb;
 
 
   while (IrrlichtController::getDevice()->run())
