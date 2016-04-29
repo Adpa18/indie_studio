@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Apr 29 16:47:50 2016 Victor Gouet
+// Last update Fri Apr 29 18:38:12 2016 Victor Gouet
 //
 
 #include "../include/ABomb.hpp"
@@ -38,10 +38,12 @@ ABomb	&ABomb::operator=(ABomb const *other)
 
 ABomb::~ABomb()
 {
+  _mutex.lock();
   alive = false;
   use = true;
   condVar.notify_one();
   threadBomb->join();
+  _mutex.unlock();
   delete threadBomb;
 }
 

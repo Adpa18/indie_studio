@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri Apr 29 17:07:35 2016 Victor Gouet
+// Last update Fri Apr 29 18:43:43 2016 Victor Gouet
 //
 
 #include "../include/ACharacter.hpp"
@@ -18,6 +18,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   this->addCollider(new Collider());
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>();
+  // BombFactory::AddBomb<FireBomb>(*_bombContainer);
 }
 
 ACharacter::~ACharacter()

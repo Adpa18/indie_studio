@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Fri Apr 29 17:52:53 2016 Victor Gouet
+// Last update Fri Apr 29 18:38:27 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -27,26 +27,9 @@ int	main()
 
   IrrlichtController::getDevice()->setEventReceiver(&eventGame);
 
-  // std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes = {
-  //     {ACharacter::LEFT, irr::KEY_LEFT},
-  //     {ACharacter::RIGHT, irr::KEY_RIGHT},
-  //     {ACharacter::UP, irr::KEY_UP},
-  //     {ACharacter::DOWN, irr::KEY_DOWN},
-  //     {ACharacter::BOMB, irr::KEY_SPACE}
-  // };
-
-  // std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes2 = {
-  //     {ACharacter::LEFT, irr::KEY_KEY_Q},
-  //     {ACharacter::RIGHT, irr::KEY_KEY_D},
-  //     {ACharacter::UP, irr::KEY_KEY_Z},
-  //     {ACharacter::DOWN, irr::KEY_KEY_S}
-  // };
-
   BomberMap		map;
 
-  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/pikachu", 0// , _keycodes
-		       , eventGame// , keycodes
-		       );
+  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/pikachu", 0, eventGame);
 
   sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
 
