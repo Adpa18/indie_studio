@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri Apr 29 13:57:36 2016 Victor Gouet
+// Last update Fri Apr 29 16:51:45 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
@@ -14,6 +14,26 @@
 FireBomb::~FireBomb()
 {
 
+}
+
+FireBomb::FireBomb() : ABomb()
+{
+
+}
+
+FireBomb	&FireBomb::operator=(ABomb const *other)
+{
+  alive = true;
+  use = false;
+  (*this)->setVisible(false);
+  newThreadBomb();
+  this->_power = other->getPower();
+  return (*this);
+}
+
+FireBomb::FireBomb(ABomb const *other)
+{
+  *this = other;
 }
 
 void		FireBomb::willExplose()

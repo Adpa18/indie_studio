@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Apr 29 13:52:37 2016 Victor Gouet
+// Last update Fri Apr 29 16:47:50 2016 Victor Gouet
 //
 
 #include "../include/ABomb.hpp"
@@ -17,22 +17,22 @@ ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
   alive = true;
   use = false;
   (*this)->setVisible(false);
-  threadBomb = new std::thread([&] {run(); });
+  threadBomb = new std::thread([&] {this->run(); });
   _power = 3;
 }
 
-ABomb::ABomb(ABomb const &other) : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
 {
   *this = other;
 }
 
-ABomb	&ABomb::operator=(ABomb const &other)
+ABomb	&ABomb::operator=(ABomb const *other)
 {
   alive = true;
   use = false;
   (*this)->setVisible(false);
   threadBomb = new std::thread([&] {run(); });
-  this->_power = other._power;
+  this->_power = other->_power;
   return (*this);
 }
 
@@ -89,4 +89,9 @@ void			ABomb::operator<<(irr::core::vector3df const &pos)
   use = true;
   (*this)->setPosition(pos);
   condVar.notify_one();
+}
+
+int			ABomb::getPower() const
+{
+  return (_power);
 }

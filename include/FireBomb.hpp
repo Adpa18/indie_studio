@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 13:37:22 2016 Victor Gouet
-// Last update Fri Apr 29 13:57:13 2016 Victor Gouet
+// Last update Fri Apr 29 16:45:56 2016 Victor Gouet
 //
 
 #ifndef FIREBOMB_HPP_
@@ -16,6 +16,9 @@
 class		FireBomb	: public ABomb
 {
 public:
+  FireBomb();
+  FireBomb	&operator=(ABomb const *);
+  FireBomb(ABomb const *);
   virtual ~FireBomb();
 
 private:

@@ -5,10 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed Apr 27 18:33:21 2016 Victor Gouet
+// Last update Fri Apr 29 17:07:35 2016 Victor Gouet
 //
 
 #include "../include/ACharacter.hpp"
+#include "../include/BombFactory.hpp"
 
 ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
 		       std::string const &mesh) : AGameObject(pos, mesh), _name(name)
@@ -16,6 +17,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   this->addCollider(new Collider());
+  _bombContainer = BombFactory::CreateBombContainer<FireBomb>();
 }
 
 ACharacter::~ACharacter()
@@ -41,8 +43,18 @@ double		ACharacter::getMoveSpeed() const
 // {
 // 	this->move(x, y, 0);
 // }
-void ACharacter::setName(const std::string &string)
+void			ACharacter::setName(const std::string &string)
 {
   _name = string;
   (*this)->setName(string.c_str());
+}
+
+void			ACharacter::putBomb()
+{
+  ABomb			*bomb;
+
+  if ((bomb = _bombContainer->getBomb()))
+    {
+      *bomb << (*this)->getPosition();
+    }
 }
