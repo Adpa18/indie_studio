@@ -8,8 +8,9 @@
 // Last update Thu Apr 28 11:51:15 2016 Victor Gouet
 //
 
-#include "../include/BomberMap.hpp"
 #include <cstdlib>
+#include "../include/BomberMap.hpp"
+#include <Player.hpp>
 
 BomberMap::BomberMap(std::string const &)
 {
@@ -63,4 +64,56 @@ void			BomberMap::generateMap()
       ++y;
     }
 
+}
+
+void BomberMap::serialize(const std::string &saveFile) const
+{
+    irr::IrrlichtDevice  *device = IrrlichtController::getDevice();
+    irr::io::IAttributes *attributes;
+    irr::io::IXMLWriter *writter;
+
+    writter = device->getFileSystem()->createXMLWriter(saveFile.c_str());
+    writter->writeXMLHeader();
+    writter->writeElement(L"Map");
+    writter->writeLineBreak();
+    for (std::vector<AGameObject *>::const_iterator it = _objects.begin(), end = _objects.end(); it != end; ++it)
+    {
+        attributes = device->getFileSystem()->createEmptyAttributes();
+        (**it)->serializeAttributes(attributes);
+        attributes->write(writter, false, L"attributes");
+        delete(attributes);
+    }
+    writter->writeClosingTag(L"Map");
+    writter->drop();
+}
+
+void BomberMap::deserialize(const std::string &loadFile)
+{
+    irr::IrrlichtDevice *device = IrrlichtController::getDevice();
+    irr::io::IAttributes *attributes;
+    irr::io::IXMLReader *reader;
+    EventGame   eventGame;
+    std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes;
+    AGameObject *toPush;
+    irr::core::stringw mapelem(L"attributes");
+
+    reader = device->getFileSystem()->createXMLReader(loadFile.c_str());
+    while (reader->read())
+    {
+        if (reader->getNodeType() == irr::io::EXN_ELEMENT && mapelem.equals_ignore_case(reader->getNodeName()))
+        {
+            Player  *character;
+
+            attributes = device->getFileSystem()->createEmptyAttributes();
+            attributes->read(reader, true);
+            toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu", 42, eventGame, keycodes);
+            (*toPush)->deserializeAttributes(attributes);
+            character = dynamic_cast<Player *>(toPush);
+            if (character != NULL)
+                character->setName((*toPush)->getName());
+            _objects.push_back(toPush);
+            attributes->drop();
+        }
+    }
+    reader->drop();
 }

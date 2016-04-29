@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu Apr 28 16:20:52 2016 Victor Gouet
+// Last update Fri Apr 29 11:46:32 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -27,16 +27,17 @@ public:
 
 public:
   std::string const &   getName() const;
-  double                getMouveSpeed() const;
+  double                getMoveSpeed() const;
+  void                setName(const std::string &);
   virtual void		compute() = 0;
   // void                  move(int x, int y, int z);
   // void                  move(int x, int y);
 
 private:
-  std::string const	_name;
+  std::string	_name;
   // std::vector<Bomb *>	bombs;
   // Bonus			*bonus;
-  double		mouveSpeed;
+  double		moveSpeed;
 
 protected:
   irr::u32 then;

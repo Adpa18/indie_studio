@@ -16,6 +16,10 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)EventGame.cpp				\
 			$(SRC_DIR)Collider.cpp				\
 			$(SRC_DIR)Bomb.cpp				\
+			$(SRC_DIR)AController.cpp			\
+			$(SRC_DIR)MotionController.cpp		\
+			$(SRC_DIR)KeysController.cpp		\
+
 
 OBJ			=	$(SRC:%cpp=%o)
 
@@ -29,7 +33,7 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./include
 
 CPPFLAGS	+=	-O3 -ffast-math
 

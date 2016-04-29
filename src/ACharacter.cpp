@@ -13,7 +13,7 @@
 ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
 		       std::string const &mesh) : AGameObject(pos, mesh), _name(name)
 {
-  mouveSpeed = BASICSPEED;
+  moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   this->addCollider(new Collider());
 }
@@ -27,17 +27,22 @@ std::string const &	ACharacter::getName() const
   return (_name);
 }
 
-double		ACharacter::getMouveSpeed() const
+double		ACharacter::getMoveSpeed() const
 {
-  return (mouveSpeed);
+  return (moveSpeed);
 }
 
 // void 		ACharacter::move(int x, int y, int z)
 // {
-// 	(*this)->setPosition((*this)->getPosition() + irr::core::vector3df(x * this->mouveSpeed, y * this->mouveSpeed, z * this->mouveSpeed));
+// 	(*this)->setPosition((*this)->getPosition() + irr::core::vector3df(x * this->moveSpeed, y * this->moveSpeed, z * this->moveSpeed));
 // }
 
 // void 		ACharacter::move(int x, int y)
 // {
 // 	this->move(x, y, 0);
 // }
+void ACharacter::setName(const std::string &string)
+{
+  _name = string;
+  (*this)->setName(string.c_str());
+}

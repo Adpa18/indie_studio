@@ -5,12 +5,12 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 18:29:31 2016 Adrien WERY
-** Last update	Thu Apr 28 16:06:18 2016 Adrien WERY
+** Last update	Fri Apr 29 10:52:42 2016 Adrien WERY
 */
 
 #include "../include/Collider.hpp"
 
-Collider::Collider(int flags) : _distance(13)
+Collider::Collider(int flags) : _distance(IrrlichtController::scale / 2)
 {
     this->_collMan = IrrlichtController::getSceneCollisionManager();
 }
@@ -24,8 +24,7 @@ Collider::~Collider()
 
 int     Collider::collid(irr::core::vector3df pos, IrrlichtController::Direction dir)
 {
-    // TODO Chaner distance if != dir
-    irr::scene::ISceneNode              *selectedSceneNode;
+    irr::scene::ISceneNode  *selectedSceneNode;
 
     if (dir & IrrlichtController::RIGHT && (selectedSceneNode = this->rangeHit(pos, dir))) {
         this->_ids.push_back(selectedSceneNode->getID());
@@ -50,36 +49,38 @@ int     Collider::collid(irr::core::vector3df pos, IrrlichtController::Direction
 irr::scene::ISceneNode  *Collider::rangeHit(irr::core::vector3df pos, IrrlichtController::Direction dir) const
 {
     irr::scene::ISceneNode      *selectedSceneNode = NULL;
-    irr::core::line3d<irr::f32> ray;
     irr::core::vector3df        vec_dir;
+    irr::core::vector3df        range_vec;
 
     switch (dir) {
         case IrrlichtController::LEFT:
             vec_dir = irr::core::vector3df(-1, 0, 0);
+            range_vec = irr::core::vector3df(0, 0, 1);
             break;
         case IrrlichtController::RIGHT:
             vec_dir = irr::core::vector3df(1, 0, 0);
+            range_vec = irr::core::vector3df(0, 0, 1);
             break;
         case IrrlichtController::UP:
             vec_dir = irr::core::vector3df(0, 0, 1);
+            range_vec = irr::core::vector3df(1, 0, 0);
             break;
         case IrrlichtController::DOWN:
             vec_dir = irr::core::vector3df(0, 0, -1);
+            range_vec = irr::core::vector3df(1, 0, 0);
             break;
     }
-    ray.start = pos;
-    ray.end = pos + vec_dir * this->_distance;
     if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
         return (selectedSceneNode);
     }
-    // pos += (vec_dir * IrrlichtController::scale / 2);
-    // if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
-    //     return (selectedSceneNode);
-    // }
-    // pos -= (vec_dir * IrrlichtController::scale / 2);
-    // if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
-    //     return (selectedSceneNode);
-    // }
+    pos += (range_vec * (IrrlichtController::scale / 2 - 1));
+    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
+        return (selectedSceneNode);
+    }
+    pos -= (range_vec * (IrrlichtController::scale / 2 - 1));
+    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
+        return (selectedSceneNode);
+    }
     return (NULL);
 }
 
