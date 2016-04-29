@@ -5,17 +5,22 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 13:37:22 2016 Victor Gouet
-// Last update Fri Apr 29 13:39:16 2016 Victor Gouet
+// Last update Fri Apr 29 13:57:13 2016 Victor Gouet
 //
 
 #ifndef FIREBOMB_HPP_
 # define FIREBOMB_HPP_
 
-# include "Bomb.hpp"
+# include "ABomb.hpp"
 
-class		FireBomb	: public Bomb
+class		FireBomb	: public ABomb
 {
+public:
+  virtual ~FireBomb();
+
+private:
   virtual void	willExplose();
+  
 };
 
 #endif

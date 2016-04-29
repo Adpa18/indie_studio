@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Apr 29 13:33:44 2016 Victor Gouet
+// Last update Fri Apr 29 13:51:38 2016 Victor Gouet
 //
 
-#include "../include/Bomb.hpp"
+#include "../include/Abomb.hpp"
 #include <iostream>
 #include <unistd.h>
 
-Bomb::Bomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+Abomb::Abomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
 {
   alive = true;
   use = false;
@@ -21,12 +21,12 @@ Bomb::Bomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
   _power = 3;
 }
 
-Bomb::Bomb(Bomb const &other) : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+Abomb::Abomb(Abomb const &other) : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
 {
   *this = other;
 }
 
-Bomb	&Bomb::operator=(Bomb const &other)
+Abomb	&Abomb::operator=(Abomb const &other)
 {
   alive = true;
   use = false;
@@ -36,7 +36,7 @@ Bomb	&Bomb::operator=(Bomb const &other)
   return (*this);
 }
 
-Bomb::~Bomb()
+Abomb::~Abomb()
 {
   alive = false;
   use = true;
@@ -45,12 +45,12 @@ Bomb::~Bomb()
   delete threadBomb;
 }
 
-void			Bomb::willExplose()
-{
-  (*this)->setVisible(false);
-}
+// void			Abomb::willExplose()
+// {
+//   (*this)->setVisible(false);
+// }
 
-void				Bomb::run()
+void				Abomb::run()
 {
   while (alive)
     {
@@ -73,17 +73,17 @@ void				Bomb::run()
 }
 
 
-bool			Bomb::isAlive() const
+bool			Abomb::isAlive() const
 {
   return (alive);
 }
 
-bool			Bomb::isUse() const
+bool			Abomb::isUse() const
 {
   return (use);
 }
 
-void			Bomb::operator<<(irr::core::vector3df const &pos)
+void			Abomb::operator<<(irr::core::vector3df const &pos)
 {
   std::lock_guard<std::mutex> lock(_mutex);
   use = true;

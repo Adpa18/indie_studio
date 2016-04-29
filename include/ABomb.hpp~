@@ -1,0 +1,54 @@
+//
+// Bomb.hpp for BOMB in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
+// 
+// Made by Victor Gouet
+// Login   <gouet_v@epitech.net>
+// 
+// Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
+// Last update Fri Apr 29 13:51:12 2016 Victor Gouet
+//
+
+#ifndef ABOMB_HPP_
+# define ABOMB_HPP_
+
+# include <condition_variable>
+# include <mutex>
+# include <thread>
+# include "AGameObject.hpp"
+
+class	Abomb	: public AGameObject
+{
+
+public:
+  Abomb();
+  Abomb(Abomb const &);
+  Abomb	&operator=(Abomb const &);
+  virtual ~Abomb();
+
+public:
+  bool			isAlive() const;
+  bool			isUse() const;
+
+public:
+  void			operator<<(irr::core::vector3df const &);
+
+private:
+  virtual void		        willExplose() = 0;
+
+private:
+  void			run();
+
+private:
+  std::thread			*threadBomb;
+  std::condition_variable	condVar;
+  std::mutex			_mutex;
+
+private:
+  int				_power;
+
+private:
+  bool				alive;
+  bool				use;
+};
+
+#endif

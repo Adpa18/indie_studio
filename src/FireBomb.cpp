@@ -5,11 +5,16 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri Apr 29 13:41:01 2016 Victor Gouet
+// Last update Fri Apr 29 13:57:36 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
 #include <iostream>
+
+FireBomb::~FireBomb()
+{
+
+}
 
 void		FireBomb::willExplose()
 {
