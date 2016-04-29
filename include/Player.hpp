@@ -13,6 +13,7 @@
 
 # include "EventGame.hpp"
 # include "ACharacter.hpp"
+# include "MotionController.hpp"
 # include <map>
 
 class	Player	: public ACharacter
@@ -21,7 +22,8 @@ private:
   int     _player;
   EventGame	const &					_eventGame;
   int							    anime;
-  std::map<ACharacter::ACTION, irr::EKEY_CODE> const &	_keycodes;
+  std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
+  const MotionController            *_joystick;
   IrrlichtController::Direction     _dir;
 
 public:

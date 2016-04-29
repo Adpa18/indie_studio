@@ -5,30 +5,34 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 15:16:51 2016 Adrien WERY
-** Last update	Thu Apr 28 23:46:59 2016 Adrien WERY
+** Last update	Fri Apr 29 10:48:42 2016 Adrien WERY
 */
 
 #ifndef EVENT_HPP
 # define EVENT_HPP
 
 # include "IrrlichtController.hpp"
+# include "MotionController.hpp"
+# include "KeysController.hpp"
+# include "ACharacter.hpp"
 # include <vector>
 # include <utility>
 # include <map>
 
 class EventGame : public irr::IEventReceiver {
 private:
+    static const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> _keycodes;
+private:
     bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
-    std::map<irr::EKEY_CODE, irr::EKEY_ACTION>  _keycodes;
-    std::vector<irr::SEvent::SJoystickEvent>    _joysticks;
-    std::map<int, bool>                         _isJoysticks;
+    std::map<int, MotionController *>   _joysticks;
+    std::vector<KeysController *>       _keymaps;
 public:
     EventGame ();
     virtual ~EventGame ();
     virtual bool  OnEvent(const irr::SEvent& event);
     virtual bool  IsKeyDown(irr::EKEY_CODE keyCode) const;
-    const irr::SEvent::SJoystickEvent   &GetJoystickState(unsigned int id) const;
-    bool            isAvaibleJoystick(unsigned int id) const;
+    const MotionController  *GetAvaibleJoystick() const;
+    const KeysController    *GetAvaibleKeycodes() const;
 };
 
 #endif /* !EVENT_HPP */

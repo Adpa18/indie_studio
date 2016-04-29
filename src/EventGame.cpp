@@ -5,11 +5,23 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 15:16:31 2016 Adrien WERY
-** Last update	Thu Apr 28 23:48:53 2016 Adrien WERY
+** Last update	Fri Apr 29 10:52:12 2016 Adrien WERY
 */
 
 #include "../include/EventGame.hpp"
 #include <iostream>
+
+const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> EventGame::_keycodes({{
+    {ACharacter::LEFT, irr::KEY_LEFT},
+    {ACharacter::RIGHT, irr::KEY_RIGHT},
+    {ACharacter::UP, irr::KEY_UP},
+    {ACharacter::DOWN, irr::KEY_DOWN}
+},{
+    {ACharacter::LEFT, irr::KEY_KEY_Q},
+    {ACharacter::RIGHT, irr::KEY_KEY_D},
+    {ACharacter::UP, irr::KEY_KEY_Z},
+    {ACharacter::DOWN, irr::KEY_KEY_S}
+}});
 
 EventGame::EventGame()
 {
@@ -18,12 +30,12 @@ EventGame::EventGame()
     if (IrrlichtController::getDevice()->activateJoysticks(joystickInfo)) {
         for (size_t i = 0; i < joystickInfo.size(); i++) {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0) {
-                this->_joysticks.push_back(irr::SEvent::SJoystickEvent());
-                this->_isJoysticks[joystickInfo[i].Joystick] = true;
-            } else {
-                this->_isJoysticks[joystickInfo[i].Joystick] = false;
+                this->_joysticks[i] = new MotionController(joystickInfo[i]);
             }
         }
+    }
+    for (std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>>::const_iterator it = this->_keycodes.begin(); it != this->_keycodes.end(); ++it) {
+        this->_keymaps.push_back(new KeysController(*it));
     }
   for (irr::u32 i=0; i < irr::KEY_KEY_CODES_COUNT; ++i) {
       KeyIsDown[i] = false;
@@ -40,15 +52,10 @@ bool 	EventGame::OnEvent(const irr::SEvent &event)
   if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
     KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
   }
-  if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && this->_isJoysticks[event.JoystickEvent.Joystick]) {
-      this->_joysticks[event.JoystickEvent.Joystick] = event.JoystickEvent;
+  if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && this->_joysticks[event.JoystickEvent.Joystick]) {
+      this->_joysticks[event.JoystickEvent.Joystick]->setData(event.JoystickEvent);
   }
   return (false);
-}
-
-const irr::SEvent::SJoystickEvent   &EventGame::GetJoystickState(unsigned int id) const
-{
-    return (this->_joysticks[id]);
 }
 
 bool 	EventGame::IsKeyDown(irr::EKEY_CODE keyCode) const
@@ -56,7 +63,24 @@ bool 	EventGame::IsKeyDown(irr::EKEY_CODE keyCode) const
 	return (KeyIsDown[keyCode]);
 }
 
-bool    EventGame::isAvaibleJoystick(unsigned int id) const
+const MotionController  *EventGame::GetAvaibleJoystick() const
 {
-    return (id < this->_joysticks.size());
+    for (std::map<int, MotionController *>::const_iterator it = this->_joysticks.begin(); it != this->_joysticks.end(); ++it) {
+        if (!it->second->isUsed()) {
+            it->second->useIt();
+            return (it->second);
+        }
+    }
+    return (NULL);
+}
+
+const KeysController    *EventGame::GetAvaibleKeycodes() const
+{
+    for (std::vector<KeysController *>::const_iterator it = this->_keymaps.begin(); it != this->_keymaps.end(); ++it) {
+        if (!(*it)->isUsed()) {
+            (*it)->useIt();
+            return (*it);
+        }
+    }
+    return (NULL);
 }

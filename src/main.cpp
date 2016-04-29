@@ -92,7 +92,7 @@ int	main()
 	}
 
       sydney.compute();
-    //   pikashy.compute();
+      pikashy.compute();
 
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();

@@ -19,15 +19,15 @@ irr::IrrlichtDevice *IrrlichtController::getDevice()
 {
   if (!device)
     {
-    //   Display* disp = XOpenDisplay(NULL);
-    //   Screen*  scrn = DefaultScreenOfDisplay(disp);
-    //   height = scrn->height;
-    //   width  = scrn->width;
+      Display* disp = XOpenDisplay(NULL);
+      Screen*  scrn = DefaultScreenOfDisplay(disp);
+      height = scrn->height;
+      width  = scrn->width;
 
       // irr::createDevice(video::E_DRIVER_TYPE deviceType, const core::dimension2d<u32> &windowSize, u32 bits, , bool stencilbuffer, bool vsync, irr::IEventReceiver *receiver)
       device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
 				 irr::core::dimension2d<irr::u32>(width, height), 32,
-				 false, false, false, 0);
+				 true, false, false, 0);
     }
   return (device);
 }

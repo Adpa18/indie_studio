@@ -15,6 +15,9 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)BomberMap.cpp				\
 			$(SRC_DIR)EventGame.cpp				\
 			$(SRC_DIR)Collider.cpp				\
+			$(SRC_DIR)AController.cpp			\
+			$(SRC_DIR)MotionController.cpp		\
+			$(SRC_DIR)KeysController.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

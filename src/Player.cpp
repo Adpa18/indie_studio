@@ -16,10 +16,13 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       EventGame const &eventGame,
 	       std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes)
   : ACharacter(name, pos, mesh),
-    _player(player), _eventGame(eventGame), _keycodes(keycodes), _dir(IrrlichtController::RIGHT)
+    _player(player), _eventGame(eventGame), _dir(IrrlichtController::RIGHT)
 {
   anime = irr::scene::EMAT_STAND;
     (*this)->setName(name.c_str());
+	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
+		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
+	}
 }
 
 Player::~Player()
@@ -39,9 +42,8 @@ void		Player::compute()
   irr::core::vector3df nodePosition = (*this)->getPosition();
 
   // Joystick
-  const irr::SEvent::SJoystickEvent &joystickData = _eventGame.GetJoystickState(this->_player);
-
-	if (_eventGame.isAvaibleJoystick(this->_player)) {
+  if (this->_joystick) {
+		const irr::SEvent::SJoystickEvent &joystickData = this->_joystick->getData();
 		const irr::u16 povDegrees = joystickData.POV / 100;
 		const irr::f32 DEAD_ZONE = 0.05f;
 		moveHorizontal = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
