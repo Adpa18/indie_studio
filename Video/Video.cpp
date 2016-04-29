@@ -6,10 +6,10 @@
 // Login   <tavern_d@epitech.net>
 // 
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
-// Last update Thu Apr 28 17:31:12 2016 Matthieu Tavernier
+// Last update Fri Apr 29 18:53:31 2016 Victor Gouet
 //
 
-#include "../include/Video.hpp"
+#include "Video.hpp"
 #include "../include/IrrlichtController.hpp"
 
 Video::Video(const std::string path)

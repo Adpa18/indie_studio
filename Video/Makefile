@@ -6,8 +6,8 @@ SRC_DIR	=	src/
 
 IrrlichtHome	=	../Irrlicht/irrlicht-1.8.3
 
-SRC		=	tavern.cpp					\
-			IrrlichtController.cpp	\
+SRC		=	main.cpp			\
+			../src/IrrlichtController.cpp	\
 			Video.cpp
 
 OBJ			=	$(SRC:%cpp=%o)
