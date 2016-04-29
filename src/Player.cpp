@@ -19,6 +19,7 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
     _player(player), _eventGame(eventGame), _keycodes(keycodes), _dir(IrrlichtController::RIGHT)
 {
   anime = irr::scene::EMAT_STAND;
+    (*this)->setName(name.c_str());
 }
 
 Player::~Player()
@@ -31,18 +32,18 @@ void		Player::compute()
 
   const irr::u32 now = IrrlichtController::getDevice()->getTimer()->getTime();
   const irr::f32 frameDeltaTime = (irr::f32)(now - then) / 1000.f;
+  irr::f32 moveHorizontal = 0.f;
+  irr::f32 moveVertical = 0.f;
   then = now;
 
   irr::core::vector3df nodePosition = (*this)->getPosition();
 
   // Joystick
   const irr::SEvent::SJoystickEvent &joystickData = _eventGame.GetJoystickState(this->_player);
-  const irr::u16 povDegrees = joystickData.POV / 100;
-  const irr::f32 DEAD_ZONE = 0.05f;
-  irr::f32 moveHorizontal = 0.f;
-  irr::f32 moveVertical = 0.f;
 
-	if (joystickData.NUMBER_OF_AXES != 0) {
+	if (_eventGame.isAvaibleJoystick(this->_player)) {
+		const irr::u16 povDegrees = joystickData.POV / 100;
+		const irr::f32 DEAD_ZONE = 0.05f;
 		moveHorizontal = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
 		if(fabs(moveHorizontal) < DEAD_ZONE) {
 			moveHorizontal = 0.f;

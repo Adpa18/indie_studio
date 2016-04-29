@@ -41,3 +41,8 @@ double		ACharacter::getMoveSpeed() const
 // {
 // 	this->move(x, y, 0);
 // }
+void ACharacter::setName(const std::string &string)
+{
+  _name = string;
+  (*this)->setName(string.c_str());
+}

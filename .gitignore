@@ -2,3 +2,4 @@
 bomberman
 *.o
 .clang-complete
+CMakeLists.txt

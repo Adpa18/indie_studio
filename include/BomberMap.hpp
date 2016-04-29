@@ -21,6 +21,10 @@ public:
   BomberMap(std::string const &);
   BomberMap();
 
+public:
+    void  serialize(std::string const &) const;
+    void  deserialize(std::string const &);
+
 private:
   void			generateMap();
   void		        generateGround();
