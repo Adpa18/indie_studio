@@ -190,10 +190,17 @@ int main(int ac, char **av)
 	if (node)
 	{
 		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
-		size_t lastindex = std::string(av[1]).find_last_of(".");
-		std::string rawname = std::string(av[1]).substr(0, lastindex);
-		node->setMaterialTexture( 0, driver->getTexture(std::string(rawname + ".png").c_str()) );
+		//node->setMD2Animation(scene::EMAT_STAND);
+		if (ac > 2)
+		{
+			node->setMaterialTexture( 0, driver->getTexture(av[2]) );
+		}
+		else
+		{
+			size_t lastindex = std::string(av[1]).find_last_of(".");
+			std::string rawname = std::string(av[1]).substr(0, lastindex);
+			node->setMaterialTexture( 0, driver->getTexture(std::string(rawname + ".png").c_str()) );
+		}
 	}
 	/*
 	To look at the mesh, we place a camera into 3d space at the position

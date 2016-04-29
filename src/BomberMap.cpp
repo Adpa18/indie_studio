@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Thu Apr 28 11:51:15 2016 Victor Gouet
+// Last update Fri Apr 29 17:57:04 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -93,7 +93,6 @@ void BomberMap::deserialize(const std::string &loadFile)
     irr::io::IAttributes *attributes;
     irr::io::IXMLReader *reader;
     EventGame   eventGame;
-    std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes;
     AGameObject *toPush;
     irr::core::stringw mapelem(L"attributes");
 
@@ -106,7 +105,7 @@ void BomberMap::deserialize(const std::string &loadFile)
 
             attributes = device->getFileSystem()->createEmptyAttributes();
             attributes->read(reader, true);
-            toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu", 42, eventGame, keycodes);
+            toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu", 42, eventGame);
             (*toPush)->deserializeAttributes(attributes);
             character = dynamic_cast<Player *>(toPush);
             if (character != NULL)

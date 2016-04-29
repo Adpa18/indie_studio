@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 17:09:44 2016 Victor Gouet
+// Last update Fri Apr 29 17:56:06 2016 Victor Gouet
 //
 
 #ifndef PLAYER_HPP_
@@ -28,8 +28,7 @@ private:
 
 public:
   Player(std::string const &name, irr::core::vector3df const &pos,
-	 std::string const &mesh, int player, EventGame const &eventGame,
-	 std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes);
+	 std::string const &mesh, int player, EventGame const &eventGame);
   virtual ~Player();
 
 public:

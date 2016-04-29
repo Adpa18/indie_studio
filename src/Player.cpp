@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed Apr 27 17:09:32 2016 Victor Gouet
+// Last update Fri Apr 29 17:55:47 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"
@@ -13,8 +13,7 @@
 
 Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       std::string const &mesh, int player,
-	       EventGame const &eventGame,
-	       std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes)
+	       EventGame const &eventGame)
   : ACharacter(name, pos, mesh),
     _player(player), _eventGame(eventGame), _dir(IrrlichtController::RIGHT)
 {
@@ -79,6 +78,14 @@ void		Player::compute()
 		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
 			moveHorizontal = 1.0f;
 		}
+
+		// PUT A BOMB
+		
+		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second))
+		  {
+		    this->putBomb();
+		  }
+
 	}
 	if (moveHorizontal < 0.0f) {
 		stand = false;
@@ -120,5 +127,6 @@ void		Player::compute()
       (*this)->setMD2Animation(irr::scene::EMAT_RUN);
       anime = irr::scene::EMAT_RUN;
     }
-	(*this)->setPosition(nodePosition);
+
+  (*this)->setPosition(nodePosition);
 }

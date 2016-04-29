@@ -5,13 +5,14 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 16:44:30 2016 Victor Gouet
+// Last update Fri Apr 29 17:06:54 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
 # define ACHARACTER_HPP_
 
 # include "AGameObject.hpp"
+# include "BombContainer.hpp"
 
 class	ACharacter	: public AGameObject
 {
@@ -28,14 +29,20 @@ public:
 public:
   std::string const &   getName() const;
   double                getMoveSpeed() const;
+
+public:
   void                setName(const std::string &);
   virtual void		compute() = 0;
   // void                  move(int x, int y, int z);
   // void                  move(int x, int y);
 
+public:
+  void			putBomb();
+
 private:
-  std::string _name;
-  // std::vector<Bomb>	bombs;
+  std::string	_name;
+  BombContainer			*_bombContainer;
+  // std::vector<Bomb *>	bombs;
   // Bonus			*bonus;
   double		moveSpeed;
 

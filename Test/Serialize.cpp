@@ -68,23 +68,25 @@ namespace MapOfBomberman
 
 int main()
 {
-//    EventGame   eventGame;std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes;
-//    MapOfBomberman::_objects.push_back(new Player("Richard", irr::core::vector3df(5, 0, 0), "../media/pikachu", 42, eventGame, keycodes));
-//    MapOfBomberman::_objects.push_back(new Player("Simon", irr::core::vector3df(15, 0, 0), "../media/pokeball", 42, eventGame, keycodes));
-//    MapOfBomberman::_objects.push_back(new Player("Jean-Louis", irr::core::vector3df(25, 0, 0), "../media/salameche", 42, eventGame, keycodes));
-//    MapOfBomberman::_objects.push_back(new Player("Albert", irr::core::vector3df(35, 0, 0), "../media/carapuce", 42, eventGame, keycodes));
-//    MapOfBomberman::_objects.push_back(new Player("Irrlicht", irr::core::vector3df(45, 0, 0), "../media/bulbizarre", 42, eventGame, keycodes));
-//
-//    MapOfBomberman::serialize("toto.xml");
-//
-    MapOfBomberman::deserialize("toto.xml");
+  IrrlichtController::getDevice(false);
 
-    for (std::vector<AGameObject *>::iterator it = MapOfBomberman::_objects.begin(), end = MapOfBomberman::_objects.end(); it != end; ++it)
-    {
-        std::cout << (*it)->operator->()->getPosition().X << ", " << (*it)->operator->()->getPosition().Y << ", " << (*it)->operator->()->getPosition().Z << std::endl;
-        std::cout << (*it)->operator->()->getName() << std::endl;
-        delete(*it);
-    }
+   EventGame   eventGame;std::map<ACharacter::ACTION, irr::EKEY_CODE> keycodes;
+   MapOfBomberman::_objects.push_back(new Player("Richard", irr::core::vector3df(5, 0, 0), "../media/pikachu", 42, eventGame, keycodes));
+   MapOfBomberman::_objects.push_back(new Player("Simon", irr::core::vector3df(15, 0, 0), "../media/pokeball", 42, eventGame, keycodes));
+   MapOfBomberman::_objects.push_back(new Player("Jean-Louis", irr::core::vector3df(25, 0, 0), "../media/salameche", 42, eventGame, keycodes));
+   MapOfBomberman::_objects.push_back(new Player("Albert", irr::core::vector3df(35, 0, 0), "../media/carapuce", 42, eventGame, keycodes));
+   MapOfBomberman::_objects.push_back(new Player("Irrlicht", irr::core::vector3df(45, 0, 0), "../media/bulbizarre", 42, eventGame, keycodes));
+//
+   MapOfBomberman::serialize("toto.xml");
+//
+    // MapOfBomberman::deserialize("toto.xml");
+
+    // for (std::vector<AGameObject *>::iterator it = MapOfBomberman::_objects.begin(), end = MapOfBomberman::_objects.end(); it != end; ++it)
+    // {
+    //     std::cout << (*it)->operator->()->getPosition().X << ", " << (*it)->operator->()->getPosition().Y << ", " << (*it)->operator->()->getPosition().Z << std::endl;
+    //     std::cout << (*it)->operator->()->getName() << std::endl;
+    //     delete(*it);
+    // }
 //    irr::scene::ISceneManager *manager = IrrlichtController::getSceneManager();
 //    irr::video::IVideoDriver *driver = IrrlichtController::getDriver();
 //    irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 320, -250), irr::core::vector3df(0,5,0));
