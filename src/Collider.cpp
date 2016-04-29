@@ -5,7 +5,7 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 18:29:31 2016 Adrien WERY
-** Last update	Fri Apr 29 10:52:42 2016 Adrien WERY
+** Last update	Fri Apr 29 10:56:37 2016 Adrien WERY
 */
 
 #include "../include/Collider.hpp"
