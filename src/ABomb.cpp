@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Apr 29 18:38:12 2016 Victor Gouet
+// Last update Sat Apr 30 10:04:36 2016 Victor Gouet
 //
 
 #include "../include/ABomb.hpp"
 #include <iostream>
 #include <unistd.h>
 
-ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse.md2", "media/caisse.png")
 {
   alive = true;
   use = false;
@@ -21,7 +21,8 @@ ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
   _power = 3;
 }
 
-ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector3df(0, 0, 0),
+					       "media/caisse.md2", "media/caisse.png")
 {
   *this = other;
 }

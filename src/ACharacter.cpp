@@ -5,14 +5,15 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri Apr 29 18:43:43 2016 Victor Gouet
+// Last update Sat Apr 30 10:02:48 2016 Victor Gouet
 //
 
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
 
 ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
-		       std::string const &mesh) : AGameObject(pos, mesh), _name(name)
+		       std::string const &mesh, std::string const &texture)
+  : AGameObject(pos, mesh, texture), _name(name)
 {
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();

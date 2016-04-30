@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Tue Apr 26 21:17:15 2016 Victor Gouet
+// Last update Sat Apr 30 10:00:35 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -18,7 +18,7 @@
 class	AGameObject
 {
 public:
-  AGameObject(irr::core::vector3df const &pos, std::string const &mesh, Collider *collider = NULL);
+  AGameObject(irr::core::vector3df const &pos, std::string const &mesh, std::string const &texture, Collider *collider = NULL);
   virtual ~AGameObject();
 
 public:

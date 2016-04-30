@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Fri Apr 29 17:57:04 2016 Victor Gouet
+// Last update Sat Apr 30 10:07:54 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -105,7 +105,7 @@ void BomberMap::deserialize(const std::string &loadFile)
 
             attributes = device->getFileSystem()->createEmptyAttributes();
             attributes->read(reader, true);
-            toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu", 42, eventGame);
+            toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu.md2", "../media/pikachu.png", 42, eventGame);
             (*toPush)->deserializeAttributes(attributes);
             character = dynamic_cast<Player *>(toPush);
             if (character != NULL)

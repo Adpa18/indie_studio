@@ -5,16 +5,16 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri Apr 29 17:55:47 2016 Victor Gouet
+// Last update Sat Apr 30 10:05:26 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"
 #include <iostream>
 
 Player::Player(std::string const &name, irr::core::vector3df const &pos,
-	       std::string const &mesh, int player,
+	       std::string const &mesh, std::string const &texture, int player,
 	       EventGame const &eventGame)
-  : ACharacter(name, pos, mesh),
+  : ACharacter(name, pos, mesh, texture),
     _player(player), _eventGame(eventGame), _dir(IrrlichtController::RIGHT)
 {
   anime = irr::scene::EMAT_STAND;

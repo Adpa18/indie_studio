@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Fri Apr 29 17:06:54 2016 Victor Gouet
+// Last update Sat Apr 30 10:02:35 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -23,7 +23,7 @@ private:
     static constexpr double BASICSPEED = 10.0;
 
 public:
-  ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh);
+  ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh, std::string const &texture);
   virtual ~ACharacter();
 
 public:
