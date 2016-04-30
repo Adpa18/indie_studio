@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sat Apr 30 10:05:26 2016 Victor Gouet
+// Last update Sat Apr 30 15:03:35 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"
@@ -89,42 +89,50 @@ void		Player::compute()
 	}
 	if (moveHorizontal < 0.0f) {
 		stand = false;
-        (*this)->setRotation(irr::core::vector3df(0, 180, 0));
+        (*this)->setRotation(irr::core::vector3df(0, 90, 0));
 		this->_dir = IrrlichtController::LEFT;
 		if (this->collid((*this)->getPosition(), IrrlichtController::LEFT) == -1) {
 			nodePosition.X -= getMoveSpeed() * frameDeltaTime;
 		}
 	} else if (moveHorizontal > 0.0f) {
 		stand = false;
-        (*this)->setRotation(irr::core::vector3df(0, 0, 0));
+        (*this)->setRotation(irr::core::vector3df(0, -90, 0));
 		this->_dir = IrrlichtController::RIGHT;
 		if (this->collid((*this)->getPosition(), IrrlichtController::RIGHT) == -1) {
 			nodePosition.X += getMoveSpeed() * frameDeltaTime;
 		}
 	} else if (moveVertical > 0.0f) {
 		stand = false;
-        (*this)->setRotation(irr::core::vector3df(0, -90, 0));
+        (*this)->setRotation(irr::core::vector3df(0, 180, 0));
 		this->_dir = IrrlichtController::UP;
 		if (this->collid((*this)->getPosition(), IrrlichtController::UP) == -1) {
 			nodePosition.Z += getMoveSpeed() * frameDeltaTime;
 		}
 	} else if (moveVertical < 0.0f) {
 		stand = false;
-        (*this)->setRotation(irr::core::vector3df(0, 90, 0));
+        (*this)->setRotation(irr::core::vector3df(0, 0, 0));
 		this->_dir = IrrlichtController::DOWN;
 		if (this->collid((*this)->getPosition(), IrrlichtController::DOWN) == -1) {
 			nodePosition.Z -= getMoveSpeed() * frameDeltaTime;
 		}
 	}
 
+	// attack
+	// 217 247
+
   if (stand && anime != irr::scene::EMAT_STAND)
     {
-      (*this)->setMD2Animation(irr::scene::EMAT_STAND);
+      //stand
+      (*this)->setFrameLoop(0, 96);
+      // (*this)->setMD2Animation(irr::scene::EMAT_STAND);
       anime = irr::scene::EMAT_STAND;
     }
   else if (!stand && anime != irr::scene::EMAT_RUN)
     {
-      (*this)->setMD2Animation(irr::scene::EMAT_RUN);
+      // run
+
+      (*this)->setFrameLoop(96, 216);
+      // (*this)->setMD2Animation(irr::scene::EMAT_RUN);
       anime = irr::scene::EMAT_RUN;
     }
 
