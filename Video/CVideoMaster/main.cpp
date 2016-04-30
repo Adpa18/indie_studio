@@ -34,7 +34,9 @@ class CEvents : public irr::IEventReceiver
           case KEY_ESCAPE :
           {
             device->closeDevice();
-          } break;
+          }
+          default:
+            break;
         }
       } break;
 
@@ -59,9 +61,13 @@ class CEvents : public irr::IEventReceiver
               if (temp->isPaused()) temp->play();
               else                  temp->pause();
             }
-          } break;
+          }
+          default:
+            break;
         }
-      } break;
+      }
+      default:
+        break;
     }
 
     return false;

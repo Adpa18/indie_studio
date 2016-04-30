@@ -17,7 +17,7 @@ BinPath 	=	./
 
 DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
-CPPFLAGS	=	-W -Wall -Wextra -std=c++11
+CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
@@ -26,7 +26,7 @@ CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./theoraplayer/incl
 CPPFLAGS	+=	-O3 -ffast-math
 
 LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -lpthread
-LDFLAGS  += -L./theoraplayer -ltheoraplayer -ltheora -lvorbis  -logg 
+LDFLAGS  += -L./theoraplayer -ltheoraplayer -ltheora -lvorbis  -logg
 
 %.o : %.cpp
 	@echo -e "Compiling $<"

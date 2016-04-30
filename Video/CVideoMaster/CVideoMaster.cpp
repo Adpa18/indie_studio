@@ -164,7 +164,7 @@ irr::video::ITexture* CVideoMaster::getTextureByName(const irr::io::path &clipna
   return NULL;
 }
 
-const bool CVideoMaster::isPOT(const irr::core::dimension2du &size)
+bool CVideoMaster::isPOT(const irr::core::dimension2du &size)
 {
   u32 x = size.Width;
   u32 y = size.Height;

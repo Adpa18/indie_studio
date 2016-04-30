@@ -6,7 +6,7 @@
 #ifndef CLASS_VIDEO_MASTER_H_INC
 #define CLASS_VIDEO_MASTER_H_INC
 
-#include "../../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
+#include "irrlicht.h"
 #include "TheoraPlayer.h"
 //#include <CAudioInterface_OpenAL.h>
 
@@ -65,7 +65,7 @@ public :
   ~CVideoMaster();
 
   void update();
-  const bool isPOT(const irr::core::dimension2du &size);
+  bool isPOT(const irr::core::dimension2du &size);
   const irr::core::dimension2du getNextPOT(const irr::core::dimension2du &size, bool up = false);
 
   SIrrVideoClip*        getIrrClipByName (const irr::io::path &clipname);
