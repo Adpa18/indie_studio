@@ -1,0 +1,21 @@
+######################BEGIN######################
+Exporting UV texture coordinates for transformZiggs_madscientist
+Exporting transformZiggs_madscientist
+Header Information
+Ident: IDP3
+Version: 15
+Name: 
+Flags: 0
+Number of Frames: 248
+Number of Tags: 0
+Number of Surfaces: 1
+Number of Skins: 0
+Offset Frames: 108
+Offset Tags: 13996
+Offset Surfaces: 13996
+Offset end: 9977148
+Total Shaders: 1
+Total Triangles: 7386
+Total Vertices: 4957
+MD3 saved to /home/consta_n/Epitech/rendu/cpp_indie_studio/media/ziggs_mad.md3
+Elapsed 25.70858 seconds
