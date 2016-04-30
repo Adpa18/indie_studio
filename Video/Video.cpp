@@ -1,10 +1,10 @@
 //
 
 // Video.cpp for indie studio in /home/tavern_d/rendu/semestre4/cpp_indie_studio/src
-// 
+//
 // Made by Matthieu Tavernier
 // Login   <tavern_d@epitech.net>
-// 
+//
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
 // Last update Fri Apr 29 18:53:31 2016 Victor Gouet
 //
@@ -15,7 +15,7 @@
 Video::Video(const std::string path)
 {
   DIR	*rep;
-  
+
   rep = opendir(path.data());
   if (rep != NULL)
     {

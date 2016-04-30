@@ -4,7 +4,7 @@ RM		= 	rm -rf
 
 SRC_DIR	=	src/
 
-IrrlichtHome	=	../Irrlicht/irrlicht-1.8.3
+IrrlichtHome	=	../../Irrlicht/irrlicht-1.8.3
 
 SRC		=	main.cpp			\
 			../src/IrrlichtController.cpp	\
@@ -26,7 +26,7 @@ CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L./theoraplayer
 
 %.o : %.cpp
 	@echo -e "Compiling $<"
