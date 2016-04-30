@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Sat Apr 30 14:35:45 2016 Victor Gouet
+// Last update Sat Apr 30 14:37:42 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -29,7 +29,7 @@ int	main()
 
   BomberMap		map;
 
-  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/pika.md3", "media/pikachu.png", 0, eventGame);
+  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/ziggs.md3", "media/ziggs.png", 0, eventGame);
 
   sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
 
