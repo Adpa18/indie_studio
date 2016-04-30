@@ -11,6 +11,20 @@
 #include "../include/Player.hpp"
 #include <iostream>
 
+struct SMD3AnimationType
+{
+	irr::s32 begin;
+	irr::s32 end;
+	irr::s32 fps;
+};
+
+static const SMD3AnimationType MD3AnimationTypeList[3] =
+{
+	{  0,  96,  25}, // IDLE
+	{ 97,  216, 20}, // RUN
+	{ 217,  247,  25}, // ATTACK
+};
+
 Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       std::string const &mesh, std::string const &texture, int player,
 	       EventGame const &eventGame)
@@ -22,10 +36,16 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
 		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
 	}
+	setMD3Animation(MD3_ANIMATION::IDLE);
 }
 
 Player::~Player()
 {
+}
+
+void Player::setMD3Animation(MD3_ANIMATION anim) {
+	(*this)->setFrameLoop(MD3AnimationTypeList[anim].begin, MD3AnimationTypeList[anim].end);
+	(*this)->setAnimationSpeed(MD3AnimationTypeList[anim].fps);
 }
 
 void		Player::compute()
@@ -80,7 +100,7 @@ void		Player::compute()
 		}
 
 		// PUT A BOMB
-		
+
 		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second))
 		  {
 		    this->putBomb();

@@ -25,6 +25,11 @@ private:
   std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
   const MotionController            *_joystick;
   IrrlichtController::Direction     _dir;
+  enum MD3_ANIMATION {
+    IDLE,
+    RUN,
+    ATTACk
+  };
 
 public:
   Player(std::string const &name, irr::core::vector3df const &pos,
@@ -33,6 +38,7 @@ public:
 
 public:
   virtual void		compute();
+  void            setMD3Animation(MD3_ANIMATION anim);
 };
 
 #endif
