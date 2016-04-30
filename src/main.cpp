@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Sat Apr 30 10:12:37 2016 Victor Gouet
+// Last update Sat Apr 30 14:35:45 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
@@ -29,7 +29,7 @@ int	main()
 
   BomberMap		map;
 
-  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/ziggs_general.md3", "media/ziggs_general.png", 0, eventGame);
+  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/pika.md3", "media/pikachu.png", 0, eventGame);
 
   sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
 
@@ -68,8 +68,13 @@ int	main()
   IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f, 1.0f,
 									     1.0f, 1.0f));
 
-  // FireBomb	bomb;
-
+  // TEXTURE DU CIEL ET GROUND
+  IrrlichtController::getSceneManager()->addSkyBoxSceneNode(IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_up.jpg"),
+							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_dn.jpg"), //dn
+							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_lf.jpg"), //lf
+							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_rt.jpg"), //rt
+							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_ft.jpg"), //ft
+							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_bk.jpg")); //bk
 
   while (IrrlichtController::getDevice()->run())
     {
