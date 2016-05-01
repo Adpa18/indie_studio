@@ -17,13 +17,13 @@ BinPath 	=	./
 
 DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
-CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
+CPPFLAGS	=	-W -Wall -Wextra -Werror
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
 CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./theoraplayer/include/theoraplayer
 
-CPPFLAGS	+=	-O3 -ffast-math
+CPPFLAGS	+=	-O3 -ffast-math -std=c++11
 
 LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -lpthread
 LDFLAGS  += -L./theoraplayer -ltheoraplayer -ltheora -lvorbis  -logg

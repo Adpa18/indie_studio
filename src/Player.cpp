@@ -5,25 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sat Apr 30 15:03:35 2016 Victor Gouet
+// Last update Sun May  1 19:09:16 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"
 #include <iostream>
-
-struct SMD3AnimationType
-{
-	irr::s32 begin;
-	irr::s32 end;
-	irr::s32 fps;
-};
-
-static const SMD3AnimationType MD3AnimationTypeList[3] =
-{
-	{  0,  96,  25}, // IDLE
-	{ 97,  216, 20}, // RUN
-	{ 217,  247,  25}, // ATTACK
-};
 
 Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	       std::string const &mesh, std::string const &texture, int player,
@@ -36,16 +22,10 @@ Player::Player(std::string const &name, irr::core::vector3df const &pos,
 	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
 		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
 	}
-	setMD3Animation(MD3_ANIMATION::IDLE);
 }
 
 Player::~Player()
 {
-}
-
-void Player::setMD3Animation(MD3_ANIMATION anim) {
-	(*this)->setFrameLoop(MD3AnimationTypeList[anim].begin, MD3AnimationTypeList[anim].end);
-	(*this)->setAnimationSpeed(MD3AnimationTypeList[anim].fps);
 }
 
 void		Player::compute()
@@ -56,9 +36,8 @@ void		Player::compute()
   const irr::f32 frameDeltaTime = (irr::f32)(now - then) / 1000.f;
   irr::f32 moveHorizontal = 0.f;
   irr::f32 moveVertical = 0.f;
-  then = now;
 
-  irr::core::vector3df nodePosition = (*this)->getPosition();
+  // irr::core::vector3df nodePosition = (*this)->getPosition();
 
   // Joystick
   if (this->_joystick) {
@@ -101,10 +80,10 @@ void		Player::compute()
 
 		// PUT A BOMB
 
-		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second))
-		  {
-		    this->putBomb();
-		  }
+		// if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second))
+		//   {
+		//     this->putBomb();
+		//   }
 
 	}
 	if (moveHorizontal < 0.0f) {
@@ -112,30 +91,38 @@ void		Player::compute()
         (*this)->setRotation(irr::core::vector3df(0, 90, 0));
 		this->_dir = IrrlichtController::LEFT;
 		if (this->collid((*this)->getPosition(), IrrlichtController::LEFT) == -1) {
-			nodePosition.X -= getMoveSpeed() * frameDeltaTime;
+			// nodePosition.X -= getMoveSpeed() * frameDeltaTime;
+		  goLeft();
 		}
 	} else if (moveHorizontal > 0.0f) {
 		stand = false;
         (*this)->setRotation(irr::core::vector3df(0, -90, 0));
 		this->_dir = IrrlichtController::RIGHT;
 		if (this->collid((*this)->getPosition(), IrrlichtController::RIGHT) == -1) {
-			nodePosition.X += getMoveSpeed() * frameDeltaTime;
+			// nodePosition.X += getMoveSpeed() * frameDeltaTime;
+		  goRight();
 		}
 	} else if (moveVertical > 0.0f) {
 		stand = false;
         (*this)->setRotation(irr::core::vector3df(0, 180, 0));
 		this->_dir = IrrlichtController::UP;
 		if (this->collid((*this)->getPosition(), IrrlichtController::UP) == -1) {
-			nodePosition.Z += getMoveSpeed() * frameDeltaTime;
+			// nodePosition.Z += getMoveSpeed() * frameDeltaTime;
+		  goUp();
 		}
 	} else if (moveVertical < 0.0f) {
 		stand = false;
         (*this)->setRotation(irr::core::vector3df(0, 0, 0));
 		this->_dir = IrrlichtController::DOWN;
 		if (this->collid((*this)->getPosition(), IrrlichtController::DOWN) == -1) {
-			nodePosition.Z -= getMoveSpeed() * frameDeltaTime;
+			// nodePosition.Z -= getMoveSpeed() * frameDeltaTime;
+		  goDown();
 		}
 	}
+	else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second))
+	  {
+	    this->putBomb();
+	  }
 
 	// attack
 	// 217 247
@@ -143,18 +130,17 @@ void		Player::compute()
   if (stand && anime != irr::scene::EMAT_STAND)
     {
       //stand
-      (*this)->setFrameLoop(0, 96);
-      // (*this)->setMD2Animation(irr::scene::EMAT_STAND);
+      setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
       anime = irr::scene::EMAT_STAND;
     }
   else if (!stand && anime != irr::scene::EMAT_RUN)
     {
       // run
-
-      (*this)->setFrameLoop(96, 216);
-      // (*this)->setMD2Animation(irr::scene::EMAT_RUN);
+      setMD3Animation(ACharacter::MD3_ANIMATION::RUN);
       anime = irr::scene::EMAT_RUN;
     }
 
-  (*this)->setPosition(nodePosition);
+  then = now;
+
+  // (*this)->setPosition(nodePosition);
 }
