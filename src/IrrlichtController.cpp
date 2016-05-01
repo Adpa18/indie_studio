@@ -25,14 +25,14 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
       width  = scrn->width;*/
 
       if (pleinScreen)
-	device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
+	device = irr::createDevice(irr::video::EDT_OPENGL,
 				   irr::core::dimension2d<irr::u32>(width, height), 32,
 				   true, false, false, 0);
       else
 	{
 	  height = 640;
 	  width = 640;
-	  device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
+	  device = irr::createDevice(irr::video::EDT_OPENGL,
 				     irr::core::dimension2d<irr::u32>(width, height), 32,
 				     false, false, false, 0);
 	}

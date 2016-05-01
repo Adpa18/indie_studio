@@ -18,6 +18,7 @@ public:
     // Encapsulates all the ui components
 public:
     irr::IrrlichtDevice *GetDevice() const;
+    irr::gui::IGUIEnvironment *GetEnv() const;
     irr::gui::IGUISkin const *GetSkin() const;
     irr::gui::IGUIFont const* GetFont(const irr::io::path& fileName) const;
     void SetFont(irr::gui::IGUIFont *font, irr::gui::EGUI_DEFAULT_FONT def) const;

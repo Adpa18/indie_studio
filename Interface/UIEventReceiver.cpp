@@ -20,8 +20,9 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         switch (event.KeyInput.Key)
         {
             case irr::KEY_ESCAPE:
-            std::cout << "ESCAPE" << std::endl;
+                std::cout << "ESCAPE" << std::endl;
                 m_gameState = PAUSE;
+                IrrlichtController::getDevice()->closeDevice();
                 break;
         }
     }
@@ -100,6 +101,9 @@ void UIEventReceiver::DisplayMainMenu()
 void UIEventReceiver::DisplaySplashScreen()
 {
     m_manager.ClearEnv();
+
+    irr::gui::IGUIImage* image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height), nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuSceneTEXT.png"));
     m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
             IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50), nullptr, UIElement::SPLASH_BUTTON_START, L"PRESS START", L"");
 

@@ -79,3 +79,8 @@ void UIManager::ClearEnv() const
 {
     m_env->clear();
 }
+
+irr::gui::IGUIEnvironment *UIManager::GetEnv() const
+{
+    return m_env;
+}

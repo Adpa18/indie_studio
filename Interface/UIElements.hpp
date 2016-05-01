@@ -11,29 +11,21 @@
 namespace UIElement
 {
     // Objects for main menu
-    enum MainMenu
+    enum Menu
     {
         MAIN_MENU_BUTTON_1P = 100,
         MAIN_MENU_BUTTON_2P,
         MAIN_MENU_BUTTON_3P,
-        MAIN_MENU_BUTTON_4P
-    };
+        MAIN_MENU_BUTTON_4P,
 
-    enum SplashScreen
-    {
-        SPLASH_BUTTON_START = 1
-    };
+        SPLASH_BUTTON_START,
+        SPLASH_BACKGROUND,
 
-    enum MapMenu
-    {
-        MAP_SELECTION1 = 200,
+        MAP_SELECTION1,
         MAP_SELECTION2,
-        MAP_SELECTION3
-    };
+        MAP_SELECTION3,
 
-    enum PauseMenu
-    {
-        QUIT_BUTTON = 300,
+        QUIT_BUTTON,
         RESUME_BUTTON
     };
 }
