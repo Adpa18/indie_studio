@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Sat Apr 30 10:02:35 2016 Victor Gouet
+// Last update Sun May  1 18:43:56 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -18,6 +18,7 @@ class	ACharacter	: public AGameObject
 {
 public:
     enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
+    enum MD3_ANIMATION { STAY, RUN, ATTACK };
 
 private:
     static constexpr double BASICSPEED = 10.0;
@@ -25,6 +26,13 @@ private:
 public:
   ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh, std::string const &texture);
   virtual ~ACharacter();
+
+protected:
+  void			setMD3Animation(MD3_ANIMATION anim);
+  void			goLeft();
+  void			goRight();
+  void			goDown();
+  void			goUp();
 
 public:
   std::string const &   getName() const;
