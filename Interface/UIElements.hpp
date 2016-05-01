@@ -23,6 +23,19 @@ namespace UIElement
     {
         SPLASH_BUTTON_START = 1
     };
+
+    enum MapMenu
+    {
+        MAP_SELECTION1 = 200,
+        MAP_SELECTION2,
+        MAP_SELECTION3
+    };
+
+    enum PauseMenu
+    {
+        QUIT_BUTTON = 300,
+        RESUME_BUTTON
+    };
 }
 
 #endif //CPP_INDIE_STUDIO_UIELEMENTS_HPP

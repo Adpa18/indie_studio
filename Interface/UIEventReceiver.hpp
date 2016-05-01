@@ -33,6 +33,7 @@ private:
     void DisplayMainMenu();
     void DisplaySplashScreen();
     void DisplayMapMenu();
+    void DisplayPauseMenu();
 
 private:
     UIManager m_manager;

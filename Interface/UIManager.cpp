@@ -60,7 +60,7 @@ irr::gui::IGUIFont const *UIManager::GetFont(const irr::io::path& fileName) cons
 
 void UIManager::SetFont(irr::gui::IGUIFont *font, irr::gui::EGUI_DEFAULT_FONT def) const
 {
-
+    m_env->getSkin()->setFont(font, def);
 }
 
 void UIManager::AddButton(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
