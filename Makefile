@@ -34,7 +34,9 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread -g
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./include
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include
+
+#-I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
@@ -65,9 +67,9 @@ re		: fclean all
 ifeq ($(OS),Windows_NT)
 SYSTEM=Win32-gcc
 SUF=.exe
-CPPFLAGS += -D_IRR_STATIC_LIB_ #static
-LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32 #static
-LDFLAGS += -lopengl32 -lm
+CPPFLAGS += -D_IRR_STATIC_LIB_
+LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
+LDFLAGS += -lopengl32 -lm -static-libstdc++
 else
 LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
 SYSTEM=Linux

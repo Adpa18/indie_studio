@@ -19,10 +19,10 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
 {
   if (!device)
     {
-      Display* disp = XOpenDisplay(NULL);
+      /*Display* disp = XOpenDisplay(NULL);
       Screen*  scrn = DefaultScreenOfDisplay(disp);
       height = scrn->height;
-      width  = scrn->width;
+      width  = scrn->width;*/
 
       if (pleinScreen)
 	device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
