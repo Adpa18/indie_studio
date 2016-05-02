@@ -5,20 +5,20 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Thu Apr 28 11:30:09 2016 Victor Gouet
+// Last update Sat Apr 30 10:01:45 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
 #include <stdexcept>
 
-AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh, Collider *collider) : _collider(collider)
+AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mesh, std::string const &texture, Collider *collider) : _collider(collider)
 {
-    static int i = 0;
-  std::string		const strMd2(mesh + ".md2");
-  std::string		const strBMP(mesh + ".png");
+  static int i = 0;
+  // std::string		const strMd = mesh;
+  // std::string		const strBM = texture;
 
   irr::scene::IAnimatedMesh *meshNode =
-    IrrlichtController::getSceneManager()->getMesh(strMd2.c_str());
+    IrrlichtController::getSceneManager()->getMesh(mesh.c_str());
 
   if (!meshNode)
     {
@@ -29,7 +29,7 @@ AGameObject::AGameObject(irr::core::vector3df const &pos, std::string const &mes
   if (_node)
     {
       _node->setPosition(pos);
-      _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(strBMP.c_str()));
+      _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
       _node->setMD2Animation(irr::scene::EMAT_STAND);
       _node->setMaterialFlag(irr::video::EMF_LIGHTING,true);
       // _node->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
@@ -56,7 +56,12 @@ void        AGameObject::addCollider(Collider *collider)
     this->_collider = collider;
 }
 
-int     AGameObject::collid(irr::core::vector3df pos,IrrlichtController::Direction dir) const
+irr::scene::ISceneNode  *AGameObject::collid(irr::core::vector3df pos,IrrlichtController::Direction dir) const
 {
     return (this->_collider->collid(pos, dir));
+}
+
+Collider    *AGameObject::getCollider() const
+{
+    return (this->_collider);
 }

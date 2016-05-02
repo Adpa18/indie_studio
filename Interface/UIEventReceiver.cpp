@@ -15,6 +15,17 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
  */
 bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 {
+    if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+    {
+        switch (event.KeyInput.Key)
+        {
+            case irr::KEY_ESCAPE:
+                std::cout << "ESCAPE" << std::endl;
+                m_gameState = PAUSE;
+                IrrlichtController::getDevice()->closeDevice();
+                break;
+        }
+    }
 
     if (event.EventType == irr::EET_GUI_EVENT)
     {
@@ -58,6 +69,11 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         DisplayMapMenu();
         return true;
     }
+    if (m_gameState == PAUSE && m_gameSatePrev != PAUSE)
+    {
+        DisplayPauseMenu();
+        return true;
+    }
 
     return false;
 }
@@ -85,6 +101,9 @@ void UIEventReceiver::DisplayMainMenu()
 void UIEventReceiver::DisplaySplashScreen()
 {
     m_manager.ClearEnv();
+
+    irr::gui::IGUIImage* image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height), nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuSceneTEXT.png"));
     m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
             IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50), nullptr, UIElement::SPLASH_BUTTON_START, L"PRESS START", L"");
 
@@ -94,4 +113,17 @@ void UIEventReceiver::DisplaySplashScreen()
 void UIEventReceiver::DisplayMapMenu()
 {
     m_manager.ClearEnv();
+    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 - 50,
+                                                  IrrlichtController::width / 2.0 + 300, IrrlichtController::height / 2.0 + 50),
+                        nullptr, UIElement::MAP_SELECTION1, L"Map 1", L"");
+    m_gameSatePrev = m_gameState;
+}
+
+void UIEventReceiver::DisplayPauseMenu()
+{
+    m_manager.ClearEnv();
+    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
+                                                  IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50),
+                        nullptr, UIElement::QUIT_BUTTON , L"PRESS START", L"");
+    m_gameSatePrev = m_gameState;
 }

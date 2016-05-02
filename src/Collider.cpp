@@ -5,7 +5,7 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 18:29:31 2016 Adrien WERY
-** Last update	Fri Apr 29 10:56:37 2016 Adrien WERY
+** Last update	Mon May 02 18:45:09 2016 Adrien WERY
 */
 
 #include "../include/Collider.hpp"
@@ -22,28 +22,28 @@ Collider::~Collider()
 
 #include <iostream>
 
-int     Collider::collid(irr::core::vector3df pos, IrrlichtController::Direction dir)
+irr::scene::ISceneNode  *Collider::collid(irr::core::vector3df pos, IrrlichtController::Direction dir)
 {
     irr::scene::ISceneNode  *selectedSceneNode;
 
     if (dir & IrrlichtController::RIGHT && (selectedSceneNode = this->rangeHit(pos, dir))) {
         this->_ids.push_back(selectedSceneNode->getID());
-        return (selectedSceneNode->getID());
+        return (selectedSceneNode);
     }
     if (dir & IrrlichtController::LEFT && (selectedSceneNode = this->rangeHit(pos, dir))) {
         this->_ids.push_back(selectedSceneNode->getID());
-        return (selectedSceneNode->getID());
+        return (selectedSceneNode);
     }
     if (dir & IrrlichtController::UP && (selectedSceneNode = this->rangeHit(pos, dir))) {
         this->_ids.push_back(selectedSceneNode->getID());
-        return (selectedSceneNode->getID());
+        return (selectedSceneNode);
     }
     if (dir & IrrlichtController::DOWN && (selectedSceneNode = this->rangeHit(pos, dir))) {
         this->_ids.push_back(selectedSceneNode->getID());
-        return (selectedSceneNode->getID());
+        return (selectedSceneNode);
     }
     this->_ids.clear();
-    return (-1);
+    return (NULL);
 }
 
 irr::scene::ISceneNode  *Collider::rangeHit(irr::core::vector3df pos, IrrlichtController::Direction dir) const
@@ -70,15 +70,16 @@ irr::scene::ISceneNode  *Collider::rangeHit(irr::core::vector3df pos, IrrlichtCo
             range_vec = irr::core::vector3df(1, 0, 0);
             break;
     }
-    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
+    // pos + vec_dir * IrrlichtController::scale / 2 //just for character
+    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos + vec_dir * IrrlichtController::scale / 2, pos + vec_dir * this->_distance)))) {
         return (selectedSceneNode);
     }
     pos += (range_vec * (IrrlichtController::scale / 2 - 1));
-    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
+    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos + vec_dir * IrrlichtController::scale / 2, pos + vec_dir * this->_distance)))) {
         return (selectedSceneNode);
     }
     pos -= (range_vec * (IrrlichtController::scale / 2 - 1));
-    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos, pos + vec_dir * this->_distance)))) {
+    if ((selectedSceneNode = this->hit(irr::core::line3d<irr::f32>(pos + vec_dir * IrrlichtController::scale / 2, pos + vec_dir * this->_distance)))) {
         return (selectedSceneNode);
     }
     return (NULL);

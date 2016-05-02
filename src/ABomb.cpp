@@ -1,18 +1,18 @@
 //
 // Bomb.cpp for BOMB in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Apr 29 18:38:12 2016 Victor Gouet
+// Last update Sat Apr 30 10:04:36 2016 Victor Gouet
 //
 
 #include "../include/ABomb.hpp"
 #include <iostream>
 #include <unistd.h>
 
-ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/pokeball.md2", "media/pokeball.png")
 {
   alive = true;
   use = false;
@@ -21,7 +21,8 @@ ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
   _power = 3;
 }
 
-ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector3df(0, 0, 0), "media/caisse")
+ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector3df(0, 0, 0),
+					       "media/pokeball.md2", "media/pokeball.png")
 {
   *this = other;
 }
@@ -69,7 +70,7 @@ void				ABomb::run()
       sleep(3);
       if (!alive)
 	return ;
-      willExplose();      
+      willExplose();
       use = false;
     }
 }

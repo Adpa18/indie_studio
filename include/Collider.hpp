@@ -5,7 +5,7 @@
 ** Login	wery_a
 **
 ** Started on	Wed Apr 27 18:27:45 2016 Adrien WERY
-** Last update	Thu Apr 28 15:54:11 2016 Adrien WERY
+** Last update	Mon May 02 18:37:25 2016 Adrien WERY
 */
 
 #ifndef COLLIDER_HPP
@@ -30,7 +30,7 @@ private:
 public:
     Collider (int flags = CHARACTER | BOMB | OTHER);
     virtual ~Collider ();
-    int collid(irr::core::vector3df pos, IrrlichtController::Direction dir);
+    irr::scene::ISceneNode  *collid(irr::core::vector3df pos, IrrlichtController::Direction dir);
     irr::scene::ISceneNode  *hit(irr::core::line3d<irr::f32> ray) const;
     irr::scene::ISceneNode  *rangeHit(irr::core::vector3df pos, IrrlichtController::Direction dir) const;
 

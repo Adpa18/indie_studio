@@ -11,7 +11,7 @@
 #ifndef IRRLICHTCONTROLLER_HPP_
 # define IRRLICHTCONTROLLER_HPP_
 
-# include <X11/Xlib.h>
+//# include <X11/Xlib.h>
 # include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 
 class	IrrlichtController

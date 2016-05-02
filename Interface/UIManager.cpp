@@ -60,7 +60,7 @@ irr::gui::IGUIFont const *UIManager::GetFont(const irr::io::path& fileName) cons
 
 void UIManager::SetFont(irr::gui::IGUIFont *font, irr::gui::EGUI_DEFAULT_FONT def) const
 {
-
+    m_env->getSkin()->setFont(font, def);
 }
 
 void UIManager::AddButton(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
@@ -78,4 +78,9 @@ void UIManager::AddStaticText(const wchar_t *text, irr::core::rect<irr::s32> tra
 void UIManager::ClearEnv() const
 {
     m_env->clear();
+}
+
+irr::gui::IGUIEnvironment *UIManager::GetEnv() const
+{
+    return m_env;
 }
