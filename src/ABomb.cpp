@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Thu May  5 15:26:28 2016 Victor Gouet
+// Last update Thu May  5 15:53:20 2016 Victor Gouet
 //
 
 #include "../include/ABomb.hpp"
@@ -44,7 +44,7 @@ ABomb::~ABomb()
   _mutex.lock();
   alive = false;
   use = true;
-  condVar.notify_one();
+  // condVar.notify_one();
   threadBomb->join();
   _mutex.unlock();
   delete threadBomb;
@@ -59,22 +59,31 @@ void				ABomb::run()
 {
   while (alive)
     {
-      std::unique_lock<std::mutex>	lk(_mutex);
+      // std::unique_lock<std::mutex>	lk(_mutex);
 
-      while (!use && alive)
-	condVar.wait(lk);
+      while (!isUse() && isAlive())
+	usleep(0);
+      _mutex.lock();
+	//condVar.wait(lk);
       if (alive == false)
 	{
-	  lk.unlock();
+	  _mutex.unlock();
+	  // lk.unlock();
 	  return ;
 	}
-      (*this)->setVisible(true);
+      //(*this)->setVisible(true);
+      //_mutex.unlock();
       sleep(3);
+      //_mutex.lock();
       if (!alive)
-	return ;
+	{
+	  _mutex.unlock();
+	  return ;
+	}
       __active = true;
       // willExplose();
       use = false;
+      _mutex.unlock();
     }
 }
 
@@ -95,20 +104,40 @@ bool			ABomb::isActive() const
 
 bool			ABomb::isAlive() const
 {
-  return (alive);
+  bool			_alive;
+
+  _alive = true;
+  if (_mutex.try_lock())
+    {
+      _alive = alive;
+      _mutex.unlock();
+    }
+  return (_alive);
 }
 
 bool			ABomb::isUse() const
 {
-  return (use);
+  bool			_use;
+
+  _use = true;
+  if (_mutex.try_lock())
+    {
+      _use = use;
+      _mutex.unlock();
+    }
+  return (_use);
+  // return (use);
 }
 
 void			ABomb::operator<<(irr::core::vector3df const &pos)
 {
-  std::lock_guard<std::mutex> lock(_mutex);
+  // std::lock_guard<std::mutex> lock(_mutex);
+  _mutex.lock();
+  (*this)->setVisible(true);
   use = true;
   (*this)->setPosition(pos);
-  condVar.notify_one();
+  _mutex.unlock();
+  // condVar.notify_one();
 }
 
 int			ABomb::getPower() const
