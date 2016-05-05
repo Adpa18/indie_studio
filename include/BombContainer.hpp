@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:14:03 2016 Victor Gouet
-// Last update Fri Apr 29 15:37:15 2016 Victor Gouet
+// Last update Thu May  5 15:17:14 2016 Victor Gouet
 //
 
 #ifndef BOMBCONTAINER_HPP_
@@ -28,6 +28,7 @@ public:
 public:
   void				addBomb(ABomb *);
   void				deleteAllBomb();
+  void				bombExplose();
 
 private:
   std::vector<ABomb *>		_bombs;

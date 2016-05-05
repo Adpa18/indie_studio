@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Fri Apr 29 16:52:17 2016 Victor Gouet
+// Last update Thu May  5 15:20:40 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
@@ -28,6 +28,7 @@ public:
 public:
   bool			isAlive() const;
   bool			isUse() const;
+  bool			isActive() const;
 
 public:
   int			getPower() const;
@@ -35,7 +36,7 @@ public:
 public:
   void			operator<<(irr::core::vector3df const &);
 
-private:
+public:
   virtual void		        willExplose() = 0;
 
 private:
@@ -50,7 +51,8 @@ protected:
 private:
   std::thread			*threadBomb;
   std::condition_variable	condVar;
-  std::mutex			_mutex;
+  mutable std::mutex			_mutex;
+  mutable bool			__active;
 
 protected:
   int				_power;

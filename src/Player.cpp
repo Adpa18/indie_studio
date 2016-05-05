@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sun May  1 19:09:16 2016 Victor Gouet
+// Last update Thu May  5 15:24:24 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"
@@ -40,6 +40,7 @@ void		Player::compute()
   // irr::core::vector3df nodePosition = (*this)->getPosition();
 
   // Joystick
+  this->exploseHisBomb();
   if (this->_joystick) {
 		const irr::SEvent::SJoystickEvent &joystickData = this->_joystick->getData();
 		const irr::u16 povDegrees = joystickData.POV / 100;

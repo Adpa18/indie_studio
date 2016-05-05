@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Sun May  1 18:43:56 2016 Victor Gouet
+// Last update Thu May  5 15:23:25 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -40,6 +40,7 @@ public:
 
 public:
   void                setName(const std::string &);
+  void			exploseHisBomb();
   virtual void		compute() = 0;
   // void                  move(int x, int y, int z);
   // void                  move(int x, int y);

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sun May  1 19:08:04 2016 Victor Gouet
+// Last update Thu May  5 15:23:50 2016 Victor Gouet
 //
 
 #include "../include/ACharacter.hpp"
@@ -40,6 +40,11 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector3df const &pos,
 
 ACharacter::~ACharacter()
 {
+}
+
+void			ACharacter::exploseHisBomb()
+{
+  _bombContainer->bombExplose();
 }
 
 void ACharacter::setMD3Animation(MD3_ANIMATION anim)

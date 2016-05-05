@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:21:28 2016 Victor Gouet
-// Last update Fri Apr 29 15:42:08 2016 Victor Gouet
+// Last update Thu May  5 15:18:34 2016 Victor Gouet
 //
 
 #include "../include/BombContainer.hpp"
@@ -44,6 +44,19 @@ void				BombContainer::addBomb(ABomb *bomb)
 {
   if (_bombs.size() < 9)
     _bombs.push_back(bomb);
+}
+
+void				BombContainer::bombExplose()
+{
+  std::vector<ABomb *>::iterator	it;
+
+  it = _bombs.begin();
+  while (it != _bombs.end())
+    {
+      if ((*it)->isActive())
+	(*it)->willExplose();
+      ++it;
+    }
 }
 
 void				BombContainer::deleteAllBomb()

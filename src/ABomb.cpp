@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Sat Apr 30 10:04:36 2016 Victor Gouet
+// Last update Thu May  5 15:26:28 2016 Victor Gouet
 //
 
 #include "../include/ABomb.hpp"
@@ -19,6 +19,7 @@ ABomb::ABomb() : AGameObject(irr::core::vector3df(0, 0, 0), "media/pokeball.md2"
   (*this)->setVisible(false);
   threadBomb = new std::thread([&] {this->run(); });
   _power = 3;
+  __active = false;
 }
 
 ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector3df(0, 0, 0),
@@ -34,6 +35,7 @@ ABomb	&ABomb::operator=(ABomb const *other)
   (*this)->setVisible(false);
   threadBomb = new std::thread([&] {run(); });
   this->_power = other->_power;
+  this->__active = false;
   return (*this);
 }
 
@@ -70,11 +72,26 @@ void				ABomb::run()
       sleep(3);
       if (!alive)
 	return ;
-      willExplose();
+      __active = true;
+      // willExplose();
       use = false;
     }
 }
 
+bool			ABomb::isActive() const
+{
+  bool			_active;
+
+  _active = false;
+  if (_mutex.try_lock())
+    {
+      _active = __active;
+      if (__active == true)
+	__active = false;
+      _mutex.unlock();
+    }
+  return (_active);
+}
 
 bool			ABomb::isAlive() const
 {
