@@ -24,7 +24,7 @@ public:
     };
 
 public:
-  Wall(irr::core::vector2di const &pos, State state = Destructible);
+  Wall(irr::core::vector2df const &pos, State state = Destructible);
   virtual ~Wall();
 
 public:

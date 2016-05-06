@@ -38,13 +38,14 @@ private:
   void		        generateGround();
 
 public:
-    void  add(AGameObject* obj, const irr::core::vector2di &pos);
+    void  add(AGameObject* obj, const irr::core::vector2df &pos);
     void  remove(AGameObject *obj);
-    void  move(AGameObject *obj, const irr::core::vector2di &pos);
-    std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2di &pos) const;
+    void  move(AGameObject *obj, const irr::core::vector2df &pos);
+    std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
+    const irr::core::vector2df  get(AGameObject *obj);
 
 private:
-    std::map<AGameObject*, irr::core::vector2di> _objects;
+    std::map<AGameObject*, irr::core::vector2df> _objects;
 
 private:
     char			_patron[11][11] = {

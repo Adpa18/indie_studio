@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include "ABomb.hpp"
 
-ABomb::ABomb() : AGameObject(irr::core::vector2di(0, 0), "media/pokeball.md2",
+ABomb::ABomb() : AGameObject(irr::core::vector2df(0, 0), "media/pokeball.md2",
                              "media/pokeball.png", AGameObject::BOMB)
 {
   alive = true;
@@ -23,7 +23,7 @@ ABomb::ABomb() : AGameObject(irr::core::vector2di(0, 0), "media/pokeball.md2",
   __active = false;
 }
 
-ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector2di(0, 0),
+ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector2df(0, 0),
 					       "media/pokeball.md2", "media/pokeball.png")
 {
   *this = other;
@@ -133,7 +133,7 @@ bool			ABomb::isUse() const
   // return (use);
 }
 
-void			ABomb::operator<<(irr::core::vector2di const &pos)
+void			ABomb::operator<<(irr::core::vector2df const &pos)
 {
   // std::lock_guard<std::mutex> lock(_mutex);
   _mutex.lock();

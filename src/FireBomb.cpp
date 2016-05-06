@@ -38,7 +38,7 @@ FireBomb::FireBomb(ABomb const *other)
 
 void		FireBomb::willExplose()
 {
-    irr::core::vector2di        pos = this->getPos();
+    irr::core::vector2df        pos = this->getMapPos();
     std::vector<AGameObject *>   objs;
     AGameObject::Type           type;
     bool                        stop;
@@ -53,7 +53,7 @@ void		FireBomb::willExplose()
     for (int i = 1; i <= this->_power; ++i) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(-i, 0));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(-i, 0));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -69,7 +69,7 @@ void		FireBomb::willExplose()
     for (int i = 1; i <= this->_power; ++i) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(i, 0));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(i, 0));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -85,7 +85,7 @@ void		FireBomb::willExplose()
     for (int i = 1; i <= this->_power; ++i) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(0, -i));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, -i));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -101,7 +101,7 @@ void		FireBomb::willExplose()
     for (int i = 1; i <= this->_power; ++i) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(0, i));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, i));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {

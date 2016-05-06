@@ -24,18 +24,14 @@ private:
     static constexpr double BASICSPEED = 10.0;
 
 public:
-  ACharacter(std::string const &name, irr::core::vector2di const &pos,
+  ACharacter(std::string const &name, irr::core::vector2df const &pos,
              std::string const &mesh, std::string const &texture, int player);
   virtual ~ACharacter();
 
 protected:
   void			setMD3Animation(MD3_ANIMATION anim);
     void        action(ACTION act);
-    void        moveTo(irr::core::vector2di const &pos);
-//  void			goLeft();
-//  void			goRight();
-//  void			goDown();
-//  void			goUp();
+    void        moveTo(irr::core::vector2df const &dir);
 
 public:
     std::string const   &getName() const;
@@ -51,11 +47,14 @@ private:
   BombContainer			            *_bombContainer;
   double		                    moveSpeed;
     int					            anime;
+    irr::core::vector2df            _last_act;
+    bool                            _arrived;
   // Bonus			*bonus;
   // std::vector<Bomb *>	bombs;
 
 protected:
   irr::u32 then;
+  irr::f32  frameDeltaTime;
 
 };
 

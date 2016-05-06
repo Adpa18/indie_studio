@@ -14,7 +14,7 @@ Collider::~Collider()
 
 }
 
-std::vector<AGameObject*>   Collider::collid(irr::core::vector2di const &pos) const
+std::vector<AGameObject*>   Collider::collid(irr::core::vector2df const &pos) const
 {
     return (BomberMap::getMap()->getObjsFromVector2(pos));
 }

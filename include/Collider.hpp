@@ -15,7 +15,7 @@ public:
     virtual ~Collider();
 
 public:
-    std::vector<AGameObject*>   collid(irr::core::vector2di const &pos) const;
+    std::vector<AGameObject*>   collid(irr::core::vector2df const &pos) const;
 };
 
 #endif //CPP_INDIE_STUDIO_COLLIDER_HPP

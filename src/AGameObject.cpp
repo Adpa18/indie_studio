@@ -11,7 +11,7 @@
 #include "AGameObject.hpp"
 #include "BomberMap.hpp"
 
-AGameObject::AGameObject(irr::core::vector2di const &pos, std::string const &mesh, std::string const &texture, Type type) : _type(type)
+AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type) : _type(type)
 {
     BomberMap::getMap()->add(this, pos);
     irr::scene::IAnimatedMesh *meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str());
@@ -48,17 +48,22 @@ AGameObject::Type   AGameObject::getType() const
     return (this->_type);
 }
 
-void                AGameObject::setPos(irr::core::vector2di const &pos)
+void                AGameObject::setPos(irr::core::vector2df const &pos)
 {
     BomberMap::getMap()->move(this, pos);
     _node->setPosition(irr::core::vector3df(pos.X - BomberMap::size_side / 2, 0, pos.Y - BomberMap::size_side / 2) * BomberMap::scale);
 }
 
-irr::core::vector2di    AGameObject::getPos() const
+irr::core::vector2df    AGameObject::getMapPos() const
+{
+    return (BomberMap::getMap()->get(const_cast<AGameObject*>(this)));
+}
+
+irr::core::vector2df    AGameObject::getRealPos() const
 {
     irr::core::vector3df    pos3df = _node->getPosition() / BomberMap::scale;
 
-    return (irr::core::vector2di(pos3df.X + BomberMap::size_side / 2, pos3df.Z + BomberMap::size_side / 2));
+    return (irr::core::vector2df(pos3df.X + BomberMap::size_side / 2, pos3df.Z + BomberMap::size_side / 2));
 }
 
 void                AGameObject::dead()

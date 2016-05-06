@@ -26,15 +26,16 @@ public:
         OTHER = 1 << 4
     };
 public:
-  AGameObject(irr::core::vector2di const &pos, std::string const &mesh,
+  AGameObject(irr::core::vector2df const &pos, std::string const &mesh,
               std::string const &texture, Type type = NONE);
   virtual ~AGameObject();
 
 public:
   irr::scene::IAnimatedMeshSceneNode    *operator->();
     AGameObject::Type                   getType() const;
-    void                                setPos(irr::core::vector2di const &pos);
-    irr::core::vector2di                getPos() const;
+    void                                setPos(irr::core::vector2df const &pos);
+    irr::core::vector2df                getMapPos() const;
+    irr::core::vector2df                getRealPos() const;
     virtual void                        dead();
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;

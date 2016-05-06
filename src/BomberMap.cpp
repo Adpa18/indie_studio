@@ -40,9 +40,9 @@ void			BomberMap::generateMap()
     for (int y = 0; y < BomberMap::size_side; ++y) {
         for (int x = 0; x < BomberMap::size_side; ++x) {
             if (_patron[y][x] == 'X') {
-                new Wall(irr::core::vector2di(x, y), Wall::Invicible);
+                new Wall(irr::core::vector2df(x, y), Wall::Invicible);
             } else if (_patron[y][x] == 'C') {
-                new Wall(irr::core::vector2di(x, y));
+                new Wall(irr::core::vector2df(x, y));
             }
         }
     }
@@ -107,7 +107,7 @@ BomberMap       * BomberMap::getMap()
     return (bomberMap);
 }
 
-void  BomberMap::add(AGameObject* obj, const irr::core::vector2di &pos)
+void  BomberMap::add(AGameObject* obj, const irr::core::vector2df &pos)
 {
     this->_objects[obj] = pos;
 }
@@ -117,19 +117,24 @@ void  BomberMap::remove(AGameObject *obj)
     this->_objects.erase(obj);
 }
 
-void  BomberMap::move(AGameObject *obj, const irr::core::vector2di &pos)
+void  BomberMap::move(AGameObject *obj, const irr::core::vector2df &pos)
 {
     this->_objects[obj] = pos;
 }
 
-std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vector2di &pos) const
+std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vector2df &pos) const
 {
     std::vector<AGameObject *>  objs;
 
-    for (std::map<AGameObject*, irr::core::vector2di>::const_iterator it = this->_objects.begin(); it != this->_objects.end(); ++it) {
+    for (std::map<AGameObject*, irr::core::vector2df>::const_iterator it = this->_objects.begin(); it != this->_objects.end(); ++it) {
         if ((*it).second == pos) {
             objs.push_back((*it).first);
         }
     }
     return (objs);
+}
+
+const irr::core::vector2df  BomberMap::get(AGameObject *obj)
+{
+    return (this->_objects[obj]);
 }

@@ -29,15 +29,16 @@ static const SMD3AnimationType MD3AnimationTypeList[3] =
 };
 
 
-ACharacter::ACharacter(std::string const &name, irr::core::vector2di const &pos,
+ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
 		       std::string const &mesh, std::string const &texture, int player)
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
+    _arrived = true;
+    _last_act = irr::core::vector2df(0, 0);
     anime = irr::scene::EMAT_STAND;
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
-  // this->setCollider(new Collider(AGameObject::CHARACTER));
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>();
   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
   setMD3Animation(MD3_ANIMATION::STAY);
@@ -79,51 +80,42 @@ void            ACharacter::action(ACTION act)
 {
     bool			stand = true;
     const irr::u32 now = IrrlichtController::getDevice()->getTimer()->getTime();
-    const irr::f32 frameDeltaTime = (irr::f32)(now - then) / 1000.f;
+    this->frameDeltaTime = (irr::f32)(now - this->then) / 1000.f;
 
-    switch (act) {
-        case DOWN:
-            stand = false;
-            (*this)->setRotation(irr::core::vector3df(0, 0, 0));
-            this->moveTo(this->getPos() + irr::core::vector2di(0, -1));
-//            this->_dir = IrrlichtController::DOWN;
-//            if (!this->collid(nodePosition, IrrlichtController::DOWN)) {
-//                nodePosition.Z -= getMoveSpeed() * frameDeltaTime;
-//            }
-            break;
-        case UP:
-            stand = false;
-            (*this)->setRotation(irr::core::vector3df(0, 180, 0));
-            this->moveTo(this->getPos() + irr::core::vector2di(0, 1));
-//            this->_dir = IrrlichtController::UP;
-//            if (!this->collid(nodePosition, IrrlichtController::UP)) {
-//                nodePosition.Z += getMoveSpeed() * frameDeltaTime;
-//            }
-            break;
-        case LEFT:
-            stand = false;
-            (*this)->setRotation(irr::core::vector3df(0, 90, 0));
-            this->moveTo(this->getPos() + irr::core::vector2di(-1, 0));
-//            this->_dir = IrrlichtController::LEFT;
-//            if (!this->collid(nodePosition, IrrlichtController::LEFT)) {
-//                nodePosition.X -= getMoveSpeed() * frameDeltaTime;
-//            }
-            break;
-        case RIGHT:
-            stand = false;
+    if (_arrived || act == BOMB)
+    {
+        _arrived = false;
+        switch (act) {
+            case DOWN:
+                stand = false;
+                (*this)->setRotation(irr::core::vector3df(0, 0, 0));
+                _last_act = irr::core::vector2df(0, -1);
+                break;
+            case UP:
+                stand = false;
+                (*this)->setRotation(irr::core::vector3df(0, 180, 0));
+                _last_act = irr::core::vector2df(0, 1);
+                break;
+            case LEFT:
+                stand = false;
+                (*this)->setRotation(irr::core::vector3df(0, 90, 0));
+                _last_act = irr::core::vector2df(-1, 0);
+                break;
+            case RIGHT:
+                stand = false;
                 (*this)->setRotation(irr::core::vector3df(0, -90, 0));
-                this->moveTo(this->getPos() + irr::core::vector2di(1, 0));
-//                this->_dir = IrrlichtController::RIGHT;
-//                if (!this->collid(nodePosition, IrrlichtController::RIGHT)) {
-//                    nodePosition.X += getMoveSpeed() * frameDeltaTime;
-//                }
-            break;
-        case BOMB:
-            this->putBomb();
-            break;
-        default:
-            break;
+                _last_act = irr::core::vector2df(1, 0);
+                break;
+            case BOMB:
+                this->putBomb();
+                break;
+            default:
+                _arrived = true;
+                break;
+        }
     }
+    if (!_arrived)
+        this->moveTo(_last_act);
     if (stand && anime != irr::scene::EMAT_STAND)  {
         setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
         anime = irr::scene::EMAT_STAND;
@@ -134,18 +126,29 @@ void            ACharacter::action(ACTION act)
     then = now;
 }
 
-void            ACharacter::moveTo(irr::core::vector2di const &pos)
+void            ACharacter::moveTo(irr::core::vector2df const &dir)
 {
-    std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(pos);
+    std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir);
     AGameObject::Type           type;
 
     for (std::vector<AGameObject*>::const_iterator it = objs.begin(); it != objs.end(); ++it) {
         type = (*it)->getType();
         if (type != AGameObject::CHARACTER) {
+            _arrived = true;
             return;
         }
     }
-    this->setPos(pos);
+    float   distance = this->getRealPos().getDistanceFrom(this->getMapPos() + dir);
+
+    if (distance < 0.2) {
+        _arrived = true;
+        this->setPos(this->getMapPos() + dir);
+        return;
+    }
+//    if (distance < 0.5) {
+//        this->setPos(this->getMapPos() + dir);
+//    }
+    (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * 100, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * 100));
 }
 
 
@@ -155,6 +158,6 @@ void			ACharacter::putBomb()
 
   if ((bomb = _bombContainer->getBomb()))
     {
-      *bomb << this->getPos();
+      *bomb << this->getMapPos();
     }
 }

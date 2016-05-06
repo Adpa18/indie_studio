@@ -11,15 +11,16 @@
 #include "../include/Player.hpp"
 #include <iostream>
 
-Player::Player(std::string const &name, irr::core::vector2di const &pos,
+Player::Player(std::string const &name, irr::core::vector2df const &pos,
 	       std::string const &mesh, std::string const &texture, int player,
 	       EventGame const &eventGame)
   : ACharacter(name, pos, mesh, texture, player), _eventGame(eventGame)
 {
     (*this)->setName(name.c_str());
-	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
+    this->_joystick = NULL;
+//	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
 		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
-	}
+//	}
 }
 
 Player::~Player()

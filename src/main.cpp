@@ -26,7 +26,7 @@ int	main()
   IrrlichtController::getDevice()->setEventReceiver(&eventGame);
   std::vector<ACharacter *>     characters;
 
-    characters.push_back(new Player("ROGER", irr::core::vector2di(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, eventGame));
+    characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, eventGame));
     BomberMap::getMap()->genMap();
 
   // sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
