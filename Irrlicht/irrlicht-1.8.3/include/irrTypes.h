@@ -247,4 +247,3 @@ code like 'code', but some generate warnings so we use this macro here */
 #endif
 
 #endif // __IRR_TYPES_H_INCLUDED__
-

@@ -148,7 +148,7 @@ int main(int ac, char **av)
 	device->getGUIEnvironment().
 	*/
 	IVideoDriver* driver = device->getVideoDriver();
-	ISceneManager* smgr = device->getSceneManager();
+	ISceneManager* smgr = (ISceneManager *) device->getSceneManager();
 	IGUIEnvironment* guienv = device->getGUIEnvironment();
 
 	/*
@@ -178,7 +178,6 @@ int main(int ac, char **av)
 		return 1;
 	}
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh );
-
 	/*
 	To let the mesh look a little bit nicer, we change its material. We
 	disable lighting because we do not have a dynamic light in here, and
@@ -190,10 +189,18 @@ int main(int ac, char **av)
 	if (node)
 	{
 		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
-		size_t lastindex = std::string(av[1]).find_last_of(".");
-		std::string rawname = std::string(av[1]).substr(0, lastindex);
-		node->setMaterialTexture( 0, driver->getTexture(std::string(rawname + ".png").c_str()) );
+		node->setFrameLoop(96, 216);
+		node-> setAnimationSpeed(20);
+		if (ac > 2)
+		{
+			node->setMaterialTexture( 0, driver->getTexture(av[2]) );
+		}
+		else
+		{
+			size_t lastindex = std::string(av[1]).find_last_of(".");
+			std::string rawname = std::string(av[1]).substr(0, lastindex);
+			node->setMaterialTexture( 0, driver->getTexture(std::string(rawname + ".png").c_str()) );
+		}
 	}
 	/*
 	To look at the mesh, we place a camera into 3d space at the position

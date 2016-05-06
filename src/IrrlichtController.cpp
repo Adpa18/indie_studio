@@ -12,27 +12,27 @@
 
 // redeclare static member for cpp linkage
 irr::IrrlichtDevice *IrrlichtController::device = NULL;
-size_t    IrrlichtController::width = 640;
-size_t    IrrlichtController::height = 480;
+size_t    IrrlichtController::width = 1920;
+size_t    IrrlichtController::height = 1080;
 
 irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
 {
   if (!device)
     {
-      Display* disp = XOpenDisplay(NULL);
+      /*Display* disp = XOpenDisplay(NULL);
       Screen*  scrn = DefaultScreenOfDisplay(disp);
       height = scrn->height;
-      width  = scrn->width;
+      width  = scrn->width;*/
 
       if (pleinScreen)
-	device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
+	device = irr::createDevice(irr::video::EDT_OPENGL,
 				   irr::core::dimension2d<irr::u32>(width, height), 32,
 				   true, false, false, 0);
       else
 	{
 	  height = 640;
 	  width = 640;
-	  device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO,
+	  device = irr::createDevice(irr::video::EDT_OPENGL,
 				     irr::core::dimension2d<irr::u32>(width, height), 32,
 				     false, false, false, 0);
 	}

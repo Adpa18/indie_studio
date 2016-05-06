@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed Apr 27 17:09:44 2016 Victor Gouet
+// Last update Fri May  6 17:32:43 2016 Victor Gouet
 //
 
 #ifndef PLAYER_HPP_
@@ -19,21 +19,24 @@
 class	Player	: public ACharacter
 {
 private:
-  int     _player;
   EventGame	const &					_eventGame;
-  int							    anime;
   std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
   const MotionController            *_joystick;
-  IrrlichtController::Direction     _dir;
+  // enum MD3_ANIMATION {
+  //   IDLE,
+  //   RUN,
+  //   ATTACk
+  // };
 
 public:
-  Player(std::string const &name, irr::core::vector3df const &pos,
-	 std::string const &mesh, int player, EventGame const &eventGame,
-	 std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes);
+  Player(std::string const &name, irr::core::vector2df const &pos,
+	 std::string const &mesh, std::string const &texture, int player,
+		 EventGame const &eventGame);
   virtual ~Player();
 
 public:
   virtual void		compute();
+  // void            setMD3Animation(MD3_ANIMATION anim);
 };
 
 #endif

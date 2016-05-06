@@ -1,42 +1,21 @@
-/*
-** Collider.hpp for cpp_indie_studio
-**
-** Made by	Adrien WERY
-** Login	wery_a
-**
-** Started on	Wed Apr 27 18:27:45 2016 Adrien WERY
-** Last update	Thu Apr 28 15:54:11 2016 Adrien WERY
-*/
+//
+// Created by wery_a on 06/05/16.
+//
 
-#ifndef COLLIDER_HPP
-# define COLLIDER_HPP
+#ifndef CPP_INDIE_STUDIO_COLLIDER_HPP
+# define CPP_INDIE_STUDIO_COLLIDER_HPP
 
-# include "IrrlichtController.hpp"
-# include <vector>
+# include <stack>
+# include "BomberMap.hpp"
 
-class Collider {
+class Collider
+{
 public:
-    enum Type {
-        NONE = 0,
-        CHARACTER = 1 << 0,
-        BOMB = 1 << 1,
-        OTHER = 1 << 2
-    };
-private:
-    unsigned int        _distance;
-    int                 _flags;
-    std::vector<int>    _ids;
-    irr::scene::ISceneCollisionManager  *_collMan;
+    Collider();
+    virtual ~Collider();
+
 public:
-    Collider (int flags = CHARACTER | BOMB | OTHER);
-    virtual ~Collider ();
-    int collid(irr::core::vector3df pos, IrrlichtController::Direction dir);
-    irr::scene::ISceneNode  *hit(irr::core::line3d<irr::f32> ray) const;
-    irr::scene::ISceneNode  *rangeHit(irr::core::vector3df pos, IrrlichtController::Direction dir) const;
-
-
-    void                    setDistance(unsigned int distance);
-    unsigned int            getDistance() const;
+    std::vector<AGameObject*>   collid(irr::core::vector2df const &pos) const;
 };
 
-#endif /* !COLLIDER_HPP */
+#endif //CPP_INDIE_STUDIO_COLLIDER_HPP

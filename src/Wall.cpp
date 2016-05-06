@@ -5,13 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Wed Apr 27 20:04:08 2016 Victor Gouet
+// Last update Fri May  6 17:36:58 2016 Victor Gouet
 //
 
 #include "../include/Wall.hpp"
 
-Wall::Wall(irr::core::vector3df const &pos, State state) // 1 caisseMetal
-  : AGameObject(pos, state == Invicible ? "media/caisse-metal" : "media/caisse"), _state(state)
+Wall::Wall(irr::core::vector2df const &pos, State state) // 1 caisseMetal
+  : AGameObject(pos, state == Invicible ? "media/caisse-metal.md2" : "media/caisse.md2",
+		state == Invicible ? "media/caisse-metal.png" : "media/caisse.png",
+                (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
   
 }
@@ -19,6 +21,16 @@ Wall::Wall(irr::core::vector3df const &pos, State state) // 1 caisseMetal
 Wall::~Wall()
 {
   
+}
+
+
+void                        Wall::dead()
+{
+}
+
+bool				Wall::isDestructible() const
+{
+  return ((_state == Destructible));
 }
 
 Wall::State			Wall::getState() const

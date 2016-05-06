@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Thu Apr 28 10:09:59 2016 Victor Gouet
+// Last update Fri May  6 17:35:57 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -24,8 +24,12 @@ public:
     };
 
 public:
-  Wall(irr::core::vector3df const &pos, State state = Destructible);
+  Wall(irr::core::vector2df const &pos, State state = Destructible);
   virtual ~Wall();
+
+public:
+  virtual void                        dead();
+  virtual bool				isDestructible() const;
 
 public:
   State			getState() const;
