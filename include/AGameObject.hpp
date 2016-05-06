@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Sat Apr 30 10:00:35 2016 Victor Gouet
+// Last update Fri May  6 17:30:51 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -36,7 +36,12 @@ public:
     void                                setPos(irr::core::vector2df const &pos);
     irr::core::vector2df                getMapPos() const;
     irr::core::vector2df                getRealPos() const;
-    virtual void                        dead();
+
+public:
+  virtual void                        dead() = 0;
+  virtual bool				isDestructible() const = 0;
+
+
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;
   Type                                  _type;

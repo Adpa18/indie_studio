@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri May  6 17:20:09 2016 Victor Gouet
+// Last update Fri May  6 17:42:40 2016 Victor Gouet
 //
 
-#include "FireBomb.hpp"
-#include "BomberMap.hpp"
+#include "../include/FireBomb.hpp"
+#include "../include/BomberMap.hpp"
 
 FireBomb::FireBomb() : ABomb()
 {
@@ -46,7 +46,9 @@ void		FireBomb::willExplose()
     for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
         if (this != (*it)) {
             AGameObject *obj = (*it);
-            delete obj;
+	    obj->dead();
+	    if (obj->isDestructible())
+	      delete obj;
         }
     }
     stop = false;
@@ -57,8 +59,10 @@ void		FireBomb::willExplose()
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
-                AGameObject *obj = (*it);
-                delete obj;
+	      AGameObject *obj = (*it);
+	      obj->dead();
+	      if (obj->isDestructible())
+		delete obj;
             }
             if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
                 stop = true;
@@ -74,7 +78,9 @@ void		FireBomb::willExplose()
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
                 AGameObject *obj = (*it);
-                delete obj;
+		obj->dead();
+		if (obj->isDestructible())
+		  delete obj;
             }
             if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
                 stop = true;
@@ -90,7 +96,9 @@ void		FireBomb::willExplose()
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
                 AGameObject *obj = (*it);
-                delete obj;
+		obj->dead();
+		if (obj->isDestructible())
+		  delete obj;
             }
             if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
                 stop = true;
@@ -106,7 +114,9 @@ void		FireBomb::willExplose()
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
                 AGameObject *obj = (*it);
-                delete obj;
+		obj->dead();
+		if (obj->isDestructible())
+		  delete obj;
             }
             if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
                 stop = true;

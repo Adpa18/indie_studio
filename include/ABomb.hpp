@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Fri May  6 17:16:33 2016 Victor Gouet
+// Last update Fri May  6 17:37:29 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
@@ -41,6 +41,10 @@ public:
 
 protected:
   virtual void		disable();
+
+public:
+  virtual void                        dead();
+  virtual bool				isDestructible() const;
 
 public:
   virtual void		        willExplose() = 0;

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May  5 15:24:24 2016 Victor Gouet
+// Last update Fri May  6 17:33:18 2016 Victor Gouet
 //
 
 #include "../include/Player.hpp"

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May  5 15:23:50 2016 Victor Gouet
+// Last update Fri May  6 17:35:15 2016 Victor Gouet
 //
 
 // #include "Collider.hpp"
@@ -28,7 +28,6 @@ static const SMD3AnimationType MD3AnimationTypeList[3] =
 	{ 217,  247,  25}, // ATTACK
 };
 
-
 ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
 		       std::string const &mesh, std::string const &texture, int player)
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
@@ -49,6 +48,15 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
 
 ACharacter::~ACharacter()
 {
+}
+
+void                    ACharacter::dead()
+{
+}
+
+bool			ACharacter::isDestructible() const
+{
+  return (false);
 }
 
 void			ACharacter::exploseHisBomb()

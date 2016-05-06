@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu May  5 15:23:25 2016 Victor Gouet
+// Last update Fri May  6 17:34:36 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -32,6 +32,10 @@ protected:
   void			setMD3Animation(MD3_ANIMATION anim);
     void        action(ACTION act);
     void        moveTo(irr::core::vector2df const &dir);
+
+public:
+  virtual void                  dead();
+  virtual bool		        isDestructible() const;
 
 public:
     std::string const   &getName() const;

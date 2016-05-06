@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Sat Apr 30 10:06:22 2016 Victor Gouet
+// Last update Fri May  6 17:36:58 2016 Victor Gouet
 //
 
 #include "../include/Wall.hpp"
@@ -21,6 +21,16 @@ Wall::Wall(irr::core::vector2df const &pos, State state) // 1 caisseMetal
 Wall::~Wall()
 {
   
+}
+
+
+void                        Wall::dead()
+{
+}
+
+bool				Wall::isDestructible() const
+{
+  return ((_state == Destructible));
 }
 
 Wall::State			Wall::getState() const

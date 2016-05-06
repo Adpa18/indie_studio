@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May  6 17:18:59 2016 Victor Gouet
+// Last update Fri May  6 17:51:57 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -51,11 +51,24 @@ ABomb::~ABomb()
   delete threadBomb;
 }
 
+void                        ABomb::dead()
+{
+  // willExplose();
+  __active = true;
+  use = false;
+}
+
+bool				ABomb::isDestructible() const
+{
+  return (false);
+}
+
 void				ABomb::run()
 {
   while (alive)
     {
-      
+      int i = 0;
+
       while (!isNotUse() && isAlive())
 	usleep(0);
       _mutex.lock();
@@ -64,7 +77,12 @@ void				ABomb::run()
 	  _mutex.unlock();
 	  return ;
 	}
-      sleep(3);
+      while (i < 3000 && __active == false)
+	{
+	  usleep(1000);
+	  ++i;
+	}
+      // sleep(3);
       if (!alive)
 	{
 	  _mutex.unlock();
