@@ -12,24 +12,22 @@
 
 // # include "../include/ACharacter.hpp"
 
-#include "../include/Player.hpp"
-#include "../include/EventGame.hpp"
-#include "../include/BomberMap.hpp"
 #include "../include/FireBomb.hpp"
+#include "../include/EventGame.hpp"
+#include "../include/Player.hpp"
+#include "../include/BomberMap.hpp"
 #include <iostream>
 
 
 int	main()
 {
   IrrlichtController::getDevice(false);
-
-  EventGame		eventGame;
-
+  EventGame		                eventGame;
   IrrlichtController::getDevice()->setEventReceiver(&eventGame);
+  std::vector<ACharacter *>     characters;
 
-  BomberMap		map;
-
-  Player	sydney("ROGER", irr::core::vector3df(-100, 0, -100), "media/ziggs.md3", "media/ziggs.png", 0, eventGame);
+    characters.push_back(new Player("ROGER", irr::core::vector2di(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, eventGame));
+    BomberMap::getMap()->genMap();
 
   // sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
 
@@ -54,9 +52,7 @@ int	main()
 
  //REAL CAM
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-  (0, irr::core::vector3df(0, 200
-  			   , -200
-  			   ), irr::core::vector3df(0,5,0));
+  (0, irr::core::vector3df(0, 200, -200), irr::core::vector3df(0,5,0));
 
   //camera->setPosition(irr::core::vector3df(0, 100, -100));
   camera->setTarget(irr::core::vector3df(0, 0, 0));
@@ -65,43 +61,29 @@ int	main()
   camera->setFarValue(1000);
   camera->setNearValue(10);
 
-  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f, 1.0f,
-									     1.0f, 1.0f));
+  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f, 1.0f, 1.0f, 1.0f));
 
   // TEXTURE DU CIEL ET GROUND
-  IrrlichtController::getSceneManager()->addSkyBoxSceneNode(IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_up.jpg"),
-							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_dn.jpg"), //dn
-							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_lf.jpg"), //lf
-							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_rt.jpg"), //rt
-							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_ft.jpg"), //ft
-							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_bk.jpg")); //bk
+//  IrrlichtController::getSceneManager()->addSkyBoxSceneNode(IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_up.jpg"),
+//							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_dn.jpg"), //dn
+//							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_lf.jpg"), //lf
+//							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_rt.jpg"), //rt
+//							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_ft.jpg"), //ft
+//							    IrrlichtController::getDriver()->getTexture("/home/gouet_v/Downloads/irrlicht-1.8.3/media/irrlicht2_bk.jpg")); //bk
 
   while (IrrlichtController::getDevice()->run())
     {
       IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
-      if (eventGame.IsKeyDown(irr::KEY_ESCAPE))
-      	{
+      if (eventGame.IsKeyDown(irr::KEY_ESCAPE)) {
       	  break;
-      	}
-      // else if (eventGame.IsKeyDown(irr::KEY_SPACE))
-      // 	{
-	  // sydney.
-      // 	  std::cout << "POSSSS" << std::endl;
-      // 	  if (!bomb.isUse())
-      // 	    bomb << sydney->getPosition();
-      	// }
-      sydney.compute();
-      // pikashy.compute();
-
+      }
+        for (std::vector<ACharacter*>::iterator it = characters.begin(); it != characters.end(); ++it) {
+            (*it)->compute();
+        }
       IrrlichtController::getSceneManager()->drawAll();
       IrrlichtController::getGUIEnvironment()->drawAll();
-
-      // camera->setTarget(sydney->getPosition());
-
       IrrlichtController::getDriver()->endScene();
     }
-
   IrrlichtController::getDevice()->drop();
-
 }

@@ -13,6 +13,9 @@
 
 //# include <X11/Xlib.h>
 # include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
+# include <map>
+
+class AGameObject;
 
 class	IrrlichtController
 {
@@ -28,30 +31,7 @@ public:
 private:
     static irr::IrrlichtDevice *device;
 public:
-    static const size_t	scale = 25;
     static const size_t	bombSize = 15;
-    enum Direction {
-        LEFT = 1 << 0,
-        RIGHT = 1 << 1,
-        UP = 1 << 2,
-        DOWN = 1 << 3
-    };
-    enum Controller {
-        SQUARE = 1 << 0,
-        CROSS = 1 << 1,
-        CIRCLE = 1 << 2,
-        TRIANGLE = 1 << 3,
-        L1 = 1 << 4,
-        R1 = 1 << 5,
-        L2 = 1 << 6,
-        R2 = 1 << 7,
-        FIRST_OPTION = 1 << 7,
-        SECOND_OPTION = 1 << 8,
-        L3 = 1 << 9,
-        R3 = 1 << 10,
-        HOME = 1 << 11,
-        OTHER = 1 << 12
-    };
 };
 
 #endif

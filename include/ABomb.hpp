@@ -34,7 +34,7 @@ public:
   int			getPower() const;
 
 public:
-  void			operator<<(irr::core::vector3df const &);
+  void			operator<<(irr::core::vector2di const &pos);
 
 public:
   virtual void		        willExplose() = 0;
@@ -56,8 +56,6 @@ private:
 
 protected:
   int				_power;
-
-protected:
   bool				alive;
   bool				use;
 };

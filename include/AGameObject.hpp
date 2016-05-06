@@ -13,22 +13,32 @@
 
 # include <string>
 # include "IrrlichtController.hpp"
-# include "Collider.hpp"
 
 class	AGameObject
 {
 public:
-  AGameObject(irr::core::vector3df const &pos, std::string const &mesh, std::string const &texture, Collider *collider = NULL);
+    enum Type {
+        NONE = 0,
+        CHARACTER = 1 << 0,
+        BOMB = 1 << 1,
+        ITEM = 1 << 2,
+        BLOCK = 1 << 3,
+        OTHER = 1 << 4
+    };
+public:
+  AGameObject(irr::core::vector2di const &pos, std::string const &mesh,
+              std::string const &texture, Type type = NONE);
   virtual ~AGameObject();
 
 public:
-  irr::scene::IAnimatedMeshSceneNode *operator->();
-  void      addCollider(Collider *collider);
-  irr::scene::ISceneNode    *collid(irr::core::vector3df pos, IrrlichtController::Direction dir) const;
-  Collider  *getCollider() const;
+  irr::scene::IAnimatedMeshSceneNode    *operator->();
+    AGameObject::Type                   getType() const;
+    void                                setPos(irr::core::vector2di const &pos);
+    irr::core::vector2di                getPos() const;
+    virtual void                        dead();
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;
-  Collider                              *_collider;
+  Type                                  _type;
 };
 
 #endif

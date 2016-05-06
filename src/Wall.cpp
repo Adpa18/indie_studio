@@ -10,9 +10,10 @@
 
 #include "../include/Wall.hpp"
 
-Wall::Wall(irr::core::vector3df const &pos, State state) // 1 caisseMetal
+Wall::Wall(irr::core::vector2di const &pos, State state) // 1 caisseMetal
   : AGameObject(pos, state == Invicible ? "media/caisse-metal.md2" : "media/caisse.md2",
-		state == Invicible ? "media/caisse-metal.png" : "media/caisse.png"), _state(state)
+		state == Invicible ? "media/caisse-metal.png" : "media/caisse.png",
+                (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
   
 }

@@ -13,10 +13,14 @@
 
 # include <vector>
 # include <string>
+# include "ACharacter.hpp"
 # include "Wall.hpp"
 
 class	BomberMap
 {
+public:
+    static const int	size_side = 11;
+    static const size_t	scale = 25;
 public:
   BomberMap(std::string const &);
   BomberMap();
@@ -25,27 +29,40 @@ public:
     void  serialize(std::string const &) const;
     void  deserialize(std::string const &);
 
+public:
+    static BomberMap    *getMap();
+    void    genMap();
+
 private:
   void			generateMap();
   void		        generateGround();
 
-private:
-  char			_patron[11][11] = {
-    {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X', 'X'},
-    {'X', ' ', ' ', 'C', 'C', 'C', 'C', 'C',' ', ' ', 'X'},
-    {'X', ' ', 'X', 'C', 'X', 'C', 'X', 'C','X', ' ', 'X'},
-    {'X', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'X'},
-    {'X', 'C', 'X', 'C', 'X', 'C', 'X', 'C','X', 'C', 'X'},
-    {'X', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'X'},
-    {'X', 'C', 'X', 'C', 'X', 'C', 'X', 'C','X', 'C', 'X'},
-    {'X', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'X'},
-    {'X', ' ', 'X', 'C', 'X', 'C', 'X', 'C','X', ' ', 'X'},
-    {'X', ' ', ' ', 'C', 'C', 'C', 'C', 'C',' ', ' ', 'X'},
-    {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X', 'X'}
-  };
+public:
+    void  add(AGameObject* obj, const irr::core::vector2di &pos);
+    void  remove(AGameObject *obj);
+    void  move(AGameObject *obj, const irr::core::vector2di &pos);
+    std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2di &pos) const;
 
 private:
-  std::vector<AGameObject *>	_objects;
+    std::map<AGameObject*, irr::core::vector2di> _objects;
+
+private:
+    char			_patron[11][11] = {
+            {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X', 'X'},
+            {'X', ' ', ' ', 'C', 'C', 'C', 'C', 'C',' ', ' ', 'X'},
+            {'X', ' ', 'X', 'C', 'X', 'C', 'X', 'C','X', ' ', 'X'},
+            {'X', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'X'},
+            {'X', 'C', 'X', 'C', 'X', 'C', 'X', 'C','X', 'C', 'X'},
+            {'X', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'X'},
+            {'X', 'C', 'X', 'C', 'X', 'C', 'X', 'C','X', 'C', 'X'},
+            {'X', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'X'},
+            {'X', ' ', 'X', 'C', 'X', 'C', 'X', 'C','X', ' ', 'X'},
+            {'X', ' ', ' ', 'C', 'C', 'C', 'C', 'C',' ', ' ', 'X'},
+            {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X', 'X'}
+    };
+
+private:
+    static BomberMap    *bomberMap;
 };
 
 #endif

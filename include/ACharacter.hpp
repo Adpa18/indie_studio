@@ -24,36 +24,35 @@ private:
     static constexpr double BASICSPEED = 10.0;
 
 public:
-  ACharacter(std::string const &name, irr::core::vector3df const &pos, std::string const &mesh, std::string const &texture);
+  ACharacter(std::string const &name, irr::core::vector2di const &pos,
+             std::string const &mesh, std::string const &texture, int player);
   virtual ~ACharacter();
 
 protected:
   void			setMD3Animation(MD3_ANIMATION anim);
-  void			goLeft();
-  void			goRight();
-  void			goDown();
-  void			goUp();
+    void        action(ACTION act);
+    void        moveTo(irr::core::vector2di const &pos);
+//  void			goLeft();
+//  void			goRight();
+//  void			goDown();
+//  void			goUp();
 
 public:
-  std::string const &   getName() const;
-  double                getMoveSpeed() const;
-
-public:
-  void                setName(const std::string &);
-  void			exploseHisBomb();
-  virtual void		compute() = 0;
-  // void                  move(int x, int y, int z);
-  // void                  move(int x, int y);
-
-public:
-  void			putBomb();
+    std::string const   &getName() const;
+    double              getMoveSpeed() const;
+    void		        putBomb();
+    void                setName(const std::string &);
+    void			    exploseHisBomb();
+    virtual void		compute() = 0;
 
 private:
-  std::string	_name;
-  BombContainer			*_bombContainer;
-  // std::vector<Bomb *>	bombs;
+  std::string	                    _name;
+    int                             _player;
+  BombContainer			            *_bombContainer;
+  double		                    moveSpeed;
+    int					            anime;
   // Bonus			*bonus;
-  double		moveSpeed;
+  // std::vector<Bomb *>	bombs;
 
 protected:
   irr::u32 then;

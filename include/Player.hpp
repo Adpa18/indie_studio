@@ -19,12 +19,9 @@
 class	Player	: public ACharacter
 {
 private:
-  int     _player;
   EventGame	const &					_eventGame;
-  int							    anime;
   std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
   const MotionController            *_joystick;
-  IrrlichtController::Direction     _dir;
   // enum MD3_ANIMATION {
   //   IDLE,
   //   RUN,
@@ -32,8 +29,9 @@ private:
   // };
 
 public:
-  Player(std::string const &name, irr::core::vector3df const &pos,
-	 std::string const &mesh, std::string const &texture, int player, EventGame const &eventGame);
+  Player(std::string const &name, irr::core::vector2di const &pos,
+	 std::string const &mesh, std::string const &texture, int player,
+		 EventGame const &eventGame);
   virtual ~Player();
 
 public:

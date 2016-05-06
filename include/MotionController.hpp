@@ -23,6 +23,24 @@ public:
     const irr::SJoystickInfo            &getInfo() const;
     const irr::SEvent::SJoystickEvent   &getData() const;
     void                                setData(irr::SEvent::SJoystickEvent data);
+
+public:
+    enum Controller {
+        SQUARE = 1 << 0,
+        CROSS = 1 << 1,
+        CIRCLE = 1 << 2,
+        TRIANGLE = 1 << 3,
+        L1 = 1 << 4,
+        R1 = 1 << 5,
+        L2 = 1 << 6,
+        R2 = 1 << 7,
+        FIRST_OPTION = 1 << 7,
+        SECOND_OPTION = 1 << 8,
+        L3 = 1 << 9,
+        R3 = 1 << 10,
+        HOME = 1 << 11,
+        OTHER = 1 << 12
+    };
 };
 
 #endif /* !MOTIONCONTROLLER_HPP */

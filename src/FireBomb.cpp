@@ -8,12 +8,12 @@
 // Last update Fri Apr 29 16:51:45 2016 Victor Gouet
 //
 
-#include "../include/FireBomb.hpp"
-#include <iostream>
+#include "FireBomb.hpp"
+#include "BomberMap.hpp"
 
 FireBomb::FireBomb() : ABomb()
 {
-    this->addCollider(new Collider());
+
 }
 
 FireBomb::~FireBomb()
@@ -38,26 +38,79 @@ FireBomb::FireBomb(ABomb const *other)
 
 void		FireBomb::willExplose()
 {
-    irr::scene::ISceneNode  *obj;
+    irr::core::vector2di        pos = this->getPos();
+    std::vector<AGameObject *>   objs;
+    AGameObject::Type           type;
+    bool                        stop;
 
-    (*this)->setVisible(false);
-    std::cout << "EXPLOSE DANS FIREBOMB" << std::endl;
-    this->getCollider()->setDistance(this->_power * IrrlichtController::scale);
-    if ((obj = this->collid((*this)->getPosition(), IrrlichtController::LEFT))) {
-      std::cout << "Object with ID => " << obj->getID() << " touched" << std::endl;
-      obj->remove();
-  }
-  if ((obj = this->collid((*this)->getPosition(), IrrlichtController::RIGHT))) {
-      std::cout << "Object with ID => " << obj->getID() << " touched" << std::endl;
-      obj->remove();
-  }
-  if ((obj = this->collid((*this)->getPosition(), IrrlichtController::UP))) {
-      std::cout << "Object with ID => " << obj->getID() << " touched" << std::endl;
-      obj->remove();
-  }
-  if ((obj = this->collid((*this)->getPosition(), IrrlichtController::DOWN))) {
-      std::cout << "Object with ID => " << obj->getID() << " touched" << std::endl;
-      obj->remove();
-  }
-  (*this)->setPosition(irr::core::vector3df(0, 0, 0));
+    for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+        if (this != (*it)) {
+            AGameObject *obj = (*it);
+            delete obj;
+        }
+    }
+    stop = false;
+    for (int i = 1; i <= this->_power; ++i) {
+        if (stop)
+            break;
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(-i, 0));
+        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+            type = (*it)->getType();
+            if (type != AGameObject::BLOCK) {
+                AGameObject *obj = (*it);
+                delete obj;
+            }
+            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+                stop = true;
+            }
+        }
+    }
+    stop = false;
+    for (int i = 1; i <= this->_power; ++i) {
+        if (stop)
+            break;
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(i, 0));
+        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+            type = (*it)->getType();
+            if (type != AGameObject::BLOCK) {
+                AGameObject *obj = (*it);
+                delete obj;
+            }
+            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+                stop = true;
+            }
+        }
+    }
+    stop = false;
+    for (int i = 1; i <= this->_power; ++i) {
+        if (stop)
+            break;
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(0, -i));
+        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+            type = (*it)->getType();
+            if (type != AGameObject::BLOCK) {
+                AGameObject *obj = (*it);
+                delete obj;
+            }
+            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+                stop = true;
+            }
+        }
+    }
+    stop = false;
+    for (int i = 1; i <= this->_power; ++i) {
+        if (stop)
+            break;
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2di(0, i));
+        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+            type = (*it)->getType();
+            if (type != AGameObject::BLOCK) {
+                AGameObject *obj = (*it);
+                delete obj;
+            }
+            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+                stop = true;
+            }
+        }
+    }
 }
