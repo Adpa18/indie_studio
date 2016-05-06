@@ -84,25 +84,28 @@ void            ACharacter::action(ACTION act)
 
     if (_arrived || act == BOMB)
     {
-        _arrived = false;
         switch (act) {
             case DOWN:
                 stand = false;
+                _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 0, 0));
                 _last_act = irr::core::vector2df(0, -1);
                 break;
             case UP:
                 stand = false;
+                _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 180, 0));
                 _last_act = irr::core::vector2df(0, 1);
                 break;
             case LEFT:
                 stand = false;
+                _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 90, 0));
                 _last_act = irr::core::vector2df(-1, 0);
                 break;
             case RIGHT:
                 stand = false;
+                _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, -90, 0));
                 _last_act = irr::core::vector2df(1, 0);
                 break;
@@ -115,7 +118,10 @@ void            ACharacter::action(ACTION act)
         }
     }
     if (!_arrived)
+    {
+        stand = false;
         this->moveTo(_last_act);
+    }
     if (stand && anime != irr::scene::EMAT_STAND)  {
         setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
         anime = irr::scene::EMAT_STAND;
@@ -145,12 +151,8 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
         this->setPos(this->getMapPos() + dir);
         return;
     }
-//    if (distance < 0.5) {
-//        this->setPos(this->getMapPos() + dir);
-//    }
     (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * 100, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * 100));
 }
-
 
 void			ACharacter::putBomb()
 {
