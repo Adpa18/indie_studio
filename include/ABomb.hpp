@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Fri May  6 13:00:55 2016 Victor Gouet
+// Last update Fri May  6 17:16:33 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
@@ -29,6 +29,8 @@ public:
   bool			isAlive() const;
   bool			isUse() const;
   bool			isActive() const;
+
+private:
   bool		        isNotUse() const;
 
 public:
@@ -36,6 +38,9 @@ public:
 
 public:
   void			operator<<(irr::core::vector2df const &pos);
+
+protected:
+  virtual void		disable();
 
 public:
   virtual void		        willExplose() = 0;
