@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May  6 13:01:32 2016 Victor Gouet
+// Last update Fri May  6 17:18:59 2016 Victor Gouet
 //
 
 #include <iostream>
 #include <unistd.h>
-#include "ABomb.hpp"
+#include "../include/ABomb.hpp"
 
 ABomb::ABomb() : AGameObject(irr::core::vector2df(0, 0), "media/pokeball.md2",
                              "media/pokeball.png", AGameObject::BOMB)
@@ -130,18 +130,20 @@ bool			ABomb::isUse() const
       _mutex.unlock();
     }
   return (_use);
-  // return (use);
+}
+
+void		ABomb::disable()
+{
+  this->setPos(irr::core::vector2df(-1000, -1000));
 }
 
 void			ABomb::operator<<(irr::core::vector2df const &pos)
 {
-  // std::lock_guard<std::mutex> lock(_mutex);
   _mutex.lock();
   (*this)->setVisible(true);
   use = true;
     this->setPos(pos);
   _mutex.unlock();
-  // condVar.notify_one();
 }
 
 int			ABomb::getPower() const
