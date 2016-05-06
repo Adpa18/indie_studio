@@ -49,6 +49,7 @@ private:
     int					            anime;
     irr::core::vector2df            _last_act;
     bool                            _arrived;
+    bool                            bombPosed;
   // Bonus			*bonus;
   // std::vector<Bomb *>	bombs;
 

@@ -52,7 +52,7 @@ int	main()
 
  //REAL CAM
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-  (0, irr::core::vector3df(0, 200, -200), irr::core::vector3df(0,5,0));
+  (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0,5,0));
 
   //camera->setPosition(irr::core::vector3df(0, 100, -100));
   camera->setTarget(irr::core::vector3df(0, 0, 0));

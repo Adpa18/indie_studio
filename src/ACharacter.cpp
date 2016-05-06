@@ -34,13 +34,16 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
+    bombPosed = false;
     _arrived = true;
     _last_act = irr::core::vector2df(0, 0);
     anime = irr::scene::EMAT_STAND;
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>();
-  // BombFactory::AddBomb<FireBomb>(*_bombContainer);
+   BombFactory::AddBomb<FireBomb>(*_bombContainer);
+   BombFactory::AddBomb<FireBomb>(*_bombContainer);
+   BombFactory::AddBomb<FireBomb>(*_bombContainer);
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 
@@ -86,33 +89,40 @@ void            ACharacter::action(ACTION act)
     {
         switch (act) {
             case DOWN:
+                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 0, 0));
                 _last_act = irr::core::vector2df(0, -1);
                 break;
             case UP:
+                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 180, 0));
                 _last_act = irr::core::vector2df(0, 1);
                 break;
             case LEFT:
+                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 90, 0));
                 _last_act = irr::core::vector2df(-1, 0);
                 break;
             case RIGHT:
+                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, -90, 0));
                 _last_act = irr::core::vector2df(1, 0);
                 break;
             case BOMB:
-                this->putBomb();
+                if (!bombPosed)
+                    this->putBomb();
+                bombPosed = true;
                 break;
             default:
+                bombPosed = false;
                 _arrived = true;
                 break;
         }
