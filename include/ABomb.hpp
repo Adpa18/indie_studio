@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Thu May  5 15:20:40 2016 Victor Gouet
+// Last update Fri May  6 13:00:55 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
@@ -29,6 +29,7 @@ public:
   bool			isAlive() const;
   bool			isUse() const;
   bool			isActive() const;
+  bool		        isNotUse() const;
 
 public:
   int			getPower() const;

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Thu May  5 15:53:20 2016 Victor Gouet
+// Last update Fri May  6 13:01:32 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -51,38 +51,26 @@ ABomb::~ABomb()
   delete threadBomb;
 }
 
-// void			ABomb::willExplose()
-// {
-//   (*this)->setVisible(false);
-// }
-
 void				ABomb::run()
 {
   while (alive)
     {
-      // std::unique_lock<std::mutex>	lk(_mutex);
-
-      while (!isUse() && isAlive())
+      
+      while (!isNotUse() && isAlive())
 	usleep(0);
       _mutex.lock();
-	//condVar.wait(lk);
       if (alive == false)
 	{
 	  _mutex.unlock();
-	  // lk.unlock();
 	  return ;
 	}
-      //(*this)->setVisible(true);
-      //_mutex.unlock();
       sleep(3);
-      //_mutex.lock();
       if (!alive)
 	{
 	  _mutex.unlock();
 	  return ;
 	}
       __active = true;
-      // willExplose();
       use = false;
       _mutex.unlock();
     }
@@ -114,6 +102,21 @@ bool			ABomb::isAlive() const
       _mutex.unlock();
     }
   return (_alive);
+}
+
+
+bool			ABomb::isNotUse() const
+{
+  bool			_use;
+
+  _use = false;
+  if (_mutex.try_lock())
+    {
+      _use = use;
+      _mutex.unlock();
+    }
+  return (_use);
+  // return (use);
 }
 
 bool			ABomb::isUse() const
