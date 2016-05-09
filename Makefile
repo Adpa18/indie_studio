@@ -23,6 +23,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)GameManager.cpp		\
 			$(SRC_DIR)BonusSpeed.cpp		\
 			$(SRC_DIR)ABonus.cpp			\
+			$(SRC_DIR)BonusPower.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Fri May  6 17:30:51 2016 Victor Gouet
+// Last update Mon May  9 14:31:29 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -23,7 +23,8 @@ public:
         BOMB = 1 << 1,
         ITEM = 1 << 2,
         BLOCK = 1 << 3,
-        OTHER = 1 << 4
+        OTHER = 1 << 4,
+	BONUS = 1 << 5
     };
 public:
   AGameObject(irr::core::vector2df const &pos, std::string const &mesh,

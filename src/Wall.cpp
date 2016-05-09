@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Fri May  6 17:36:58 2016 Victor Gouet
+// Last update Mon May  9 15:31:38 2016 Victor Gouet
 //
 
 #include "../include/Wall.hpp"
@@ -23,9 +23,24 @@ Wall::~Wall()
   
 }
 
-
 void                        Wall::dead()
 {
+  int			i;
+
+  srand(time(NULL));
+  i = rand() % 3;
+  switch (i)
+    {
+    case 0:
+      new BonusSpeed(this->getMapPos());
+      break;
+    case 1:
+      new BonusPower(this->getMapPos());
+      break;
+    default:
+      break;
+    }
+  // std::cout << "JESUS CHRIST" << std::endl;
 }
 
 bool				Wall::isDestructible() const

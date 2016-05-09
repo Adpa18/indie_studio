@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Fri May  6 17:37:29 2016 Victor Gouet
+// Last update Mon May  9 15:25:56 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
@@ -38,6 +38,7 @@ public:
 
 public:
   void			operator<<(irr::core::vector2df const &pos);
+  void		        setPower(int power);
 
 protected:
   virtual void		disable();

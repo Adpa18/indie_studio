@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May  6 18:02:05 2016 Victor Gouet
+// Last update Mon May  9 15:25:10 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -161,6 +161,13 @@ void			ABomb::operator<<(irr::core::vector2df const &pos)
   use = true;
     this->setPos(pos);
   _mutex.unlock();
+}
+
+void			ABomb::setPower(int power)
+{
+  if (_power > 7)
+    return ;
+  _power = power;
 }
 
 int			ABomb::getPower() const

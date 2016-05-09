@@ -5,13 +5,14 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May  9 13:42:19 2016 Victor Gouet
+// Last update Mon May  9 15:50:05 2016 Victor Gouet
 //
 
 // #include "Collider.hpp"
 #include "ACharacter.hpp"
 #include "BombFactory.hpp"
 #include <iostream>
+#include "ABonus.hpp"
 #include <BomberMap.hpp>
 
 struct SMD3AnimationType
@@ -54,6 +55,11 @@ void                    ACharacter::dead()
 {
 }
 
+BombContainer		*ACharacter::getBombContainer() const
+{
+  return (_bombContainer);
+}
+
 bool			ACharacter::isDestructible() const
 {
   return (false);
@@ -90,6 +96,11 @@ void			ACharacter::setName(const std::string &string)
 {
   _name = string;
   (*this)->setName(string.c_str());
+}
+
+void		        ACharacter::increasePowerBomb()
+{
+  _bombContainer->upgradePowerBombs();
 }
 
 void            ACharacter::action(ACTION act)
@@ -160,9 +171,19 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
     std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir);
     AGameObject::Type           type;
 
-    for (std::vector<AGameObject*>::const_iterator it = objs.begin(); it != objs.end(); ++it) {
+    for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
         type = (*it)->getType();
-        if (type != AGameObject::CHARACTER) {
+	if (type == AGameObject::BONUS)
+	  {
+	    ABonus	*bonus;
+
+	    if (((bonus = dynamic_cast<ABonus *>(*it))) != NULL)
+	      {
+		bonus->take(*this);
+		delete bonus;
+	      }
+	  }
+        else if (type != AGameObject::CHARACTER) {
             _arrived = true;
             return;
         }

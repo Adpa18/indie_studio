@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:21:28 2016 Victor Gouet
-// Last update Thu May  5 15:18:34 2016 Victor Gouet
+// Last update Mon May  9 15:27:08 2016 Victor Gouet
 //
 
 #include "../include/BombContainer.hpp"
@@ -44,6 +44,14 @@ void				BombContainer::addBomb(ABomb *bomb)
 {
   if (_bombs.size() < 9)
     _bombs.push_back(bomb);
+}
+
+void				BombContainer::upgradePowerBombs()
+{
+  for (std::vector<ABomb *>::iterator it = _bombs.begin(), end = _bombs.end() ; it != end ; ++it)
+    {
+      (*it)->setPower((*it)->getPower() + 1);
+    }
 }
 
 void				BombContainer::bombExplose()

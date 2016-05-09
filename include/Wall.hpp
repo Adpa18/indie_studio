@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Fri May  6 17:35:57 2016 Victor Gouet
+// Last update Mon May  9 15:31:19 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -13,6 +13,8 @@
 
 # include <string>
 # include "AGameObject.hpp"
+# include "BonusSpeed.hpp"
+# include "BonusPower.hpp"
 
 class	Wall : public AGameObject
 {
