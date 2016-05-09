@@ -112,6 +112,7 @@ void	GameManager::willStartGame()
 {
   characters.clear();
   characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, *eventGame));
+  characters.push_back(new Player("RICHARD", irr::core::vector2df(1, 9), "media/ziggs.md3", "media/ziggs.png", 0, *eventGame));
   BomberMap::getMap()->genMap();
 
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
