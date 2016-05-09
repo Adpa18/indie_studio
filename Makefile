@@ -20,6 +20,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)KeysController.cpp		\
 			$(SRC_DIR)FireBomb.cpp			    \
 			$(SRC_DIR)BombContainer.cpp		    \
+			$(SRC_DIR)GameManager.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 
