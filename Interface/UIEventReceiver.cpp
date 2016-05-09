@@ -101,7 +101,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     }
     fptr = nullptr;
 
-    //RefreshButtons();
+    RefreshButtons();
 
     return false;
 }
@@ -220,6 +220,8 @@ void UIEventReceiver::RefreshButtons()
 
 void UIEventReceiver::SelectNextButton()
 {
+    if (m_buttons.size() == 0)
+        return;
     irr::gui::IGUIButton *b = m_buttons.front();
     m_buttons.pop_front();
     m_buttons.push_back(b);
@@ -227,6 +229,8 @@ void UIEventReceiver::SelectNextButton()
 
 void UIEventReceiver::SelectPrevButton()
 {
+    if (m_buttons.size() == 0)
+        return;
     irr::gui::IGUIButton *b = m_buttons.back();
     m_buttons.pop_back();
     m_buttons.push_front(b);
