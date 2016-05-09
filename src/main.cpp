@@ -5,22 +5,36 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Sat Apr 30 15:42:43 2016 Victor Gouet
+// Last update Mon May  9 11:59:54 2016 Victor Gouet
 //
 
 // #include "../include/AGameObject.hpp"
 
 // # include "../include/ACharacter.hpp"
 
-#include "../include/FireBomb.hpp"
-#include "../include/EventGame.hpp"
-#include "../include/Player.hpp"
-#include "../include/BomberMap.hpp"
+#include "../include/GameManager.hpp"
+
+// #include "../include/FireBomb.hpp"
+// #include "../include/EventGame.hpp"
+// #include "../include/Player.hpp"
+// #include "../include/BomberMap.hpp"
 #include <iostream>
 
 
 int	main()
 {
+  GameManager::SharedInstance()->run();
+  return (0);
+
+
+
+
+
+
+
+
+
+  // PLUS UTILISE
   IrrlichtController::getDevice(false);
   EventGame		                eventGame;
   IrrlichtController::getDevice()->setEventReceiver(&eventGame);
@@ -28,18 +42,6 @@ int	main()
 
     characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, eventGame));
     BomberMap::getMap()->genMap();
-
-  // sydney->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
-
-  // Player        pikashy("ROGER", irr::core::vector3df(30, 0, 0), "media/pikachu", 1// , _keycodes
-  // 		       , eventGame, keycodes2);
-
-  // pikashy->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
-
-  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeMaya();
-
-  // irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNodeFPS(0, 100.0f, .3f, 0, 0, 0, true, 3.f);
-
 
 
   // FREE CAM

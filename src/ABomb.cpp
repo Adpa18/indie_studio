@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May  6 17:51:57 2016 Victor Gouet
+// Last update Fri May  6 18:02:05 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -53,7 +53,6 @@ ABomb::~ABomb()
 
 void                        ABomb::dead()
 {
-  // willExplose();
   __active = true;
   use = false;
 }
