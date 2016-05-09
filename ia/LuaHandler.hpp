@@ -63,33 +63,38 @@ namespace Lua
         int     operator()(Types ... args)
         {
             int result;
+            int dum[sizeof...(Types)] = { (pushArgs(args))... };
 
-            nbofargs = 0;
-            pushArgs(args...);
-            lua_call(state, nbofargs, 1);
+            lua_call(state, sizeof...(Types), 1);
             result = lua_tointeger(state, -1);
             lua_pop(state, 1);
             return result;
         }
 
     private:
-        void    pushArgs(void)
+        int    pushArgs(void)
         {
-            return;
+            return 0;
         }
-        template <typename ... Types>
-        void    pushArgs(int topush, Types ... args)
+        int    pushArgs(int topush)
         {
             lua_pushnumber(state, topush);
-            ++nbofargs;
-            pushArgs(args...);
+            return 0;
         }
-        template <typename ... Types>
-        void pushArgs(double topush, Types ... args)
+        int pushArgs(double topush)
         {
             lua_pushnumber(state, topush);
-            ++nbofargs;
-            pushArgs(args...);
+            return 0;
+        }
+        int pushArgs(bool topush)
+        {
+            lua_pushboolean(state, topush);
+            return 0;
+        };
+        int pushArgs(const char *topush)
+        {
+            lua_pushstring(state, topush);
+            return 0;
         }
 
     private:

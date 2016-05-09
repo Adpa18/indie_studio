@@ -10,6 +10,7 @@ int main()
     Lua::LuaHandler  handler("./iaBehaviour.lua");
 
     std::cout << handler["computeIA"](2, 3) << std::endl;
+    std::cout << handler["testargs"](2, 2.4, true, "On fait des test") << std::endl;
     /*lua_State   *state;
 
     state = luaL_newstate();
