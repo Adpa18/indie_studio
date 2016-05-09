@@ -8,7 +8,8 @@
 // Last update Fri May  6 17:33:18 2016 Victor Gouet
 //
 
-#include "../include/Player.hpp"
+#include "ACharacter.hpp"
+#include "Player.hpp"
 #include <iostream>
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
@@ -18,9 +19,9 @@ Player::Player(std::string const &name, irr::core::vector2df const &pos,
 {
     (*this)->setName(name.c_str());
     this->_joystick = NULL;
-//	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
+	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
 		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
-//	}
+	}
 }
 
 Player::~Player()
@@ -33,31 +34,10 @@ void		Player::compute()
   // Joystick
   this->exploseHisBomb();
   if (this->_joystick) {
-//		const irr::SEvent::SJoystickEvent &joystickData = this->_joystick->getData();
-//		const irr::u16 povDegrees = joystickData.POV / 100;
-//		const irr::f32 DEAD_ZONE = 0.05f;
-//		moveHorizontal = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
-//		if(fabs(moveHorizontal) < DEAD_ZONE) {
-//			moveHorizontal = 0.f;
-//		}
-//		moveVertical = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
-//		if(fabs(moveVertical) < DEAD_ZONE) {
-//			moveVertical = 0.f;
-//		}
-//		if (povDegrees < 360) {
-//			if(povDegrees > 0 && povDegrees < 180) {
-//				moveHorizontal = 1.f;
-//			} else if (povDegrees > 180) {
-//				moveHorizontal = -1.f;
-//			}
-//			if(povDegrees > 90 && povDegrees < 270) {
-//				moveVertical = -1.f;
-//			} else if (povDegrees > 270 || povDegrees < 90) {
-//				moveVertical = +1.f;
-//			}
-//		}
-		// nodePosition.X += getMoveSpeed() * frameDeltaTime * moveHorizontal;
-		// nodePosition.Z += getMoveSpeed() * frameDeltaTime * moveVertical;
+      act = this->_joystick->getDirAxis(MotionController::LEFT_JOYSTICK);
+      if (this->_joystick->IsButtonPressed(MotionController::CROSS)) {
+          act = ACharacter::ACTION::BOMB;
+      }
 	} else {
 		// KeysCode
 		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {

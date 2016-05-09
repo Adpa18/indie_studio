@@ -11,10 +11,9 @@
 #ifndef PLAYER_HPP_
 # define PLAYER_HPP_
 
-# include "EventGame.hpp"
-# include "ACharacter.hpp"
-# include "MotionController.hpp"
 # include <map>
+# include "EventGame.hpp"
+# include "MotionController.hpp"
 
 class	Player	: public ACharacter
 {
