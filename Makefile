@@ -24,6 +24,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)BonusSpeed.cpp		\
 			$(SRC_DIR)ABonus.cpp			\
 			$(SRC_DIR)BonusPower.cpp		\
+			$(SRC_DIR)BonusFireBomb.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

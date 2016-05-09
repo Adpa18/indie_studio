@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:04:37 2016 Victor Gouet
-// Last update Fri Apr 29 16:35:00 2016 Victor Gouet
+// Last update Mon May  9 16:18:31 2016 Victor Gouet
 //
 
 #ifndef BOMBFACTORY_HPP_
@@ -14,7 +14,6 @@
 # include "BombContainer.hpp"
 # include "FireBomb.hpp"
 
-// template<class T>
 class		BombFactory
 {
 public:
