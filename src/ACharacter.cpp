@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May  9 15:50:05 2016 Victor Gouet
+// Last update Mon May  9 18:23:12 2016 Victor Gouet
 //
 
 // #include "Collider.hpp"
@@ -34,6 +34,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
+  this->item = NULL;
     bombPosed = false;
     _arrived = true;
     _last_act = irr::core::vector2df(0, 0);
@@ -181,6 +182,23 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 	      {
 		bonus->take(*this);
 		delete bonus;
+	      }
+	  }
+	else if (type == AGameObject::ITEM)
+	  {
+	    AItem	*item;
+
+	    if (((item = dynamic_cast<AItem *>(*it))) != NULL)
+	      {
+		// NEW ITEM
+		// TODO c'est casse ça segfault et je me barre
+
+
+		// if (this->item)
+		//   delete (this->item);
+		// this->item = item;
+		// this->item->dead();
+		// std::cout << "GET NEW ITEM" << std::endl;
 	      }
 	  }
         else if (type != AGameObject::CHARACTER) {

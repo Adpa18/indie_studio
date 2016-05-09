@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Mon May  9 16:08:05 2016 Victor Gouet
+// Last update Mon May  9 18:08:29 2016 Victor Gouet
 //
 
 #include "../include/Wall.hpp"
@@ -27,18 +27,22 @@ void                        Wall::dead()
 {
   int			i;
 
-  i = rand() % 3;
+  i = rand() % 1;
   switch (i)
     {
+    // case 0:
+    //   new BonusSpeed(this->getMapPos());
+    //   break;
+    // case 1:
+    //   new BonusPower(this->getMapPos());
+    //   break;
+    // case 2:
+    //   new BonusFireBomb(this->getMapPos());
+    //   break;    
+      
     case 0:
-      new BonusSpeed(this->getMapPos());
+      new ItemThrow(this->getMapPos());
       break;
-    case 1:
-      new BonusPower(this->getMapPos());
-      break;
-    case 2:
-      new BonusFireBomb(this->getMapPos());
-      break;     
     default:
       break;
     }

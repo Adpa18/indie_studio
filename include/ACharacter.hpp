@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Mon May  9 15:51:31 2016 Victor Gouet
+// Last update Mon May  9 18:11:38 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -13,6 +13,7 @@
 
 # include "AGameObject.hpp"
 # include "BombContainer.hpp"
+# include "AItem.hpp"
 
 class	ACharacter	: public AGameObject
 {
@@ -60,6 +61,7 @@ private:
     irr::core::vector2df            _last_act;
     bool                            _arrived;
     bool                            bombPosed;
+  AItem					*item;
   // Bonus			*bonus;
   // std::vector<Bomb *>	bombs;
 
