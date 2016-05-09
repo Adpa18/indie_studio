@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Mon May  9 18:11:38 2016 Victor Gouet
+// Last update Mon May  9 21:50:08 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -62,8 +62,6 @@ private:
     bool                            _arrived;
     bool                            bombPosed;
   AItem					*item;
-  // Bonus			*bonus;
-  // std::vector<Bomb *>	bombs;
 
 protected:
   irr::u32 then;

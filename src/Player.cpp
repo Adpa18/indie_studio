@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May  6 17:33:18 2016 Victor Gouet
+// Last update Mon May  9 21:46:15 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -38,20 +38,25 @@ void		Player::compute()
       if (this->_joystick->IsButtonPressed(MotionController::CROSS)) {
           act = ACharacter::ACTION::BOMB;
       }
-	} else {
-		// KeysCode
-		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
-			act = ACharacter::ACTION::DOWN;
-		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
-            act = ACharacter::ACTION::UP;
-		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second)) {
-            act = ACharacter::ACTION::LEFT;
-		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
-            act = ACharacter::ACTION::RIGHT;
-		}
-        if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second)) {
-            act = ACharacter::ACTION::BOMB;
-        }
-	}
-    this->action(act);
+      // PAS SET POUR LE ACharacter::ACTION::ACT !!
+      
+  } else {
+    // KeysCode
+    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
+      act = ACharacter::ACTION::DOWN;
+    } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
+      act = ACharacter::ACTION::UP;
+    } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second)) {
+      act = ACharacter::ACTION::LEFT;
+    } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
+      act = ACharacter::ACTION::RIGHT;
+    }
+    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second)) {
+      act = ACharacter::ACTION::BOMB;
+    }
+    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::ACT)->second)) {
+      act = ACharacter::ACTION::ACT;
+    }
+  }
+  this->action(act);
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:39:34 2016 Victor Gouet
-// Last update Mon May  9 18:06:52 2016 Victor Gouet
+// Last update Mon May  9 21:32:05 2016 Victor Gouet
 //
 
 #ifndef ITEMTHROW_HPP_
@@ -21,8 +21,6 @@ public:
 
 public:
   virtual void		use();
-  virtual void		dead();
-  virtual bool		isDestructible() const;
 };
 
 #endif

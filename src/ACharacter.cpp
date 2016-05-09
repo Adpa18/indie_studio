@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May  9 18:23:12 2016 Victor Gouet
+// Last update Mon May  9 21:55:23 2016 Victor Gouet
 //
 
 // #include "Collider.hpp"
@@ -146,6 +146,12 @@ void            ACharacter::action(ACTION act)
                     this->putBomb();
                 bombPosed = true;
                 break;
+	case ACT:
+	  if (this->item)
+	    {
+	      this->item->use();
+	    }
+	  break;
             default:
                 bombPosed = false;
                 _arrived = true;
@@ -190,15 +196,10 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 
 	    if (((item = dynamic_cast<AItem *>(*it))) != NULL)
 	      {
-		// NEW ITEM
-		// TODO c'est casse ça segfault et je me barre
-
-
-		// if (this->item)
-		//   delete (this->item);
-		// this->item = item;
-		// this->item->dead();
-		// std::cout << "GET NEW ITEM" << std::endl;
+		if (this->item)
+		  delete (this->item);
+		this->item = item;
+		this->item->dead();
 	      }
 	  }
         else if (type != AGameObject::CHARACTER) {
