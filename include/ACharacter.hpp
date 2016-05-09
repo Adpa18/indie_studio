@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Mon May  9 15:49:03 2016 Victor Gouet
+// Last update Mon May  9 15:51:31 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
