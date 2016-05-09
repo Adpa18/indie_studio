@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Fri May  6 17:29:19 2016 Victor Gouet
+// Last update Mon May  9 14:04:58 2016 Victor Gouet
 //
 
 #include "AGameObject.hpp"
@@ -32,7 +32,10 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 
 AGameObject::~AGameObject()
 {
-    this->dead();
+    BomberMap::getMap()->remove(this);
+    (*this)->remove();
+
+    // this->dead();
     //  (*this)->remove();
     // this->_node->removeAll();
     // this->_node->remove();
@@ -66,8 +69,8 @@ irr::core::vector2df    AGameObject::getRealPos() const
     return (irr::core::vector2df(pos3df.X + BomberMap::size_side / 2, pos3df.Z + BomberMap::size_side / 2));
 }
 
-void                AGameObject::dead()
-{
-    BomberMap::getMap()->remove(this);
-    (*this)->remove();
-}
+// void                AGameObject::dead()
+// {
+//     BomberMap::getMap()->remove(this);
+//     (*this)->remove();
+// }

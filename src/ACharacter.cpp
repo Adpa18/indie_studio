@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May  6 17:35:15 2016 Victor Gouet
+// Last update Mon May  9 13:42:19 2016 Victor Gouet
 //
 
 // #include "Collider.hpp"
@@ -62,6 +62,11 @@ bool			ACharacter::isDestructible() const
 void			ACharacter::exploseHisBomb()
 {
   _bombContainer->bombExplose();
+}
+
+void			ACharacter::setMoveSpeed(double speed)
+{
+  this->moveSpeed = speed;
 }
 
 void ACharacter::setMD3Animation(MD3_ANIMATION anim)

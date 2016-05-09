@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Fri May  6 17:34:36 2016 Victor Gouet
+// Last update Mon May  9 13:41:33 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -38,6 +38,7 @@ public:
   virtual bool		        isDestructible() const;
 
 public:
+  void			setMoveSpeed(double);
     std::string const   &getName() const;
     double              getMoveSpeed() const;
     void		        putBomb();
