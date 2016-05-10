@@ -7,6 +7,7 @@
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice()), m_gameState(SPLASH_SCREEN), m_gameSatePrev(PLAY)
 {
+    LoadTextures();
     DisplaySplashScreen();
 }
 
@@ -97,6 +98,8 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     // Updates menu visibility according to the current game state
     if (fptr != nullptr)
     {
+        m_manager.ClearEnv();
+        m_buttons.clear();
         (this->*fptr)();
     }
     fptr = nullptr;
@@ -109,41 +112,49 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
-    m_manager.ClearEnv();
-    m_buttons.clear();
+    irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
+                                                            nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
 
-    irr::gui::IGUIButton *b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.12, IrrlichtController::height / 2.0 - 50,
-                                                            IrrlichtController::width * 0.27, IrrlichtController::height / 2.0 + 50),
+    img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
+    img->setScaleImage(true);
+
+    irr::gui::IGUIButton *b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
+                                                            IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
                                   nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.32, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.47, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::MAIN_MENU_BUTTON_2P, L"Two players", L"");
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.52, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.67, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::MAIN_MENU_BUTTON_3P, L"Three players", L"");
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.72, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width * 0.87, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::MAIN_MENU_BUTTON_4P, L"Four players", L"");
+    //m_buttons.push_back(b);
 
-    m_manager.GetEnv()->setFocus(b);
+    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.32, IrrlichtController::height / 2.0 - 50,
+                                                                IrrlichtController::width * 0.47, IrrlichtController::height / 2.0 + 50),
+                                      nullptr, UIElement::MAIN_MENU_BUTTON_2P, L"Two players", L"");
+    //m_buttons.push_back(b);
+
+    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.52, IrrlichtController::height / 2.0 - 50,
+                                                                IrrlichtController::width * 0.67, IrrlichtController::height / 2.0 + 50),
+                                      nullptr, UIElement::MAIN_MENU_BUTTON_3P, L"Three players", L"");
+    //m_buttons.push_back(b);
+
+    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.72, IrrlichtController::height / 2.0 - 50,
+                                                            IrrlichtController::width * 0.87, IrrlichtController::height / 2.0 + 50),
+                                  nullptr, UIElement::MAIN_MENU_BUTTON_4P, L"Four players", L"");
+    //m_buttons.push_back(b);
+
     m_gameSatePrev = m_gameState;
 }
 
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
 {
-    m_manager.ClearEnv();
-    m_buttons.clear();
-
     irr::gui::IGUIImage* image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                                               nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
-    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuSceneTEXT.png"));
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuScene.png"));
 
-    /*irr::gui::IGUIButton *b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
-                                                            IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50),
-                                  nullptr, UIElement::SPLASH_BUTTON_START, L"PRESS START", L"");
+    image->setScaleImage(true);
 
-    m_buttons.push_back(b);*/
+    image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
+                                         nullptr, UIElement::SPLASH_BUTTON_START, L"", true);
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png"));
+
+    image->setScaleImage(true);
 
     m_gameSatePrev = m_gameState;
 }
@@ -153,9 +164,6 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
-    m_manager.ClearEnv();
-    m_buttons.clear();
-
     irr::gui::IGUIButton *b1 = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                                                        IrrlichtController::width * 0.95, IrrlichtController::height * 0.3),
                                                              nullptr, UIElement::MAP_SELECTION1, L"Map 1", L"");
@@ -168,7 +176,6 @@ void UIEventReceiver::DisplayMapMenu()
                                                                                        IrrlichtController::width * 0.95, IrrlichtController::height * 0.9),
                                                              nullptr, UIElement::MAP_SELECTION3, L"Map 3", L"");
 
-    m_manager.GetEnv()->setFocus(b1);
     m_buttons.push_back(b1);
     m_buttons.push_back(b2);
     m_buttons.push_back(b3);
@@ -179,9 +186,6 @@ void UIEventReceiver::DisplayMapMenu()
 // Pause menu from pause button
 void UIEventReceiver::DisplayPauseMenu()
 {
-    m_manager.ClearEnv();
-    m_buttons.clear();
-
     m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
                                                   IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50),
                         nullptr, UIElement::QUIT_BUTTON , L"PRESS START", L"");
@@ -191,12 +195,9 @@ void UIEventReceiver::DisplayPauseMenu()
 // Screen displayed between level loading
 void UIEventReceiver::DisplayLoadingScreen()
 {
-    m_manager.ClearEnv();
-    m_buttons.clear();
-
     irr::gui::IGUIImage* image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                                               nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
-    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuSceneTEXT.png"));
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuScene.png"));
     m_gameSatePrev = m_gameState;
 }
 
@@ -210,10 +211,6 @@ void UIEventReceiver::RefreshButtons()
         {
             m_manager.GetEnv()->setFocus(*it);
             (*it)->setPressed(true);
-        }
-        else
-        {
-
         }
     }
 }
@@ -234,4 +231,12 @@ void UIEventReceiver::SelectPrevButton()
     irr::gui::IGUIButton *b = m_buttons.back();
     m_buttons.pop_back();
     m_buttons.push_front(b);
+}
+
+void UIEventReceiver::LoadTextures()
+{
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuScene.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
 }

@@ -6,7 +6,7 @@ SRC_DIR	=	src/
 
 IrrlichtHome	=	../../Irrlicht/irrlicht-1.8.3
 
-SRC		=	main.cpp									\
+SRC		=	main.cpp		\
 			CVideoMaster.cpp
 
 OBJ			=	$(SRC:%cpp=%o)
