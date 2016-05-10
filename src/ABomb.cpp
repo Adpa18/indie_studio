@@ -5,15 +5,16 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Mon May  9 15:25:10 2016 Victor Gouet
+// Last update Tue May 10 15:03:01 2016 Victor Gouet
 //
 
 #include <iostream>
 #include <unistd.h>
 #include "../include/ABomb.hpp"
 
-ABomb::ABomb() : AGameObject(irr::core::vector2df(0, 0), "media/pokeball.md2",
-                             "media/pokeball.png", AGameObject::BOMB)
+ABomb::ABomb(std::string const &mesh, std::string const &texture) :
+  AGameObject(irr::core::vector2df(0, 0), mesh, texture, AGameObject::BOMB),
+  mesh(mesh), texture(texture)								    
 {
   alive = true;
   use = false;
@@ -24,7 +25,7 @@ ABomb::ABomb() : AGameObject(irr::core::vector2df(0, 0), "media/pokeball.md2",
 }
 
 ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector2df(0, 0),
-					       "media/pokeball.md2", "media/pokeball.png")
+					       other->mesh, other->texture)
 {
   *this = other;
 }
@@ -37,6 +38,8 @@ ABomb	&ABomb::operator=(ABomb const *other)
   threadBomb = new std::thread([&] {run(); });
   this->_power = other->_power;
   this->__active = false;
+  this->mesh = other->mesh;
+  this->texture = other->texture;
   return (*this);
 }
 

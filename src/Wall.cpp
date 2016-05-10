@@ -5,14 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Mon May  9 21:57:48 2016 Victor Gouet
+// Last update Tue May 10 15:57:29 2016 Victor Gouet
 //
 
 #include "../include/Wall.hpp"
+#include "../include/Texture.hpp"
 
 Wall::Wall(irr::core::vector2df const &pos, State state) // 1 caisseMetal
-  : AGameObject(pos, state == Invicible ? "media/caisse-metal.md2" : "media/caisse.md2",
-		state == Invicible ? "media/caisse-metal.png" : "media/caisse.png",
+  : AGameObject(pos, state == Invicible ? BomberManTexture::caisseIndestructibleMD : BomberManTexture::caisseDestructibleMD,
+		state == Invicible ? BomberManTexture::caisseIndestructibleTexture : BomberManTexture::caisseDestructibleTexture,
                 (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
   
