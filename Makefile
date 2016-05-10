@@ -29,6 +29,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)ItemThrow.cpp			\
 			$(SRC_DIR)Particule.cpp			\
 			$(SRC_DIR)Texture.cpp			\
+			$(SRC_DIR)GameObjectTimeContainer.cpp	\
 
 OBJ			=	$(SRC:%cpp=%o)
 

@@ -5,16 +5,40 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Mon May  9 14:04:58 2016 Victor Gouet
+// Last update Tue May 10 19:12:09 2016 Victor Gouet
 //
 
-#include "AGameObject.hpp"
-#include "BomberMap.hpp"
+#include "../include/AGameObject.hpp"
+#include "../include/BomberMap.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
-AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type) : _type(type)
+AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, int timeout) : _type(type)
 {
     BomberMap::getMap()->add(this, pos);
     irr::scene::IAnimatedMesh *meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str());
+
+  time_t	timer;
+  struct tm	y2k;
+
+  this->_timeout = timeout;
+  timer = time(NULL);
+
+    if (timeout != -1)
+      {
+	y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+	y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+	y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
+	y2k.tm_zone = 0;
+	_timer = difftime(timer, mktime(&y2k));
+	// A Mettre dans une list de GameObject qui vont disparaitre au bon d un moment
+	
+	GameObjectTimeContainer::SharedInstance()->add(this);
+
+      }
+    else
+      {
+	_timer = 0;
+      }
 
   if (!meshNode)
     {
@@ -32,13 +56,37 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 
 AGameObject::~AGameObject()
 {
-    BomberMap::getMap()->remove(this);
-    (*this)->remove();
+  if (_timeout != -1)
+    GameObjectTimeContainer::SharedInstance()->remove(this);
+  BomberMap::getMap()->remove(this);
+  (*this)->remove();
 
     // this->dead();
     //  (*this)->remove();
     // this->_node->removeAll();
     // this->_node->remove();
+}
+
+bool				AGameObject::isTimeOut() const
+{
+  time_t	timer;
+  struct tm	y2k;
+  double	seconds;
+
+  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
+  y2k.tm_zone = 0;
+
+  timer = time(NULL);
+
+  seconds = difftime(timer, mktime(&y2k));
+  return (seconds >= (_timer + _timeout));
+}
+
+void			AGameObject::onTimeOut()
+{
+  // Remove From the list of timer object
 }
 
 irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()

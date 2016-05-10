@@ -5,11 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Tue May 10 15:58:12 2016 Victor Gouet
+// Last update Tue May 10 19:13:53 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
 GameManager *GameManager::GM = NULL;
 
@@ -104,6 +105,7 @@ void	GameManager::onMenu()
 
 void	GameManager::onGame()
 {
+  GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
   for (std::vector<ACharacter*>::iterator it = characters.begin(); it != characters.end(); ++it)
     {
       (*it)->compute();

@@ -5,12 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Mon May  9 14:31:29 2016 Victor Gouet
+// Last update Tue May 10 18:08:11 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
 # define AGAMEOBJECT_HPP_
 
+# include <time.h>
 # include <string>
 # include "IrrlichtController.hpp"
 
@@ -28,7 +29,7 @@ public:
     };
 public:
   AGameObject(irr::core::vector2df const &pos, std::string const &mesh,
-              std::string const &texture, Type type = NONE);
+              std::string const &texture, Type type = NONE, int timeout = -1);
   virtual ~AGameObject();
 
 public:
@@ -42,10 +43,17 @@ public:
   virtual void                        dead() = 0;
   virtual bool				isDestructible() const = 0;
 
+public:
+  bool				isTimeOut() const;
+  virtual void			onTimeOut();
 
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;
   Type                                  _type;
+
+private:
+  int					_timeout;
+  double				_timer;
 };
 
 #endif
