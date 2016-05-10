@@ -5,13 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 15:05:25 2016 Victor Gouet
-// Last update Mon May  9 15:40:28 2016 Victor Gouet
+// Last update Tue May 10 15:06:13 2016 Victor Gouet
 //
 
 #include "../include/BonusPower.hpp"
+#include "../include/Texture.hpp"
 
 BonusPower::BonusPower(irr::core::vector2df const &pos)
-  : ABonus(pos, "media/carapuce.md2", "media/carapuce.png", BONUS)
+  : ABonus(pos, BomberManTexture::bonusPowerMD,
+	   BomberManTexture::bonusPowerTexture, BONUS)
 {
 
 }

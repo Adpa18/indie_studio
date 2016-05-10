@@ -5,13 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:42:59 2016 Victor Gouet
-// Last update Mon May  9 21:31:50 2016 Victor Gouet
+// Last update Tue May 10 15:08:53 2016 Victor Gouet
 //
 
 #include "../include/ItemThrow.hpp"
+#include "../include/Texture.hpp"
 
 ItemThrow::ItemThrow(irr::core::vector2df const &pos)
-  : AItem(pos, "media/bulbizarre.md2", "media/bulbizarre.png", ITEM)
+  : AItem(pos, BomberManTexture::itemThrowMD,
+	  BomberManTexture::itemThrowTexture, ITEM)
 {
 
 }
