@@ -8,7 +8,6 @@
 // Last update Mon May  9 21:55:23 2016 Victor Gouet
 //
 
-// #include "Collider.hpp"
 #include "ACharacter.hpp"
 #include "BombFactory.hpp"
 #include <iostream>
@@ -34,8 +33,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
-  this->item = NULL;
-    bombPosed = false;
+    this->item = NULL;
     _arrived = true;
     _last_act = irr::core::vector2df(0, 0);
     anime = irr::scene::EMAT_STAND;
@@ -114,46 +112,39 @@ void            ACharacter::action(ACTION act)
     {
         switch (act) {
             case DOWN:
-                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 0, 0));
                 _last_act = irr::core::vector2df(0, -1);
                 break;
             case UP:
-                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 180, 0));
                 _last_act = irr::core::vector2df(0, 1);
                 break;
             case LEFT:
-                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, 90, 0));
                 _last_act = irr::core::vector2df(-1, 0);
                 break;
             case RIGHT:
-                bombPosed = false;
                 stand = false;
                 _arrived = false;
                 (*this)->setRotation(irr::core::vector3df(0, -90, 0));
                 _last_act = irr::core::vector2df(1, 0);
                 break;
             case BOMB:
-                if (!bombPosed)
-                    this->putBomb();
-                bombPosed = true;
+                this->putBomb();
                 break;
-	case ACT:
-	  if (this->item)
-	    {
-	      this->item->use();
-	    }
-	  break;
+	        case ACT:
+	            if (this->item)
+                {
+	                this->item->use();
+	            }
+	            break;
             default:
-                bombPosed = false;
                 _arrived = true;
                 break;
         }
@@ -219,8 +210,13 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 
 void			ACharacter::putBomb()
 {
-  ABomb			*bomb;
-
+    ABomb			        *bomb;
+    std::vector<ABomb *>    bombs = this->_bombContainer->getBombs();
+    for (std::vector<ABomb *>::const_iterator it = bombs.begin(); it != bombs.end(); ++it) {
+        if ((*it)->getMapPos() == this->getMapPos()) {
+            return;
+        }
+    }
   if ((bomb = _bombContainer->getBomb()))
     {
       *bomb << this->getMapPos();

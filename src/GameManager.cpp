@@ -9,6 +9,7 @@
 //
 
 #include "../include/GameManager.hpp"
+#include "../include/Particule.hpp"
 
 GameManager *GameManager::GM = NULL;
 
