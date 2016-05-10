@@ -46,6 +46,7 @@ private:
     void SelectNextButton();
     void SelectPrevButton();
 
+    void LoadTextures();
 
 private:
     UIManager m_manager;

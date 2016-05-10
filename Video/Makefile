@@ -4,7 +4,7 @@ RM		= 	rm -rf
 
 SRC_DIR	=	src/
 
-IrrlichtHome	=	../../Irrlicht/irrlicht-1.8.3
+IrrlichtHome	=	../Irrlicht/irrlicht-1.8.3
 
 SRC		=	main.cpp			\
 			../src/IrrlichtController.cpp	\

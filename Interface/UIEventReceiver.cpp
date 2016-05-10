@@ -7,6 +7,7 @@
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice()), m_gameState(SPLASH_SCREEN), m_gameSatePrev(PLAY)
 {
+    LoadTextures();
     DisplaySplashScreen();
 }
 
@@ -114,13 +115,11 @@ void UIEventReceiver::DisplayMainMenu()
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                                             nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
 
-    irr::video::ITexture *texture = IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/pikachu.png");
-    //img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/pikachu.png"));
-    std::cout << "icic " << texture << std::endl;
+    img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
     img->setScaleImage(true);
 
-    irr::gui::IGUIButton *b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.12, IrrlichtController::height / 2.0 - 50,
-                                                            IrrlichtController::width * 0.27, IrrlichtController::height / 2.0 + 50),
+    irr::gui::IGUIButton *b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
+                                                            IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
                                   nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");
     //m_buttons.push_back(b);
 
@@ -232,4 +231,12 @@ void UIEventReceiver::SelectPrevButton()
     irr::gui::IGUIButton *b = m_buttons.back();
     m_buttons.pop_back();
     m_buttons.push_front(b);
+}
+
+void UIEventReceiver::LoadTextures()
+{
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuScene.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
 }

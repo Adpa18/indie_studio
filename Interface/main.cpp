@@ -7,8 +7,8 @@
 
 int main()
 {
-    //IrrlichtController::width = 1920;
-    //IrrlichtController::height = 1080;
+    IrrlichtController::width = 1920;
+    IrrlichtController::height = 1080;
     UIManager uiManager(IrrlichtController::getDevice(false));
     UIEventReceiver *uiEventReceiver = new UIEventReceiver(uiManager);
 
