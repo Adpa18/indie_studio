@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:24:03 2016 Victor Gouet
-// Last update Tue May 10 15:12:38 2016 Victor Gouet
+// Last update Tue May 10 15:57:17 2016 Victor Gouet
 //
 
 #ifndef TEXTURE_HPP_
@@ -24,7 +24,7 @@ public:
   static const std::string caisseDestructibleMD;
   
   static const std::string caisseIndestructibleTexture;
-  static const std::string caisseIndestructibleMetalMD;
+  static const std::string caisseIndestructibleMD;
   
   static const std::string fireBombTexture;
   static const std::string fireBombMD;

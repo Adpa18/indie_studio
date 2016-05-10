@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Tue May 10 14:43:41 2016 Victor Gouet
+// Last update Tue May 10 15:58:12 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -22,6 +22,7 @@ GameManager::GameManager()
   // uiManager = new UIManager(IrrlichtController::getDevice(false));
   // uiEventReceiver = new UIEventReceiver(*uiManager);
   eventGame = new EventGame();
+  BomberManTexture::loadTexture();
   // _state = PREV_GAME;
 }
 

@@ -5,10 +5,11 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Tue May 10 15:14:14 2016 Victor Gouet
+// Last update Tue May 10 15:56:50 2016 Victor Gouet
 //
 
 #include "../include/Texture.hpp"
+#include "../include/IrrlichtController.hpp"
 
 const std::string BomberManTexture::path = "media/";
 
@@ -19,7 +20,7 @@ const std::string BomberManTexture::caisseDestructibleTexture = BomberManTexture
 const std::string BomberManTexture::caisseDestructibleMD = BomberManTexture::path + "caisse.md2";
 
 const std::string BomberManTexture::caisseIndestructibleTexture = BomberManTexture::path + "caisse-metal.png";
-const std::string BomberManTexture::caisseIndestructibleMetalMD = BomberManTexture::path + "caisse-metal.md2";
+const std::string BomberManTexture::caisseIndestructibleMD = BomberManTexture::path + "caisse-metal.md2";
 
 const std::string BomberManTexture::fireBombTexture = BomberManTexture::path + "pokeball.png";
 const std::string BomberManTexture::fireBombMD = BomberManTexture::path + "pokeball.md2";
@@ -38,5 +39,21 @@ const std::string BomberManTexture::itemThrowMD = BomberManTexture::path + "bulb
 
 void BomberManTexture::loadTexture()
 {
-  
+  IrrlichtController::getDriver()->getTexture(ziggsTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(caisseDestructibleTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(caisseIndestructibleTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(fireBombTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(bonusFireBombTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(bonusPowerTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(bonusSpeedTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(itemThrowTexture.c_str());
+
+  IrrlichtController::getSceneManager()->getMesh(ziggsMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(caisseDestructibleMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(caisseIndestructibleMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(fireBombMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(bonusFireBombMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(bonusPowerMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(bonusSpeedMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(itemThrowMD.c_str());
 }
