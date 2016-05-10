@@ -5,13 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 13:37:03 2016 Victor Gouet
-// Last update Mon May  9 15:12:20 2016 Victor Gouet
+// Last update Tue May 10 15:08:02 2016 Victor Gouet
 //
 
 #include "../include/BonusSpeed.hpp"
+#include "../include/Texture.hpp"
 
 BonusSpeed::BonusSpeed(irr::core::vector2df const &pos)
-  : ABonus(pos, "media/caisse-metal.md2", "media/caisse-metal.png", BONUS)
+  : ABonus(pos, BomberManTexture::bonusSpeedMD,
+	   BomberManTexture::bonusSpeedTexture, BONUS)
 {
 
 }

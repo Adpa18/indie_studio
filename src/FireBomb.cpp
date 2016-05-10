@@ -5,14 +5,16 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri May  6 17:42:40 2016 Victor Gouet
+// Last update Tue May 10 15:00:41 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Particule.hpp"
+#include "../include/Texture.hpp"
 
-FireBomb::FireBomb() : ABomb()
+FireBomb::FireBomb() : ABomb(BomberManTexture::fireBombMD,
+			     BomberManTexture::fireBombTexture)
 {
 
 }
@@ -32,7 +34,7 @@ FireBomb	&FireBomb::operator=(ABomb const *other)
   return (*this);
 }
 
-FireBomb::FireBomb(ABomb const *other)
+FireBomb::FireBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }

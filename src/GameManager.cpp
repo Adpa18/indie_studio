@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May  9 11:58:15 2016 Victor Gouet
+// Last update Tue May 10 14:43:41 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
-#include "../include/Particule.hpp"
+#include "../include/Texture.hpp"
 
 GameManager *GameManager::GM = NULL;
 
@@ -112,8 +112,8 @@ void	GameManager::onGame()
 void	GameManager::willStartGame()
 {
   characters.clear();
-  characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, *eventGame));
-  characters.push_back(new Player("RICHARD", irr::core::vector2df(1, 9), "media/ziggs.md3", "media/ziggs.png", 0, *eventGame));
+  characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), BomberManTexture::ziggsMD, BomberManTexture::ziggsTexture, 0, *eventGame));
+  characters.push_back(new Player("RICHARD", irr::core::vector2df(1, 9), BomberManTexture::ziggsMD, BomberManTexture::ziggsTexture, 0, *eventGame));
   BomberMap::getMap()->genMap();
 
   IrrlichtController::getDevice()->setEventReceiver(eventGame);

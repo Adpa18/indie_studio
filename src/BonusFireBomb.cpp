@@ -5,14 +5,16 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
-// Last update Mon May  9 16:10:54 2016 Victor Gouet
+// Last update Tue May 10 15:05:05 2016 Victor Gouet
 //
 
 #include "../include/BonusFireBomb.hpp"
 #include "../include/BombFactory.hpp"
+#include "../include/Texture.hpp"
 
 BonusFireBomb::BonusFireBomb(irr::core::vector2df const &pos)
-  : ABonus(pos, "media/salameche.md2", "media/salameche.png", BONUS)
+  : ABonus(pos, BomberManTexture::bonusFireBombMD,
+	   BomberManTexture::bonusFireBombTexture, BONUS)
 {
 
 }
