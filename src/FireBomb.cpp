@@ -10,6 +10,7 @@
 
 #include "../include/FireBomb.hpp"
 #include "../include/BomberMap.hpp"
+#include "../include/Particule.hpp"
 #include "../include/Texture.hpp"
 
 FireBomb::FireBomb() : ABomb(BomberManTexture::fireBombMD,
@@ -53,11 +54,13 @@ void		FireBomb::willExplose()
 	      delete obj;
         }
     }
+    int power;
     stop = false;
-    for (int i = 1; i <= this->_power; ++i) {
-        if (stop)
+    for (power = 1; power <= this->_power; ++power) {
+        if (stop) {
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(-i, 0));
+        }
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(-power, 0));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -71,11 +74,12 @@ void		FireBomb::willExplose()
             }
         }
     }
+    Particule p1((*this)->getPosition(), irr::core::vector3df(-1, 0, 0), power);
     stop = false;
-    for (int i = 1; i <= this->_power; ++i) {
+    for (power = 1; power <= this->_power; ++power) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(i, 0));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(power, 0));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -89,11 +93,12 @@ void		FireBomb::willExplose()
             }
         }
     }
+    Particule p2((*this)->getPosition(), irr::core::vector3df(1, 0, 0), power);
     stop = false;
-    for (int i = 1; i <= this->_power; ++i) {
+    for (power = 1; power <= this->_power; ++power) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, -i));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, -power));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -107,11 +112,12 @@ void		FireBomb::willExplose()
             }
         }
     }
+    Particule p3((*this)->getPosition(), irr::core::vector3df(1, 0, -1), power);
     stop = false;
-    for (int i = 1; i <= this->_power; ++i) {
+    for (power = 1; power <= this->_power; ++power) {
         if (stop)
             break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, i));
+        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, power));
         for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
             type = (*it)->getType();
             if (type != AGameObject::BLOCK) {
@@ -125,5 +131,6 @@ void		FireBomb::willExplose()
             }
         }
     }
+    Particule p4((*this)->getPosition(), irr::core::vector3df(0, 0, 1), power);
     disable();
 }

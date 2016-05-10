@@ -27,6 +27,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)BonusFireBomb.cpp		\
 			$(SRC_DIR)AItem.cpp			\
 			$(SRC_DIR)ItemThrow.cpp			\
+			$(SRC_DIR)Particule.cpp			\
 			$(SRC_DIR)Texture.cpp			\
 
 OBJ			=	$(SRC:%cpp=%o)

@@ -11,6 +11,7 @@
 #ifndef ACHARACTER_HPP_
 # define ACHARACTER_HPP_
 
+# include <vector>
 # include "AGameObject.hpp"
 # include "BombContainer.hpp"
 # include "AItem.hpp"
@@ -45,7 +46,7 @@ public:
     void		        putBomb();
     void                setName(const std::string &);
     void			    exploseHisBomb();
-  void		        increasePowerBomb();
+    void		        increasePowerBomb();
 
     virtual void		compute() = 0;
 
@@ -60,8 +61,7 @@ private:
     int					            anime;
     irr::core::vector2df            _last_act;
     bool                            _arrived;
-    bool                            bombPosed;
-  AItem					*item;
+    AItem					        *item;
 
 protected:
   irr::u32 then;
