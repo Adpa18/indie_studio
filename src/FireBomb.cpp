@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Tue May 10 15:00:41 2016 Victor Gouet
+// Last update Tue May 10 22:33:11 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"

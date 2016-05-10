@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Tue May 10 22:26:57 2016 Victor Gouet
+// Last update Sat Apr 30 10:07:54 2016 Victor Gouet
 //
 
 #include <cstdlib>
-#include "../include/BomberMap.hpp"
+#include "BomberMap.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -109,7 +109,7 @@ BomberMap       * BomberMap::getMap()
 
 void  BomberMap::add(AGameObject* obj, const irr::core::vector2df &pos)
 {
-  this->_objects[obj] = pos;
+    this->_objects[obj] = pos;
 }
 
 void  BomberMap::remove(AGameObject *obj)
