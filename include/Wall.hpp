@@ -11,6 +11,7 @@
 #ifndef WALL_HPP_
 # define WALL_HPP_
 
+# include <map>
 # include <string>
 # include "AGameObject.hpp"
 # include "BonusSpeed.hpp"
@@ -23,9 +24,13 @@ class	Wall : public AGameObject
 public:
   enum 	State
     {
-      Invicible,// = "media/caisseMetal",
-      Destructible// = "media/caisse"
+      Invicible,
+      Destructible,
+      Edge
     };
+
+private:
+    static const std::map<State, std::pair<const std::string&, const std::string&>> _models;
 
 public:
   Wall(irr::core::vector2df const &pos, State state = Destructible);

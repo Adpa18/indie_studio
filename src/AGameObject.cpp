@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed May 11 11:13:26 2016 Victor Gouet
+// Last update Wed May 11 17:11:54 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -41,6 +41,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
     if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
     {
         IrrlichtController::getDevice()->drop();
+        return;
         throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
     }
     else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
@@ -80,12 +81,31 @@ bool				AGameObject::isTimeOut() const
   return (seconds >= (_timer + _timeout));
 }
 
-void			AGameObject::onTimeOut()
+void			AGameObject::setTimeOut(double timeout)
 {
-  // Remove From the list of timer object
+  time_t	timer;
+  struct tm	y2k;
+
+  this->_timeout = timeout;
+  timer = time(NULL);
+  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
+  y2k.tm_zone = 0;
+  _timer = difftime(timer, mktime(&y2k));	
+  GameObjectTimeContainer::SharedInstance()->add(this);
+}
+
+void			      AGameObject::updateTimeOut()
+{
 }
 
 irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
+{
+  return (_node);
+}
+
+irr::scene::IAnimatedMeshSceneNode *AGameObject::getSceneNode()
 {
   return (_node);
 }
@@ -112,9 +132,3 @@ irr::core::vector2df    AGameObject::getRealPos() const
 
     return (irr::core::vector2df(pos3df.X + BomberMap::size_side / 2, pos3df.Z + BomberMap::size_side / 2));
 }
-
-// void                AGameObject::dead()
-// {
-//     BomberMap::getMap()->remove(this);
-//     (*this)->remove();
-// }

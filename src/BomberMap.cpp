@@ -9,7 +9,10 @@
 //
 
 #include <cstdlib>
+#include <iostream>
+#include <stdlib.h>
 #include "../include/BomberMap.hpp"
+#include "../include/Texture.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -31,7 +34,45 @@ void            BomberMap::genMap()
 
 void			BomberMap::generateGround()
 {
-  // IrrlichtController::getSceneManager()->addTerrainSceneNode("/home/gouet_v/Downloads/irrlicht-1.8.3/media/wall.bmp");// addT
+    irr::scene::IAnimatedMesh *terrain_model;
+
+    terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
+    irr::core::dimension2d<irr::f32>(25, 25), // Tile size
+    irr::core::dimension2d<irr::u32>(11, 11), // Tile count
+            0, // Material
+            0.0f, // Hill height
+    irr::core::dimension2d<irr::f32>(0.0f, 0.0f), // countHills
+    irr::core::dimension2d<irr::f32>(11, 11)); // textureRepeatCount
+
+    _ground = IrrlichtController::getSceneManager()->addMeshSceneNode(terrain_model->getMesh(0));
+    _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::groundTexture.c_str()));
+    _ground->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+
+    irr::scene::ISceneNode* light;
+    irr::scene::ISceneNodeAnimator* anim = 0;
+
+//    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(0,0,0), irr::video::SColorf(1.0f, 1.0f, 1.0f, 1.0f), 100.0f);
+//    irr::scene::ISceneNodeAnimator* anim = 0;
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator (irr::core::vector3df(0,150,0),250.0f);
+//    light->addAnimator(anim);
+//    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(-125, 0, 125), irr::video::SColorf(1.0f, 0.0f, 0.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(-125, 0, -125), irr::video::SColorf(0.0f, 1.0f, 0.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(125, 0, -125), irr::video::SColorf(0.0f, 0.0f, 1.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(125, 0, 125), irr::video::SColorf(1.0f, 1.0f, 0.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+
 }
 
 void			BomberMap::generateMap()
@@ -39,10 +80,18 @@ void			BomberMap::generateMap()
   srand(time(NULL));
     for (int y = 0; y < BomberMap::size_side; ++y) {
         for (int x = 0; x < BomberMap::size_side; ++x) {
-            if (_patron[y][x] == 'X') {
-                new Wall(irr::core::vector2df(x, y), Wall::Invicible);
-            } else if (_patron[y][x] == 'C') {
-                new Wall(irr::core::vector2df(x, y));
+            switch (_patron[y][x]) {
+                case 'E':
+                    new Wall(irr::core::vector2df(x, y), Wall::Edge);
+                    break;
+                case 'X':
+                    new Wall(irr::core::vector2df(x, y), Wall::Invicible);
+                    break;
+                case 'C':
+                    new Wall(irr::core::vector2df(x, y));
+                    break;
+                default:
+                    break;
             }
         }
     }

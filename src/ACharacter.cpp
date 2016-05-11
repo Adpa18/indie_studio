@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May  9 21:55:23 2016 Victor Gouet
+// Last update Wed May 11 17:54:28 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
 #include "BombFactory.hpp"
 #include <iostream>
 #include "ABonus.hpp"
-#include <BomberMap.hpp>
+#include "BomberMap.hpp"
 
 struct SMD3AnimationType
 {
@@ -33,7 +33,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
-    this->item = NULL;
+  this->item = NULL;
     _arrived = true;
     _last_act = irr::core::vector2df(0, 0);
     anime = irr::scene::EMAT_STAND;
@@ -62,11 +62,6 @@ BombContainer		*ACharacter::getBombContainer() const
 bool			ACharacter::isDestructible() const
 {
   return (false);
-}
-
-void			ACharacter::exploseHisBomb()
-{
-  _bombContainer->bombExplose();
 }
 
 void			ACharacter::setMoveSpeed(double speed)
@@ -141,7 +136,7 @@ void            ACharacter::action(ACTION act)
 	        case ACT:
 	            if (this->item)
                 {
-	                this->item->use();
+		  this->item->use(this->getMapPos(), _last_act);
 	            }
 	            break;
             default:

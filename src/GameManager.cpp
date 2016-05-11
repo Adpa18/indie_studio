@@ -90,7 +90,7 @@ void	GameManager::run()
 	      _state = MENU;
 	      onMenu();
 	    }
-	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 200, 200, 200));
+	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
 	  IrrlichtController::getSceneManager()->drawAll();
 	  IrrlichtController::getGUIEnvironment()->drawAll();
 	  IrrlichtController::getDriver()->endScene();
@@ -129,8 +129,8 @@ void	GameManager::willStartGame()
   camera->setFarValue(1000);
   camera->setNearValue(10);
 
-  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
-									     1.0f, 1.0f, 1.0f));
+//  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
+//									     1.0f, 1.0f, 1.0f));
   
 }
 

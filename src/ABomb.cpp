@@ -5,37 +5,44 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Tue May 10 15:03:01 2016 Victor Gouet
+// Last update Wed May 11 18:22:24 2016 Victor Gouet
 //
 
 #include <iostream>
 #include <unistd.h>
 #include "../include/ABomb.hpp"
+#include "../include/BombFactory.hpp"
+#include "../include/BomberMap.hpp"
 
 ABomb::ABomb(std::string const &mesh, std::string const &texture) :
-  AGameObject(irr::core::vector2df(0, 0), mesh, texture, AGameObject::BOMB),
-  mesh(mesh), texture(texture)								    
+  AGameObject(irr::core::vector2df(-1000, -1000),
+	      mesh, texture, AGameObject::BOMB),
+  mesh(mesh), texture(texture)
 {
-  alive = true;
+  _arrived = true;
+  then = IrrlichtController::getDevice()->getTimer()->getTime();
+  dir = irr::core::vector2df(0, 0);
   use = false;
   (*this)->setVisible(false);
-  threadBomb = new std::thread([&] {this->run(); });
   _power = 3;
   __active = false;
 }
 
-ABomb::ABomb(ABomb const *other) : AGameObject(irr::core::vector2df(0, 0),
-					       other->mesh, other->texture)
+ABomb::ABomb(ABomb const *other)
+  : AGameObject(irr::core::vector2df(-1000, -1000),
+		other->mesh,
+		other->texture, AGameObject::BOMB)
 {
   *this = other;
 }
 
 ABomb	&ABomb::operator=(ABomb const *other)
 {
-  alive = true;
+  _arrived = true;
+  then = IrrlichtController::getDevice()->getTimer()->getTime();
+  dir = irr::core::vector2df(0, 0);
   use = false;
   (*this)->setVisible(false);
-  threadBomb = new std::thread([&] {run(); });
   this->_power = other->_power;
   this->__active = false;
   this->mesh = other->mesh;
@@ -45,111 +52,63 @@ ABomb	&ABomb::operator=(ABomb const *other)
 
 ABomb::~ABomb()
 {
-  _mutex.lock();
-  alive = false;
-  use = true;
-  // condVar.notify_one();
-  threadBomb->join();
-  _mutex.unlock();
-  delete threadBomb;
+}
+
+void			ABomb::setVelocity(irr::core::vector2df const &_dir)
+{
+  dir = _dir;
+  _arrived = false;
+}
+
+void			ABomb::updateTimeOut()
+{
+  float   distance = this->getRealPos().getDistanceFrom(this->getMapPos() + dir);
+  const irr::u32 now = IrrlichtController::getDevice()->getTimer()->getTime();
+  this->frameDeltaTime = (irr::f32)(now - this->then) / 1000.f;
+
+  if (!_arrived)
+    {
+      std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir);
+      if (objs.size() > 0)
+	{
+	  _arrived = true;
+	}
+      if (use && !_arrived)
+	{
+	  if (distance < 0.2)
+	    {
+	      std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir + dir);
+	      if (objs.size() > 0)
+		_arrived = true;
+	      this->setPos(this->getMapPos() + dir);
+	      return;
+	    }
+	  (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * 300, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * 300));
+	}
+    }
+  then = now;
 }
 
 void                        ABomb::dead()
 {
-  __active = true;
-  use = false;
+  
+  if (use)
+    {
+      _arrived = true;
+      use = false;
+      willExplose();
+      disable();
+    }
 }
 
-bool				ABomb::isDestructible() const
+bool			ABomb::isDestructible() const
 {
   return (false);
 }
 
-void				ABomb::run()
-{
-  while (alive)
-    {
-      int i = 0;
-
-      while (!isNotUse() && isAlive())
-	usleep(0);
-      _mutex.lock();
-      if (alive == false)
-	{
-	  _mutex.unlock();
-	  return ;
-	}
-      while (i < 3000 && __active == false)
-	{
-	  usleep(1000);
-	  ++i;
-	}
-      // sleep(3);
-      if (!alive)
-	{
-	  _mutex.unlock();
-	  return ;
-	}
-      __active = true;
-      use = false;
-      _mutex.unlock();
-    }
-}
-
-bool			ABomb::isActive() const
-{
-  bool			_active;
-
-  _active = false;
-  if (_mutex.try_lock())
-    {
-      _active = __active;
-      if (__active == true)
-	__active = false;
-      _mutex.unlock();
-    }
-  return (_active);
-}
-
-bool			ABomb::isAlive() const
-{
-  bool			_alive;
-
-  _alive = true;
-  if (_mutex.try_lock())
-    {
-      _alive = alive;
-      _mutex.unlock();
-    }
-  return (_alive);
-}
-
-
-bool			ABomb::isNotUse() const
-{
-  bool			_use;
-
-  _use = false;
-  if (_mutex.try_lock())
-    {
-      _use = use;
-      _mutex.unlock();
-    }
-  return (_use);
-  // return (use);
-}
-
 bool			ABomb::isUse() const
 {
-  bool			_use;
-
-  _use = true;
-  if (_mutex.try_lock())
-    {
-      _use = use;
-      _mutex.unlock();
-    }
-  return (_use);
+  return (use);
 }
 
 void		ABomb::disable()
@@ -157,18 +116,19 @@ void		ABomb::disable()
   this->setPos(irr::core::vector2df(-1000, -1000));
 }
 
-void			ABomb::operator<<(irr::core::vector2df const &pos)
+void			ABomb::operator<<(irr::core::vector2df
+					  const &pos)
 {
-  _mutex.lock();
+  then = IrrlichtController::getDevice()->getTimer()->getTime();
   (*this)->setVisible(true);
   use = true;
-    this->setPos(pos);
-  _mutex.unlock();
+  this->setTimeOut(3);
+  this->setPos(pos);
 }
 
 void			ABomb::setPower(int power)
 {
-  if (_power > 7)
+  if (_power > 5)
     return ;
   _power = power;
 }

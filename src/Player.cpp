@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May  9 21:46:15 2016 Victor Gouet
+// Last update Wed May 11 16:16:25 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -32,7 +32,7 @@ void		Player::compute()
 {
     ACharacter::ACTION  act = ACharacter::IDLE;
   // Joystick
-  this->exploseHisBomb();
+  // this->exploseHisBomb();
   if (this->_joystick) {
       act = this->_joystick->getDirAxis(MotionController::LEFT_JOYSTICK);
       if (this->_joystick->IsButtonPressed(MotionController::CROSS)) {

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Mon May  9 21:50:08 2016 Victor Gouet
+// Last update Wed May 11 16:15:11 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -45,7 +45,7 @@ public:
     double              getMoveSpeed() const;
     void		        putBomb();
     void                setName(const std::string &);
-    void			    exploseHisBomb();
+    // void			    exploseHisBomb();
     void		        increasePowerBomb();
 
     virtual void		compute() = 0;

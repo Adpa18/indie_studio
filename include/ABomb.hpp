@@ -5,15 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Tue May 10 14:53:39 2016 Victor Gouet
+// Last update Wed May 11 17:30:15 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
 # define ABOMB_HPP_
 
-# include <condition_variable>
-# include <mutex>
-# include <thread>
 # include "AGameObject.hpp"
 
 class	ABomb	: public AGameObject
@@ -26,12 +23,7 @@ public:
   virtual ~ABomb();
 
 public:
-  bool			isAlive() const;
   bool			isUse() const;
-  bool			isActive() const;
-
-private:
-  bool		        isNotUse() const;
 
 public:
   int			getPower() const;
@@ -39,40 +31,38 @@ public:
 public:
   void			operator<<(irr::core::vector2df const &pos);
   void		        setPower(int power);
+  void			setVelocity(irr::core::vector2df const &);
 
-protected:
+private:
   virtual void		disable();
 
 public:
-  virtual void                        dead();
-  virtual bool				isDestructible() const;
+  virtual void          dead();
+  virtual bool		isDestructible() const;
+  virtual void		updateTimeOut();
 
 public:
-  virtual void		        willExplose() = 0;
+  virtual void		willExplose() = 0;
 
 private:
   void			run();
-
-protected:
-  void			newThreadBomb()
-  {
-    threadBomb = new std::thread([&] {run(); });
-  }
 
 private:
   std::string   	mesh;
   std::string 		texture;
 
 private:
-  std::thread			*threadBomb;
-  std::condition_variable	condVar;
-  mutable std::mutex			_mutex;
-  mutable bool			__active;
+  bool			_arrived;
+  irr::core::vector2df	dir;
+  irr::f32		frameDeltaTime;
+  irr::f32		then;
+
+private:
+  mutable bool		__active;
 
 protected:
-  int				_power;
-  bool				alive;
-  bool				use;
+  int			_power;
+  bool			use;
 };
 
 #endif

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:14:03 2016 Victor Gouet
-// Last update Mon May  9 15:27:04 2016 Victor Gouet
+// Last update Wed May 11 16:15:54 2016 Victor Gouet
 //
 
 #ifndef BOMBCONTAINER_HPP_
@@ -28,7 +28,7 @@ public:
 public:
   void				addBomb(ABomb *);
   void				deleteAllBomb();
-  void				bombExplose();
+  // void				bombExplose();
   void			        upgradePowerBombs();
 
 private:
