@@ -11,7 +11,8 @@
 #include "../include/Texture.hpp"
 #include "../include/IrrlichtController.hpp"
 
-const std::string BomberManTexture::path = "media/";
+//TODO : ifndef for path
+const std::string BomberManTexture::path = "../media/";
 
 //BomberMap
 const std::string BomberManTexture::groundTexture = BomberManTexture::path + "grass.jpg";

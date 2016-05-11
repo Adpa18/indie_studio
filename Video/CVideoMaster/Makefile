@@ -21,7 +21,7 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./theoraplayer/include/theoraplayer
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include -I./theoraplayer/theoraplayer/include/theoraplayer
 
 CPPFLAGS	+=	-O3 -ffast-math -std=c++11
 

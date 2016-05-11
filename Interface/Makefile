@@ -1,71 +1,92 @@
-# Makefile for Irrlicht Examples
-# It's usually sufficient to change just the target name and source file list
-# and be sure that CXX is set to a valid compiler
+CC		=	g++ -g
 
-# Name of the executable created (.exe will be added automatically if necessary)
-Target := bomberman
-# List of source files, separated by spaces
-Sources := main.cpp \
-            UIEventReceiver.cpp \
-            UIManager.cpp \
-            ../src/IrrlichtController.cpp \
-            PlayerSelectionBox.cpp
+RM		= 	rm -rf
 
-# Path to Irrlicht directory, should contain include/ and lib/
-IrrlichtHome := ../Irrlicht/irrlicht-1.8.3
-# Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
-BinPath = ./
+SRC_DIR	=	../src/
 
-# general compiler settings (might need to be set when compiling the lib, too)
-# preprocessor flags, e.g. defines and include paths
-USERCPPFLAGS = -I ../include
-# compiler flags such as optimization flags
-USERCXXFLAGS = -std=c++11 -O3 -ffast-math
-#USERCXXFLAGS = -g -Wall
-# linker flags such as additional libraries and link paths
-USERLDFLAGS =
+IrrlichtHome	=	../Irrlicht/irrlicht-1.8.3
 
-####
-#no changes necessary below this line
-####
+SRC		=	$(SRC_DIR)IrrlichtController.cpp	\
+			$(SRC_DIR)AGameObject.cpp			\
+			$(SRC_DIR)Player.cpp				\
+			$(SRC_DIR)ACharacter.cpp			\
+			$(SRC_DIR)Wall.cpp					\
+			$(SRC_DIR)BomberMap.cpp				\
+			$(SRC_DIR)EventGame.cpp				\
+			$(SRC_DIR)ABomb.cpp				    \
+			$(SRC_DIR)AController.cpp			\
+			$(SRC_DIR)MotionController.cpp		\
+			$(SRC_DIR)KeysController.cpp		\
+			$(SRC_DIR)FireBomb.cpp			    \
+			$(SRC_DIR)BombContainer.cpp		    \
+			$(SRC_DIR)GameManager.cpp		\
+			$(SRC_DIR)BonusSpeed.cpp		\
+			$(SRC_DIR)ABonus.cpp			\
+			$(SRC_DIR)BonusPower.cpp		\
+			$(SRC_DIR)BonusFireBomb.cpp		\
+			$(SRC_DIR)AItem.cpp			\
+			$(SRC_DIR)ItemThrow.cpp			\
+			$(SRC_DIR)Particule.cpp			\
+			$(SRC_DIR)Texture.cpp			\
+			$(SRC_DIR)GameObjectTimeContainer.cpp	\
+			main.cpp \
+			PlayerSelectionBox.cpp \
+			UIEventReceiver.cpp \
+			UIManager.cpp
 
-CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS)
-CXXFLAGS = $(USERCXXFLAGS)
-LDFLAGS = $(USERLDFLAGS)
+OBJ			=	$(SRC:%cpp=%o)
 
-#default target is Linux
-all: all_linux
+NAME		=	bomberman
 
-# target specific settings
-all_linux all_win32 static_win32: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
-all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
-all_linux clean_linux: SYSTEM=Linux
-all_win32 clean_win32 static_win32: SYSTEM=Win32-gcc
-all_win32 clean_win32 static_win32: SUF=.exe
-static_win32: CPPFLAGS += -D_IRR_STATIC_LIB_
-all_win32: LDFLAGS += -lopengl32 -lm
-static_win32: LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
-# name of the binary - only valid for targets which set SYSTEM
-DESTPATH = $(BinPath)/$(Target)$(SUF)
+BinPath 	=	./
 
-all_linux all_win32 static_win32:
-	$(warning Building...)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(Sources) -o $(DESTPATH) $(LDFLAGS)
+DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
-clean: clean_linux clean_win32
-	$(warning Cleaning...)
+CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread -g
 
-clean_linux clean_win32:
-	@$(RM) $(DESTPATH)
+CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-.PHONY: all all_win32 static_win32 clean clean_linux clean_win32
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I../include -I ./
 
-#multilib handling
+#-I/usr/X11R6/include
+
+CPPFLAGS	+=	-O3 -ffast-math
+
+LDFLAGS 	= -lpthread -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+
+%.o : %.cpp
+	@echo -e "Compiling $<"
+	@$(CC) -c $(CPPFLAGS) $< -o $@
+
+$(NAME)	:	$(OBJ)
+	@$(CC) $(OBJ) $(LDFLAGS) -o $(DESTPATH)
+	@echo -e "\033[0;33m${NAME} Compiled\033[0;00m"
+
+all	:	$(NAME)
+
+clean 	:
+	@echo -e "\033[0;31mRemoving Objects\033[0;00m"
+	@$(RM) $(OBJ)
+
+fclean	:	clean
+	@echo -e "\033[0;31mRemoving ${NAME}\033[0;00m"
+	@$(RM) $(NAME)
+
+re		: fclean all
+
+.PHONY	: all clean fclean re
+
+ifeq ($(OS),Windows_NT)
+SYSTEM=Win32-gcc
+SUF=.exe
+CPPFLAGS += -D_IRR_STATIC_LIB_
+LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
+LDFLAGS += -lopengl32 -lm -static-libstdc++
+else
+LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
+SYSTEM=Linux
+endif
+
 ifeq ($(HOSTTYPE), x86_64)
 LIBSELECT=64
 endif
-#solaris real-time features
-ifeq ($(HOSTTYPE), sun4)
-LDFLAGS += -lrt
-endif
-
