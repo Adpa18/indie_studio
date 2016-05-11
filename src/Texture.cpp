@@ -9,9 +9,7 @@
 //
 
 #include "../include/Texture.hpp"
-#include "../include/IrrlichtController.hpp"
 
-//TODO : ifndef for path
 const std::string BomberManTexture::path = "../media/";
 
 //BomberMap

@@ -12,7 +12,7 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
 {
     m_driver = m_manager->GetDevice()->getVideoDriver();
     m_sceneManager = m_manager->GetDevice()->getSceneManager();
-    m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(50, 0, 0), irr::core::vector3df(0, 0, 0));
+    m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(0, 10, -30), irr::core::vector3df(0, 10, 0));
     // TODO: set a different image id !
     img = m_manager->GetEnv()->addImage(pos, nullptr, 42, L"", true);
     irr::gui::IGUIButton *b = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
@@ -24,7 +24,7 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
 
 PlayerSelectionBox::~PlayerSelectionBox()
 {
-
+    // TODO: destroy mesh
 }
 
 /*
@@ -93,7 +93,8 @@ void PlayerSelectionBox::Update()
         {
             m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_model);
         }
-        m_sceneManager->drawAll();
+        //m_sceneManager->drawAll();
+        IrrlichtController::getDevice()->getSceneManager()->drawAll();
 
         // Sets the viewport to its initial state
         m_driver->setViewPort(viewPort);

@@ -42,7 +42,7 @@ BinPath 	=	./
 
 DESTPATH 	=	$(BinPath)/$(NAME)$(SUF)
 
-CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread -g
+CPPFLAGS	=	-W -Wall -Wextra -std=c++11 -pthread -g
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 

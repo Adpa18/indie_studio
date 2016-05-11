@@ -8,8 +8,8 @@
 
 int main()
 {
-    IrrlichtController::width = 640;
-    IrrlichtController::height = 640;
+    IrrlichtController::width = 1920;
+    IrrlichtController::height = 1080;
     UIManager uiManager(IrrlichtController::getDevice(false));
     BomberManTexture::loadTexture();
     UIEventReceiver *uiEventReceiver = new UIEventReceiver(uiManager);
@@ -21,6 +21,7 @@ int main()
         if (IrrlichtController::getDevice()->isWindowActive())
         {
             IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 200, 200, 200));
+            IrrlichtController::getDevice()->getSceneManager()->drawAll();
             IrrlichtController::getDevice()->getGUIEnvironment()->drawAll();
             IrrlichtController::getDriver()->endScene();
         }
