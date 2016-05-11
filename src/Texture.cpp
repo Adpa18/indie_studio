@@ -12,7 +12,7 @@
 #include "../include/IrrlichtController.hpp"
 
 //TODO : ifndef for path
-const std::string BomberManTexture::path = "../media/";
+const std::string BomberManTexture::path = "media/";
 
 //BomberMap
 const std::string BomberManTexture::groundTexture = BomberManTexture::path + "grass.jpg";
