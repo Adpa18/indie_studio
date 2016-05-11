@@ -3,8 +3,10 @@
 //
 
 #include "Particule.hpp"
+#include "Texture.hpp"
 
 Particule::Particule(irr::core::vector3df const &pos, irr::core::vector3df const &dir, int power)
+    :AGameObject(irr::core::vector2df(pos.X, pos.Y), BomberManTexture::emptyMD, BomberManTexture::emptyTexture, AGameObject::NONE, 1)
 {
     irr::scene::IParticleEmitter            *emitter;
     irr::scene::IParticleAffector           *affector;
@@ -12,12 +14,12 @@ Particule::Particule(irr::core::vector3df const &pos, irr::core::vector3df const
     _particleSystem = IrrlichtController::getSceneManager()->addParticleSystemSceneNode(false);
     _particleSystem->setPosition(pos);
     emitter = _particleSystem->createBoxEmitter(
-            irr::core::aabbox3d<irr::f32>(-10,0,-10,10,0,10), dir / 20, 10, 500,
+            irr::core::aabbox3d<irr::f32>(-10,0,-10,10,0,10), dir / 20, 10, 50,
             irr::video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
             500, 500 * power, // duree de vie min / max
             0, // angle max d'ecart / direction prevue
-            irr::core::dimension2df(8.0f,8.0f),
-            irr::core::dimension2df(14.0f,14.0f)
+            irr::core::dimension2df(40.0f,40.0f),
+            irr::core::dimension2df(50.0f,50.0f)
     );
     _particleSystem->setEmitter(emitter);
     emitter->drop();
@@ -32,5 +34,15 @@ Particule::Particule(irr::core::vector3df const &pos, irr::core::vector3df const
 
 Particule::~Particule()
 {
-//    _particleSystem->setEmitter(0);
+    _particleSystem->setEmitter(0);
+}
+
+void        Particule::dead()
+{
+
+}
+
+bool        Particule::isDestructible() const
+{
+    return (true);
 }

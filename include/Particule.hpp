@@ -6,15 +6,19 @@
 # define PARTICULE_HPP
 
 # include "IrrlichtController.hpp"
+# include "AGameObject.hpp"
 
-class Particule
+class Particule : public  AGameObject
 {
 private:
     irr::scene::IParticleSystemSceneNode    *_particleSystem;
 public:
-
     Particule(irr::core::vector3df const &pos, irr::core::vector3df const &dir, int power);
     virtual ~Particule();
+
+public:
+    virtual void                        dead();
+    virtual bool				isDestructible() const;
 };
 
 #endif //PARTICULE_HPP

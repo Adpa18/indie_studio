@@ -74,7 +74,7 @@ void		FireBomb::willExplose()
             }
         }
     }
-    Particule p1((*this)->getPosition(), irr::core::vector3df(-1, 0, 0), power);
+    new Particule((*this)->getPosition(), irr::core::vector3df(-1, 0, 0), power);
     stop = false;
     for (power = 1; power <= this->_power; ++power) {
         if (stop)
@@ -93,7 +93,7 @@ void		FireBomb::willExplose()
             }
         }
     }
-    Particule p2((*this)->getPosition(), irr::core::vector3df(1, 0, 0), power);
+    new Particule((*this)->getPosition(), irr::core::vector3df(1, 0, 0), power);
     stop = false;
     for (power = 1; power <= this->_power; ++power) {
         if (stop)
@@ -112,7 +112,7 @@ void		FireBomb::willExplose()
             }
         }
     }
-    Particule p3((*this)->getPosition(), irr::core::vector3df(1, 0, -1), power);
+    new Particule((*this)->getPosition(), irr::core::vector3df(1, 0, -1), power);
     stop = false;
     for (power = 1; power <= this->_power; ++power) {
         if (stop)
@@ -131,6 +131,6 @@ void		FireBomb::willExplose()
             }
         }
     }
-    Particule p4((*this)->getPosition(), irr::core::vector3df(0, 0, 1), power);
+    new Particule((*this)->getPosition(), irr::core::vector3df(0, 0, 1), power);
     disable();
 }

@@ -13,6 +13,9 @@
 
 const std::string BomberManTexture::path = "media/";
 
+const std::string BomberManTexture::emptyTexture = BomberManTexture::path + "empty.jpg";
+const std::string BomberManTexture::emptyMD = BomberManTexture::path + "empty.md2";
+
 const std::string BomberManTexture::ziggsTexture = BomberManTexture::path + "ziggs.png";
 const std::string BomberManTexture::ziggsMD = BomberManTexture::path + "ziggs.md3";
 
@@ -39,6 +42,7 @@ const std::string BomberManTexture::itemThrowMD = BomberManTexture::path + "bulb
 
 void BomberManTexture::loadTexture()
 {
+  IrrlichtController::getDriver()->getTexture(emptyTexture.c_str());
   IrrlichtController::getDriver()->getTexture(ziggsTexture.c_str());
   IrrlichtController::getDriver()->getTexture(caisseDestructibleTexture.c_str());
   IrrlichtController::getDriver()->getTexture(caisseIndestructibleTexture.c_str());
@@ -48,6 +52,7 @@ void BomberManTexture::loadTexture()
   IrrlichtController::getDriver()->getTexture(bonusSpeedTexture.c_str());
   IrrlichtController::getDriver()->getTexture(itemThrowTexture.c_str());
 
+  IrrlichtController::getSceneManager()->getMesh(emptyMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(ziggsMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(caisseDestructibleMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(caisseIndestructibleMD.c_str());

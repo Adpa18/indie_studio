@@ -17,6 +17,9 @@
 class	BomberManTexture
 {
 public:
+  static const std::string emptyTexture;
+  static const std::string emptyMD;
+
   static const std::string ziggsTexture;
   static const std::string ziggsMD;
   

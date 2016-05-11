@@ -15,7 +15,7 @@
 AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, double timeout) : _type(type)
 {
     BomberMap::getMap()->add(this, pos);
-    irr::scene::IAnimatedMesh *meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str());
+    irr::scene::IAnimatedMesh *meshNode;
 
   time_t	timer;
   struct tm	y2k;
@@ -32,25 +32,24 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 	_timer = difftime(timer, mktime(&y2k));
 	
 	GameObjectTimeContainer::SharedInstance()->add(this);
-
       }
     else
       {
 	_timer = 0;
       }
 
-  if (!meshNode)
+    if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
     {
-      IrrlichtController::getDevice()->drop();
-      throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
+        IrrlichtController::getDevice()->drop();
+        throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
     }
-  if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
+    else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
     {
-        this->setPos(pos);
-      _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
-      _node->setMD2Animation(irr::scene::EMAT_STAND);
-      _node->setMaterialFlag(irr::video::EMF_LIGHTING,true);
+        _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
+        _node->setMD2Animation(irr::scene::EMAT_STAND);
+        _node->setMaterialFlag(irr::video::EMF_LIGHTING,true);
     }
+    this->setPos(pos);
 }
 
 AGameObject::~AGameObject()
