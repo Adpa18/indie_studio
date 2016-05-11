@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:24:03 2016 Victor Gouet
-// Last update Tue May 10 15:57:17 2016 Victor Gouet
+// Last update Wed May 11 11:07:05 2016 Victor Gouet
 //
 
 #ifndef TEXTURE_HPP_
@@ -17,6 +17,8 @@
 class	BomberManTexture
 {
 public:
+  static const std::string blueParticuleTexture;
+
   static const std::string emptyTexture;
   static const std::string emptyMD;
 

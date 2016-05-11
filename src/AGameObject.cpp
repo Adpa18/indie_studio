@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed May 11 09:45:53 2016 Victor Gouet
+// Last update Wed May 11 11:13:26 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -54,9 +54,6 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 
 AGameObject::~AGameObject()
 {
-  if (_timeout != -1)
-    GameObjectTimeContainer::SharedInstance()->remove(this);
-
   BomberMap::getMap()->remove(this);
   (*this)->remove();
 

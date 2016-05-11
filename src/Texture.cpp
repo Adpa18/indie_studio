@@ -5,13 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Tue May 10 15:56:50 2016 Victor Gouet
+// Last update Wed May 11 11:07:16 2016 Victor Gouet
 //
 
 #include "../include/Texture.hpp"
 #include "../include/IrrlichtController.hpp"
 
 const std::string BomberManTexture::path = "media/";
+
+const std::string BomberManTexture::blueParticuleTexture = BomberManTexture::path + "blueFire.jpg";
 
 const std::string BomberManTexture::emptyTexture = BomberManTexture::path + "empty.jpg";
 const std::string BomberManTexture::emptyMD = BomberManTexture::path + "empty.md2";
@@ -51,6 +53,7 @@ void BomberManTexture::loadTexture()
   IrrlichtController::getDriver()->getTexture(bonusPowerTexture.c_str());
   IrrlichtController::getDriver()->getTexture(bonusSpeedTexture.c_str());
   IrrlichtController::getDriver()->getTexture(itemThrowTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(blueParticuleTexture.c_str());
 
   IrrlichtController::getSceneManager()->getMesh(emptyMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(ziggsMD.c_str());

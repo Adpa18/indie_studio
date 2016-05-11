@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Wed May 11 09:44:03 2016 Victor Gouet
+// Last update Wed May 11 11:16:09 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -32,11 +32,6 @@ GameObjectTimeContainer *GameObjectTimeContainer::SharedInstance()
   return (instance);
 }
 
-void				GameObjectTimeContainer::remove(AGameObject *obj)
-{
-  container.remove(obj);
-}
-
 void				GameObjectTimeContainer::add(AGameObject *obj)
 {
   container.push_back(obj);
@@ -54,8 +49,7 @@ void				GameObjectTimeContainer::callTimeOutObjects()
 	  if ((*it)->isDestructible())
 	    delete (*it);
 	  it = container.erase(it);
-	  std::cout << "TIME OUT ! OBJ destroy" << std::endl;
-	}
+      	}
       else
 	++it;
     }

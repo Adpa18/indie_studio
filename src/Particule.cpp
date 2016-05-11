@@ -25,7 +25,7 @@ Particule::Particule(irr::core::vector3df const &pos, irr::core::vector3df const
     emitter->drop();
     _particleSystem->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _particleSystem->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
-    _particleSystem->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture("media/blueFire.jpg"));
+    _particleSystem->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::blueParticuleTexture.c_str()));
     _particleSystem->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
     affector = _particleSystem->createFadeOutParticleAffector(irr::video::SColor(0,0,0,0), 1200);
     _particleSystem->addAffector(affector);
