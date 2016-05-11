@@ -3,6 +3,7 @@
 //
 
 #include "UIEventReceiver.hpp"
+#include "PlayerSelectionBox.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice()), m_gameState(SPLASH_SCREEN), m_gameSatePrev(PLAY)
@@ -118,14 +119,21 @@ void UIEventReceiver::DisplayMainMenu()
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
     img->setScaleImage(true);
 
-    irr::gui::IGUIButton *b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
+    PlayerSelectionBox playerSelectionBox(&m_manager, "../media/PlayerButton.png",
+                                          irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
+                                                                    IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
+                                          UIElement::MAIN_MENU_BUTTON_1P, false);
+
+    irr::gui::IGUIButton *b;
+    /**b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
                                                             IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                  nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");
+                                  nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");*/
     //m_buttons.push_back(b);
 
     b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.32, IrrlichtController::height / 2.0 - 50,
                                                                 IrrlichtController::width * 0.47, IrrlichtController::height / 2.0 + 50),
                                       nullptr, UIElement::MAIN_MENU_BUTTON_2P, L"Two players", L"");
+    b->setImage(m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
     //m_buttons.push_back(b);
 
     b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.52, IrrlichtController::height / 2.0 - 50,
@@ -239,4 +247,5 @@ void UIEventReceiver::LoadTextures()
     m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
     m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png");
     m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButton.png");
 }
