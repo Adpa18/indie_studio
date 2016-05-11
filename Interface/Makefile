@@ -29,6 +29,7 @@ SRC		=	$(SRC_DIR)IrrlichtController.cpp	\
 			$(SRC_DIR)Particule.cpp			\
 			$(SRC_DIR)Texture.cpp			\
 			$(SRC_DIR)GameObjectTimeContainer.cpp	\
+			$(SRC_DIR)Explosion.cpp	\
 			main.cpp \
 			PlayerSelectionBox.cpp \
 			UIEventReceiver.cpp \

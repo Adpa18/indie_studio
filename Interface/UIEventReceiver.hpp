@@ -11,6 +11,7 @@
 #include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 #include "UIElements.hpp"
 #include "UIManager.hpp"
+#include "PlayerSelectionBox.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver

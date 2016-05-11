@@ -21,7 +21,11 @@ int main()
         if (IrrlichtController::getDevice()->isWindowActive())
         {
             IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 200, 200, 200));
+            IrrlichtController::getDevice()->getVideoDriver()->setViewPort(irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
+                                                                                                     IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
             IrrlichtController::getDevice()->getSceneManager()->drawAll();
+            IrrlichtController::getDevice()->getVideoDriver()->setViewPort(irr::core::rect<irr::s32>(0, 0,
+                                                                                                     IrrlichtController::width, IrrlichtController::height));
             IrrlichtController::getDevice()->getGUIEnvironment()->drawAll();
             IrrlichtController::getDriver()->endScene();
         }

@@ -12,7 +12,7 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
 {
     m_driver = m_manager->GetDevice()->getVideoDriver();
     m_sceneManager = m_manager->GetDevice()->getSceneManager();
-    m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(0, 10, -30), irr::core::vector3df(0, 10, 0));
+    m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(0, 12, -30), irr::core::vector3df(0, 12, 0));
     // TODO: set a different image id !
     img = m_manager->GetEnv()->addImage(pos, nullptr, 42, L"", true);
     irr::gui::IGUIButton *b = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
@@ -25,6 +25,7 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
 PlayerSelectionBox::~PlayerSelectionBox()
 {
     // TODO: destroy mesh
+    //m_modelNode->remove();
 }
 
 /*
@@ -79,11 +80,11 @@ void PlayerSelectionBox::Update()
     if (!m_bIsIaPlayer)
     {
         // Copies viewport state
-        irr::core::rect<irr::s32> viewPort = m_driver->getViewPort();
-        irr::scene::ICameraSceneNode *camera = m_sceneManager->getActiveCamera();
+        //irr::core::rect<irr::s32> viewPort = m_driver->getViewPort();
+        //irr::scene::ICameraSceneNode *camera = m_sceneManager->getActiveCamera();
 
-        m_driver->setViewPort(m_pos);
-        m_sceneManager->setActiveCamera(m_camera);
+        //m_driver->setViewPort(m_pos);
+        //m_sceneManager->setActiveCamera(m_camera);
 
         if (m_model == nullptr)
         {
@@ -92,13 +93,19 @@ void PlayerSelectionBox::Update()
         if (m_model != nullptr && m_modelNode == nullptr)
         {
             m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_model);
+            if (m_modelNode)
+            {
+                irr::video::ITexture *texture = m_driver->getTexture("../media/ziggs.png");
+                m_modelNode->setMaterialTexture(0, texture);
+                m_modelNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            }
         }
-        //m_sceneManager->drawAll();
+
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
 
         // Sets the viewport to its initial state
-        m_driver->setViewPort(viewPort);
-        m_sceneManager->setActiveCamera(camera);
+        //m_driver->setViewPort(viewPort);
+        //m_sceneManager->setActiveCamera(camera);
     }
     else
     {
