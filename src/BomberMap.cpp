@@ -42,7 +42,7 @@ void			BomberMap::generateGround()
             0, // Material
             0.0f, // Hill height
     irr::core::dimension2d<irr::f32>(0.0f, 0.0f), // countHills
-    irr::core::dimension2d<irr::f32>(25.0f, 25.0f)); // textureRepeatCount
+    irr::core::dimension2d<irr::f32>(11, 11)); // textureRepeatCount
 
     _ground = IrrlichtController::getSceneManager()->addMeshSceneNode(terrain_model->getMesh(0));
     _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::groundTexture.c_str()));
