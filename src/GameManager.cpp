@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Tue May 10 19:13:53 2016 Victor Gouet
+// Last update Wed May 11 13:22:18 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -22,6 +22,7 @@ GameManager::GameManager()
   m_gameSatePrev = SPLASH_SCREEN;
   // uiManager = new UIManager(IrrlichtController::getDevice(false));
   // uiEventReceiver = new UIEventReceiver(*uiManager);
+  IrrlichtController::getGUIEnvironment()->getFont("/home/gouet_v/Downloads/irrlicht-1.8.3/media/fonthaettenschweiler.bmp");
   eventGame = new EventGame();
   BomberManTexture::loadTexture();
   // _state = PREV_GAME;
