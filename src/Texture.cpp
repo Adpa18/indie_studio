@@ -51,6 +51,9 @@ const std::string BomberManTexture::itemThrowMD = BomberManTexture::path + "bulb
 
 const std::string BomberManTexture::blueParticuleTexture = BomberManTexture::path + "blueFire.jpg";
 
+const std::string BomberManTexture::fireExplosionTexture = BomberManTexture::path + "explosion.jpg";
+const std::string BomberManTexture::fireExplosionMD = BomberManTexture::path + "cube.md2";
+
 void BomberManTexture::loadTexture()
 {
   IrrlichtController::getDriver()->getTexture(cubeDestructibleTexture.c_str());

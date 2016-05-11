@@ -24,8 +24,9 @@ public:
         BOMB = 1 << 1,
         ITEM = 1 << 2,
         BLOCK = 1 << 3,
-        OTHER = 1 << 4,
-	BONUS = 1 << 5
+	    BONUS = 1 << 4,
+	    BOOM = 1 << 5,
+        OTHER = 1 << 6
     };
 public:
   AGameObject(irr::core::vector2df const &pos, std::string const &mesh,

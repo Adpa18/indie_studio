@@ -17,6 +17,8 @@
 class	BomberManTexture
 {
 public:
+    static const std::string path;
+
   static const std::string groundTexture;
 
   static const std::string blueParticuleTexture;
@@ -51,7 +53,9 @@ public:
   static const std::string itemThrowTexture;
   static const std::string itemThrowMD;
 
-  static const std::string path;
+    static const std::string fireExplosionTexture;
+    static const std::string fireExplosionMD;
+
 
 public:
   static void loadTexture();

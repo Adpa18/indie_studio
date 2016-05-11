@@ -188,7 +188,7 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 		this->item->dead();
 	      }
 	  }
-        else if (type != AGameObject::CHARACTER) {
+        else if (type != AGameObject::CHARACTER && type != AGameObject::BOOM) {
             _arrived = true;
             return;
         }
