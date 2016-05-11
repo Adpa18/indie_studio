@@ -10,12 +10,7 @@
 
 #include "../include/Texture.hpp"
 
-<<<<<<< HEAD
 const std::string BomberManTexture::path = "../media/";
-=======
-//TODO : ifndef for path
-const std::string BomberManTexture::path = "media/";
->>>>>>> 0c7b3cb91c327ebaf7f74387d20e2a44f0dbae00
 
 //BomberMap
 const std::string BomberManTexture::groundTexture = BomberManTexture::path + "grass.jpg";
