@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Tue May 10 18:08:11 2016 Victor Gouet
+// Last update Wed May 11 09:46:06 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -29,7 +29,7 @@ public:
     };
 public:
   AGameObject(irr::core::vector2df const &pos, std::string const &mesh,
-              std::string const &texture, Type type = NONE, int timeout = -1);
+              std::string const &texture, Type type = NONE, double timeout = -1);
   virtual ~AGameObject();
 
 public:

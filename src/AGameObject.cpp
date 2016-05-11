@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Tue May 10 19:12:09 2016 Victor Gouet
+// Last update Wed May 11 09:45:53 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
 
-AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, int timeout) : _type(type)
+AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, double timeout) : _type(type)
 {
     BomberMap::getMap()->add(this, pos);
     irr::scene::IAnimatedMesh *meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str());
@@ -30,7 +30,6 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 	y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
 	y2k.tm_zone = 0;
 	_timer = difftime(timer, mktime(&y2k));
-	// A Mettre dans une list de GameObject qui vont disparaitre au bon d un moment
 	
 	GameObjectTimeContainer::SharedInstance()->add(this);
 
@@ -58,6 +57,7 @@ AGameObject::~AGameObject()
 {
   if (_timeout != -1)
     GameObjectTimeContainer::SharedInstance()->remove(this);
+
   BomberMap::getMap()->remove(this);
   (*this)->remove();
 
