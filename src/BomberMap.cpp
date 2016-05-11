@@ -9,7 +9,10 @@
 //
 
 #include <cstdlib>
+#include <iostream>
+#include <stdlib.h>
 #include "../include/BomberMap.hpp"
+#include "../include/Texture.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -31,7 +34,19 @@ void            BomberMap::genMap()
 
 void			BomberMap::generateGround()
 {
-  // IrrlichtController::getSceneManager()->addTerrainSceneNode("/home/gouet_v/Downloads/irrlicht-1.8.3/media/wall.bmp");// addT
+    irr::scene::IAnimatedMesh *terrain_model;
+
+    terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
+    irr::core::dimension2d<irr::f32>(25, 25), // Tile size
+    irr::core::dimension2d<irr::u32>(11, 11), // Tile count
+            0, // Material
+            0.0f, // Hill height
+    irr::core::dimension2d<irr::f32>(0.0f, 0.0f), // countHills
+    irr::core::dimension2d<irr::f32>(25.0f, 25.0f)); // textureRepeatCount
+
+    _ground = IrrlichtController::getSceneManager()->addMeshSceneNode(terrain_model->getMesh(0));
+    _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::groundTexture.c_str()));
+    _ground->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 }
 
 void			BomberMap::generateMap()
@@ -39,10 +54,18 @@ void			BomberMap::generateMap()
   srand(time(NULL));
     for (int y = 0; y < BomberMap::size_side; ++y) {
         for (int x = 0; x < BomberMap::size_side; ++x) {
-            if (_patron[y][x] == 'X') {
-                new Wall(irr::core::vector2df(x, y), Wall::Invicible);
-            } else if (_patron[y][x] == 'C') {
-                new Wall(irr::core::vector2df(x, y));
+            switch (_patron[y][x]) {
+                case 'E':
+                    new Wall(irr::core::vector2df(x, y), Wall::Edge);
+                    break;
+                case 'X':
+                    new Wall(irr::core::vector2df(x, y), Wall::Invicible);
+                    break;
+                case 'C':
+                    new Wall(irr::core::vector2df(x, y));
+                    break;
+                default:
+                    break;
             }
         }
     }

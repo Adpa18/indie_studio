@@ -90,7 +90,7 @@ void	GameManager::run()
 	      _state = MENU;
 	      onMenu();
 	    }
-	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 200, 200, 200));
+	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
 	  IrrlichtController::getSceneManager()->drawAll();
 	  IrrlichtController::getGUIEnvironment()->drawAll();
 	  IrrlichtController::getDriver()->endScene();

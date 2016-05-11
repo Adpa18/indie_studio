@@ -41,6 +41,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
     if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
     {
         IrrlichtController::getDevice()->drop();
+        return;
         throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
     }
     else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))

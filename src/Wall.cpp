@@ -8,15 +8,20 @@
 // Last update Tue May 10 15:57:29 2016 Victor Gouet
 //
 
+#include <iostream>
 #include "../include/Wall.hpp"
 #include "../include/Texture.hpp"
 
-Wall::Wall(irr::core::vector2df const &pos, State state) // 1 caisseMetal
-  : AGameObject(pos, state == Invicible ? BomberManTexture::caisseIndestructibleMD : BomberManTexture::caisseDestructibleMD,
-		state == Invicible ? BomberManTexture::caisseIndestructibleTexture : BomberManTexture::caisseDestructibleTexture,
-                (state == Destructible) ? OTHER : BLOCK), _state(state)
+const std::map<Wall::State, std::pair<const std::string&, const std::string&>>  Wall::_models = {
+        {Invicible, {BomberManTexture::cubeIndestructibleMD, BomberManTexture::cubeIndestructibleTexture}},
+        {Destructible, {BomberManTexture::cubeDestructibleMD, BomberManTexture::cubeDestructibleTexture}},
+        {Edge, {BomberManTexture::cubeEdgeMD, BomberManTexture::cubeEdgeTexture}}
+};
+
+Wall::Wall(irr::core::vector2df const &pos, State state)
+  : AGameObject(pos, _models.find(state)->second.first, _models.find(state)->second.second, (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
-  
+    (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
 }
 
 Wall::~Wall()
