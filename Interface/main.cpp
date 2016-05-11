@@ -4,12 +4,14 @@
 
 #include "UIManager.hpp"
 #include "UIEventReceiver.hpp"
+#include "../include/Texture.hpp"
 
 int main()
 {
-    IrrlichtController::width = 1920;
-    IrrlichtController::height = 1080;
+    IrrlichtController::width = 640;
+    IrrlichtController::height = 640;
     UIManager uiManager(IrrlichtController::getDevice(false));
+    BomberManTexture::loadTexture();
     UIEventReceiver *uiEventReceiver = new UIEventReceiver(uiManager);
 
     IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);

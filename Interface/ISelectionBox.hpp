@@ -17,7 +17,7 @@ public:
     {}
 
 public:
-    virtual void Update() const = 0;
+    virtual void Update() = 0;
     virtual void SelectNext() const = 0;
     virtual void SelectPrev() const = 0;
 };

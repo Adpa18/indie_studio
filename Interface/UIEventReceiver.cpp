@@ -123,6 +123,7 @@ void UIEventReceiver::DisplayMainMenu()
                                           irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
                                                                     IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
                                           UIElement::MAIN_MENU_BUTTON_1P, false);
+    playerSelectionBox.Update();
 
     irr::gui::IGUIButton *b;
     /**b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
@@ -248,4 +249,5 @@ void UIEventReceiver::LoadTextures()
     m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png");
     m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
     m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButton.png");
+    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButtonIa.png");
 }
