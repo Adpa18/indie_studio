@@ -12,6 +12,7 @@
 #include "../include/BomberMap.hpp"
 #include "../include/Particule.hpp"
 #include "../include/Texture.hpp"
+#include "../include/Explosion.hpp"
 
 FireBomb::FireBomb()
   : ABomb(BomberManTexture::fireBombMD, BomberManTexture::fireBombTexture)
@@ -40,94 +41,132 @@ FireBomb::FireBomb(ABomb const *other) : ABomb(other)
 void		FireBomb::willExplose()
 {
     irr::core::vector2df        pos = this->getMapPos();
+
+    this->killObjects(pos);
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(-power, 0))) {
+            break;
+        }
+    }
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(power, 0))) {
+            break;
+        }
+    }
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(0, -power))) {
+            break;
+        }
+    }
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(0, power))) {
+            break;
+        }
+    }
+
+//    std::vector<AGameObject *>   objs;
+//    AGameObject::Type           type;
+//
+//    for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+//        new Explosion(pos, 3);
+//        if (this != (*it)) {
+//            AGameObject *obj = (*it);
+//	    obj->dead();
+//	    if (obj->isDestructible())
+//	      delete obj;
+//        }
+//    }
+//    for (int power = 1; power <= this->_power; ++power) {
+//        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(-power, 0));
+//        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+//            type = (*it)->getType();
+//            if (type != AGameObject::BLOCK) {
+//	      AGameObject *obj = (*it);
+//	      obj->dead();
+//	      if (obj->isDestructible())
+//		delete obj;
+//            }
+//            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+//                break;
+//            }
+//        }
+//        new Explosion(pos + irr::core::vector2df(-power, 0), 3);
+//    }
+//    for (int power = 1; power <= this->_power; ++power) {
+//        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(power, 0));
+//        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+//            type = (*it)->getType();
+//            if (type != AGameObject::BLOCK) {
+//                AGameObject *obj = (*it);
+//		obj->dead();
+//		if (obj->isDestructible())
+//		  delete obj;
+//            }
+//            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+//                break;
+//            }
+//        }
+//        new Explosion(pos + irr::core::vector2df(power, 0), 3);
+//    }
+//    for (int power = 1; power <= this->_power; ++power) {
+//        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, -power));
+//        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+//            type = (*it)->getType();
+//            if (type != AGameObject::BLOCK) {
+//                AGameObject *obj = (*it);
+//		obj->dead();
+//		if (obj->isDestructible())
+//		  delete obj;
+//            }
+//            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+//                break;
+//            }
+//        }
+//        new Explosion(pos + irr::core::vector2df(0, -power), 3);
+//    }
+//    for (int power = 1; power <= this->_power; ++power) {
+//        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, power));
+//        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+//            type = (*it)->getType();
+//            if (type != AGameObject::BLOCK) {
+//                AGameObject *obj = (*it);
+//		obj->dead();
+//		if (obj->isDestructible())
+//		  delete obj;
+//            }
+//            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+//                break;
+//            }
+//        }
+//        new Explosion(pos + irr::core::vector2df(0, power), 3);
+//    }
+}
+
+bool    FireBomb::killObjects(irr::core::vector2df const &pos)
+{
     std::vector<AGameObject *>   objs;
     AGameObject::Type           type;
-    bool                        stop;
+    bool                        stop = false;
 
+    objs = BomberMap::getMap()->getObjsFromVector2(pos);
     for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
-        if (this != (*it)) {
+        if (this == (*it)) {
+            continue;
+        }
+        type = (*it)->getType();
+        if (type != AGameObject::BLOCK) {
             AGameObject *obj = (*it);
-	    obj->dead();
-	    if (obj->isDestructible())
-	      delete obj;
+            obj->dead();
+            if (type != AGameObject::BOOM && obj->isDestructible()) {
+                delete obj;
+            }
+        }
+        if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+            stop = true;
         }
     }
-    int power;
-    stop = false;
-    for (power = 1; power <= this->_power; ++power) {
-        if (stop) {
-            break;
-        }
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(-power, 0));
-        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
-            type = (*it)->getType();
-            if (type != AGameObject::BLOCK) {
-	      AGameObject *obj = (*it);
-	      obj->dead();
-	      if (obj->isDestructible())
-		delete obj;
-            }
-            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
-                stop = true;
-            }
-        }
+    if (!stop) {
+        new Explosion(pos, 1);
     }
-    new Particule((*this)->getPosition(), irr::core::vector3df(-1, 0, 0), power);
-    stop = false;
-    for (power = 1; power <= this->_power; ++power) {
-        if (stop)
-            break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(power, 0));
-        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
-            type = (*it)->getType();
-            if (type != AGameObject::BLOCK) {
-                AGameObject *obj = (*it);
-		obj->dead();
-		if (obj->isDestructible())
-		  delete obj;
-            }
-            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
-                stop = true;
-            }
-        }
-    }
-    new Particule((*this)->getPosition(), irr::core::vector3df(1, 0, 0), power);
-    stop = false;
-    for (power = 1; power <= this->_power; ++power) {
-        if (stop)
-            break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, -power));
-        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
-            type = (*it)->getType();
-            if (type != AGameObject::BLOCK) {
-                AGameObject *obj = (*it);
-		obj->dead();
-		if (obj->isDestructible())
-		  delete obj;
-            }
-            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
-                stop = true;
-            }
-        }
-    }
-    new Particule((*this)->getPosition(), irr::core::vector3df(1, 0, -1), power);
-    stop = false;
-    for (power = 1; power <= this->_power; ++power) {
-        if (stop)
-            break;
-        objs = BomberMap::getMap()->getObjsFromVector2(pos + irr::core::vector2df(0, power));
-        for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
-            type = (*it)->getType();
-            if (type != AGameObject::BLOCK) {
-                AGameObject *obj = (*it);
-		obj->dead();
-		if (obj->isDestructible())
-		  delete obj;
-            }
-            if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
-                stop = true;
-            }
-        }
-    }
-    new Particule((*this)->getPosition(), irr::core::vector3df(0, 0, 1), power);
+    return (stop);
 }

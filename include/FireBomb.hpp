@@ -23,6 +23,9 @@ public:
 
 public:
   virtual void	willExplose();
+
+private:
+    bool        killObjects(irr::core::vector2df const &pos);
 };
 
 #endif
