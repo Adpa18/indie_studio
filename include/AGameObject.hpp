@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Wed May 11 15:45:12 2016 Victor Gouet
+// Last update Wed May 11 17:11:30 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -33,6 +33,7 @@ public:
   virtual ~AGameObject();
 
 public:
+  irr::scene::IAnimatedMeshSceneNode    *getSceneNode();
   irr::scene::IAnimatedMeshSceneNode    *operator->();
     AGameObject::Type                   getType() const;
     void                                setPos(irr::core::vector2df const &pos);
@@ -42,11 +43,12 @@ public:
 
 public:
   virtual void                        dead() = 0;
-  virtual bool				isDestructible() const = 0;
+  virtual bool			      isDestructible() const = 0;
+  virtual void			      updateTimeOut();
+
 
 public:
   bool				isTimeOut() const;
-  virtual void			onTimeOut();
 
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;

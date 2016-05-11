@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed May 11 16:36:13 2016 Victor Gouet
+// Last update Wed May 11 17:11:54 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -86,8 +86,6 @@ void			AGameObject::setTimeOut(double timeout)
   time_t	timer;
   struct tm	y2k;
 
-  // if (_timeout != -1)
-  //   return ;
   this->_timeout = timeout;
   timer = time(NULL);
   y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
@@ -98,12 +96,16 @@ void			AGameObject::setTimeOut(double timeout)
   GameObjectTimeContainer::SharedInstance()->add(this);
 }
 
-void			AGameObject::onTimeOut()
+void			      AGameObject::updateTimeOut()
 {
-  // Remove From the list of timer object
 }
 
 irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
+{
+  return (_node);
+}
+
+irr::scene::IAnimatedMeshSceneNode *AGameObject::getSceneNode()
 {
   return (_node);
 }

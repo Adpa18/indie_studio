@@ -122,15 +122,15 @@ void	GameManager::willStartGame()
 
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-    (0, irr::core::vector3df(0, 100, -200), irr::core::vector3df(0,5,0));
+    (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0,5,0));
   camera->setTarget(irr::core::vector3df(0, 0, 0));
 
   camera->setAutomaticCulling(irr::scene::EAC_OFF);
   camera->setFarValue(1000);
   camera->setNearValue(10);
 
-  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
-									     1.0f, 1.0f, 1.0f));
+//  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
+//									     1.0f, 1.0f, 1.0f));
   
 }
 

@@ -47,6 +47,32 @@ void			BomberMap::generateGround()
     _ground = IrrlichtController::getSceneManager()->addMeshSceneNode(terrain_model->getMesh(0));
     _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::groundTexture.c_str()));
     _ground->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+
+    irr::scene::ISceneNode* light;
+    irr::scene::ISceneNodeAnimator* anim = 0;
+
+//    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(0,0,0), irr::video::SColorf(1.0f, 1.0f, 1.0f, 1.0f), 100.0f);
+//    irr::scene::ISceneNodeAnimator* anim = 0;
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator (irr::core::vector3df(0,150,0),250.0f);
+//    light->addAnimator(anim);
+//    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(-125, 0, 125), irr::video::SColorf(1.0f, 0.0f, 0.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(-125, 0, -125), irr::video::SColorf(0.0f, 1.0f, 0.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(125, 0, -125), irr::video::SColorf(0.0f, 0.0f, 1.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(125, 0, 125), irr::video::SColorf(1.0f, 1.0f, 0.0f), 1000.0f);
+    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0,150,0),250.0f);
+    light->addAnimator(anim);
+    anim->drop();
+
 }
 
 void			BomberMap::generateMap()

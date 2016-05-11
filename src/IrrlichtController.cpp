@@ -12,8 +12,8 @@
 
 // redeclare static member for cpp linkage
 irr::IrrlichtDevice *IrrlichtController::device = NULL;
-size_t    IrrlichtController::width = 640;
-size_t    IrrlichtController::height = 640;
+size_t    IrrlichtController::width = 1920;
+size_t    IrrlichtController::height = 1080;
 
 irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
 {
