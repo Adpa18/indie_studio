@@ -5,11 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:42:59 2016 Victor Gouet
-// Last update Tue May 10 15:08:53 2016 Victor Gouet
+// Last update Wed May 11 17:59:29 2016 Victor Gouet
 //
 
 #include "../include/ItemThrow.hpp"
 #include "../include/Texture.hpp"
+#include "../include/BomberMap.hpp"
 
 ItemThrow::ItemThrow(irr::core::vector2df const &pos)
   : AItem(pos, BomberManTexture::itemThrowMD,
@@ -25,7 +26,19 @@ ItemThrow::~ItemThrow()
 
 #include <iostream>
 
-void		ItemThrow::use()
+void		ItemThrow::use(irr::core::vector2df const &playerPos,
+			       irr::core::vector2df const &dir)
 {
-  std::cout << "USE ITEM THROW" << std::endl;
+  std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(playerPos + dir);
+
+  for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+    if ((*it)->getType() == AGameObject::BOMB)
+      {
+	ABomb	*bomb;
+	if ((bomb = dynamic_cast<ABomb *>(*it)))
+	  {
+	    bomb->setVelocity(dir);
+	  }
+      }
+  }
 }

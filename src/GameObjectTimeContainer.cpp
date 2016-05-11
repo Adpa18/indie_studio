@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Wed May 11 16:07:28 2016 Victor Gouet
+// Last update Wed May 11 17:34:29 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -43,6 +43,8 @@ void				GameObjectTimeContainer::callTimeOutObjects()
 
   while (it != container.end())
     {
+      (*it)->updateTimeOut();
+
       if ((*it)->isTimeOut())
 	{
 	  (*it)->dead();

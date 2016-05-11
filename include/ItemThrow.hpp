@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:39:34 2016 Victor Gouet
-// Last update Mon May  9 21:32:05 2016 Victor Gouet
+// Last update Wed May 11 17:54:48 2016 Victor Gouet
 //
 
 #ifndef ITEMTHROW_HPP_
@@ -20,7 +20,7 @@ public:
   virtual ~ItemThrow();
 
 public:
-  virtual void		use();
+  virtual void		use(irr::core::vector2df const &, irr::core::vector2df const &);
 };
 
 #endif
