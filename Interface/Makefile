@@ -8,7 +8,8 @@ Target := bomberman
 Sources := main.cpp \
             UIEventReceiver.cpp \
             UIManager.cpp \
-            ../src/IrrlichtController.cpp
+            ../src/IrrlichtController.cpp \
+            PlayerSelectionBox.cpp
 
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := ../Irrlicht/irrlicht-1.8.3
