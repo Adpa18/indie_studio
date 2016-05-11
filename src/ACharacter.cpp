@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May  9 21:55:23 2016 Victor Gouet
+// Last update Wed May 11 16:14:49 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -64,10 +64,10 @@ bool			ACharacter::isDestructible() const
   return (false);
 }
 
-void			ACharacter::exploseHisBomb()
-{
-  _bombContainer->bombExplose();
-}
+// void			ACharacter::exploseHisBomb()
+// {
+//   _bombContainer->bombExplose();
+// }
 
 void			ACharacter::setMoveSpeed(double speed)
 {

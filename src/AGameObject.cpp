@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Wed May 11 11:13:26 2016 Victor Gouet
+// Last update Wed May 11 16:36:13 2016 Victor Gouet
 //
 
 #include "../include/AGameObject.hpp"
@@ -80,6 +80,23 @@ bool				AGameObject::isTimeOut() const
   return (seconds >= (_timer + _timeout));
 }
 
+void			AGameObject::setTimeOut(double timeout)
+{
+  time_t	timer;
+  struct tm	y2k;
+
+  // if (_timeout != -1)
+  //   return ;
+  this->_timeout = timeout;
+  timer = time(NULL);
+  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
+  y2k.tm_zone = 0;
+  _timer = difftime(timer, mktime(&y2k));	
+  GameObjectTimeContainer::SharedInstance()->add(this);
+}
+
 void			AGameObject::onTimeOut()
 {
   // Remove From the list of timer object
@@ -112,9 +129,3 @@ irr::core::vector2df    AGameObject::getRealPos() const
 
     return (irr::core::vector2df(pos3df.X + BomberMap::size_side / 2, pos3df.Z + BomberMap::size_side / 2));
 }
-
-// void                AGameObject::dead()
-// {
-//     BomberMap::getMap()->remove(this);
-//     (*this)->remove();
-// }

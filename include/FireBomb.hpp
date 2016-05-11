@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 13:37:22 2016 Victor Gouet
-// Last update Thu May  5 15:14:31 2016 Victor Gouet
+// Last update Wed May 11 15:54:06 2016 Victor Gouet
 //
 
 #ifndef FIREBOMB_HPP_
