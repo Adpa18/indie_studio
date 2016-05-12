@@ -30,6 +30,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)Explosion.cpp			\
 			$(SRC_DIR)Texture.cpp			\
 			$(SRC_DIR)GameObjectTimeContainer.cpp	\
+			$(SRC_DIR)BonusBombPass.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

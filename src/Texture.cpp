@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Thu May 12 11:29:27 2016 Victor Gouet
+// Last update Thu May 12 12:32:49 2016 Victor Gouet
 //
 
 #include "../include/Texture.hpp"
@@ -32,10 +32,15 @@ const std::string BomberManTexture::ziggsMD = BomberManTexture::path + "ziggs.md
 const std::string BomberManTexture::emptyTexture = BomberManTexture::path + "empty.jpg";
 const std::string BomberManTexture::emptyMD = BomberManTexture::path + "empty.md2";
 
-
-
 const std::string BomberManTexture::fireBombTexture = BomberManTexture::path + "pokeball.png";
 const std::string BomberManTexture::fireBombMD = BomberManTexture::path + "pokeball.md2";
+
+
+/*
+**	BONUS
+*/
+const std::string BomberManTexture::bonusBombPassTexture = BomberManTexture::path + "pokeball.png";
+const std::string BomberManTexture::bonusBombPassMD = BomberManTexture::path + "pokeball.md2";
 
 const std::string BomberManTexture::bonusFireBombTexture = BomberManTexture::path + "salameche.png";
 const std::string BomberManTexture::bonusFireBombMD = BomberManTexture::path + "salameche.md2";
@@ -46,6 +51,9 @@ const std::string BomberManTexture::bonusPowerMD = BomberManTexture::path + "car
 const std::string BomberManTexture::bonusSpeedTexture = BomberManTexture::path + "caisse-metal.png";
 const std::string BomberManTexture::bonusSpeedMD = BomberManTexture::path + "caisse-metal.md2";
 
+/*
+**	ITEM
+*/
 const std::string BomberManTexture::itemThrowTexture = BomberManTexture::path + "bulbizarre.png";
 const std::string BomberManTexture::itemThrowMD = BomberManTexture::path + "bulbizarre.md2";
 

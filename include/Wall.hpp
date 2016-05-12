@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Mon May  9 18:04:49 2016 Victor Gouet
+// Last update Thu May 12 12:26:38 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -18,6 +18,7 @@
 # include "BonusPower.hpp"
 # include "BonusFireBomb.hpp"
 # include "ItemThrow.hpp"
+# include "BonusBombPass.hpp"
 
 class	Wall : public AGameObject
 {

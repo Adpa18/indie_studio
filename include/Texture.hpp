@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:24:03 2016 Victor Gouet
-// Last update Wed May 11 11:07:05 2016 Victor Gouet
+// Last update Thu May 12 12:33:01 2016 Victor Gouet
 //
 
 #ifndef TEXTURE_HPP_
@@ -32,7 +32,7 @@ public:
   static const std::string cubeDestructibleTexture;
   static const std::string cubeDestructibleMD;
 
-    static const std::string cubeEdgeTexture;
+  static const std::string cubeEdgeTexture;
   static const std::string cubeEdgeMD;
 
   static const std::string cubeIndestructibleTexture;
@@ -53,9 +53,11 @@ public:
   static const std::string itemThrowTexture;
   static const std::string itemThrowMD;
 
-    static const std::string fireExplosionTexture;
-    static const std::string fireExplosionMD;
+  static const std::string fireExplosionTexture;
+  static const std::string fireExplosionMD;
 
+  static const std::string bonusBombPassTexture;
+  static const std::string bonusBombPassMD;
 
 public:
   static void loadTexture();

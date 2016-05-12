@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 12:05:24 2016 Victor Gouet
+// Last update Thu May 12 12:31:10 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -33,6 +33,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
+  bombPass = false;
   _dead = false;
   this->item = NULL;
     _arrived = true;
@@ -200,6 +201,14 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 	  {
 	    this->dead();
 	  }
+	else if (type == AGameObject::BOMB)
+	  {
+	    if (!bombPass)
+	      {
+		_arrived = true;
+		return;
+	      }
+	  }
         else if (type != AGameObject::CHARACTER && type != AGameObject::BOOM) {
             _arrived = true;
             return;
@@ -215,6 +224,11 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
     (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * moveSpeed// 100
 					      , 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * moveSpeed// 100
 					      ));
+}
+
+void			ACharacter::setBombPass(bool pass)
+{
+  bombPass = pass;
 }
 
 void			ACharacter::putBomb()
