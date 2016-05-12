@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 12:31:10 2016 Victor Gouet
+// Last update Thu May 12 13:12:43 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -33,6 +33,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
+  life = 1;
   bombPass = false;
   _dead = false;
   this->item = NULL;
@@ -55,7 +56,12 @@ ACharacter::~ACharacter()
 void                    ACharacter::dead()
 {
   std::cout << this->_name << ":"  << "CHARACTER DEAD" << std::endl;
-  _dead = true;
+  
+  --life;
+  if (life == 1)
+    (*this)->setScale(irr::core::vector3df(1, 1, 1));
+  if (life <= 0)
+    _dead = true;
 }
 
 BombContainer		*ACharacter::getBombContainer() const
@@ -79,6 +85,10 @@ void ACharacter::setMD3Animation(MD3_ANIMATION anim)
   (*this)->setAnimationSpeed(MD3AnimationTypeList[anim].fps);
 }
 
+void			ACharacter::setLifeUp()
+{
+  life = 2;
+}
 
 std::string const &	ACharacter::getName() const
 {
@@ -165,7 +175,12 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
-  return (_dead);
+  // if (life == 1)
+  //   (*this)->setScale(irr::core::vector3df(1, 1, 1));
+  // if (life == 0)
+    return (_dead);
+  // --life;
+  // return (false);
 }
 
 void            ACharacter::moveTo(irr::core::vector2df const &dir)

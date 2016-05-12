@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu May 12 12:25:11 2016 Victor Gouet
+// Last update Thu May 12 13:10:19 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -50,6 +50,7 @@ public:
   bool				isDead() const;
     virtual void		compute() = 0;
   void				setBombPass(bool pass);
+  void				setLifeUp();
 
 public:
   BombContainer		*getBombContainer() const;
@@ -67,6 +68,7 @@ private:
 
 private:
   bool				bombPass;
+  int				life;
   
 protected:
   irr::u32 then;

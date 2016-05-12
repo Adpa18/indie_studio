@@ -31,6 +31,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)Texture.cpp			\
 			$(SRC_DIR)GameObjectTimeContainer.cpp	\
 			$(SRC_DIR)BonusBombPass.cpp		\
+			$(SRC_DIR)BonusBiggestMan.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

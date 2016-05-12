@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Thu May 12 12:32:49 2016 Victor Gouet
+// Last update Thu May 12 12:54:30 2016 Victor Gouet
 //
 
 #include "../include/Texture.hpp"
@@ -50,6 +50,10 @@ const std::string BomberManTexture::bonusPowerMD = BomberManTexture::path + "car
 
 const std::string BomberManTexture::bonusSpeedTexture = BomberManTexture::path + "caisse-metal.png";
 const std::string BomberManTexture::bonusSpeedMD = BomberManTexture::path + "caisse-metal.md2";
+
+const std::string BomberManTexture::bonusBiggestManTexture = BomberManTexture::path + "caisse-metal.png";
+const std::string BomberManTexture::bonusBiggestManMD = BomberManTexture::path + "caisse-metal.md2";
+
 
 /*
 **	ITEM
