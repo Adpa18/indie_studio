@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Thu May 12 14:44:45 2016 Victor Gouet
+// Last update Thu May 12 18:33:11 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -21,6 +21,7 @@
 # include "BonusBombPass.hpp"
 # include "BonusBiggestMan.hpp"
 # include "BonusSmallestMan.hpp"
+# include "BonusInvincible.hpp"
 
 class	Wall : public AGameObject
 {

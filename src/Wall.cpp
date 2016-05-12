@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Thu May 12 15:20:57 2016 Victor Gouet
+// Last update Thu May 12 18:33:37 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -35,7 +35,7 @@ void                        Wall::dead()
 {
   int			i;
 
-  i = 5;//rand() % 7;
+  i = 7;//rand() % 7;
   switch (i)
     {
     case 0:
@@ -58,7 +58,10 @@ void                        Wall::dead()
       break;
     case 6:
       new BonusSmallestMan(this->getMapPos());
-      break;   
+      break;
+    case 7:
+      new BonusInvincible(this->getMapPos());
+      break;
     default:
       break;
     }

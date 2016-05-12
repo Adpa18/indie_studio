@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Thu May 12 14:41:48 2016 Victor Gouet
+// Last update Thu May 12 18:34:43 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -32,6 +32,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"bonusSpeed", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
         {"bonusBiggestMan", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
         {"bonusSmallestMan", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
+	{"bonusInvincible", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
         // Items
         {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
 };
