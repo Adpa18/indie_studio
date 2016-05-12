@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed May 11 13:22:18 2016 Victor Gouet
+// Last update Thu May 12 11:56:41 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -107,9 +107,20 @@ void	GameManager::onMenu()
 void	GameManager::onGame()
 {
   GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
-  for (std::vector<ACharacter*>::iterator it = characters.begin(); it != characters.end(); ++it)
+
+  std::vector<ACharacter*>::iterator it = characters.begin();
+  while (it != characters.end())
     {
-      (*it)->compute();
+      if (!(*it)->isDead())
+	{
+	  (*it)->compute();
+	  ++it;
+	}
+      else
+	{
+	  delete (*it);
+	  it = characters.erase(it);
+	}
     }
 }
 

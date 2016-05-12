@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Wed May 11 17:11:30 2016 Victor Gouet
+// Last update Thu May 12 11:57:54 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -24,8 +24,8 @@ public:
         BOMB = 1 << 1,
         ITEM = 1 << 2,
         BLOCK = 1 << 3,
-	    BONUS = 1 << 4,
-	    BOOM = 1 << 5,
+	BONUS = 1 << 4,
+	BOOM = 1 << 5,
         OTHER = 1 << 6
     };
 public:
@@ -46,7 +46,6 @@ public:
   virtual void                        dead() = 0;
   virtual bool			      isDestructible() const = 0;
   virtual void			      updateTimeOut();
-
 
 public:
   bool				isTimeOut() const;

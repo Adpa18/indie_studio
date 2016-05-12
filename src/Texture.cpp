@@ -5,12 +5,13 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Wed May 11 11:07:16 2016 Victor Gouet
+// Last update Thu May 12 11:29:27 2016 Victor Gouet
 //
 
 #include "../include/Texture.hpp"
 
-const std::string BomberManTexture::path = "../media/";
+// STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
+const std::string BomberManTexture::path = "media/";
 
 //BomberMap
 const std::string BomberManTexture::groundTexture = BomberManTexture::path + "grass.jpg";

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed May 11 16:15:11 2016 Victor Gouet
+// Last update Thu May 12 11:58:15 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -47,7 +47,7 @@ public:
     void                setName(const std::string &);
     // void			    exploseHisBomb();
     void		        increasePowerBomb();
-
+  bool				isDead() const;
     virtual void		compute() = 0;
 
 public:
@@ -62,6 +62,7 @@ private:
     irr::core::vector2df            _last_act;
     bool                            _arrived;
     AItem					        *item;
+    bool					_dead;
 
 protected:
   irr::u32 then;

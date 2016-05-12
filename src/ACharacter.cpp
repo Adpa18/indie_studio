@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed May 11 17:54:28 2016 Victor Gouet
+// Last update Thu May 12 11:53:54 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -33,6 +33,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player)
 {
+  _dead = false;
   this->item = NULL;
     _arrived = true;
     _last_act = irr::core::vector2df(0, 0);
@@ -52,6 +53,8 @@ ACharacter::~ACharacter()
 
 void                    ACharacter::dead()
 {
+  std::cout << this->_name << ":"  << "CHARACTER DEAD" << std::endl;
+  _dead = true;
 }
 
 BombContainer		*ACharacter::getBombContainer() const
@@ -159,6 +162,11 @@ void            ACharacter::action(ACTION act)
     then = now;
 }
 
+bool		ACharacter::isDead() const
+{
+  return (_dead);
+}
+
 void            ACharacter::moveTo(irr::core::vector2df const &dir)
 {
     std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir);
@@ -187,6 +195,10 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 		this->item = item;
 		this->item->dead();
 	      }
+	  }
+	else if (type == AGameObject::BOOM)
+	  {
+	    this->dead();
 	  }
         else if (type != AGameObject::CHARACTER && type != AGameObject::BOOM) {
             _arrived = true;
