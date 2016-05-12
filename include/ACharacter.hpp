@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu May 12 11:58:15 2016 Victor Gouet
+// Last update Thu May 12 12:06:12 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -23,7 +23,7 @@ public:
     enum MD3_ANIMATION { STAY, RUN, ATTACK };
 
 private:
-    static constexpr double BASICSPEED = 10.0;
+    static constexpr double BASICSPEED = 100.0;
 
 public:
   ACharacter(std::string const &name, irr::core::vector2df const &pos,
@@ -55,15 +55,15 @@ public:
 
 private:
   std::string	                    _name;
-    int                             _player;
-  BombContainer			            *_bombContainer;
-  double		                    moveSpeed;
-    int					            anime;
-    irr::core::vector2df            _last_act;
-    bool                            _arrived;
-    AItem					        *item;
-    bool					_dead;
-
+  int                             _player;
+  BombContainer			    *_bombContainer;
+  double		            moveSpeed;
+  int				    anime;
+  irr::core::vector2df            _last_act;
+  bool                            _arrived;
+  AItem				  *item;
+  bool				 _dead;
+  
 protected:
   irr::u32 then;
   irr::f32  frameDeltaTime;

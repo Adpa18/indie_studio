@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 11:53:54 2016 Victor Gouet
+// Last update Thu May 12 12:05:24 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -212,7 +212,9 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
         this->setPos(this->getMapPos() + dir);
         return;
     }
-    (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * 100, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * 100));
+    (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * moveSpeed// 100
+					      , 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * moveSpeed// 100
+					      ));
 }
 
 void			ACharacter::putBomb()
