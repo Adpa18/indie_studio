@@ -5,12 +5,15 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu May 12 14:27:08 2016 Victor Gouet
+// Last update Thu May 12 15:38:55 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
 # define ACHARACTER_HPP_
 
+# include <thread>
+# include <mutex>
+# include <thread>
 # include <vector>
 # include "AGameObject.hpp"
 # include "BombContainer.hpp"
@@ -27,13 +30,20 @@ public:
 
 public:
   ACharacter(std::string const &name, irr::core::vector2df const &pos,
-             std::string const &mesh, std::string const &texture, int player);
+             std::string const &mesh, std::string const &texture, int player,
+	     bool invincible = false);
   virtual ~ACharacter();
 
 protected:
-  void			setMD3Animation(MD3_ANIMATION anim);
-    void        action(ACTION act);
-    void        moveTo(irr::core::vector2df const &dir);
+  void		setMD3Animation(MD3_ANIMATION anim);
+  void        action(ACTION act);
+  void        moveTo(irr::core::vector2df const &dir);
+
+private:
+  void			onInvinciblePeriode(double time);
+
+public:
+  void		        invincibleEnabledDuringPeriod(double time);
 
 public:
   virtual void                  dead();
@@ -69,7 +79,10 @@ private:
 private:
   bool				bombPass;
   int				life;
-  
+  bool				_invincible;
+  std::mutex			mutex;
+  std::thread			*t;
+
 protected:
   irr::u32 then;
   irr::f32  frameDeltaTime;

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Thu May 12 14:49:58 2016 Victor Gouet
+// Last update Thu May 12 15:20:57 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -35,7 +35,7 @@ void                        Wall::dead()
 {
   int			i;
 
-  i = 6;//rand() % 7;
+  i = 5;//rand() % 7;
   switch (i)
     {
     case 0:
@@ -62,7 +62,6 @@ void                        Wall::dead()
     default:
       break;
     }
-  // std::cout << "JESUS CHRIST" << std::endl;
 }
 
 bool				Wall::isDestructible() const

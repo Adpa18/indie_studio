@@ -5,14 +5,15 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 14:25:57 2016 Victor Gouet
+// Last update Thu May 12 16:55:02 2016 Victor Gouet
 //
 
-#include "ACharacter.hpp"
-#include "BombFactory.hpp"
+#include <unistd.h>
+#include "../include/ACharacter.hpp"
+#include "../include/BombFactory.hpp"
 #include <iostream>
-#include "ABonus.hpp"
-#include "BomberMap.hpp"
+#include "../include/ABonus.hpp"
+#include "../include/BomberMap.hpp"
 
 struct SMD3AnimationType
 {
@@ -29,10 +30,12 @@ static const SMD3AnimationType MD3AnimationTypeList[3] =
 };
 
 ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
-		       std::string const &mesh, std::string const &texture, int player)
+		       std::string const &mesh, std::string const &texture, int player,
+		       bool invincible)
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
-    _name(name), _player(player)
+    _name(name), _player(player), _invincible(invincible)
 {
+  t = NULL;
   life = 1;
   bombPass = false;
   _dead = false;
@@ -53,13 +56,50 @@ ACharacter::~ACharacter()
 {
 }
 
+void			ACharacter::onInvinciblePeriode(double time)
+{
+  mutex.lock();
+  _invincible = true;
+  mutex.unlock();
+  usleep(time);//time);
+  mutex.lock();
+  _invincible = false;
+  mutex.unlock();
+}
+
+void			ACharacter::invincibleEnabledDuringPeriod(double time)
+{
+  mutex.lock();
+  if (_invincible)
+    {
+      mutex.unlock();
+      return ;
+    }
+  mutex.unlock();
+  if (t)
+    {
+      t->join();
+      delete (t);
+    }
+  // (*this)->setMaterialType(irr::video::);
+  t = new std::thread([time, this] { this->onInvinciblePeriode(time);
+    });
+}
+
 void                    ACharacter::dead()
 {
-  std::cout << this->_name << ":"  << "CHARACTER DEAD" << std::endl;
-  
+  mutex.lock();
+  if (_invincible == true)
+    {
+      mutex.unlock();
+      return ;
+    }
+  mutex.unlock();
+
   --life;
   if (life == 1)
     {
+      invincibleEnabledDuringPeriod(1000000);
       (*this)->setScale(irr::core::vector3df(1, 1, 1));
       setMoveSpeed(BASICSPEED);
     }
