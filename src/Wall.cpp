@@ -12,14 +12,16 @@
 #include "../include/Wall.hpp"
 #include "../include/Texture.hpp"
 
-const std::map<Wall::State, std::pair<const std::string&, const std::string&>>  Wall::_models = {
-        {Invicible, {BomberManTexture::cubeIndestructibleMD, BomberManTexture::cubeIndestructibleTexture}},
-        {Destructible, {BomberManTexture::cubeDestructibleMD, BomberManTexture::cubeDestructibleTexture}},
-        {Edge, {BomberManTexture::cubeEdgeMD, BomberManTexture::cubeEdgeTexture}}
+const std::map<Wall::State, std::string>  Wall::_types = {
+        {Invicible, "cubeIndestructible"},
+        {Destructible, "cubeDestructible"},
+        {Edge, "edge"},
 };
 
 Wall::Wall(irr::core::vector2df const &pos, State state)
-  : AGameObject(pos, _models.find(state)->second.first, _models.find(state)->second.second, (state == Destructible) ? OTHER : BLOCK), _state(state)
+  : AGameObject(pos, BomberManTexture::getModel(_types.find(state)->second).mesh,
+                BomberManTexture::getModel(_types.find(state)->second).texture,
+                (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
     (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
 }

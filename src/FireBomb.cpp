@@ -10,12 +10,12 @@
 
 #include "../include/FireBomb.hpp"
 #include "../include/BomberMap.hpp"
-#include "../include/Particule.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Explosion.hpp"
 
 FireBomb::FireBomb()
-  : ABomb(BomberManTexture::fireBombMD, BomberManTexture::fireBombTexture)
+  : ABomb(BomberManTexture::getModel("fireBomb").mesh,
+  BomberManTexture::getModel("fireBomb").texture)
 {
 
 }

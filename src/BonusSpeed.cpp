@@ -1,9 +1,9 @@
 //
 // BonusSpeed.cpp for BONUS SPEED in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Mon May  9 13:37:03 2016 Victor Gouet
 // Last update Tue May 10 15:08:02 2016 Victor Gouet
 //
@@ -12,8 +12,8 @@
 #include "../include/Texture.hpp"
 
 BonusSpeed::BonusSpeed(irr::core::vector2df const &pos)
-  : ABonus(pos, BomberManTexture::bonusSpeedMD,
-	   BomberManTexture::bonusSpeedTexture, BONUS)
+  : ABonus(pos, BomberManTexture::getModel("bonusSpeed").mesh,
+	   BomberManTexture::getModel("bonusSpeed").texture, BONUS)
 {
 
 }

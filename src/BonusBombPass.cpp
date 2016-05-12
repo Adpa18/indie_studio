@@ -1,9 +1,9 @@
 //
 // BonusBombPass.cpp for BOMB PASS in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Thu May 12 12:15:24 2016 Victor Gouet
 // Last update Thu May 12 13:18:47 2016 Victor Gouet
 //
@@ -12,8 +12,8 @@
 #include "../include/Texture.hpp"
 
 BonusBombPass::BonusBombPass(irr::core::vector2df const &pos)
-  : ABonus(pos, BomberManTexture::bonusBombPassMD,
-	   BomberManTexture::bonusBombPassTexture, BONUS)
+  : ABonus(pos, BomberManTexture::getModel("bonusBombPass").mesh,
+	   BomberManTexture::getModel("bonusBombPass").texture, BONUS)
 {
 
 }

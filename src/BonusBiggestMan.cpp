@@ -1,9 +1,9 @@
 //
 // BonusBiggestMan.cpp for BIGGEST in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
 // Last update Thu May 12 14:27:24 2016 Victor Gouet
 //
@@ -12,8 +12,8 @@
 #include "../include/Texture.hpp"
 
 BonusBiggestMan::BonusBiggestMan(irr::core::vector2df const &pos)
-  : ABonus(pos, BomberManTexture::bonusBiggestManMD,
-	   BomberManTexture::bonusBiggestManTexture, BONUS)
+  : ABonus(pos, BomberManTexture::getModel("bonusBiggestMan").mesh,
+	   BomberManTexture::getModel("bonusBiggestMan").texture, BONUS)
 {
 
 }

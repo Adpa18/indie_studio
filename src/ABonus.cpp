@@ -9,11 +9,18 @@
 //
 
 #include "../include/ABonus.hpp"
+#include "../include/BomberMap.hpp"
 
 ABonus::ABonus(irr::core::vector2df const &pos, std::string const &mesh,
 	       std::string const &texture, Type type)
   : AGameObject(pos, mesh, texture, type)
 {
+    (*this)->setPosition((*this)->getPosition() + irr::core::vector3df(0, BomberMap::scale / 2, 0));
+//    (*this)->setRotation(irr::core::vector3df(45, 45, 45));
+    (*this)->setScale(irr::core::vector3df(0.5f, 0.5f, 0.5f));
+    irr::scene::ISceneNodeAnimator *anim =IrrlichtController::getSceneManager()->createRotationAnimator(irr::core::vector3df(0,1,0));
+    (*this)->addAnimator(anim);
+    anim->drop();
 }
 
 ABonus::~ABonus()

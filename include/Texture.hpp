@@ -14,60 +14,20 @@
 # include <string>
 # include "IrrlichtController.hpp"
 
+struct model {
+    std::string   mesh;
+    std::string   texture;
+};
+
 class	BomberManTexture
 {
 public:
     static const std::string path;
-
-  static const std::string groundTexture;
-
-  static const std::string blueParticuleTexture;
-
-  static const std::string emptyTexture;
-  static const std::string emptyMD;
-
-  static const std::string ziggsTexture;
-  static const std::string ziggsMD;
-  
-  static const std::string cubeDestructibleTexture;
-  static const std::string cubeDestructibleMD;
-
-  static const std::string cubeEdgeTexture;
-  static const std::string cubeEdgeMD;
-
-  static const std::string cubeIndestructibleTexture;
-  static const std::string cubeIndestructibleMD;
-  
-  static const std::string fireBombTexture;
-  static const std::string fireBombMD;
-  
-  static const std::string bonusFireBombTexture;
-  static const std::string bonusFireBombMD;
-
-  static const std::string bonusPowerTexture;
-  static const std::string bonusPowerMD;
-
-  static const std::string bonusSpeedTexture;
-  static const std::string bonusSpeedMD;
-
-  static const std::string itemThrowTexture;
-  static const std::string itemThrowMD;
-
-  static const std::string fireExplosionTexture;
-  static const std::string fireExplosionMD;
-
-  static const std::string bonusBombPassTexture;
-  static const std::string bonusBombPassMD;
-
-  static const std::string bonusBiggestManTexture;
-  static const std::string bonusBiggestManMD;
-
-  static const std::string bonusSmallestManTexture;
-  static const std::string bonusSmallestManMD;
-
+    static const std::map<std::string, struct model> _models;
 
 public:
   static void loadTexture();
+   static const struct model   &getModel(const std::string &model);
 
 };
 

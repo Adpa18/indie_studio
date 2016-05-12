@@ -45,8 +45,8 @@ void			BomberMap::generateGround()
     irr::core::dimension2d<irr::f32>(11, 11)); // textureRepeatCount
 
     _ground = IrrlichtController::getSceneManager()->addMeshSceneNode(terrain_model->getMesh(0));
-    _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::groundTexture.c_str()));
-    _ground->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::getModel("ground").texture.c_str()));
+    _ground->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 
     irr::scene::ISceneNode* light;
     irr::scene::ISceneNodeAnimator* anim = 0;

@@ -8,6 +8,7 @@
 // Last update Wed May 11 17:11:54 2016 Victor Gouet
 //
 
+#include <iostream>
 #include "../include/AGameObject.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
@@ -41,6 +42,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
     if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
     {
         IrrlichtController::getDevice()->drop();
+        std::cout << type << std::endl;
         throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
     }
     else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))

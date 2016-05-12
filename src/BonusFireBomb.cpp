@@ -1,9 +1,9 @@
 //
 // BonusBombUp.cpp for BONUS UP in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
 // Last update Tue May 10 15:05:05 2016 Victor Gouet
 //
@@ -13,8 +13,8 @@
 #include "../include/Texture.hpp"
 
 BonusFireBomb::BonusFireBomb(irr::core::vector2df const &pos)
-  : ABonus(pos, BomberManTexture::bonusFireBombMD,
-	   BomberManTexture::bonusFireBombTexture, BONUS)
+  : ABonus(pos, BomberManTexture::getModel("bonusFireBomb").mesh,
+    BomberManTexture::getModel("bonusFireBomb").texture, BONUS)
 {
 
 }

@@ -33,7 +33,7 @@ public:
     };
 
 private:
-    static const std::map<State, std::pair<const std::string&, const std::string&>> _models;
+    static const std::map<Wall::State, std::string> _types;
 
 public:
   Wall(irr::core::vector2df const &pos, State state = Destructible);

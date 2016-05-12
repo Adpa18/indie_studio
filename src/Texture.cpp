@@ -8,93 +8,47 @@
 // Last update Thu May 12 14:41:48 2016 Victor Gouet
 //
 
+#include <iostream>
 #include "../include/Texture.hpp"
 
 // STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
 const std::string BomberManTexture::path = "media/";
 
-//BomberMap
-const std::string BomberManTexture::groundTexture = BomberManTexture::path + "grass.jpg";
 
-const std::string BomberManTexture::cubeDestructibleTexture = BomberManTexture::path + "cubeDestrutible.png";
-const std::string BomberManTexture::cubeDestructibleMD = BomberManTexture::path + "cube.md2";
-
-const std::string BomberManTexture::cubeIndestructibleTexture = BomberManTexture::path + "cubeIndestructible.png";
-const std::string BomberManTexture::cubeIndestructibleMD = BomberManTexture::path + "cube.md2";
-
-const std::string BomberManTexture::cubeEdgeTexture = BomberManTexture::path + "cubeEdge.png";
-const std::string BomberManTexture::cubeEdgeMD = BomberManTexture::path + "cube.md2";
-
-// Players
-const std::string BomberManTexture::ziggsTexture = BomberManTexture::path + "ziggs.png";
-const std::string BomberManTexture::ziggsMD = BomberManTexture::path + "ziggs.md3";
-
-const std::string BomberManTexture::emptyTexture = BomberManTexture::path + "empty.jpg";
-const std::string BomberManTexture::emptyMD = BomberManTexture::path + "empty.md2";
-
-const std::string BomberManTexture::fireBombTexture = BomberManTexture::path + "pokeball.png";
-const std::string BomberManTexture::fireBombMD = BomberManTexture::path + "pokeball.md2";
-
-
-/*
-**	BONUS
-*/
-const std::string BomberManTexture::bonusBombPassTexture = BomberManTexture::path + "pokeball.png";
-const std::string BomberManTexture::bonusBombPassMD = BomberManTexture::path + "pokeball.md2";
-
-const std::string BomberManTexture::bonusFireBombTexture = BomberManTexture::path + "salameche.png";
-const std::string BomberManTexture::bonusFireBombMD = BomberManTexture::path + "salameche.md2";
-
-const std::string BomberManTexture::bonusPowerTexture = BomberManTexture::path + "carapuce.png";
-const std::string BomberManTexture::bonusPowerMD = BomberManTexture::path + "carapuce.md2";
-
-const std::string BomberManTexture::bonusSpeedTexture = BomberManTexture::path + "caisse-metal.png";
-const std::string BomberManTexture::bonusSpeedMD = BomberManTexture::path + "caisse-metal.md2";
-
-const std::string BomberManTexture::bonusBiggestManTexture = BomberManTexture::path + "caisse-metal.png";
-const std::string BomberManTexture::bonusBiggestManMD = BomberManTexture::path + "caisse-metal.md2";
-
-const std::string BomberManTexture::bonusSmallestManTexture = BomberManTexture::path + "caisse-metal.png";
-const std::string BomberManTexture::bonusSmallestManMD = BomberManTexture::path + "caisse-metal.md2";
-
-
-/*
-**	ITEM
-*/
-const std::string BomberManTexture::itemThrowTexture = BomberManTexture::path + "bulbizarre.png";
-const std::string BomberManTexture::itemThrowMD = BomberManTexture::path + "bulbizarre.md2";
-
-const std::string BomberManTexture::blueParticuleTexture = BomberManTexture::path + "blueFire.jpg";
-
-const std::string BomberManTexture::fireExplosionTexture = BomberManTexture::path + "explosion.jpg";
-const std::string BomberManTexture::fireExplosionMD = BomberManTexture::path + "cube.md2";
+const std::map<std::string, struct model>  BomberManTexture::_models = {
+        // BomberMap
+        {"ground", {"", BomberManTexture::path + "grass.jpg"}},
+        {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible.png"}},
+        {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible.png"}},
+        {"edge", {BomberManTexture::path + "cylinder_bottom.md2", BomberManTexture::path + "edge.png"}},
+        // Players
+        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs_snow.png"}},
+        {"fireBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
+        {"fireExplosion", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "explosion.jpg"}},
+        // Bonus
+        {"bonusBombPass", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
+        {"bonusFireBomb", {BomberManTexture::path + "salameche.md2", BomberManTexture::path + "salameche.png"}},
+        {"bonusPower", {BomberManTexture::path + "carapuce.md2", BomberManTexture::path + "carapuce.png"}},
+        {"bonusSpeed", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
+        {"bonusBiggestMan", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
+        {"bonusSmallestMan", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
+        // Items
+        {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
+};
 
 void BomberManTexture::loadTexture()
 {
-  IrrlichtController::getDriver()->getTexture(cubeDestructibleTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(cubeIndestructibleTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(emptyTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(ziggsTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(fireBombTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(bonusFireBombTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(bonusPowerTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(bonusSpeedTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(itemThrowTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(blueParticuleTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(bonusBiggestManTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(bonusSmallestManTexture.c_str());
-  IrrlichtController::getDriver()->getTexture(bonusBombPassTexture.c_str());
- 
-  IrrlichtController::getSceneManager()->getMesh(cubeDestructibleMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(cubeIndestructibleMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(emptyMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(ziggsMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(fireBombMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(bonusFireBombMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(bonusPowerMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(bonusSpeedMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(itemThrowMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(bonusSmallestManMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(bonusBiggestManMD.c_str());
-  IrrlichtController::getSceneManager()->getMesh(bonusBombPassMD.c_str());
+    for (std::map<std::string, struct model>::const_iterator it = _models.begin(); it != _models.end(); ++it) {
+        if ((*it).second.mesh != "") {
+            IrrlichtController::getSceneManager()->getMesh((*it).second.mesh.c_str());
+        }
+         if ((*it).second.texture != "") {
+             IrrlichtController::getDriver()->getTexture((*it).second.texture.c_str());
+         }
+    }
+}
+
+const struct model &BomberManTexture::getModel(const std::string &model)
+{
+    return (_models.find(model)->second);
 }

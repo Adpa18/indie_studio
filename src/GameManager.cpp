@@ -1,9 +1,9 @@
 //
 // GameManager.cpp for MANAGER in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
 // Last update Thu May 12 11:56:41 2016 Victor Gouet
 //
@@ -127,8 +127,8 @@ void	GameManager::onGame()
 void	GameManager::willStartGame()
 {
   characters.clear();
-  characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), BomberManTexture::ziggsMD, BomberManTexture::ziggsTexture, 0, *eventGame));
-  characters.push_back(new Player("RICHARD", irr::core::vector2df(1, 9), BomberManTexture::ziggsMD, BomberManTexture::ziggsTexture, 0, *eventGame));
+  characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+  characters.push_back(new Player("RICHARD", irr::core::vector2df(1, 9), BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
   BomberMap::getMap()->genMap();
 
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
@@ -142,7 +142,7 @@ void	GameManager::willStartGame()
 
 //  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
 //									     1.0f, 1.0f, 1.0f));
-  
+
 }
 
 void	GameManager::willStartMenu()

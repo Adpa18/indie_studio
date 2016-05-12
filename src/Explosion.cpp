@@ -6,7 +6,8 @@
 #include "Explosion.hpp"
 
 Explosion::Explosion(irr::core::vector2df const &pos, double timeout)
-        : AGameObject(pos, BomberManTexture::fireExplosionMD, BomberManTexture::fireExplosionTexture, Type::BOOM, timeout)
+        : AGameObject(pos, BomberManTexture::getModel("fireExplosion").mesh,
+        BomberManTexture::getModel("fireExplosion").texture, Type::BOOM, timeout)
 {
 
 }
