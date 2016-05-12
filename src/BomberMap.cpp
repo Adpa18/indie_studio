@@ -49,15 +49,8 @@ void			BomberMap::generateGround()
     _ground->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 
     irr::scene::ILightSceneNode* light;
-    irr::scene::ISceneNodeAnimator* anim = 0;
-
-//    light = IrrlichtController::getSceneManager()->addLightSceneNode(0, irr::core::vector3df(0,0,0), irr::video::SColorf(1.0f, 1.0f, 1.0f, 1.0f), 100.0f);
-//    irr::scene::ISceneNodeAnimator* anim = 0;
-//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator (irr::core::vector3df(0,150,0),250.0f);
-//    light->addAnimator(anim);
-//    anim->drop();
-
     irr::video::SLight  light_data;
+//    irr::scene::ISceneNodeAnimator* anim = 0;
 
     light_data.Radius = 1000.0f;
     light_data.OuterCone = 50.0f;
@@ -71,32 +64,42 @@ void			BomberMap::generateGround()
     light = IrrlichtController::getSceneManager()->addLightSceneNode();
     light->setPosition(irr::core::vector3df(0, 100, 0));
     light->setLightType(irr::video::ELT_POINT);
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
+//    light->addAnimator(anim);
 
     light = IrrlichtController::getSceneManager()->addLightSceneNode();
 //    light_data.DiffuseColor = irr::video::SColorf(1.0f, 0.0f, 0.0f);
     light->setLightData(light_data);
     light->setPosition(irr::core::vector3df(125, 0, -125));
     light->setRotation(irr::core::vector3df(-45, -45, 0));
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(125, 0, -125), 50.0f);
+//    light->addAnimator(anim);
 
     light = IrrlichtController::getSceneManager()->addLightSceneNode();
 //    light_data.DiffuseColor = irr::video::SColorf(1.0f, 1.0f, 0.0f);
     light->setLightData(light_data);
     light->setPosition(irr::core::vector3df(125, 0, 125));
     light->setRotation(irr::core::vector3df(-45, 225, 0));
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(125, 0, 125), 50.0f);
+//    light->addAnimator(anim);
 
     light = IrrlichtController::getSceneManager()->addLightSceneNode();
 //    light_data.DiffuseColor = irr::video::SColorf(0.0f, 1.0f, 0.0f);
     light->setLightData(light_data);
     light->setPosition(irr::core::vector3df(-125, 0, -125));
     light->setRotation(irr::core::vector3df(-45, 45, 0));
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(-125, 0, -125), 50.0f);
+//    light->addAnimator(anim);
 
     light = IrrlichtController::getSceneManager()->addLightSceneNode();
 //    light_data.DiffuseColor = irr::video::SColorf(0.0f, 0.0f, 1.0f);
     light->setLightData(light_data);
     light->setPosition(irr::core::vector3df(-125, 0, 125));
     light->setRotation(irr::core::vector3df(-45, 135, 0));
+//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(-125, 0, 125), 50.0f);
+//    light->addAnimator(anim);
 
-
+//    anim->drop();
 }
 
 void			BomberMap::generateMap()
