@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 16:55:02 2016 Victor Gouet
+// Last update Thu May 12 18:04:48 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -82,6 +82,15 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
       delete (t);
     }
   // (*this)->setMaterialType(irr::video::);
+  // irr::core::array<irr::video::ITexture *>	array;
+
+  // array.push_back(IrrlichtController::getDriver()->getTexture("media/ziggs.png"));
+  // array.push_back(IrrlichtController::getDriver()->getTexture(""));
+  // irr::scene::ISceneNodeAnimator *anime =  IrrlichtController::getSceneManager()->createTextureAnimator(array, 100, true);
+  // (*this)->addAnimator(anime);
+  //(*this)->removeAnimator(anime);
+  // anime->drop();
+  addAnimation();
   t = new std::thread([time, this] { this->onInvinciblePeriode(time);
     });
 }
@@ -160,6 +169,8 @@ void            ACharacter::action(ACTION act)
     const irr::u32 now = IrrlichtController::getDevice()->getTimer()->getTime();
     this->frameDeltaTime = (irr::f32)(now - this->then) / 1000.f;
 
+    if (!_invincible && getAnimator())
+      removeAnnimation();
     if (_arrived || act == BOMB)
     {
         switch (act) {

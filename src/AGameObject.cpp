@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Thu May 12 16:54:34 2016 Victor Gouet
+// Last update Thu May 12 18:10:29 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -15,9 +15,10 @@
 
 AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, double timeout) : _type(type)
 {
-    BomberMap::getMap()->add(this, pos);
-    irr::scene::IAnimatedMesh *meshNode;
-
+  BomberMap::getMap()->add(this, pos);
+  irr::scene::IAnimatedMesh *meshNode;
+    
+  anime = NULL;
   time_t	timer;
   struct tm	y2k;
 
@@ -48,6 +49,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
     else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
     {
         _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
+	_texture = texture;
         _node->setMD2Animation(irr::scene::EMAT_STAND);
         _node->setMaterialFlag(irr::video::EMF_LIGHTING,true);
     }
@@ -63,6 +65,29 @@ AGameObject::~AGameObject()
     //  (*this)->remove();
     // this->_node->removeAll();
     // this->_node->remove();
+}
+
+void				AGameObject::addAnimation()
+{
+  irr::core::array<irr::video::ITexture *>	array;
+
+  array.push_back(IrrlichtController::getDriver()->getTexture(_texture.c_str()));
+  array.push_back(IrrlichtController::getDriver()->getTexture(""));
+  anime =  IrrlichtController::getSceneManager()->createTextureAnimator(array, 100, true);
+  _node->addAnimator(anime);
+}
+
+void				AGameObject::removeAnnimation()
+{
+  _node->removeAnimator(anime);
+  anime->drop();
+        _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(_texture.c_str()));  
+  anime = NULL;
+}
+
+irr::scene::ISceneNodeAnimator	*AGameObject::getAnimator() const
+{
+  return (anime);
 }
 
 bool				AGameObject::isTimeOut() const

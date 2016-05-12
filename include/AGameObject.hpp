@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Thu May 12 11:57:54 2016 Victor Gouet
+// Last update Thu May 12 17:58:05 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -36,11 +36,13 @@ public:
 public:
   irr::scene::IAnimatedMeshSceneNode    *getSceneNode();
   irr::scene::IAnimatedMeshSceneNode    *operator->();
-    AGameObject::Type                   getType() const;
-    void                                setPos(irr::core::vector2df const &pos);
-    irr::core::vector2df                getMapPos() const;
-    irr::core::vector2df                getRealPos() const;
+  AGameObject::Type                   getType() const;
+  void                                setPos(irr::core::vector2df const &pos);
+  irr::core::vector2df                getMapPos() const;
+  irr::core::vector2df                getRealPos() const;
   void					setTimeOut(double timeout);
+  void					addAnimation();
+  void					removeAnnimation();
 
 public:
   virtual void                        dead() = 0;
@@ -48,10 +50,15 @@ public:
   virtual void			      updateTimeOut();
 
 public:
-  bool				isTimeOut() const;
+  bool					isTimeOut() const;
+  irr::scene::ISceneNodeAnimator	*getAnimator() const;
+
+private:
+  std::string				_texture;
 
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;
+  irr::scene::ISceneNodeAnimator	*anime;
   Type                                  _type;
 
 private:
