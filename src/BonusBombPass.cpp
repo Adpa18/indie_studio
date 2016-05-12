@@ -5,11 +5,10 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 12:15:24 2016 Victor Gouet
-// Last update Thu May 12 12:33:46 2016 Victor Gouet
+// Last update Thu May 12 13:18:47 2016 Victor Gouet
 //
 
 #include "../include/BonusBombPass.hpp"
-
 #include "../include/Texture.hpp"
 
 BonusBombPass::BonusBombPass(irr::core::vector2df const &pos)
