@@ -18,8 +18,8 @@ const std::string BomberManTexture::path = "media/";
 const std::map<std::string, struct model>  BomberManTexture::_models = {
         // BomberMap
         {"ground", {"", BomberManTexture::path + "grass.jpg"}},
-        {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible.png"}},
-        {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible.png"}},
+        {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
+        {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
         {"edge", {BomberManTexture::path + "cylinder_bottom.md2", BomberManTexture::path + "edge.png"}},
         // Players
         {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs_snow.png"}},
