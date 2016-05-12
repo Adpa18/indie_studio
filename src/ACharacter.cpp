@@ -5,15 +5,15 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 15:45:29 2016 Victor Gouet
+// Last update Thu May 12 16:55:02 2016 Victor Gouet
 //
 
 #include <unistd.h>
-#include "ACharacter.hpp"
-#include "BombFactory.hpp"
+#include "../include/ACharacter.hpp"
+#include "../include/BombFactory.hpp"
 #include <iostream>
-#include "ABonus.hpp"
-#include "BomberMap.hpp"
+#include "../include/ABonus.hpp"
+#include "../include/BomberMap.hpp"
 
 struct SMD3AnimationType
 {
@@ -81,7 +81,8 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
       t->join();
       delete (t);
     }
-  t = new std::thread([time, this] { std::cout << time << std::endl; this->onInvinciblePeriode(time);
+  // (*this)->setMaterialType(irr::video::);
+  t = new std::thread([time, this] { this->onInvinciblePeriode(time);
     });
 }
 
