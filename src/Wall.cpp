@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Thu May 12 18:33:37 2016 Victor Gouet
+// Last update Thu May 12 18:43:08 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -35,7 +35,7 @@ void                        Wall::dead()
 {
   int			i;
 
-  i = 7;//rand() % 7;
+  i = rand() % 8;
   switch (i)
     {
     case 0:
