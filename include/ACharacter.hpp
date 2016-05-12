@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu May 12 13:10:19 2016 Victor Gouet
+// Last update Thu May 12 14:27:08 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -22,7 +22,7 @@ public:
     enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
     enum MD3_ANIMATION { STAY, RUN, ATTACK };
 
-private:
+public:
     static constexpr double BASICSPEED = 100.0;
 
 public:

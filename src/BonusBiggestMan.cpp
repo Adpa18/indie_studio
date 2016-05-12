@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
-// Last update Thu May 12 13:17:01 2016 Victor Gouet
+// Last update Thu May 12 14:27:24 2016 Victor Gouet
 //
 
 #include "../include/BonusBiggestMan.hpp"
@@ -30,6 +30,7 @@ void	        BonusBiggestMan::take(ACharacter &player)
   std::cout << "Bonus BonusBiggestMan ADD" << std::endl;
   // player.setBombPass(true);
   player.setLifeUp();
+  player.setMoveSpeed(ACharacter::BASICSPEED / 2);
   player->setScale(irr::core::vector3df(1.7, 1.7, 1.7));
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
 }

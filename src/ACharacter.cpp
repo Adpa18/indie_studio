@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 13:12:43 2016 Victor Gouet
+// Last update Thu May 12 14:25:57 2016 Victor Gouet
 //
 
 #include "ACharacter.hpp"
@@ -59,7 +59,10 @@ void                    ACharacter::dead()
   
   --life;
   if (life == 1)
-    (*this)->setScale(irr::core::vector3df(1, 1, 1));
+    {
+      (*this)->setScale(irr::core::vector3df(1, 1, 1));
+      setMoveSpeed(BASICSPEED);
+    }
   if (life <= 0)
     _dead = true;
 }
