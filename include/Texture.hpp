@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:24:03 2016 Victor Gouet
-// Last update Thu May 12 12:53:59 2016 Victor Gouet
+// Last update Thu May 12 14:38:10 2016 Victor Gouet
 //
 
 #ifndef TEXTURE_HPP_
@@ -61,6 +61,10 @@ public:
 
   static const std::string bonusBiggestManTexture;
   static const std::string bonusBiggestManMD;
+
+  static const std::string bonusSmallestManTexture;
+  static const std::string bonusSmallestManMD;
+
 
 public:
   static void loadTexture();

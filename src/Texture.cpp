@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Thu May 12 12:54:30 2016 Victor Gouet
+// Last update Thu May 12 14:41:48 2016 Victor Gouet
 //
 
 #include "../include/Texture.hpp"
@@ -54,6 +54,9 @@ const std::string BomberManTexture::bonusSpeedMD = BomberManTexture::path + "cai
 const std::string BomberManTexture::bonusBiggestManTexture = BomberManTexture::path + "caisse-metal.png";
 const std::string BomberManTexture::bonusBiggestManMD = BomberManTexture::path + "caisse-metal.md2";
 
+const std::string BomberManTexture::bonusSmallestManTexture = BomberManTexture::path + "caisse-metal.png";
+const std::string BomberManTexture::bonusSmallestManMD = BomberManTexture::path + "caisse-metal.md2";
+
 
 /*
 **	ITEM
@@ -78,7 +81,10 @@ void BomberManTexture::loadTexture()
   IrrlichtController::getDriver()->getTexture(bonusSpeedTexture.c_str());
   IrrlichtController::getDriver()->getTexture(itemThrowTexture.c_str());
   IrrlichtController::getDriver()->getTexture(blueParticuleTexture.c_str());
-
+  IrrlichtController::getDriver()->getTexture(bonusBiggestManTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(bonusSmallestManTexture.c_str());
+  IrrlichtController::getDriver()->getTexture(bonusBombPassTexture.c_str());
+ 
   IrrlichtController::getSceneManager()->getMesh(cubeDestructibleMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(cubeIndestructibleMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(emptyMD.c_str());
@@ -88,4 +94,7 @@ void BomberManTexture::loadTexture()
   IrrlichtController::getSceneManager()->getMesh(bonusPowerMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(bonusSpeedMD.c_str());
   IrrlichtController::getSceneManager()->getMesh(itemThrowMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(bonusSmallestManMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(bonusBiggestManMD.c_str());
+  IrrlichtController::getSceneManager()->getMesh(bonusBombPassMD.c_str());
 }
