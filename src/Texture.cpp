@@ -1,9 +1,9 @@
 //
 // Texture.cpp for TEXTURE in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
 // Last update Thu May 12 18:34:43 2016 Victor Gouet
 //
@@ -17,12 +17,32 @@ const std::string BomberManTexture::path = "media/";
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
         // BomberMap
-        {"ground", {"", BomberManTexture::path + "grass.jpg"}},
+        {"ground", {"", BomberManTexture::path + "grass.png"}},
         {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
-        {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
-        {"edge", {BomberManTexture::path + "cylinder_bottom.md2", BomberManTexture::path + "edge.png"}},
+        {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
+        {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
+        // {"ground", {"", BomberManTexture::path + "grass.png"}},
+        // {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
+        // {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
+        // {"edge", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
+        // {"ground", {"", BomberManTexture::path + "grass.png"}},
+        // {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
+        // {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
+        // {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
+        // {"ground", {"", BomberManTexture::path + "grass.png"}},
+        // {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
+        // {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
+        // {"edge", {BomberManTexture::path + "cylinder_bottom.md2", BomberManTexture::path + "edge.png"}},
+        // {"ground", {"", BomberManTexture::path + "grass.png"}},
+        // {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
+        // {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
+        // {"edge", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
+        // {"ground", {"", BomberManTexture::path + "grass.png"}},
+        // {"cubeIndestructible", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
+        // {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
+        // {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
         // Players
-        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs_snow.png"}},
+        {"ziggs", {BomberManTexture::path + "ziggs_snow.md3", BomberManTexture::path + "ziggs_snow.png"}},
         {"fireBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
         {"fireExplosion", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "explosion.jpg"}},
         // Bonus
