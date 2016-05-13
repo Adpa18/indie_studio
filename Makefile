@@ -34,6 +34,7 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)BonusBiggestMan.cpp		\
 			$(SRC_DIR)BonusSmallestMan.cpp		\
 			$(SRC_DIR)BonusInvincible.cpp		\
+			$(SRC_DIR)TrackerBomb.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

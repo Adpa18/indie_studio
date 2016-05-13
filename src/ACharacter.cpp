@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 12 18:04:48 2016 Victor Gouet
+// Last update Fri May 13 11:40:30 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -14,6 +14,7 @@
 #include <iostream>
 #include "../include/ABonus.hpp"
 #include "../include/BomberMap.hpp"
+#include "../include/TrackerBomb.hpp"
 
 struct SMD3AnimationType
 {
@@ -46,9 +47,9 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>();
-   BombFactory::AddBomb<FireBomb>(*_bombContainer);
-   BombFactory::AddBomb<FireBomb>(*_bombContainer);
-   BombFactory::AddBomb<FireBomb>(*_bombContainer);
+   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
+   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
+   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 

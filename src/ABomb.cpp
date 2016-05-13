@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Wed May 11 18:22:24 2016 Victor Gouet
+// Last update Fri May 13 11:19:07 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -14,10 +14,10 @@
 #include "../include/BombFactory.hpp"
 #include "../include/BomberMap.hpp"
 
-ABomb::ABomb(std::string const &mesh, std::string const &texture) :
+ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout) :
   AGameObject(irr::core::vector2df(-1000, -1000),
 	      mesh, texture, AGameObject::BOMB),
-  mesh(mesh), texture(texture)
+  mesh(mesh), texture(texture), timeout(timeout)
 {
   _arrived = true;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
@@ -91,7 +91,6 @@ void			ABomb::updateTimeOut()
 
 void                        ABomb::dead()
 {
-  
   if (use)
     {
       _arrived = true;
@@ -122,7 +121,7 @@ void			ABomb::operator<<(irr::core::vector2df
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   (*this)->setVisible(true);
   use = true;
-  this->setTimeOut(3);
+  this->setTimeOut(timeout);
   this->setPos(pos);
 }
 

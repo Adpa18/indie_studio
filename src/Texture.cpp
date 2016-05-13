@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Thu May 12 18:34:43 2016 Victor Gouet
+// Last update Fri May 13 11:14:25 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -23,7 +23,10 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"edge", {BomberManTexture::path + "cylinder_bottom.md2", BomberManTexture::path + "edge.png"}},
         // Players
         {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs_snow.png"}},
+	// Bomb
         {"fireBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
+	{"trackerBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
+	// Explosion
         {"fireExplosion", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "explosion.jpg"}},
         // Bonus
         {"bonusBombPass", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
