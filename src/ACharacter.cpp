@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sat May 14 17:26:08 2016 Victor Gouet
+// Last update Sat May 14 22:34:11 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -82,15 +82,6 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
       t->join();
       delete (t);
     }
-  // (*this)->setMaterialType(irr::video::);
-  // irr::core::array<irr::video::ITexture *>	array;
-
-  // array.push_back(IrrlichtController::getDriver()->getTexture("media/ziggs.png"));
-  // array.push_back(IrrlichtController::getDriver()->getTexture(""));
-  // irr::scene::ISceneNodeAnimator *anime =  IrrlichtController::getSceneManager()->createTextureAnimator(array, 100, true);
-  // (*this)->addAnimator(anime);
-  //(*this)->removeAnimator(anime);
-  // anime->drop();
   addAnimation();
   t = new std::thread([time, this] { this->onInvinciblePeriode(time);
     });
@@ -230,12 +221,7 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
-  // if (life == 1)
-  //   (*this)->setScale(irr::core::vector3df(1, 1, 1));
-  // if (life == 0)
-    return (_dead);
-  // --life;
-  // return (false);
+  return (_dead);
 }
 
 void            ACharacter::moveTo(irr::core::vector2df const &dir)

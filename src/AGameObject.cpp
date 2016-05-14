@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Sat May 14 15:14:18 2016 Victor Gouet
+// Last update Sat May 14 22:57:32 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -152,7 +152,7 @@ AGameObject::Type   AGameObject::getType() const
 void                AGameObject::setPos(irr::core::vector2df const &pos)
 {
     BomberMap::getMap()->move(this, pos);
-    _node->setPosition(irr::core::vector3df(pos.X - BomberMap::size_side / 2, 0, pos.Y - BomberMap::size_side / 2) * BomberMap::scale);
+    _node->setPosition(irr::core::vector3df(pos.X - BomberMap::getMap()->getSize() / 2, 0, pos.Y - BomberMap::getMap()->getSize() / 2) * BomberMap::scale);
 }
 
 irr::core::vector2df    AGameObject::getMapPos() const
@@ -164,5 +164,5 @@ irr::core::vector2df    AGameObject::getRealPos() const
 {
     irr::core::vector3df    pos3df = _node->getPosition() / BomberMap::scale;
 
-    return (irr::core::vector2df(pos3df.X + BomberMap::size_side / 2, pos3df.Z + BomberMap::size_side / 2));
+    return (irr::core::vector2df(pos3df.X + BomberMap::getMap()->getSize() / 2, pos3df.Z + BomberMap::getMap()->getSize() / 2));
 }

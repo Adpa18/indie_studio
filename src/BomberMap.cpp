@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sat May 14 17:16:38 2016 Victor Gouet
+// Last update Sat May 14 22:59:42 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -16,14 +16,23 @@
 
 BomberMap *BomberMap::bomberMap = NULL;
 
+const int		BomberMap::size_side[3] = {11, 16, 20};
+
 BomberMap::BomberMap(std::string const &)
 {
 
 }
 
-BomberMap::BomberMap()
+BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize)
 {
+}
 
+BomberMap::~BomberMap()
+{
+  for (std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin(), end = _objects.end() ; it != end ; ++it)
+    {
+      delete ((*it).first);
+    }
 }
 
 void            BomberMap::genMap()
@@ -104,11 +113,16 @@ void			BomberMap::generateGround()
 //    anim->drop();
 }
 
+int	BomberMap::getSize() const
+{
+  return (size_side[_mapSize]);
+}
+
 void			BomberMap::generateMap()
 {
   srand(time(NULL));
-    for (int y = 0; y < BomberMap::size_side; ++y) {
-        for (int x = 0; x < BomberMap::size_side; ++x) {
+    for (int y = 0; y < BomberMap::size_side[_mapSize]; ++y) {
+        for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
             switch (_patron[y][x]) {
                 case 'E':
                     new Wall(irr::core::vector2df(x, y), Wall::Edge);
@@ -176,6 +190,24 @@ void			BomberMap::generateMap()
 //    }
 //    reader->drop();
 //}
+
+void		BomberMap::newMap(Size mapSize)
+{
+  if (bomberMap)
+    {
+      delete bomberMap;
+    }
+  bomberMap = new BomberMap(mapSize);  
+}
+
+void		BomberMap::deleteMap()
+{
+   if (bomberMap)
+    {
+      delete bomberMap;
+    }
+   bomberMap = NULL;
+}
 
 BomberMap       * BomberMap::getMap()
 {
