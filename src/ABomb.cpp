@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May 13 11:19:07 2016 Victor Gouet
+// Last update Sat May 14 17:27:28 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -14,17 +14,17 @@
 #include "../include/BombFactory.hpp"
 #include "../include/BomberMap.hpp"
 
-ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout) :
+ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout, int id) :
   AGameObject(irr::core::vector2df(-1000, -1000),
 	      mesh, texture, AGameObject::BOMB),
-  mesh(mesh), texture(texture), timeout(timeout)
+  mesh(mesh), texture(texture), timeout(timeout), characterId(id)
 {
   _arrived = true;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   dir = irr::core::vector2df(0, 0);
   use = false;
   (*this)->setVisible(false);
-  _power = 3;
+  _power = 1;
   __active = false;
 }
 
@@ -38,6 +38,8 @@ ABomb::ABomb(ABomb const *other)
 
 ABomb	&ABomb::operator=(ABomb const *other)
 {
+  timeout = other->timeout;
+  characterId = other->characterId;
   _arrived = true;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   dir = irr::core::vector2df(0, 0);
@@ -60,7 +62,7 @@ void			ABomb::setVelocity(irr::core::vector2df const &_dir)
   _arrived = false;
 }
 
-void			ABomb::updateTimeOut()
+void			ABomb::move(double speed)
 {
   float   distance = this->getRealPos().getDistanceFrom(this->getMapPos() + dir);
   const irr::u32 now = IrrlichtController::getDevice()->getTimer()->getTime();
@@ -83,10 +85,15 @@ void			ABomb::updateTimeOut()
 	      this->setPos(this->getMapPos() + dir);
 	      return;
 	    }
-	  (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * 300, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * 300));
+	  (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * speed, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * speed));
 	}
     }
   then = now;
+}
+
+void			ABomb::updateTimeOut()
+{
+  move();
 }
 
 void                        ABomb::dead()

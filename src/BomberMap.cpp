@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Tue May 10 22:26:57 2016 Victor Gouet
+// Last update Sat May 14 17:16:38 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -185,14 +185,32 @@ BomberMap       * BomberMap::getMap()
     return (bomberMap);
 }
 
+std::vector<AGameObject *> const &BomberMap::getCharacters() const
+{
+  return (_characters);
+}
+
 void  BomberMap::add(AGameObject* obj, const irr::core::vector2df &pos)
 {
   this->_objects[obj] = pos;
+  if (obj->getType() == AGameObject::CHARACTER)
+    _characters.push_back(obj);
 }
 
 void  BomberMap::remove(AGameObject *obj)
 {
-    this->_objects.erase(obj);
+  this->_objects.erase(obj);
+  if (obj->getType() == AGameObject::CHARACTER)
+    {
+      std::vector<AGameObject *>::iterator	it = _characters.begin();
+      while (it != _characters.end())
+	{
+	  if (*it == obj)
+	    it = _characters.erase(it);
+	  else
+	    ++it;
+	}
+    }
 }
 
 void  BomberMap::move(AGameObject *obj, const irr::core::vector2df &pos)

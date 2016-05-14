@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Thu Apr 28 10:11:29 2016 Victor Gouet
+// Last update Sat May 14 11:50:17 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -43,9 +43,11 @@ public:
     void  move(AGameObject *obj, const irr::core::vector2df &pos);
     std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
     const irr::core::vector2df  get(AGameObject *obj);
+  std::vector<AGameObject *> const &getCharacters() const;
 
 private:
     std::map<AGameObject*, irr::core::vector2df> _objects;
+  std::vector<AGameObject *>			_characters;
 
 private:
     char			_patron[11][11] = {

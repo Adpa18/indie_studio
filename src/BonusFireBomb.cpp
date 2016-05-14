@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
-// Last update Tue May 10 15:05:05 2016 Victor Gouet
+// Last update Sat May 14 15:13:18 2016 Victor Gouet
 //
 
 #include "../include/BonusFireBomb.hpp"
@@ -29,7 +29,7 @@ BonusFireBomb::~BonusFireBomb()
 void	        BonusFireBomb::take(ACharacter &player)
 {
   std::cout << "Bonus FIRE BOMB ADD" << std::endl;
-  BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
+  BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()), player.getID());
 }
 
 void	        BonusFireBomb::dead()

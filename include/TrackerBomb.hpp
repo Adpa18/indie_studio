@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 13 11:06:23 2016 Victor Gouet
-// Last update Fri May 13 11:25:09 2016 Victor Gouet
+// Last update Sat May 14 16:58:41 2016 Victor Gouet
 //
 
 #ifndef TRACKERBOMB_HPP_
@@ -16,7 +16,7 @@
 class		TrackerBomb	: public ABomb
 {
 public:
-  TrackerBomb();
+  TrackerBomb(int id = -1);
   TrackerBomb	&operator=(ABomb const *);
   TrackerBomb(ABomb const *);
   virtual ~TrackerBomb();
@@ -25,6 +25,9 @@ public:
   virtual void	willExplose();
   virtual void	updateTimeOut();
 
+private:
+  int		targetID;
+  irr::core::vector2df	actual;
 // private:
 //     bool        killObjects(irr::core::vector2df const &pos);
 };

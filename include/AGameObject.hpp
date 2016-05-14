@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Thu May 12 17:58:05 2016 Victor Gouet
+// Last update Sat May 14 15:13:55 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -43,6 +43,7 @@ public:
   void					setTimeOut(double timeout);
   void					addAnimation();
   void					removeAnnimation();
+  int					getID() const;
 
 public:
   virtual void                        dead() = 0;

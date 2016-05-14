@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Thu May 12 18:10:29 2016 Victor Gouet
+// Last update Sat May 14 15:14:18 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -15,6 +15,8 @@
 
 AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, double timeout) : _type(type)
 {
+  static int		id = 1;
+
   BomberMap::getMap()->add(this, pos);
   irr::scene::IAnimatedMesh *meshNode;
     
@@ -52,6 +54,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 	_texture = texture;
         _node->setMD2Animation(irr::scene::EMAT_STAND);
         _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
+	_node->setID(id++);
     }
     this->setPos(pos);
 }
@@ -65,6 +68,11 @@ AGameObject::~AGameObject()
     //  (*this)->remove();
     // this->_node->removeAll();
     // this->_node->remove();
+}
+
+int				AGameObject::getID() const
+{
+  return (_node->getID());
 }
 
 void				AGameObject::addAnimation()

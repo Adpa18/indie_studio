@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May 13 11:40:30 2016 Victor Gouet
+// Last update Sat May 14 17:26:08 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -46,8 +46,8 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
     anime = irr::scene::EMAT_STAND;
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
-  _bombContainer = BombFactory::CreateBombContainer<FireBomb>();
-   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
+  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
+  BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
    // BombFactory::AddBomb<FireBomb>(*_bombContainer);
    // BombFactory::AddBomb<FireBomb>(*_bombContainer);
   setMD3Animation(MD3_ANIMATION::STAY);
@@ -291,9 +291,7 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
         this->setPos(this->getMapPos() + dir);
         return;
     }
-    (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * moveSpeed// 100
-					      , 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * moveSpeed// 100
-					      ));
+    (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * moveSpeed, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * moveSpeed));
 }
 
 void			ACharacter::setBombPass(bool pass)

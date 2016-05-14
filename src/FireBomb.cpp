@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Wed May 11 16:34:22 2016 Victor Gouet
+// Last update Sat May 14 17:20:55 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
@@ -13,9 +13,9 @@
 #include "../include/Texture.hpp"
 #include "../include/Explosion.hpp"
 
-FireBomb::FireBomb()
+FireBomb::FireBomb(int id)
   : ABomb(BomberManTexture::getModel("fireBomb").mesh,
-  BomberManTexture::getModel("fireBomb").texture)
+	  BomberManTexture::getModel("fireBomb").texture, 3, id)
 {
 
 }
@@ -38,11 +38,14 @@ FireBomb::FireBomb(ABomb const *other) : ABomb(other)
   *this = other;
 }
 
+#include <iostream>
+
 void		FireBomb::willExplose()
 {
     irr::core::vector2df        pos = this->getMapPos();
 
     this->killObjects(pos);
+    std::cout << _power << std::endl;
     for (int power = 1; power <= this->_power; ++power) {
         if (this->killObjects(pos + irr::core::vector2df(-power, 0))) {
             break;
