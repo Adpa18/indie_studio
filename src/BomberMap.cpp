@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sat May 14 22:59:42 2016 Victor Gouet
+// Last update Sun May 15 12:33:19 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -16,7 +16,7 @@
 
 BomberMap *BomberMap::bomberMap = NULL;
 
-const int		BomberMap::size_side[3] = {11, 16, 20};
+const int		BomberMap::size_side[3] = {11, 15, 19};
 
 BomberMap::BomberMap(std::string const &)
 {
@@ -25,6 +25,7 @@ BomberMap::BomberMap(std::string const &)
 
 BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize)
 {
+  initSpawn();
 }
 
 BomberMap::~BomberMap()
@@ -47,11 +48,11 @@ void			BomberMap::generateGround()
 
     terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
     irr::core::dimension2d<irr::f32>(25, 25), // Tile size
-    irr::core::dimension2d<irr::u32>(11, 11), // Tile count
+    irr::core::dimension2d<irr::u32>(size_side[_mapSize], size_side[_mapSize]), // Tile count
             0, // Material
             0.0f, // Hill height
     irr::core::dimension2d<irr::f32>(0.0f, 0.0f), // countHills
-    irr::core::dimension2d<irr::f32>(11, 11)); // textureRepeatCount
+    irr::core::dimension2d<irr::f32>(size_side[_mapSize], size_side[_mapSize])); // textureRepeatCount
 
     _ground = IrrlichtController::getSceneManager()->addMeshSceneNode(terrain_model->getMesh(0));
     _ground->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::getModel("ground").texture.c_str()));
@@ -118,26 +119,55 @@ int	BomberMap::getSize() const
   return (size_side[_mapSize]);
 }
 
+std::vector<irr::core::vector2df> const	&BomberMap::getSpawn() const
+{
+  return (_spawner);
+}
+
+void			BomberMap::initSpawn()
+{
+  _spawner.push_back(irr::core::vector2df(1, 1));
+  _spawner.push_back(irr::core::vector2df(BomberMap::size_side[_mapSize] - 2, BomberMap::size_side[_mapSize] - 2));
+  _spawner.push_back(irr::core::vector2df(BomberMap::size_side[_mapSize] - 2, 1));
+  _spawner.push_back(irr::core::vector2df(1, BomberMap::size_side[_mapSize] - 2));
+}
+
+bool			BomberMap::canPutDestructibleWall(int x, int y) const
+{
+  int			proba;
+
+  if ((x == 1 && y == 1) || (x == 2 && y == 1) || (x == 1 && y == 2))
+    return (false);
+  if ((x == BomberMap::size_side[_mapSize] - 2 && y == BomberMap::size_side[_mapSize] - 2)
+      || (x == BomberMap::size_side[_mapSize] - 3 && y == BomberMap::size_side[_mapSize] - 2)
+      || (x == BomberMap::size_side[_mapSize] - 2 && y == BomberMap::size_side[_mapSize] - 3))
+    return (false);
+  if ((x == BomberMap::size_side[_mapSize] - 2 && y == 1)
+      || (x == BomberMap::size_side[_mapSize] - 3 && y == 1)
+      || (x == BomberMap::size_side[_mapSize] - 2 && y == 2))
+    return (false);
+  if ((x == 1 && y == BomberMap::size_side[_mapSize] - 2)
+      || (x == 1 && y == BomberMap::size_side[_mapSize] - 3)
+      || (x == 2 && y == BomberMap::size_side[_mapSize] - 2))
+    return (false);
+  proba = rand() % 10;
+  return (proba >= 1);
+}
+
 void			BomberMap::generateMap()
 {
   srand(time(NULL));
-    for (int y = 0; y < BomberMap::size_side[_mapSize]; ++y) {
-        for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
-            switch (_patron[y][x]) {
-                case 'E':
-                    new Wall(irr::core::vector2df(x, y), Wall::Edge);
-                    break;
-                case 'X':
-                    new Wall(irr::core::vector2df(x, y), Wall::Invicible);
-                    break;
-                case 'C':
-                    new Wall(irr::core::vector2df(x, y));
-                    break;
-                default:
-                    break;
-            }
-        }
+  for (int y = 0; y < BomberMap::size_side[_mapSize]; ++y) {
+    for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
+      if (x == 0 || y == 0 || x == BomberMap::size_side[_mapSize] - 1
+	  || y == BomberMap::size_side[_mapSize] - 1)
+	new Wall(irr::core::vector2df(x, y), Wall::Edge);
+      else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
+	new Wall(irr::core::vector2df(x, y), Wall::Invicible);
+      else if (canPutDestructibleWall(x, y))
+	new Wall(irr::core::vector2df(x, y));
     }
+  }
 }
 
 //void BomberMap::serialize(const std::string &saveFile) const

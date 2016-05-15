@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Sat May 14 22:55:27 2016 Victor Gouet
+// Last update Sun May 15 12:30:26 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -36,9 +36,10 @@ public:
   virtual ~BomberMap();
 
 public:
-    void  serialize(std::string const &) const;
-    void  deserialize(std::string const &);
-  void    genMap();
+  void  serialize(std::string const &) const;
+  void  deserialize(std::string const &);
+  void  genMap();
+  std::vector<irr::core::vector2df> const	&getSpawn() const;
 
 public:
   static BomberMap    *getMap();
@@ -48,36 +49,24 @@ public:
 private:
   void			generateMap();
   void		        generateGround();
+  bool			canPutDestructibleWall(int x, int y) const;
+  void			initSpawn();
 
 public:
-    void  add(AGameObject* obj, const irr::core::vector2df &pos);
-    void  remove(AGameObject *obj);
-    void  move(AGameObject *obj, const irr::core::vector2df &pos);
+  void  add(AGameObject* obj, const irr::core::vector2df &pos);
+  void  remove(AGameObject *obj);
+  void  move(AGameObject *obj, const irr::core::vector2df &pos);
   int	getSize() const;
 
-    std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
-    const irr::core::vector2df  get(AGameObject *obj);
+  std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
+  const irr::core::vector2df  get(AGameObject *obj);
   std::vector<AGameObject *> const &getCharacters() const;
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;
   std::vector<AGameObject *>			_characters;
+  std::vector<irr::core::vector2df>		_spawner;
   Size						_mapSize;
-
-private:
-    char			_patron[11][11] = {
-            {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E','E', 'E', 'E'},
-            {'E', ' ', ' ', 'C', 'C', 'C', 'C', 'C',' ', ' ', 'E'},
-            {'E', ' ', 'X', 'C', 'X', 'C', 'X', 'C','X', ' ', 'E'},
-            {'E', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'E'},
-            {'E', 'C', 'X', 'C', 'X', 'C', 'X', 'C','X', 'C', 'E'},
-            {'E', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'E'},
-            {'E', 'C', 'X', 'C', 'X', 'C', 'X', 'C','X', 'C', 'E'},
-            {'E', 'C', 'C', 'C', 'C', 'C', 'C', 'C','C', 'C', 'E'},
-            {'E', ' ', 'X', 'C', 'X', 'C', 'X', 'C','X', ' ', 'E'},
-            {'E', ' ', ' ', 'C', 'C', 'C', 'C', 'C',' ', ' ', 'E'},
-            {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E','E', 'E', 'E'}
-    };
 
 private:
     static BomberMap    *bomberMap;

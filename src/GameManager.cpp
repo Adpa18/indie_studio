@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sat May 14 23:06:32 2016 Victor Gouet
+// Last update Sun May 15 12:38:42 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -129,9 +129,11 @@ void	GameManager::willStartGame()
   BomberMap::newMap(BomberMap::Size::SMALL);
   BomberMap::getMap()->genMap();
 
+  std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
+
   characters.clear();
-  characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
-  characters.push_back(new Player("RICHARD", irr::core::vector2df(9, 1), BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+  characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+  characters.push_back(new Player("RICHARD", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
 
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
