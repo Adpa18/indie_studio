@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:21:28 2016 Victor Gouet
-// Last update Thu May  5 15:18:34 2016 Victor Gouet
+// Last update Wed May 11 16:15:38 2016 Victor Gouet
 //
 
 #include "../include/BombContainer.hpp"
@@ -22,10 +22,10 @@ BombContainer::~BombContainer()
 ABomb				*BombContainer::getBomb() const
 {
   for (std::vector<ABomb *>::const_iterator	it = _bombs.begin(),
-	 end = _bombs.end() ; it != end ; ++it)
+  	 end = _bombs.end() ; it != end ; ++it)
     {
       if (!(*it)->isUse())
-	return (*it);
+  	return (*it);
     }
   return (NULL);
 }
@@ -46,18 +46,26 @@ void				BombContainer::addBomb(ABomb *bomb)
     _bombs.push_back(bomb);
 }
 
-void				BombContainer::bombExplose()
+void				BombContainer::upgradePowerBombs()
 {
-  std::vector<ABomb *>::iterator	it;
-
-  it = _bombs.begin();
-  while (it != _bombs.end())
+  for (std::vector<ABomb *>::iterator it = _bombs.begin(), end = _bombs.end() ; it != end ; ++it)
     {
-      if ((*it)->isActive())
-	(*it)->willExplose();
-      ++it;
+      (*it)->setPower((*it)->getPower() + 1);
     }
 }
+
+// void				BombContainer::bombExplose()
+// {
+//   std::vector<ABomb *>::iterator	it;
+
+//   it = _bombs.begin();
+//   while (it != _bombs.end())
+//     {
+//       if ((*it)->isActive())
+// 	(*it)->willExplose();
+//       ++it;
+//     }
+// }
 
 void				BombContainer::deleteAllBomb()
 {

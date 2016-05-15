@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:04:37 2016 Victor Gouet
-// Last update Fri Apr 29 16:35:00 2016 Victor Gouet
+// Last update Sat May 14 15:10:30 2016 Victor Gouet
 //
 
 #ifndef BOMBFACTORY_HPP_
@@ -14,15 +14,14 @@
 # include "BombContainer.hpp"
 # include "FireBomb.hpp"
 
-// template<class T>
 class		BombFactory
 {
 public:
   template<class T>
-  static void	AddBomb(BombContainer &container)
+  static void	AddBomb(BombContainer &container, int userId)
   {
     if (container.getBombsNbr() == 0)
-      container.addBomb(new T());
+      container.addBomb(new T(userId));
     else
       {
 	std::vector<ABomb *>::const_iterator	cont = container.getBombs().begin();
@@ -31,16 +30,16 @@ public:
   }
 
   template<class T>
-  static BombContainer	*CreateBombContainer()
+  static BombContainer	*CreateBombContainer(int userId)
   {
     BombContainer	*container = new BombContainer();
 
-    AddBomb<T>(*container);
+    AddBomb<T>(*container, userId);
     return (container);
   }
 
   template<class T>
-  static void		ChangeBombContainer(BombContainer &bombContainer)
+  static void		ChangeBombContainer(BombContainer &bombContainer, int userId)
   {
     std::vector<ABomb *>	const	&bombs = bombContainer.getBombs();
     size_t				size = bombContainer.getBombsNbr();
@@ -51,7 +50,7 @@ public:
     bombContainer.deleteAllBomb();
     while (i < size)
       {
-	bombContainer.addBomb(new T());
+	bombContainer.addBomb(new T(userId));
 	++i;
       }
   }

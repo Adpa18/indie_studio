@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Mon May  9 11:54:47 2016 Victor Gouet
+// Last update Wed May 11 11:44:54 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -57,13 +57,13 @@ void	willStartGame();
 void	willStartMenu();
 
 private:
-enum	State
-  {
-PREV_MENU,
-MENU,
-  PREV_GAME,
-  GAME
-};
+  enum	State
+    {
+      PREV_MENU,
+      MENU,
+      PREV_GAME,
+      GAME
+    };
 State	_state;
 
 private:

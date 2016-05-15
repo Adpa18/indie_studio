@@ -1,14 +1,16 @@
 //
 // GameManager.cpp for MANAGER in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May  9 11:58:15 2016 Victor Gouet
+// Last update Sun May 15 12:38:42 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
+#include "../include/Texture.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
 GameManager *GameManager::GM = NULL;
 
@@ -20,7 +22,9 @@ GameManager::GameManager()
   m_gameSatePrev = SPLASH_SCREEN;
   // uiManager = new UIManager(IrrlichtController::getDevice(false));
   // uiEventReceiver = new UIEventReceiver(*uiManager);
+  IrrlichtController::getGUIEnvironment()->getFont("/home/gouet_v/Downloads/irrlicht-1.8.3/media/fonthaettenschweiler.bmp");
   eventGame = new EventGame();
+  BomberManTexture::loadTexture();
   // _state = PREV_GAME;
 }
 
@@ -86,7 +90,7 @@ void	GameManager::run()
 	      _state = MENU;
 	      onMenu();
 	    }
-	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 200, 200, 200));
+	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
 	  IrrlichtController::getSceneManager()->drawAll();
 	  IrrlichtController::getGUIEnvironment()->drawAll();
 	  IrrlichtController::getDriver()->endScene();
@@ -102,17 +106,34 @@ void	GameManager::onMenu()
 
 void	GameManager::onGame()
 {
-  for (std::vector<ACharacter*>::iterator it = characters.begin(); it != characters.end(); ++it)
+  GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
+
+  std::vector<ACharacter*>::iterator it = characters.begin();
+  while (it != characters.end())
     {
-      (*it)->compute();
+      if (!(*it)->isDead())
+	{
+	  (*it)->compute();
+	  ++it;
+	}
+      else
+	{
+	  delete (*it);
+	  it = characters.erase(it);
+	}
     }
 }
 
 void	GameManager::willStartGame()
 {
-  characters.clear();
-  characters.push_back(new Player("ROGER", irr::core::vector2df(1, 1), "media/ziggs.md3", "media/ziggs.png", 0, *eventGame));
+  BomberMap::newMap(BomberMap::Size::SMALL);
   BomberMap::getMap()->genMap();
+
+  std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
+
+  characters.clear();
+  characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+  characters.push_back(new Player("RICHARD", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
 
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
   irr::scene::ICameraSceneNode* camera = IrrlichtController::getSceneManager()->addCameraSceneNode
@@ -123,9 +144,9 @@ void	GameManager::willStartGame()
   camera->setFarValue(1000);
   camera->setNearValue(10);
 
-  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
-									     1.0f, 1.0f, 1.0f));
-  
+//  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
+//									     1.0f, 1.0f, 1.0f));
+
 }
 
 void	GameManager::willStartMenu()

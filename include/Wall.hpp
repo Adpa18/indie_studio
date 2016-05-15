@@ -5,23 +5,36 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Fri May  6 17:35:57 2016 Victor Gouet
+// Last update Thu May 12 18:33:11 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
 # define WALL_HPP_
 
+# include <map>
 # include <string>
 # include "AGameObject.hpp"
+# include "BonusSpeed.hpp"
+# include "BonusPower.hpp"
+# include "BonusFireBomb.hpp"
+# include "ItemThrow.hpp"
+# include "BonusBombPass.hpp"
+# include "BonusBiggestMan.hpp"
+# include "BonusSmallestMan.hpp"
+# include "BonusInvincible.hpp"
 
 class	Wall : public AGameObject
 {
 public:
   enum 	State
     {
-      Invicible,// = "media/caisseMetal",
-      Destructible// = "media/caisse"
+      Invicible,
+      Destructible,
+      Edge
     };
+
+private:
+    static const std::map<Wall::State, std::string> _types;
 
 public:
   Wall(irr::core::vector2df const &pos, State state = Destructible);

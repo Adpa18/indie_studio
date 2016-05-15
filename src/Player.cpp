@@ -5,10 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May  6 17:33:18 2016 Victor Gouet
+// Last update Wed May 11 16:16:25 2016 Victor Gouet
 //
 
-#include "../include/Player.hpp"
+#include "ACharacter.hpp"
+#include "Player.hpp"
 #include <iostream>
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
@@ -18,9 +19,9 @@ Player::Player(std::string const &name, irr::core::vector2df const &pos,
 {
     (*this)->setName(name.c_str());
     this->_joystick = NULL;
-//	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
+	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
 		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
-//	}
+	}
 }
 
 Player::~Player()
@@ -31,47 +32,31 @@ void		Player::compute()
 {
     ACharacter::ACTION  act = ACharacter::IDLE;
   // Joystick
-  this->exploseHisBomb();
+  // this->exploseHisBomb();
   if (this->_joystick) {
-//		const irr::SEvent::SJoystickEvent &joystickData = this->_joystick->getData();
-//		const irr::u16 povDegrees = joystickData.POV / 100;
-//		const irr::f32 DEAD_ZONE = 0.05f;
-//		moveHorizontal = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
-//		if(fabs(moveHorizontal) < DEAD_ZONE) {
-//			moveHorizontal = 0.f;
-//		}
-//		moveVertical = (irr::f32)joystickData.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
-//		if(fabs(moveVertical) < DEAD_ZONE) {
-//			moveVertical = 0.f;
-//		}
-//		if (povDegrees < 360) {
-//			if(povDegrees > 0 && povDegrees < 180) {
-//				moveHorizontal = 1.f;
-//			} else if (povDegrees > 180) {
-//				moveHorizontal = -1.f;
-//			}
-//			if(povDegrees > 90 && povDegrees < 270) {
-//				moveVertical = -1.f;
-//			} else if (povDegrees > 270 || povDegrees < 90) {
-//				moveVertical = +1.f;
-//			}
-//		}
-		// nodePosition.X += getMoveSpeed() * frameDeltaTime * moveHorizontal;
-		// nodePosition.Z += getMoveSpeed() * frameDeltaTime * moveVertical;
-	} else {
-		// KeysCode
-		if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
-			act = ACharacter::ACTION::DOWN;
-		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
-            act = ACharacter::ACTION::UP;
-		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second)) {
-            act = ACharacter::ACTION::LEFT;
-		} else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
-            act = ACharacter::ACTION::RIGHT;
-		}
-        if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second)) {
-            act = ACharacter::ACTION::BOMB;
-        }
-	}
-    this->action(act);
+      act = this->_joystick->getDirAxis(MotionController::LEFT_JOYSTICK);
+      if (this->_joystick->IsButtonPressed(MotionController::CROSS)) {
+          act = ACharacter::ACTION::BOMB;
+      }
+      // PAS SET POUR LE ACharacter::ACTION::ACT !!
+      
+  } else {
+    // KeysCode
+    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
+      act = ACharacter::ACTION::DOWN;
+    } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
+      act = ACharacter::ACTION::UP;
+    } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::LEFT)->second)) {
+      act = ACharacter::ACTION::LEFT;
+    } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
+      act = ACharacter::ACTION::RIGHT;
+    }
+    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second)) {
+      act = ACharacter::ACTION::BOMB;
+    }
+    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::ACT)->second)) {
+      act = ACharacter::ACTION::ACT;
+    }
+  }
+  this->action(act);
 }

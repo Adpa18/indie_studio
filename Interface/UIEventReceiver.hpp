@@ -6,9 +6,12 @@
 #define CPP_INDIE_STUDIO_UIEVENTRECEIVER_HPP
 
 #include <iostream>
+#include <vector>
+#include <list>
 #include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 #include "UIElements.hpp"
 #include "UIManager.hpp"
+#include "PlayerSelectionBox.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
@@ -19,7 +22,8 @@ class UIEventReceiver : public irr::IEventReceiver
         SPLASH_SCREEN = 1,
         MAIN_MENU = 2,
         MENU_MAP = 3,
-        PLAY = 4,
+        LOADING_SCREEN = 4,
+        PLAY = 5,
         PAUSE
     };
 
@@ -34,6 +38,16 @@ private:
     void DisplaySplashScreen();
     void DisplayMapMenu();
     void DisplayPauseMenu();
+    void DisplayLoadingScreen();
+
+    /*
+     * \brief Button handling
+     */
+    void RefreshButtons();
+    void SelectNextButton();
+    void SelectPrevButton();
+
+    void LoadTextures();
 
 private:
     UIManager m_manager;
@@ -42,6 +56,9 @@ private:
     // Use to know current game state and previous one
     GameState m_gameState;
     GameState m_gameSatePrev;
+
+    void (UIEventReceiver::*fptr)() = nullptr;
+    std::list<irr::gui::IGUIButton*> m_buttons;
 };
 
 

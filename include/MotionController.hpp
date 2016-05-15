@@ -12,20 +12,16 @@
 # define MOTIONCONTROLLER_HPP
 
 # include "AController.hpp"
+# include "ACharacter.hpp"
 
 class MotionController : public AController {
-private:
-    irr::SJoystickInfo          _info;
-    irr::SEvent::SJoystickEvent _data;
 public:
-    MotionController (irr::SJoystickInfo info);
-    virtual ~MotionController ();
-    const irr::SJoystickInfo            &getInfo() const;
-    const irr::SEvent::SJoystickEvent   &getData() const;
-    void                                setData(irr::SEvent::SJoystickEvent data);
+    enum Axis {
+        LEFT_JOYSTICK,
+        RIGHT_JOYSTICK
+    };
 
-public:
-    enum Controller {
+    enum ControllerKey {
         SQUARE = 1 << 0,
         CROSS = 1 << 1,
         CIRCLE = 1 << 2,
@@ -41,6 +37,17 @@ public:
         HOME = 1 << 11,
         OTHER = 1 << 12
     };
+private:
+    irr::SJoystickInfo          _info;
+    irr::SEvent::SJoystickEvent _data;
+public:
+    MotionController (irr::SJoystickInfo info);
+    virtual ~MotionController ();
+    const irr::SJoystickInfo            &getInfo() const;
+    const irr::SEvent::SJoystickEvent   &getData() const;
+    void                                setData(irr::SEvent::SJoystickEvent data);
+    ACharacter::ACTION                  getDirAxis(const Axis axis) const;
+    bool                                IsButtonPressed(ControllerKey button) const;
 };
 
 #endif /* !MOTIONCONTROLLER_HPP */

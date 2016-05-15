@@ -21,6 +21,20 @@ SRC		=	$(SRC_DIR)main.cpp					\
 			$(SRC_DIR)FireBomb.cpp			    \
 			$(SRC_DIR)BombContainer.cpp		    \
 			$(SRC_DIR)GameManager.cpp		\
+			$(SRC_DIR)BonusSpeed.cpp		\
+			$(SRC_DIR)ABonus.cpp			\
+			$(SRC_DIR)BonusPower.cpp		\
+			$(SRC_DIR)BonusFireBomb.cpp		\
+			$(SRC_DIR)AItem.cpp			\
+			$(SRC_DIR)ItemThrow.cpp			\
+			$(SRC_DIR)Explosion.cpp			\
+			$(SRC_DIR)Texture.cpp			\
+			$(SRC_DIR)GameObjectTimeContainer.cpp	\
+			$(SRC_DIR)BonusBombPass.cpp		\
+			$(SRC_DIR)BonusBiggestMan.cpp		\
+			$(SRC_DIR)BonusSmallestMan.cpp		\
+			$(SRC_DIR)BonusInvincible.cpp		\
+			$(SRC_DIR)TrackerBomb.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 

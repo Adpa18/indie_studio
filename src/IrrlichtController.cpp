@@ -30,8 +30,8 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
 				   true, false, false, 0);
       else
 	{
-	  height = 640;
-	  width = 640;
+	  /*height = 640;
+	  width = 640;*/
 	  device = irr::createDevice(irr::video::EDT_OPENGL,
 				     irr::core::dimension2d<irr::u32>(width, height), 32,
 				     false, false, false, 0);
@@ -54,9 +54,4 @@ irr::scene::ISceneManager	*IrrlichtController::getSceneManager()
 irr::gui::IGUIEnvironment	*IrrlichtController::getGUIEnvironment()
 {
   return (getDevice()->getGUIEnvironment());
-}
-
-irr::scene::ISceneCollisionManager  *IrrlichtController::getSceneCollisionManager()
-{
-  return (getSceneManager()->getSceneCollisionManager());
 }
