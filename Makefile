@@ -6,6 +6,10 @@ SRC_DIR	=	src/
 
 SRC_INTERFACE_DIR=	Interface/
 
+IrrKlangHome	=	IrrKlang/
+
+SRC_VIDEO_DIR=	Video/
+
 IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
 
 SRC		=	$(SRC_DIR)main.cpp						\
@@ -41,6 +45,7 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 			\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp		\
+			$(SRC_VIDEO_DIR)Video.cpp					\
 
 OBJ			=	$(SRC:%cpp=%o)
 
@@ -54,13 +59,13 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread -g
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include -I ./$(SRC_INTERFACE_DIR)
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include -I ./$(SRC_INTERFACE_DIR) -I ./$(IrrKlangHome)
 
 #-I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	= -lpthread -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+LDFLAGS 	= -lpthread -L $(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L $(IrrKlangHome)linux $(IrrKlangHome)linux/libIrrKlang.so
 
 %.o : %.cpp
 	@echo -e "Compiling $<"

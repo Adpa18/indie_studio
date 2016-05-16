@@ -28,7 +28,7 @@ CPPFLAGS	+=	-I$(IrrlichtHome)/include -I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L./theoraplayer -L$(IrrKlangHome)/linux ../IrrKlang/linux/libIrrKlang.so
+LDFLAGS 	= -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht  -L$(IrrKlangHome)/linux ../IrrKlang/linux/libIrrKlang.so
 
 %.o : %.cpp
 	@echo -e "Compiling $<"
