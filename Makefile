@@ -45,7 +45,7 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 			\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp		\
-			$(SRC_VIDEO_DIR)Video.cpp					\
+			## $(SRC_VIDEO_DIR)Video.cpp					\
 
 OBJ			=	$(SRC:%cpp=%o)
 

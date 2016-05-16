@@ -82,7 +82,7 @@ private:
   void			(GameManager::*fptr)() = NULL;
 
     // Cameras for the menu selection
-    irr::scene::ICameraSceneNode m_cameras[4];
+    irr::scene::ICameraSceneNode *m_cameras[4];
 
 private:
   static GameManager	*GM;
