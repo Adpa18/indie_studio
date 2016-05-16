@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 16 16:05:19 2016 Victor Gouet
+// Last update Mon May 16 17:18:32 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -164,6 +164,7 @@ void	GameManager::onGame()
       std::cout << "LOL" << std::endl;
       setGameState(PAUSE);
       IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+      uiEventReceiver->DisplayPauseMenu();
       //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
 

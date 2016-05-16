@@ -34,11 +34,13 @@ public:
 public:
     virtual bool OnEvent(const irr::SEvent &event);
 
+public:
+  void DisplayPauseMenu();
+
 private:
     void DisplayMainMenu();
     void DisplaySplashScreen();
     void DisplayMapMenu();
-    void DisplayPauseMenu();
     void DisplayLoadingScreen();
   void DisplayGameHUD();
 
