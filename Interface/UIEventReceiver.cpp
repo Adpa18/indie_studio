@@ -209,10 +209,10 @@ void UIEventReceiver::DisplayPauseMenu()
 		      nullptr, UIElement::SPLASH_BUTTON_START , L"Menu", L"");
 
   m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
-						IrrlichtController::height / 1.8 - 50,
+						IrrlichtController::height / 1.66 - 50,
 						IrrlichtController::width / 2.0 + 100,
-						IrrlichtController::height / 1.8 + 50),
-		      nullptr, UIElement::SPLASH_BUTTON_START , L"Menu", L"");
+						IrrlichtController::height / 1.66 + 50),
+		      nullptr, UIElement::SPLASH_BUTTON_START , L"Quitter", L"");
   
     //   m_gameSatePrev = m_gameState;
   GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
