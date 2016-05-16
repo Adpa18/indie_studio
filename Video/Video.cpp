@@ -5,7 +5,7 @@
 // Login   <tavern_d@epitech.net>
 //
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
-// Last update Mon May 16 17:05:55 2016 Matthieu Tavernier
+// Last update Mon May 16 17:43:15 2016 Fernand Veyrier
 //
 
 #include "Video.hpp"

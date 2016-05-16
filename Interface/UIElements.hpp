@@ -31,7 +31,9 @@ namespace UIElement
         PLAYERBOX_1,
         PLAYERBOX_2,
         PLAYERBOX_3,
-        PLAYERBOX_4
+        PLAYERBOX_4,
+
+	CONTINUE,
     };
 }
 

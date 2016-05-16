@@ -26,12 +26,12 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
             case irr::KEY_ESCAPE:
                 if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
                 {
-		  std::cout << "PASS" << std::endl;
 		  GameManager::SharedInstance()->setGameState(GameManager::PLAY);
 		  IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
+		  // fptr = &UIEventReceiver::DisplayPauseMenu;
                     // m_gameState = PAUSE;
-		  return (true);
-                    // fptr = &UIEventReceiver::DisplayPauseMenu;
+		  // return (true);
+		  fptr = &UIEventReceiver::DisplayGameHUD;
                 }
                 else
                 {
@@ -91,6 +91,12 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 			GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
 			GameManager::SharedInstance()->setGameState(GameManager::PLAY);
                         break;
+		     
+		case UIElement::CONTINUE:
+		  fptr = &UIEventReceiver::DisplayGameHUD;
+		  IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
+		  GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+		  break;
 
                     default:
                         break;
@@ -124,7 +130,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
 void UIEventReceiver::DisplayGameHUD()
 {
-  
+  std::cout << "ALORS " << std::endl;
 }
 
 // Show the game main menu
@@ -190,11 +196,26 @@ void UIEventReceiver::DisplayMapMenu()
 // Pause menu from pause button
 void UIEventReceiver::DisplayPauseMenu()
 {
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::QUIT_BUTTON , L"PRESS START", L"");
+  m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+						IrrlichtController::height / 2.5 - 50,
+						IrrlichtController::width / 2.0 + 100,
+						IrrlichtController::height / 2.5 + 50),
+		      nullptr, UIElement::CONTINUE , L"Continue", L"");
+
+  m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+						IrrlichtController::height / 2.0 - 50,
+						IrrlichtController::width / 2.0 + 100,
+						IrrlichtController::height / 2.0 + 50),
+		      nullptr, UIElement::SPLASH_BUTTON_START , L"Menu", L"");
+
+  m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+						IrrlichtController::height / 1.8 - 50,
+						IrrlichtController::width / 2.0 + 100,
+						IrrlichtController::height / 1.8 + 50),
+		      nullptr, UIElement::SPLASH_BUTTON_START , L"Menu", L"");
+  
     //   m_gameSatePrev = m_gameState;
-    GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
+  GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
 }
 
 // Screen displayed between level loading
