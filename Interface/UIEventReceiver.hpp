@@ -17,17 +17,6 @@
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
 {
-    // TODO: move this to game manager
-    // enum GameState
-    // {
-    //     SPLASH_SCREEN = 1,
-    //     MAIN_MENU = 2,
-    //     MENU_MAP = 3,
-    //     LOADING_SCREEN = 4,
-    //     PLAY = 5,
-    //     PAUSE
-    // };
-
 public:
     UIEventReceiver(UIManager const& manager);
 

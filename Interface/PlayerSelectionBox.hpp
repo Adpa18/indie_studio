@@ -18,7 +18,7 @@
 class PlayerSelectionBox : public ISelectionBox
 {
 public:
-    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id);
+    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID);
     virtual ~PlayerSelectionBox();
 
 public:
@@ -39,6 +39,7 @@ private:
     irr::scene::IAnimatedMesh *m_model = nullptr;
     irr::scene::IAnimatedMeshSceneNode *m_modelNode = nullptr;
     std::list<irr::scene::IAnimatedMesh*> m_models;
+    int m_playerID;
 };
 
 

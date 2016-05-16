@@ -6,10 +6,11 @@
 #include "../include/Texture.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
-                                       UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id) :
+                                       UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :
         m_manager(uiManager),
         m_bIsIaPlayer(bIsIaPlayer),
-        m_pos(pos)
+        m_pos(pos),
+        m_playerID(playerID)
 {
     // Get all the needed vars
     m_driver = m_manager->GetDevice()->getVideoDriver();
@@ -126,6 +127,7 @@ void PlayerSelectionBox::Update()
                 irr::video::ITexture *texture = m_driver->getTexture(BomberManTexture::getModel("ziggs").texture.c_str());
                 m_modelNode->setMaterialTexture(0, texture);
                 m_modelNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+                m_modelNode->setPosition(irr::core::vector3df(100 * m_playerID, 0, 0));
             }
         }
     }

@@ -18,9 +18,6 @@ public:
     ~PlayerSelectionBoxContainer();
 
 private:
-    void Update();
-
-private:
     std::list<PlayerSelectionBox*> m_boxes;
 };
 

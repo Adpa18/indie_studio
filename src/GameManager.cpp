@@ -25,10 +25,14 @@ GameManager::GameManager()
   uiEventReceiver = NULL;
   eventGame = new EventGame();
 
-    m_cameras[0] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(0, 12, -30), irr::core::vector3df(0, 12, 0));
-    m_cameras[1] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(100, 12, -30), irr::core::vector3df(100, 12, 0));
-    m_cameras[2] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(200, 12, -30), irr::core::vector3df(200, 12, 0));
-    m_cameras[3] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(300, 12, -30), irr::core::vector3df(300, 12, 0));
+    m_cameras[0] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(100, 12, -30),
+                                                                             irr::core::vector3df(100, 12, 0));
+    m_cameras[1] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(200, 12, -30),
+                                                                             irr::core::vector3df(200, 12, 0));
+    m_cameras[2] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(300, 12, -30),
+                                                                             irr::core::vector3df(300, 12, 0));
+    m_cameras[3] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr, irr::core::vector3df(400, 12, -30),
+                                                                             irr::core::vector3df(400, 12, 0));
 }
 
 GameManager::~GameManager()
