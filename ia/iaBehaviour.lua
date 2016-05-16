@@ -36,12 +36,25 @@ mapmeta.mt = {
 --
 --testobj = {state = 4};
 
-function testuserdata(u)
-    print(u);
-    local d = Test.new();
-    print(d);
-    d:toto();
-    Test.toto();
+--todo implement the three behaviours
+function easyBehaviour(bomberMap, iaPos)
+
+end
+
+function mediumBehaviour(bomberMap, iaPos)
+
+end
+
+function hardBehaviour(bomberMap, iaPos)
+
+end
+
+function testuserdata(bomberMap, iaPos)
+--    print(u);
+--    local d = Test.new();
+--    print(d);
+--    d:toto();
+--    Test.toto();
 --    u:toto();
 --    d:toto();
 --    local test = Map.new({4, 3});

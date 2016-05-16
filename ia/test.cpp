@@ -33,24 +33,6 @@ public:
         return 1;
     }
 
-    static int l_newtest(lua_State *state)
-    {
-        Lua::LuaClass<testClass>   testClass1(false);
-
-        std::cout << "\e[32mCREATION\e[0m" << std::endl;
-        return 1;
-    }
-
-    static int l_destructest(lua_State *state)
-    {
-        testClass *testClass1 = Lua::LuaClass<testClass>::getThis();
-
-        std::cout << "from lua deleting: " << testClass1 << std::endl;
-        delete(testClass1);
-        std::cout << "\e[31mDESTRUCTION\e[0m" << std::endl;
-        return (1);
-    }
-
 private:
     int toto;
 };
@@ -66,9 +48,9 @@ int main()
     Lua::LuaClass<testClass>   tutu;
 
     Lua::LuaClass<testClass>::LuaPrototype({
-            {"new", testClass::l_newtest},
+            {"new", Lua::LuaClass<testClass>::defaultConstructor},
             {"toto", testClass::l_tutumethod},
-            {"__gc", testClass::l_destructest}
+            {"__gc", Lua::LuaClass<testClass>::defaultDestructor}
     }).Register();
     handler.setScript("./iaBehaviour.lua");
 //    Lua::LuaHandler &(*ftpr2)(const std::string &) = NULL;
