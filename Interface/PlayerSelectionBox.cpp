@@ -5,34 +5,42 @@
 #include "PlayerSelectionBox.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
-                                       UIElement::Menu elemName, bool bIsIaPlayer) :
+                                       UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id) :
         m_manager(uiManager),
         m_bIsIaPlayer(bIsIaPlayer),
         m_pos(pos)
 {
+    // Get all the needed vars
     m_driver = m_manager->GetDevice()->getVideoDriver();
     m_sceneManager = m_manager->GetDevice()->getSceneManager();
     m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(0, 12, -30), irr::core::vector3df(0, 12, 0));
-    // TODO: set a different image id !
-    img = m_manager->GetEnv()->addImage(pos, nullptr, 42, L"", true);
+    m_image = m_manager->GetEnv()->addImage(pos, nullptr, id, L"", true);
+
+    // Creates the button box
     irr::gui::IGUIButton *b = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
     b->setImage(m_manager->GetEnv()->getVideoDriver()->getTexture(sprite));
     b->setScaleImage(true);
     b->setUseAlphaChannel(true);
     b->setDrawBorder(false);
+
+    // Loads the models and the sprites
+    m_models.push_back(m_sceneManager->getMesh("../media/ziggs.md3"));
+    m_images.push_back(m_driver->getTexture("../media/PlayerButtonIa.png"));
 }
 
 PlayerSelectionBox::~PlayerSelectionBox()
 {
-    // TODO: destroy mesh
-    //m_modelNode->remove();
+    if (m_modelNode != nullptr)
+    {
+        m_modelNode->remove();
+    }
 }
 
 /*
  * \brief If it is an IA, it swap the sprites
  * otherwise change the 3D model
  */
-void PlayerSelectionBox::SelectNext() const
+void PlayerSelectionBox::SelectNext()
 {
     if (m_bIsIaPlayer)
     {
@@ -45,7 +53,19 @@ void PlayerSelectionBox::SelectNext() const
     }
     else
     {
+        if (m_modelNode != nullptr)
+        {
+            m_modelNode->remove();
+            m_modelNode = nullptr;
+        }
+        if (m_models.size() > 0)
+        {
+            irr::scene::IAnimatedMesh *mesh = m_models.back();
+            m_models.pop_back();
+            m_models.push_front(mesh);
 
+            m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_models.front());
+        }
     }
 }
 
@@ -53,7 +73,7 @@ void PlayerSelectionBox::SelectNext() const
  * \brief If it is an IA, it swap the sprites
  * otherwise change the 3D model
  */
-void PlayerSelectionBox::SelectPrev() const
+void PlayerSelectionBox::SelectPrev()
 {
     if (m_bIsIaPlayer)
     {
@@ -66,7 +86,19 @@ void PlayerSelectionBox::SelectPrev() const
     }
     else
     {
+        if (m_modelNode != nullptr)
+        {
+            m_modelNode->remove();
+            m_modelNode = nullptr;
+        }
+        if (m_models.size() > 0)
+        {
+            irr::scene::IAnimatedMesh *mesh = m_models.front();
+            m_models.pop_front();
+            m_models.push_back(mesh);
 
+            m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_models.front());
+        }
     }
 }
 
@@ -109,6 +141,6 @@ void PlayerSelectionBox::Update()
     }
     else
     {
-        img->setImage(m_images.front());
+        m_image->setImage(m_images.front());
     }
 }

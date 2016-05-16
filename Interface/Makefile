@@ -26,14 +26,19 @@ SRC		=	$(SRC_DIR)IrrlichtController.cpp	\
 			$(SRC_DIR)BonusFireBomb.cpp		\
 			$(SRC_DIR)AItem.cpp			\
 			$(SRC_DIR)ItemThrow.cpp			\
-			$(SRC_DIR)Particule.cpp			\
 			$(SRC_DIR)Texture.cpp			\
 			$(SRC_DIR)GameObjectTimeContainer.cpp	\
 			$(SRC_DIR)Explosion.cpp	\
-			main.cpp \
-			PlayerSelectionBox.cpp \
-			UIEventReceiver.cpp \
-			UIManager.cpp
+			$(SRC_DIR)BonusBombPass.cpp		\
+			$(SRC_DIR)BonusBiggestMan.cpp		\
+			$(SRC_DIR)BonusSmallestMan.cpp		\
+			$(SRC_DIR)BonusInvincible.cpp		\
+			$(SRC_DIR)TrackerBomb.cpp		\
+			main.cpp 				\
+			PlayerSelectionBox.cpp 			\
+			UIEventReceiver.cpp 			\
+			UIManager.cpp				\
+			PlayerSelectionBoxContainer.cpp
 
 OBJ			=	$(SRC:%cpp=%o)
 

@@ -4,7 +4,6 @@
 
 #include <unistd.h>
 #include "UIEventReceiver.hpp"
-#include "PlayerSelectionBox.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice()), m_gameState(SPLASH_SCREEN), m_gameSatePrev(PLAY)
@@ -102,6 +101,11 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     {
         m_manager.ClearEnv();
         m_buttons.clear();
+        if (m_boxContainer != nullptr)
+        {
+            delete m_boxContainer;
+            m_boxContainer = nullptr;
+        }
         (this->*fptr)();
     }
     fptr = nullptr;
@@ -120,33 +124,7 @@ void UIEventReceiver::DisplayMainMenu()
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
     img->setScaleImage(true);
 
-    PlayerSelectionBox playerSelectionBox(&m_manager, "../media/PlayerButton.png",
-                                          irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
-                                                                    IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                          UIElement::MAIN_MENU_BUTTON_1P, false);
-    playerSelectionBox.Update();
-
-    irr::gui::IGUIButton *b;
-    /**b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
-                                                            IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                  nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");*/
-    //m_buttons.push_back(b);
-
-    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.32, IrrlichtController::height / 2.0 - 50,
-                                                                IrrlichtController::width * 0.47, IrrlichtController::height / 2.0 + 50),
-                                      nullptr, UIElement::MAIN_MENU_BUTTON_2P, L"Two players", L"");
-    b->setImage(m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
-    //m_buttons.push_back(b);
-
-    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.52, IrrlichtController::height / 2.0 - 50,
-                                                                IrrlichtController::width * 0.67, IrrlichtController::height / 2.0 + 50),
-                                      nullptr, UIElement::MAIN_MENU_BUTTON_3P, L"Three players", L"");
-    //m_buttons.push_back(b);
-
-    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.72, IrrlichtController::height / 2.0 - 50,
-                                                            IrrlichtController::width * 0.87, IrrlichtController::height / 2.0 + 50),
-                                  nullptr, UIElement::MAIN_MENU_BUTTON_4P, L"Four players", L"");
-    //m_buttons.push_back(b);
+    m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
 
     m_gameSatePrev = m_gameState;
 }

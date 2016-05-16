@@ -18,8 +18,8 @@ public:
 
 public:
     virtual void Update() = 0;
-    virtual void SelectNext() const = 0;
-    virtual void SelectPrev() const = 0;
+    virtual void SelectNext() = 0;
+    virtual void SelectPrev() = 0;
 };
 
 #endif //CPP_INDIE_STUDIO_ISELECTIONBOX_HPP

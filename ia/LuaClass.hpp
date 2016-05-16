@@ -66,11 +66,11 @@ namespace Lua
          * \param thisptr A pointer on the object to overload
          * \param todelete Tell if the object will be delete on ~LuaClass() call
          */
-        LuaClass(classType *thisptr, bool todelete) :
+        LuaClass(classType *thisptr) :
                 userData(NULL),
                 thisptr(thisptr),
                 state(acquireState()),
-                todelete(todelete)
+                todelete(true)
         {
             userData = static_cast<classType **>(lua_newuserdata(state, sizeof(*userData)));
             *userData = thisptr;
@@ -83,16 +83,16 @@ namespace Lua
          * \param args The arguments of the constructor of the new object
          */
         template <typename ... Types>
-        LuaClass(bool todelete, Types ... args) :
-                LuaClass(new classType(args...), todelete)
+        LuaClass(Types ... args) :
+                LuaClass(new classType(args...))
         {
         }
         /**
          * \brief A default constructor like
          * \param todelete Tells if the object will be delete on ~LuaClass() call
          */
-        LuaClass(bool todelete = true) :
-                LuaClass(new classType(), todelete)
+        LuaClass() :
+                LuaClass(new classType())
         {
         }
         /**
@@ -110,6 +110,13 @@ namespace Lua
         {
             if (todelete)
                 delete(thisptr);
+        }
+        /**
+         * \brief Tells to the class to not detele the object on destruction
+         */
+        void dontDelete(void)
+        {
+            todelete = false;
         }
 
     public:
@@ -220,6 +227,27 @@ namespace Lua
         static classType *getThis(int n = 1)
         {
             return *(classType **)luaL_checkudata(acquireState(), n, (luaPrefix + className).c_str());
+        }
+        /**
+         * \brief An implementation of the most basic constructor for a lua class
+         * \return The index of the new instance in the lua stack
+         */
+        static int defaultConstructor(lua_State *)
+        {
+            Lua::LuaClass<classType>   thisptr;
+
+            thisptr.dontDelete();
+            return (1);
+        }
+        /**
+         * \brief An implementation of the most basic destructor for a lua class
+         */
+        static int defaultDestructor(lua_State *)
+        {
+            classType   *thisptr = getThis();
+
+            delete(thisptr);
+            return (1);
         }
 
     private:

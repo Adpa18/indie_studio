@@ -5,11 +5,20 @@
 #include <BomberMap.hpp>
 #include "IAPlayer.hpp"
 
+const std::string     IAPlayer::easyLvl = "easyBehaviour";
+const std::string     IAPlayer::mediumLvl = "mediumBehaviour";
+const std::string     IAPlayer::hardLvl = "hardBehaviour";
+
+//todo implement methods to get the type/pos of the object at index
 IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos) :
     ACharacter(name, pos, "./media/ziggs_mad.png", "./media/ziggs_mad.png", 42),
-    handler("./ia/iaBehaviour.lua")
+    handler(),
+    map(BomberMap::getMap())
 {
-
+    Lua::LuaClass<BomberMap>::LuaPrototype({
+                                                   {"typeAtIndex", NULL},
+                                                   {"posAtIndex", NULL}
+                                           }).Register();
 }
 
 IAPlayer::~IAPlayer()
@@ -19,5 +28,10 @@ IAPlayer::~IAPlayer()
 
 void IAPlayer::compute()
 {
-    handler["computeIA"](&BomberMap::getMap());
+    this->action(handler[behaviour](map, getMapPos()));
+}
+
+void IAPlayer::setDifficulty(const std::string &difficulty)
+{
+    behaviour = difficulty;
 }
