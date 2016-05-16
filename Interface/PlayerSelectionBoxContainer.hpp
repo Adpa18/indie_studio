@@ -17,6 +17,12 @@ public:
     PlayerSelectionBoxContainer(UIManager *uiManager);
     ~PlayerSelectionBoxContainer();
 
+public:
+    void SelectUp();
+    void SelectDown();
+    void SelectLeft();
+    void SelectRight();
+
 private:
     std::list<PlayerSelectionBox*> m_boxes;
 };

@@ -52,6 +52,10 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 if (event.KeyInput.PressedDown)
                 {
                     SelectNextButton();
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectUp();
+                    }
                 }
                 break;
 
@@ -59,6 +63,10 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 if (event.KeyInput.PressedDown)
                 {
                     SelectPrevButton();
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectDown();
+                    }
                 }
                 break;
 

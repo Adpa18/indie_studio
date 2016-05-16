@@ -42,7 +42,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         // {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
         // {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
         // Players
-        {"ziggs", {BomberManTexture::path + "ziggs_snow.md3", BomberManTexture::path + "ziggs_snow.png"}},
+        {"ziggsSnow", {BomberManTexture::path + "ziggs_snow.md3", BomberManTexture::path + "ziggs_snow.png"}},
 	// Bomb
         {"fireBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
 	{"trackerBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
@@ -64,6 +64,9 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 	{"menuSceneStart", {"", BomberManTexture::path + "MenuSceneStart.png"}},
 	{"playerButton", {"", BomberManTexture::path + "PlayerButton.png"}},
 	{"playerButtonIa", {"", BomberManTexture::path + "PlayerButtonIa.png"}},
+        {"ziggsGeneral", {BomberManTexture::path + "ziggs_general.md3", BomberManTexture::path + "ziggs_general.png"}},
+        {"ziggsMad", {BomberManTexture::path + "ziggs_mad.md3", BomberManTexture::path + "ziggs_mad.png"}},
+        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs.png"}}
 };
 
 void BomberManTexture::loadTexture()
