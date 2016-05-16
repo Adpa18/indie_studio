@@ -18,13 +18,13 @@
 class PlayerSelectionBox : public ISelectionBox
 {
 public:
-    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer);
+    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id);
     virtual ~PlayerSelectionBox();
 
 public:
     void Update();
-    void SelectNext() const;
-    void SelectPrev() const;
+    void SelectNext();
+    void SelectPrev();
     void AddSprite(irr::io::path sprite);
 
 private:
@@ -35,9 +35,10 @@ private:
     irr::core::rect<irr::s32> m_pos;
     irr::scene::ICameraSceneNode *m_camera;
     irr::scene::ISceneManager *m_sceneManager;
-    irr::gui::IGUIImage *img;
+    irr::gui::IGUIImage *m_image;
     irr::scene::IAnimatedMesh *m_model = nullptr;
     irr::scene::IAnimatedMeshSceneNode *m_modelNode = nullptr;
+    std::list<irr::scene::IAnimatedMesh*> m_models;
 };
 
 

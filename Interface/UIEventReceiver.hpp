@@ -12,6 +12,7 @@
 #include "UIElements.hpp"
 #include "UIManager.hpp"
 #include "PlayerSelectionBox.hpp"
+#include "PlayerSelectionBoxContainer.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
@@ -59,6 +60,7 @@ private:
 
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
+    PlayerSelectionBoxContainer *m_boxContainer = nullptr;
 };
 
 
