@@ -15,7 +15,6 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     // Get all the needed vars
     m_driver = m_manager->GetDevice()->getVideoDriver();
     m_sceneManager = m_manager->GetDevice()->getSceneManager();
-    m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(0, 12, -30), irr::core::vector3df(0, 12, 0));
     m_image = m_manager->GetEnv()->addImage(pos, nullptr, id, L"", true);
 
     // Creates the button box
@@ -26,10 +25,14 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     b->setDrawBorder(false);
 
     // Loads the models and the sprites
-    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str()));
+    /*m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str()));
     m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsGeneral").mesh.c_str()));
     m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsMad").mesh.c_str()));
-    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsSnow").mesh.c_str()));
+    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsSnow").mesh.c_str()));*/
+    m_models.push_back("ziggs");
+    m_models.push_back("ziggsGeneral");
+    m_models.push_back("ziggsMad");
+    m_models.push_back("ziggsSnow");
     m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("playerButtonIa").texture.c_str()));
 
     Update();
@@ -67,9 +70,9 @@ void PlayerSelectionBox::SelectNext()
         }
         if (m_models.size() > 0)
         {
-            irr::scene::IAnimatedMesh *mesh = m_models.back();
+            std::string string = m_models.back();
             m_models.pop_back();
-            m_models.push_front(mesh);
+            m_models.push_front(string);
 
             Update();
         }
@@ -100,9 +103,9 @@ void PlayerSelectionBox::SelectPrev()
         }
         if (m_models.size() > 0)
         {
-            irr::scene::IAnimatedMesh *mesh = m_models.front();
+            std::string string = m_models.front();
             m_models.pop_front();
-            m_models.push_back(mesh);
+            m_models.push_back(string);
 
             Update();
         }
@@ -120,10 +123,11 @@ void PlayerSelectionBox::Update()
     {
         if (m_modelNode == nullptr && m_models.size() > 0)
         {
-            m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_models.front());
+            irr::scene::IAnimatedMesh *mesh = m_sceneManager->getMesh(BomberManTexture::getModel(m_models.front()).mesh.c_str());
+            m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(mesh);
             if (m_modelNode)
             {
-                irr::video::ITexture *texture = m_driver->getTexture(BomberManTexture::getModel("ziggs").texture.c_str());
+                irr::video::ITexture *texture = m_driver->getTexture(BomberManTexture::getModel(m_models.front()).texture.c_str());
                 m_modelNode->setMaterialTexture(0, texture);
                 m_modelNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
                 m_modelNode->setPosition(irr::core::vector3df(100 * m_playerID, 0, 0));

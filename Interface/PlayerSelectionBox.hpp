@@ -33,12 +33,11 @@ private:
     mutable std::list<irr::video::ITexture*> m_images;
     bool m_bIsIaPlayer;
     irr::core::rect<irr::s32> m_pos;
-    irr::scene::ICameraSceneNode *m_camera;
     irr::scene::ISceneManager *m_sceneManager;
     irr::gui::IGUIImage *m_image;
-    irr::scene::IAnimatedMesh *m_model = nullptr;
     irr::scene::IAnimatedMeshSceneNode *m_modelNode = nullptr;
-    std::list<irr::scene::IAnimatedMesh*> m_models;
+    //std::list<irr::scene::IAnimatedMesh*> m_models;
+    std::list<std::string> m_models;
     int m_playerID;
 };
 
