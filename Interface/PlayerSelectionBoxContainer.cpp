@@ -28,10 +28,6 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager)
 
 PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
 {
-    /*for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
-    {
-        delete (*it);
-    }*/
 }
 
 void PlayerSelectionBoxContainer::Update()
