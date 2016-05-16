@@ -3,6 +3,7 @@
 //
 
 #include "PlayerSelectionBox.hpp"
+#include "../include/Texture.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
                                        UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id) :
@@ -24,8 +25,8 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     b->setDrawBorder(false);
 
     // Loads the models and the sprites
-    m_models.push_back(m_sceneManager->getMesh("../media/ziggs.md3"));
-    m_images.push_back(m_driver->getTexture("../media/PlayerButtonIa.png"));
+    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str()));
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("playerButtonIa").texture.c_str()));
 }
 
 PlayerSelectionBox::~PlayerSelectionBox()
@@ -120,14 +121,14 @@ void PlayerSelectionBox::Update()
 
         if (m_model == nullptr)
         {
-            m_model = m_sceneManager->getMesh("../media/ziggs.md3");
+            m_model = m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str());
         }
         if (m_model != nullptr && m_modelNode == nullptr)
         {
             m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_model);
             if (m_modelNode)
             {
-                irr::video::ITexture *texture = m_driver->getTexture("../media/ziggs.png");
+                irr::video::ITexture *texture = m_driver->getTexture(BomberManTexture::getModel("ziggs").texture.c_str());
                 m_modelNode->setMaterialTexture(0, texture);
                 m_modelNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             }

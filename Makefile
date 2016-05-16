@@ -4,37 +4,43 @@ RM		= 	rm -rf
 
 SRC_DIR	=	src/
 
+SRC_INTERFACE_DIR=	Interface/
+
 IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
 
-SRC		=	$(SRC_DIR)main.cpp					\
-			$(SRC_DIR)IrrlichtController.cpp	\
-			$(SRC_DIR)AGameObject.cpp			\
-			$(SRC_DIR)Player.cpp				\
-			$(SRC_DIR)ACharacter.cpp			\
-			$(SRC_DIR)Wall.cpp					\
-			$(SRC_DIR)BomberMap.cpp				\
-			$(SRC_DIR)EventGame.cpp				\
-			$(SRC_DIR)ABomb.cpp				    \
-			$(SRC_DIR)AController.cpp			\
-			$(SRC_DIR)MotionController.cpp		\
-			$(SRC_DIR)KeysController.cpp		\
-			$(SRC_DIR)FireBomb.cpp			    \
-			$(SRC_DIR)BombContainer.cpp		    \
-			$(SRC_DIR)GameManager.cpp		\
-			$(SRC_DIR)BonusSpeed.cpp		\
-			$(SRC_DIR)ABonus.cpp			\
-			$(SRC_DIR)BonusPower.cpp		\
-			$(SRC_DIR)BonusFireBomb.cpp		\
-			$(SRC_DIR)AItem.cpp			\
-			$(SRC_DIR)ItemThrow.cpp			\
-			$(SRC_DIR)Explosion.cpp			\
-			$(SRC_DIR)Texture.cpp			\
-			$(SRC_DIR)GameObjectTimeContainer.cpp	\
-			$(SRC_DIR)BonusBombPass.cpp		\
-			$(SRC_DIR)BonusBiggestMan.cpp		\
-			$(SRC_DIR)BonusSmallestMan.cpp		\
-			$(SRC_DIR)BonusInvincible.cpp		\
-			$(SRC_DIR)TrackerBomb.cpp		\
+SRC		=	$(SRC_DIR)main.cpp						\
+			$(SRC_DIR)IrrlichtController.cpp				\
+			$(SRC_DIR)AGameObject.cpp					\
+			$(SRC_DIR)Player.cpp						\
+			$(SRC_DIR)ACharacter.cpp					\
+			$(SRC_DIR)Wall.cpp						\
+			$(SRC_DIR)BomberMap.cpp						\
+			$(SRC_DIR)EventGame.cpp						\
+			$(SRC_DIR)ABomb.cpp						\
+			$(SRC_DIR)AController.cpp					\
+			$(SRC_DIR)MotionController.cpp					\
+			$(SRC_DIR)KeysController.cpp					\
+			$(SRC_DIR)FireBomb.cpp						\
+			$(SRC_DIR)BombContainer.cpp					\
+			$(SRC_DIR)GameManager.cpp					\
+			$(SRC_DIR)BonusSpeed.cpp					\
+			$(SRC_DIR)ABonus.cpp						\
+			$(SRC_DIR)BonusPower.cpp					\
+			$(SRC_DIR)BonusFireBomb.cpp					\
+			$(SRC_DIR)AItem.cpp						\
+			$(SRC_DIR)ItemThrow.cpp						\
+			$(SRC_DIR)Explosion.cpp						\
+			$(SRC_DIR)Texture.cpp						\
+			$(SRC_DIR)GameObjectTimeContainer.cpp				\
+			$(SRC_DIR)BonusBombPass.cpp					\
+			$(SRC_DIR)BonusBiggestMan.cpp					\
+			$(SRC_DIR)BonusSmallestMan.cpp					\
+			$(SRC_DIR)BonusInvincible.cpp					\
+			$(SRC_DIR)TrackerBomb.cpp					\
+			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 			\
+			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 			\
+			$(SRC_INTERFACE_DIR)UIManager.cpp				\
+			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp		\
 
 OBJ			=	$(SRC:%cpp=%o)
 
@@ -48,7 +54,7 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread -g
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include
+CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include -I ./$(SRC_INTERFACE_DIR)
 
 #-I/usr/X11R6/include
 

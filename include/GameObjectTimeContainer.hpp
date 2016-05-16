@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:42:24 2016 Victor Gouet
-// Last update Mon May 16 10:43:02 2016 Victor Gouet
+// Last update Mon May 16 12:03:04 2016 Victor Gouet
 //
 
 #ifndef GAMEOBJECTTIMECONTAINER_HPP_
@@ -25,7 +25,7 @@ public:
 
 public:
   void				callTimeOutObjects();
-  void				wait();
+  void				timerStop();
   void				add(AGameObject *);
 
 private:

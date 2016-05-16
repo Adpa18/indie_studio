@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 16 10:49:58 2016 Victor Gouet
+// Last update Mon May 16 16:05:19 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -16,22 +16,20 @@ GameManager *GameManager::GM = NULL;
 
 GameManager::GameManager()
 {
-  // m_gameState = PLAY;
   IrrlichtController::getDevice(false);
-  setGameState(PLAY);
-  m_gameSatePrev = SPLASH_SCREEN;
-  // uiManager = new UIManager(IrrlichtController::getDevice(false));
-  // uiEventReceiver = new UIEventReceiver(*uiManager);
-  IrrlichtController::getGUIEnvironment()->getFont("/home/gouet_v/Downloads/irrlicht-1.8.3/media/fonthaettenschweiler.bmp");
-  eventGame = new EventGame();
   BomberManTexture::loadTexture();
-  // _state = PREV_GAME;
+  m_gameState = PLAY;
+  setGameState(SPLASH_SCREEN);
+  _state = PREV_MENU;
+  uiManager = NULL;
+  uiEventReceiver = NULL;
+  eventGame = new EventGame();
 }
 
 GameManager::~GameManager()
 {
-  // delete uiManager;
-  // delete uiEventReceiver;
+  delete uiManager;
+  delete uiEventReceiver;
   delete eventGame;
 }
 
@@ -46,11 +44,12 @@ GameManager	*GameManager::SharedInstance()
 
 void		GameManager::setGameState(GameState state)
 {
+  m_gameSatePrev = m_gameState;
   m_gameState = state;
-  if (state == PLAY)
-    _state = PREV_GAME;
-  if (state >= SPLASH_SCREEN && state <= MENU_MAP)
-    _state = PREV_MENU;
+  // if (state == PLAY)
+  //   fptr = &GameManager::willStartGame;
+  // if (state >= SPLASH_SCREEN && state <= MENU_MAP)
+  //   fptr = &GameManager::willStartMenu;
 }
 
 GameManager::GameState	GameManager::getGameState() const
@@ -70,27 +69,34 @@ GameManager::GameState	GameManager::getPrevGameState() const
 
 void	GameManager::run()
 {
+  uiManager = new UIManager(IrrlichtController::getDevice(false));
+  uiEventReceiver = new UIEventReceiver(*uiManager);
+
+  setFptr(&GameManager::willStartMenu);
+
   while (IrrlichtController::getDevice()->run()
 	 && IrrlichtController::getDriver())
     {
       if (IrrlichtController::getDevice()->isWindowActive())
 	{
+	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
+	  if (fptr)
+	    (this->*fptr)();
+	  fptr = NULL;
+	  if (m_gameState == PAUSE)
+	    GameObjectTimeContainer::SharedInstance()->timerStop();
 	  if (m_gameState == PLAY)
 	    {
-	      if (_state == PREV_GAME)
-		willStartGame();
 	      _state = GAME;
 	      onGame();
 	    }
 	  else if (m_gameState >= SPLASH_SCREEN &&
-		   m_gameState <= MENU_MAP)
+		   m_gameState <= PAUSE)
 	    {
-	      if (_state == PREV_MENU)
-		willStartMenu();
 	      _state = MENU;
 	      onMenu();
 	    }
-	  IrrlichtController::getDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
+
 	  IrrlichtController::getSceneManager()->drawAll();
 	  IrrlichtController::getGUIEnvironment()->drawAll();
 	  IrrlichtController::getDriver()->endScene();
@@ -101,27 +107,31 @@ void	GameManager::run()
 
 void	GameManager::onMenu()
 {
-
-}
-
-void	GameManager::onPause()
-{
-  std::cout << "PAUSE" << std::endl;
+  IrrlichtController::getDevice()->getVideoDriver()->setViewPort(irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445, IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
+ 
+  IrrlichtController::getDevice()->getSceneManager()->drawAll();
+  IrrlichtController::getDevice()->getVideoDriver()->setViewPort(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height));
 }
 
 void	GameManager::onGame()
 {
   if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
-      _pause = _pause == false ? true : false; 
+      std::cout << "LOL" << std::endl;
+      setGameState(PAUSE);
+      IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+      //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
-  if (_pause)
-    {
-      GameObjectTimeContainer::SharedInstance()->wait();
-      onPause();
-    }
-  else
-    {
+
+  // if (_pause)
+  //   {
+      
+  // GameObjectTimeContainer::SharedInstance()->timerStop();
+
+  //     onPause();
+  //   }
+  // else
+  //   {
       GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 
       std::vector<ACharacter*>::iterator it = characters.begin();
@@ -138,7 +148,7 @@ void	GameManager::onGame()
 	      it = characters.erase(it);
 	    }
 	}
-    }
+    // }
 }
 
 void	GameManager::willStartGame()
@@ -160,7 +170,6 @@ void	GameManager::willStartGame()
   camera->setAutomaticCulling(irr::scene::EAC_OFF);
   camera->setFarValue(1000);
   camera->setNearValue(10);
-
 //  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
 //									     1.0f, 1.0f, 1.0f));
 
@@ -168,5 +177,21 @@ void	GameManager::willStartGame()
 
 void	GameManager::willStartMenu()
 {
-  // IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+  IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+  
+}
+
+UIManager	*GameManager::getUIManager() const
+{
+  return (this->uiManager);
+}
+
+EventGame	*GameManager::getEventGame() const
+{
+  return (this->eventGame);
+}
+
+void		GameManager::setFptr(initInstance _fptr)
+{
+  this->fptr = _fptr;
 }

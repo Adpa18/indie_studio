@@ -18,15 +18,15 @@
 class UIEventReceiver : public irr::IEventReceiver
 {
     // TODO: move this to game manager
-    enum GameState
-    {
-        SPLASH_SCREEN = 1,
-        MAIN_MENU = 2,
-        MENU_MAP = 3,
-        LOADING_SCREEN = 4,
-        PLAY = 5,
-        PAUSE
-    };
+    // enum GameState
+    // {
+    //     SPLASH_SCREEN = 1,
+    //     MAIN_MENU = 2,
+    //     MENU_MAP = 3,
+    //     LOADING_SCREEN = 4,
+    //     PLAY = 5,
+    //     PAUSE
+    // };
 
 public:
     UIEventReceiver(UIManager const& manager);
@@ -40,6 +40,7 @@ private:
     void DisplayMapMenu();
     void DisplayPauseMenu();
     void DisplayLoadingScreen();
+  void DisplayGameHUD();
 
     /*
      * \brief Button handling
@@ -55,8 +56,8 @@ private:
     irr::IrrlichtDevice *m_device;
 
     // Use to know current game state and previous one
-    GameState m_gameState;
-    GameState m_gameSatePrev;
+    // GameState m_gameState;
+    // GameState m_gameSatePrev;
 
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
