@@ -5,7 +5,7 @@
 // Login   <tavern_d@epitech.net>
 //
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
-// Last update Mon May 16 16:26:03 2016 Matthieu Tavernier
+// Last update Mon May 16 17:05:55 2016 Matthieu Tavernier
 //
 
 #include "Video.hpp"
@@ -43,20 +43,24 @@ void	Video::start()
   IrrlichtController::height = 1080;
   irr::IrrlichtDevice* device = IrrlichtController::getDevice();
   irr::video::IVideoDriver* driver = device->getVideoDriver();
+  std::vector<irr::video::ITexture *> frames;
+  for (std::vector<std::string>::const_iterator it = this->files.begin(); it != this->files.end(); ++it)
+    frames.push_back(driver->getTexture((*it).data()));
   irr::scene::ISceneManager *sceneManager = device->getSceneManager();
   irr::core::position2d<irr::s32> position0;
   position0.X = 0;
   position0.Y = 0;
-  std::vector<std::string>::const_iterator it = this->files.begin();
+  //std::vector<std::string>::const_iterator it = this->files.begin();
   clock_t	timerFrame;
-  irr::video::ITexture	*frame;
+  //irr::video::ITexture	*frame;
   int	i = 0;
-  while (device->run() && it != this->files.end())
+  std::vector<irr::video::ITexture *>::iterator it = frames.begin();
+  while (device->run() && it != frames.end())
     {
       timerFrame = clock();
-      frame = driver->getTexture((*it).data());
+      //frame = driver->getTexture((*it).data());
       driver->beginScene(true, true, irr::video::SColor(0,0,0,0));
-      driver->draw2DImage(frame, position0);
+      driver->draw2DImage(*it, position0);
       driver->endScene();
       if (i == 32)
 	engine->play2D("../intro/intro.wav", true);
