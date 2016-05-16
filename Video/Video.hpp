@@ -5,7 +5,7 @@
 // Login   <tavern_d@epitech.net>
 // 
 // Started on  Thu Apr 28 11:35:00 2016 Matthieu Tavernier
-// Last update Thu Apr 28 15:54:24 2016 Matthieu Tavernier
+// Last update Mon May 16 15:20:51 2016 Matthieu Tavernier
 //
 
 #ifndef VIDEO_HPP_
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <algorithm>
 # include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
+# include "../IrrKlang/include/irrKlang.h"
 
 class				Video
 {

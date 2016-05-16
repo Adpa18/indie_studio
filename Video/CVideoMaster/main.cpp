@@ -47,7 +47,7 @@ class CEvents : public irr::IEventReceiver
           case EMIE_LMOUSE_PRESSED_DOWN :
           {
             // Add a new video clip to be used as a 2DImage
-            vidmaster->addVideoClip("media/YUVTest.ogg", "YUV", dimension2du(256,256), true);
+            vidmaster->addVideoClip("../../intro/Splash..ogg", "YUV", dimension2du(256,256), true);
           } break;
 
           case EMIE_RMOUSE_PRESSED_DOWN :
@@ -102,7 +102,7 @@ int main()
 
   // Add a new video clip,
   // the returned texture can be used for pretty much everything
-  ITexture* cubeDiffuse = vidmaster->addVideoClip("media/bunny.ogg", "TV", ESM_NONE, true);
+  ITexture* cubeDiffuse = vidmaster->addVideoClip("../../intro/Splash.ogv", "TV", ESM_NONE, true);
 
   IMeshSceneNode *TV = smgr->addCubeSceneNode(50);
   TV->setScale(vector3df(1.0f, 1.0f, 0.001f));
