@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Sat May 14 22:57:32 2016 Victor Gouet
+// Last update Mon May 16 12:01:17 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -25,6 +25,8 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
   struct tm	y2k;
 
   this->_timeout = timeout;
+  _rltimeout = timeout;
+
   timer = time(NULL);
 
     if (timeout != -1)
@@ -98,6 +100,21 @@ irr::scene::ISceneNodeAnimator	*AGameObject::getAnimator() const
   return (anime);
 }
 
+void					AGameObject::wait()
+{
+  struct tm	y2k;
+  time_t	timer;
+  double	timeSec;
+
+  timer = time(NULL);
+  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
+  y2k.tm_zone = 0;
+  timeSec = difftime(timer, mktime(&y2k));
+  _timeout = timeSec - _timer + _rltimeout;
+}
+
 bool				AGameObject::isTimeOut() const
 {
   time_t	timer;
@@ -121,6 +138,7 @@ void			AGameObject::setTimeOut(double timeout)
   struct tm	y2k;
 
   this->_timeout = timeout;
+  _rltimeout = timeout;
   timer = time(NULL);
   y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
   y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;

@@ -54,6 +54,7 @@ void				GameObjectTimeContainer::callTimeOutObjects()
 
   while (it != container.end())
     {
+      
       (*it)->updateTimeOut();
 
       if ((*it)->isTimeOut())

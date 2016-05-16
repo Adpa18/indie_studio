@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun May 15 12:38:42 2016 Victor Gouet
+// Last update Mon May 16 10:49:58 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -104,22 +104,39 @@ void	GameManager::onMenu()
 
 }
 
+void	GameManager::onPause()
+{
+  std::cout << "PAUSE" << std::endl;
+}
+
 void	GameManager::onGame()
 {
-  GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
-
-  std::vector<ACharacter*>::iterator it = characters.begin();
-  while (it != characters.end())
+  if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
-      if (!(*it)->isDead())
+      _pause = _pause == false ? true : false; 
+    }
+  if (_pause)
+    {
+      GameObjectTimeContainer::SharedInstance()->wait();
+      onPause();
+    }
+  else
+    {
+      GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
+
+      std::vector<ACharacter*>::iterator it = characters.begin();
+      while (it != characters.end())
 	{
-	  (*it)->compute();
-	  ++it;
-	}
-      else
-	{
-	  delete (*it);
-	  it = characters.erase(it);
+	  if (!(*it)->isDead())
+	    {
+	      (*it)->compute();
+	      ++it;
+	    }
+	  else
+	    {
+	      delete (*it);
+	      it = characters.erase(it);
+	    }
 	}
     }
 }

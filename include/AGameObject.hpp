@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Sat May 14 15:13:55 2016 Victor Gouet
+// Last update Mon May 16 11:55:00 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -53,6 +53,7 @@ public:
 public:
   bool					isTimeOut() const;
   irr::scene::ISceneNodeAnimator	*getAnimator() const;
+  void					wait();
 
 private:
   std::string				_texture;
@@ -63,8 +64,9 @@ private:
   Type                                  _type;
 
 private:
-  int					_timeout;
+  double				_timeout;
   double				_timer;
+  double				_rltimeout;
 };
 
 #endif

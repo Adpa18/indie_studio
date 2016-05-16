@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Wed May 11 11:44:54 2016 Victor Gouet
+// Last update Mon May 16 10:31:31 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -52,9 +52,10 @@ public:
 
 private:
   void	onMenu();
-void	onGame();
-void	willStartGame();
-void	willStartMenu();
+  void	onGame();
+  void	willStartGame();
+  void	willStartMenu();
+  void	onPause();
 
 private:
   enum	State
@@ -64,15 +65,16 @@ private:
       PREV_GAME,
       GAME
     };
-State	_state;
+State		_state;
+  bool		_pause;
 
 private:
   GameState m_gameState;
   GameState m_gameSatePrev;
   // UIManager		*uiManager;
   // UIEventReceiver	*uiEventReceiver;
-EventGame		*eventGame;
-std::vector<ACharacter *>     characters;
+  EventGame		*eventGame;
+  std::vector<ACharacter *>     characters;
 
 private:
   static GameManager	*GM;
