@@ -22,8 +22,11 @@
 
 class				Video
 {
+private:
+    static const std::string    default_path_video;
+    static const std::string    default_path_sound;
 public:
-  Video(const std::string path = "../intro");
+  Video(const std::string path = default_path_video);
   ~Video();
   void				start();
 private:

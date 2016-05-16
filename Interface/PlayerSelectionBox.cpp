@@ -27,6 +27,8 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     // Loads the models and the sprites
     m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str()));
     m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("playerButtonIa").texture.c_str()));
+
+    Update();
 }
 
 PlayerSelectionBox::~PlayerSelectionBox()
@@ -112,13 +114,6 @@ void PlayerSelectionBox::Update()
 {
     if (!m_bIsIaPlayer)
     {
-        // Copies viewport state
-        //irr::core::rect<irr::s32> viewPort = m_driver->getViewPort();
-        //irr::scene::ICameraSceneNode *camera = m_sceneManager->getActiveCamera();
-
-        //m_driver->setViewPort(m_pos);
-        //m_sceneManager->setActiveCamera(m_camera);
-
         if (m_model == nullptr)
         {
             m_model = m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str());
@@ -133,12 +128,6 @@ void PlayerSelectionBox::Update()
                 m_modelNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             }
         }
-
-        IrrlichtController::getDevice()->getSceneManager()->drawAll();
-
-        // Sets the viewport to its initial state
-        //m_driver->setViewPort(viewPort);
-        //m_sceneManager->setActiveCamera(camera);
     }
     else
     {

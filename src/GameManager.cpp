@@ -134,6 +134,24 @@ void	GameManager::onMenu()
     IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height));
 
+    // Camera 3
+    IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.515, IrrlichtController::height * 0.445,
+                                      IrrlichtController::width * 0.743, IrrlichtController::height * 0.85));
+    IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[2]);
+    IrrlichtController::getDevice()->getSceneManager()->drawAll();
+    IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
+            irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height));
+
+    // Camera 4
+    IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
+                                      IrrlichtController::width * 0.99, IrrlichtController::height * 0.85));
+    IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[3]);
+    IrrlichtController::getDevice()->getSceneManager()->drawAll();
+    IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
+            irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height));
+
     // Resets the viewport
     IrrlichtController::getDriver()->setViewPort(viewPort);
     IrrlichtController::getSceneManager()->setActiveCamera(camera);
