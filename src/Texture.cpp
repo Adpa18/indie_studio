@@ -63,10 +63,13 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 	{"menuScene", {"", BomberManTexture::path + "MenuScene.png"}},
 	{"menuSceneStart", {"", BomberManTexture::path + "MenuSceneStart.png"}},
 	{"playerButton", {"", BomberManTexture::path + "PlayerButton.png"}},
-	{"playerButtonIa", {"", BomberManTexture::path + "PlayerButtonIa.png"}},
+	{"playerButtonIa", {"", BomberManTexture::path + "PlayerButtonIaEasy.png"}},
         {"ziggsGeneral", {BomberManTexture::path + "ziggs_general.md3", BomberManTexture::path + "ziggs_general.png"}},
         {"ziggsMad", {BomberManTexture::path + "ziggs_mad.md3", BomberManTexture::path + "ziggs_mad.png"}},
-        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs.png"}}
+        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs.png"}},
+        {"IAEasy", {"", BomberManTexture::path + "PlayerButtonIaEasy.png"}},
+        {"IAMedium", {"", BomberManTexture::path + "PlayerButtonIaMedium.png"}},
+        {"IAHard", {"", BomberManTexture::path + "PlayerButtonIaHard.png"}}
 };
 
 void BomberManTexture::loadTexture()

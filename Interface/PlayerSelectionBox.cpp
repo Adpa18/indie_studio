@@ -18,22 +18,20 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     m_image = m_manager->GetEnv()->addImage(pos, nullptr, id, L"", true);
 
     // Creates the button box
-    irr::gui::IGUIButton *b = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
-    b->setImage(m_manager->GetEnv()->getVideoDriver()->getTexture(sprite));
-    b->setScaleImage(true);
-    b->setUseAlphaChannel(true);
-    b->setDrawBorder(false);
+    m_button = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
+    m_button->setImage(m_manager->GetEnv()->getVideoDriver()->getTexture(sprite));
+    m_button->setScaleImage(true);
+    m_button->setUseAlphaChannel(true);
+    m_button->setDrawBorder(false);
 
     // Loads the models and the sprites
-    /*m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggs").mesh.c_str()));
-    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsGeneral").mesh.c_str()));
-    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsMad").mesh.c_str()));
-    m_models.push_back(m_sceneManager->getMesh(BomberManTexture::getModel("ziggsSnow").mesh.c_str()));*/
     m_models.push_back("ziggs");
     m_models.push_back("ziggsGeneral");
     m_models.push_back("ziggsMad");
     m_models.push_back("ziggsSnow");
-    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("playerButtonIa").texture.c_str()));
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAEasy").texture.c_str()));
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAMedium").texture.c_str()));
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAHard").texture.c_str()));
 
     Update();
 }
@@ -74,9 +72,9 @@ void PlayerSelectionBox::SelectNext()
             m_models.pop_back();
             m_models.push_front(string);
 
-            Update();
         }
     }
+    Update();
 }
 
 /*
@@ -107,9 +105,9 @@ void PlayerSelectionBox::SelectPrev()
             m_models.pop_front();
             m_models.push_back(string);
 
-            Update();
         }
     }
+    Update();
 }
 
 void PlayerSelectionBox::AddSprite(irr::io::path sprite)
@@ -138,4 +136,9 @@ void PlayerSelectionBox::Update()
     {
         m_image->setImage(m_images.front());
     }
+}
+
+irr::gui::IGUIButton const &PlayerSelectionBox::GetButton() const
+{
+    return *m_button;
 }

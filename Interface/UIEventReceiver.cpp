@@ -70,6 +70,26 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 }
                 break;
 
+            case irr::KEY_LEFT:
+                if (event.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectLeft();
+                    }
+                }
+                break;
+
+            case irr::KEY_RIGHT:
+                if (event.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectRight();
+                    }
+                }
+                break;
+
             default:
                 break;
         }

@@ -26,6 +26,7 @@ public:
     void SelectNext();
     void SelectPrev();
     void AddSprite(irr::io::path sprite);
+    irr::gui::IGUIButton const& GetButton() const;
 
 private:
     UIManager *m_manager;
@@ -39,6 +40,7 @@ private:
     //std::list<irr::scene::IAnimatedMesh*> m_models;
     std::list<std::string> m_models;
     int m_playerID;
+    irr::gui::IGUIButton *m_button;
 };
 
 

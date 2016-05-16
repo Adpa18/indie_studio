@@ -23,6 +23,8 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager)
                                              irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
                                                                        IrrlichtController::width * 0.99, IrrlichtController::height * 0.85),
                                              UIElement::MAIN_MENU_BUTTON_4P, true, UIElement::PLAYERBOX_4, 4));
+
+    uiManager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
 }
 
 PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
@@ -35,16 +37,32 @@ PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
 
 void PlayerSelectionBoxContainer::SelectUp()
 {
-    for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    /*for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         (*it)->SelectNext();
-    }
+    }*/
+    m_boxes.front()->SelectNext();
 }
 
 void PlayerSelectionBoxContainer::SelectDown()
 {
-    for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    /*for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         (*it)->SelectPrev();
-    }
+    }*/
+    m_boxes.front()->SelectPrev();
+}
+
+void PlayerSelectionBoxContainer::SelectLeft()
+{
+    PlayerSelectionBox *box = m_boxes.back();
+    m_boxes.pop_back();
+    m_boxes.push_front(box);
+}
+
+void PlayerSelectionBoxContainer::SelectRight()
+{
+    PlayerSelectionBox *box = m_boxes.front();
+    m_boxes.pop_front();
+    m_boxes.push_back(box);
 }
