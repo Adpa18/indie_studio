@@ -118,7 +118,7 @@ void	GameManager::onMenu()
 {
     if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
         return ;
-    
+
     // Copies viewport state
     irr::core::rect<irr::s32> viewPort = IrrlichtController::getDriver()->getViewPort();
     irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->getActiveCamera();
