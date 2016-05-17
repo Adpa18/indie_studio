@@ -5,7 +5,7 @@
 // Login   <tavern_d@epitech.net>
 //
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
-// Last update Mon May 16 17:43:15 2016 Fernand Veyrier
+// Last update Tue May 17 17:01:31 2016 Matthieu Tavernier
 //
 
 #include "Video.hpp"
@@ -39,25 +39,28 @@ Video::~Video()
 
 void	Video::start()
 {
-    IrrlichtController::width = 1270;
-    IrrlichtController::height = 720;
-    irr::IrrlichtDevice* device = IrrlichtController::getDevice(false);
-
+    irr::IrrlichtDevice* device = IrrlichtController::getDevice();
     irrklang::ISoundEngine *engine = irrklang::createIrrKlangDevice();
     if (!engine)
         return;
     irr::video::IVideoDriver* driver = device->getVideoDriver();
     size_t  i = 0;
     clock_t	timerFrame;
+    irr::gui::IGUIEnvironment *guiEnv;
+    guiEnv = IrrlichtController::getGUIEnvironment();
+    irr::gui::IGUIImage *img;
+    img = guiEnv->addImage(irr::core::rect<irr::s32>(0,0, IrrlichtController::width, IrrlichtController::height));
     while (device->run() && i < this->files.size())
     {
         if (i == 24)
             engine->play2D((default_path_sound + "intro.wav").c_str(), true);
         timerFrame = clock();
         irr::video::ITexture *tex = driver->getTexture((this->files[i]).c_str());
+	img->setImage(tex);
+	img->setScaleImage(true);
         driver->beginScene(true, true, irr::video::SColor(0,0,0,0));
-        driver->draw2DImage(tex, irr::core::position2d<irr::s32>(0, 0));
-        driver->endScene();
+	IrrlichtController::getGUIEnvironment()->drawAll();
+	driver->endScene();
         driver->removeTexture(tex);
         timerFrame = clock() - timerFrame;
         if (static_cast<float>(timerFrame) / CLOCKS_PER_SEC < 1.0 / 23.975)
