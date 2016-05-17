@@ -31,10 +31,9 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 
     if (timeout != -1)
       {
-	y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
-	y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
-	y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
-	y2k.tm_zone = 0;
+        memset(&y2k, 0, sizeof(y2k));
+        y2k.tm_year = 100;
+        y2k.tm_mday = 1;
 	_timer = difftime(timer, mktime(&y2k));
 	
 	GameObjectTimeContainer::SharedInstance()->add(this);
@@ -107,10 +106,9 @@ void					AGameObject::wait()
   double	timeSec;
 
   timer = time(NULL);
-  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
-  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
-  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
-  y2k.tm_zone = 0;
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
   timeSec = difftime(timer, mktime(&y2k));
   _timeout = timeSec - _timer + _rltimeout;
 }
@@ -121,10 +119,9 @@ bool				AGameObject::isTimeOut() const
   struct tm	y2k;
   double	seconds;
 
-  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
-  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
-  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
-  y2k.tm_zone = 0;
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
 
   timer = time(NULL);
 
@@ -140,10 +137,9 @@ void			AGameObject::setTimeOut(double timeout)
   this->_timeout = timeout;
   _rltimeout = timeout;
   timer = time(NULL);
-  y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
-  y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
-  y2k.tm_gmtoff = 0; y2k.tm_isdst = 0; y2k.tm_wday = 0;
-  y2k.tm_zone = 0;
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
   _timer = difftime(timer, mktime(&y2k));	
   GameObjectTimeContainer::SharedInstance()->add(this);
 }

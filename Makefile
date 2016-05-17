@@ -65,7 +65,7 @@ CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include -I ./$(SRC_INTERFACE_DIR) -I .
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	= -lpthread -L $(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L $(IrrKlangHome)linux $(IrrKlangHome)linux/libIrrKlang.so
+LDFLAGS 	= -lpthread -L $(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L $(IrrKlangHome)linux
 
 %.o : %.cpp
 	@echo -e "Compiling $<"
@@ -97,6 +97,7 @@ LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lod
 LDFLAGS += -lopengl32 -lm -static-libstdc++
 else
 LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
+LDFLAGS += $(IrrKlangHome)linux/libIrrKlang.so
 SYSTEM=Linux
 endif
 
