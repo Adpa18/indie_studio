@@ -26,7 +26,14 @@ namespace UIElement
         MAP_SELECTION3,
 
         QUIT_BUTTON,
-        RESUME_BUTTON
+        RESUME_BUTTON,
+
+        PLAYERBOX_1,
+        PLAYERBOX_2,
+        PLAYERBOX_3,
+        PLAYERBOX_4,
+
+	CONTINUE,
     };
 }
 

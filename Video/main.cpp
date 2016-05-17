@@ -12,8 +12,8 @@
 
 int	main()
 {
-  Video	test;
+  Video	*test = new Video();
 
-  test.start();
+  test->start();
   return (0);
 }

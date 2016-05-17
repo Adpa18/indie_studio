@@ -18,14 +18,15 @@
 class PlayerSelectionBox : public ISelectionBox
 {
 public:
-    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer);
+    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID);
     virtual ~PlayerSelectionBox();
 
 public:
     void Update();
-    void SelectNext() const;
-    void SelectPrev() const;
+    void SelectNext();
+    void SelectPrev();
     void AddSprite(irr::io::path sprite);
+    irr::gui::IGUIButton const& GetButton() const;
 
 private:
     UIManager *m_manager;
@@ -33,11 +34,13 @@ private:
     mutable std::list<irr::video::ITexture*> m_images;
     bool m_bIsIaPlayer;
     irr::core::rect<irr::s32> m_pos;
-    irr::scene::ICameraSceneNode *m_camera;
     irr::scene::ISceneManager *m_sceneManager;
-    irr::gui::IGUIImage *img;
-    irr::scene::IAnimatedMesh *m_model = nullptr;
+    irr::gui::IGUIImage *m_image;
     irr::scene::IAnimatedMeshSceneNode *m_modelNode = nullptr;
+    //std::list<irr::scene::IAnimatedMesh*> m_models;
+    std::list<std::string> m_models;
+    int m_playerID;
+    irr::gui::IGUIButton *m_button;
 };
 
 

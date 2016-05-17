@@ -4,12 +4,13 @@
 
 #include <unistd.h>
 #include "UIEventReceiver.hpp"
-#include "PlayerSelectionBox.hpp"
+#include "../include/Texture.hpp"
+#include "../include/GameManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
-        m_manager(manager), m_device(manager.GetDevice()), m_gameState(SPLASH_SCREEN), m_gameSatePrev(PLAY)
+        m_manager(manager), m_device(manager.GetDevice())
 {
-    LoadTextures();
+    // LoadTextures();
     DisplaySplashScreen();
 }
 
@@ -23,10 +24,14 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         switch (event.KeyInput.Key)
         {
             case irr::KEY_ESCAPE:
-                if (m_gameState == PLAY)
+                if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
                 {
-                    m_gameState = PAUSE;
-                    fptr = &UIEventReceiver::DisplayPauseMenu;
+		  GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+		  IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
+		  // fptr = &UIEventReceiver::DisplayPauseMenu;
+                    // m_gameState = PAUSE;
+		  // return (true);
+		  fptr = &UIEventReceiver::DisplayGameHUD;
                 }
                 else
                 {
@@ -35,9 +40,9 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 break;
 
             case irr::KEY_RETURN:
-                if (m_gameState == SPLASH_SCREEN && event.KeyInput.PressedDown)
+	      if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN && event.KeyInput.PressedDown)
                 {
-                    m_gameState = MAIN_MENU;
+		  GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                     fptr = &UIEventReceiver::DisplayMainMenu;
                     return true;
                 }
@@ -47,6 +52,10 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 if (event.KeyInput.PressedDown)
                 {
                     SelectNextButton();
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectUp();
+                    }
                 }
                 break;
 
@@ -54,6 +63,30 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 if (event.KeyInput.PressedDown)
                 {
                     SelectPrevButton();
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectDown();
+                    }
+                }
+                break;
+
+            case irr::KEY_LEFT:
+                if (event.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectLeft();
+                    }
+                }
+                break;
+
+            case irr::KEY_RIGHT:
+                if (event.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectRight();
+                    }
                 }
                 break;
 
@@ -72,19 +105,26 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 switch (id)
                 {
                     case UIElement::SPLASH_BUTTON_START:
-                        m_gameState = MAIN_MENU;
+		      GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
                         break;
 
                     case UIElement::MAIN_MENU_BUTTON_1P:
-                        m_gameState = MENU_MAP;
+		      GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
                         fptr = &UIEventReceiver::DisplayMapMenu;
                         break;
 
                     case UIElement::MAP_SELECTION1:
-                        m_gameState = LOADING_SCREEN;
-                        fptr = &UIEventReceiver::DisplayLoadingScreen;
+                        fptr = &UIEventReceiver::DisplayGameHUD;
+			GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+			GameManager::SharedInstance()->setGameState(GameManager::PLAY);
                         break;
+		     
+		case UIElement::CONTINUE:
+		  fptr = &UIEventReceiver::DisplayGameHUD;
+		  IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
+		  GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+		  break;
 
                     default:
                         break;
@@ -102,6 +142,11 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     {
         m_manager.ClearEnv();
         m_buttons.clear();
+        if (m_boxContainer != nullptr)
+        {
+            delete m_boxContainer;
+            m_boxContainer = nullptr;
+        }
         (this->*fptr)();
     }
     fptr = nullptr;
@@ -111,44 +156,24 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     return false;
 }
 
+void UIEventReceiver::DisplayGameHUD()
+{
+  std::cout << "ALORS " << std::endl;
+}
+
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                                             nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
 
-    img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
+    img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
 
-    PlayerSelectionBox playerSelectionBox(&m_manager, "../media/PlayerButton.png",
-                                          irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
-                                                                    IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                          UIElement::MAIN_MENU_BUTTON_1P, false);
-    playerSelectionBox.Update();
+    m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
 
-    irr::gui::IGUIButton *b;
-    /**b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.015, IrrlichtController::height * 0.445,
-                                                            IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                  nullptr, UIElement::MAIN_MENU_BUTTON_1P, L"One player", L"");*/
-    //m_buttons.push_back(b);
-
-    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.32, IrrlichtController::height / 2.0 - 50,
-                                                                IrrlichtController::width * 0.47, IrrlichtController::height / 2.0 + 50),
-                                      nullptr, UIElement::MAIN_MENU_BUTTON_2P, L"Two players", L"");
-    b->setImage(m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png"));
-    //m_buttons.push_back(b);
-
-    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.52, IrrlichtController::height / 2.0 - 50,
-                                                                IrrlichtController::width * 0.67, IrrlichtController::height / 2.0 + 50),
-                                      nullptr, UIElement::MAIN_MENU_BUTTON_3P, L"Three players", L"");
-    //m_buttons.push_back(b);
-
-    b = m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width * 0.72, IrrlichtController::height / 2.0 - 50,
-                                                            IrrlichtController::width * 0.87, IrrlichtController::height / 2.0 + 50),
-                                  nullptr, UIElement::MAIN_MENU_BUTTON_4P, L"Four players", L"");
-    //m_buttons.push_back(b);
-
-    m_gameSatePrev = m_gameState;
+    GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
+      //m_gameSatePrev = m_gameState;
 }
 
 // Splash screen waiting for player to press some button
@@ -156,17 +181,18 @@ void UIEventReceiver::DisplaySplashScreen()
 {
     irr::gui::IGUIImage* image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                                               nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
-    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuScene.png"));
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(BomberManTexture::getModel("menuScene").texture.c_str()));
 
     image->setScaleImage(true);
 
     image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                          nullptr, UIElement::SPLASH_BUTTON_START, L"", true);
-    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png"));
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(BomberManTexture::getModel("menuSceneStart").texture.c_str()));
 
     image->setScaleImage(true);
 
-    m_gameSatePrev = m_gameState;
+    GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
+    //m_gameSatePrev = m_gameState;
 }
 
 /**
@@ -190,16 +216,34 @@ void UIEventReceiver::DisplayMapMenu()
     m_buttons.push_back(b2);
     m_buttons.push_back(b3);
 
-    m_gameSatePrev = m_gameState;
+    GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
+
+    //m_gameSatePrev = m_gameState;
 }
 
 // Pause menu from pause button
 void UIEventReceiver::DisplayPauseMenu()
 {
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100, IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width / 2.0 + 100, IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::QUIT_BUTTON , L"PRESS START", L"");
-    m_gameSatePrev = m_gameState;
+  m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+						IrrlichtController::height / 2.5 - 50,
+						IrrlichtController::width / 2.0 + 100,
+						IrrlichtController::height / 2.5 + 50),
+		      nullptr, UIElement::CONTINUE , L"Continue", L"");
+
+  m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+						IrrlichtController::height / 2.0 - 50,
+						IrrlichtController::width / 2.0 + 100,
+						IrrlichtController::height / 2.0 + 50),
+		      nullptr, UIElement::SPLASH_BUTTON_START , L"Menu", L"");
+
+  m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+						IrrlichtController::height / 1.66 - 50,
+						IrrlichtController::width / 2.0 + 100,
+						IrrlichtController::height / 1.66 + 50),
+		      nullptr, UIElement::SPLASH_BUTTON_START , L"Quitter", L"");
+  
+    //   m_gameSatePrev = m_gameState;
+  GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
 }
 
 // Screen displayed between level loading
@@ -207,8 +251,10 @@ void UIEventReceiver::DisplayLoadingScreen()
 {
     irr::gui::IGUIImage* image = m_manager.GetEnv()->addImage(irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
                                                               nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
-    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture("../media/MenuScene.png"));
-    m_gameSatePrev = m_gameState;
+    image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(BomberManTexture::getModel("menuScene").texture.c_str()));
+
+    //    m_gameSatePrev = m_gameState;
+    GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
 }
 
 void UIEventReceiver::RefreshButtons()
@@ -245,10 +291,10 @@ void UIEventReceiver::SelectPrevButton()
 
 void UIEventReceiver::LoadTextures()
 {
-    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuScene.png");
-    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
-    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png");
-    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
-    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButton.png");
-    m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButtonIa.png");
+    // m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuScene.png");
+    // m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
+    // m_manager.GetDevice()->getVideoDriver()->getTexture("../media/MenuSceneStart.png");
+    // m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerSelection.png");
+    // m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButton.png");
+    // m_manager.GetDevice()->getVideoDriver()->getTexture("../media/PlayerButtonIa.png");
 }

@@ -1,16 +1,18 @@
 //
-
 // Video.cpp for indie studio in /home/tavern_d/rendu/semestre4/cpp_indie_studio/src
 //
 // Made by Matthieu Tavernier
 // Login   <tavern_d@epitech.net>
 //
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
-// Last update Fri Apr 29 18:53:31 2016 Victor Gouet
+// Last update Mon May 16 17:43:15 2016 Fernand Veyrier
 //
 
 #include "Video.hpp"
 #include "../include/IrrlichtController.hpp"
+
+const std::string     Video::default_path_video = "../intro/video/";
+const std::string     Video::default_path_sound = "../intro/sound/";
 
 Video::Video(const std::string path)
 {
@@ -24,7 +26,7 @@ Video::Video(const std::string path)
       while ((ent = readdir(rep)) != NULL)
 	{
 	  if (std::string(ent->d_name) != "." && std::string(ent->d_name) != "..")
-	    this->files.push_back(path + "/" + std::string(ent->d_name));
+	    this->files.push_back(default_path_video + std::string(ent->d_name));
 	}
       closedir(rep);
       std::sort(this->files.begin(), this->files.end());
@@ -37,31 +39,31 @@ Video::~Video()
 
 void	Video::start()
 {
-  irr::IrrlichtDevice* device = IrrlichtController::getDevice();
-  irr::video::IVideoDriver* driver = device->getVideoDriver();
-  std::vector<irr::video::ITexture *>	frames;
-  for (std::vector<std::string>::const_iterator it = this->files.begin(), end = this->files.end(); it != end; ++it)
+    IrrlichtController::width = 1270;
+    IrrlichtController::height = 720;
+    irr::IrrlichtDevice* device = IrrlichtController::getDevice(false);
+
+    irrklang::ISoundEngine *engine = irrklang::createIrrKlangDevice();
+    if (!engine)
+        return;
+    irr::video::IVideoDriver* driver = device->getVideoDriver();
+    size_t  i = 0;
+    clock_t	timerFrame;
+    while (device->run() && i < this->files.size())
     {
-      frames.push_back(driver->getTexture((*it).data()));
+        if (i == 24)
+            engine->play2D((default_path_sound + "intro.wav").c_str(), true);
+        timerFrame = clock();
+        irr::video::ITexture *tex = driver->getTexture((this->files[i]).c_str());
+        driver->beginScene(true, true, irr::video::SColor(0,0,0,0));
+        driver->draw2DImage(tex, irr::core::position2d<irr::s32>(0, 0));
+        driver->endScene();
+        driver->removeTexture(tex);
+        timerFrame = clock() - timerFrame;
+        if (static_cast<float>(timerFrame) / CLOCKS_PER_SEC < 1.0 / 23.975)
+            usleep(1000000.0 / 23.975 - static_cast<float>(timerFrame) / CLOCKS_PER_SEC * 1000000.0);
+        ++i;
     }
-  irr::scene::ISceneManager *sceneManager = device->getSceneManager();
-  irr::core::position2d<irr::s32> position0;
-  position0.X = 0;
-  position0.Y = 0;
-  irr::core::position2d<irr::s32> position1;
-  position1.X = IrrlichtController::width;
-  position1.Y = IrrlichtController::height;
-  irr::core::rect<irr::s32> rectangle;
-  rectangle.UpperLeftCorner = position0;
-  rectangle.LowerRightCorner = position1;
-  std::vector<irr::video::ITexture *>::iterator	it = frames.begin();
-  while (device->run() && it != frames.end())
-    {
-      driver->beginScene(true, true, irr::video::SColor(0,0,0,0));
-      driver->draw2DImage(*it, position0, rectangle, 0, irr::video::SColor(255,255,255,255), true);
-      driver->endScene();
-      usleep(66666);
-      ++it;
-    }
-  device->drop ();
+    engine->drop();
+  device->drop();
 }

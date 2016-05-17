@@ -62,9 +62,17 @@ bool 	EventGame::OnEvent(const irr::SEvent &event)
   return (false);
 }
 
+bool 	EventGame::IsKeyDownOneTime(irr::EKEY_CODE keyCode) const
+{
+  bool	key = KeyIsDown[keyCode];
+
+  KeyIsDown[keyCode] = false;
+  return (key);
+}
+
 bool 	EventGame::IsKeyDown(irr::EKEY_CODE keyCode) const
 {
-	return (KeyIsDown[keyCode]);
+  return (KeyIsDown[keyCode]);
 }
 
 const MotionController  *EventGame::GetAvaibleJoystick() const

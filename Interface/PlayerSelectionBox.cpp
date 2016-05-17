@@ -3,36 +3,52 @@
 //
 
 #include "PlayerSelectionBox.hpp"
+#include "../include/Texture.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
-                                       UIElement::Menu elemName, bool bIsIaPlayer) :
+                                       UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :
         m_manager(uiManager),
         m_bIsIaPlayer(bIsIaPlayer),
-        m_pos(pos)
+        m_pos(pos),
+        m_playerID(playerID)
 {
+    // Get all the needed vars
     m_driver = m_manager->GetDevice()->getVideoDriver();
     m_sceneManager = m_manager->GetDevice()->getSceneManager();
-    m_camera = m_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(0, 12, -30), irr::core::vector3df(0, 12, 0));
-    // TODO: set a different image id !
-    img = m_manager->GetEnv()->addImage(pos, nullptr, 42, L"", true);
-    irr::gui::IGUIButton *b = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
-    b->setImage(m_manager->GetEnv()->getVideoDriver()->getTexture(sprite));
-    b->setScaleImage(true);
-    b->setUseAlphaChannel(true);
-    b->setDrawBorder(false);
+    m_image = m_manager->GetEnv()->addImage(pos, nullptr, id, L"", true);
+
+    // Creates the button box
+    m_button = m_manager->GetEnv()->addButton(pos, nullptr, elemName, L"", L"");
+    m_button->setImage(m_manager->GetEnv()->getVideoDriver()->getTexture(sprite));
+    m_button->setScaleImage(true);
+    m_button->setUseAlphaChannel(true);
+    m_button->setDrawBorder(false);
+
+    // Loads the models and the sprites
+    m_models.push_back("ziggs");
+    m_models.push_back("ziggsGeneral");
+    m_models.push_back("ziggsMad");
+    m_models.push_back("ziggsSnow");
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAEasy").texture.c_str()));
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAMedium").texture.c_str()));
+    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAHard").texture.c_str()));
+
+    Update();
 }
 
 PlayerSelectionBox::~PlayerSelectionBox()
 {
-    // TODO: destroy mesh
-    //m_modelNode->remove();
+    if (m_modelNode != nullptr)
+    {
+        m_modelNode->remove();
+    }
 }
 
 /*
  * \brief If it is an IA, it swap the sprites
  * otherwise change the 3D model
  */
-void PlayerSelectionBox::SelectNext() const
+void PlayerSelectionBox::SelectNext()
 {
     if (m_bIsIaPlayer)
     {
@@ -45,15 +61,27 @@ void PlayerSelectionBox::SelectNext() const
     }
     else
     {
+        if (m_modelNode != nullptr)
+        {
+            m_modelNode->remove();
+            m_modelNode = nullptr;
+        }
+        if (m_models.size() > 0)
+        {
+            std::string string = m_models.back();
+            m_models.pop_back();
+            m_models.push_front(string);
 
+        }
     }
+    Update();
 }
 
 /*
  * \brief If it is an IA, it swap the sprites
  * otherwise change the 3D model
  */
-void PlayerSelectionBox::SelectPrev() const
+void PlayerSelectionBox::SelectPrev()
 {
     if (m_bIsIaPlayer)
     {
@@ -66,8 +94,20 @@ void PlayerSelectionBox::SelectPrev() const
     }
     else
     {
+        if (m_modelNode != nullptr)
+        {
+            m_modelNode->remove();
+            m_modelNode = nullptr;
+        }
+        if (m_models.size() > 0)
+        {
+            std::string string = m_models.front();
+            m_models.pop_front();
+            m_models.push_back(string);
 
+        }
     }
+    Update();
 }
 
 void PlayerSelectionBox::AddSprite(irr::io::path sprite)
@@ -79,36 +119,26 @@ void PlayerSelectionBox::Update()
 {
     if (!m_bIsIaPlayer)
     {
-        // Copies viewport state
-        //irr::core::rect<irr::s32> viewPort = m_driver->getViewPort();
-        //irr::scene::ICameraSceneNode *camera = m_sceneManager->getActiveCamera();
-
-        //m_driver->setViewPort(m_pos);
-        //m_sceneManager->setActiveCamera(m_camera);
-
-        if (m_model == nullptr)
+        if (m_modelNode == nullptr && m_models.size() > 0)
         {
-            m_model = m_sceneManager->getMesh("../media/ziggs.md3");
-        }
-        if (m_model != nullptr && m_modelNode == nullptr)
-        {
-            m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(m_model);
+            irr::scene::IAnimatedMesh *mesh = m_sceneManager->getMesh(BomberManTexture::getModel(m_models.front()).mesh.c_str());
+            m_modelNode = m_sceneManager->addAnimatedMeshSceneNode(mesh);
             if (m_modelNode)
             {
-                irr::video::ITexture *texture = m_driver->getTexture("../media/ziggs.png");
+                irr::video::ITexture *texture = m_driver->getTexture(BomberManTexture::getModel(m_models.front()).texture.c_str());
                 m_modelNode->setMaterialTexture(0, texture);
                 m_modelNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+                m_modelNode->setPosition(irr::core::vector3df(100 * m_playerID, 0, 0));
             }
         }
-
-        IrrlichtController::getDevice()->getSceneManager()->drawAll();
-
-        // Sets the viewport to its initial state
-        //m_driver->setViewPort(viewPort);
-        //m_sceneManager->setActiveCamera(camera);
     }
     else
     {
-        img->setImage(m_images.front());
+        m_image->setImage(m_images.front());
     }
+}
+
+irr::gui::IGUIButton const &PlayerSelectionBox::GetButton() const
+{
+    return *m_button;
 }

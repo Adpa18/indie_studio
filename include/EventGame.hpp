@@ -20,19 +20,23 @@
 # include <map>
 
 class EventGame : public irr::IEventReceiver {
+
 private:
     static const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> _keycodes;
+
 private:
-    bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
+    mutable bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
     std::map<int, MotionController *>   _joysticks;
     std::vector<KeysController *>       _keymaps;
+
 public:
-    EventGame ();
-    virtual ~EventGame ();
-    virtual bool  OnEvent(const irr::SEvent& event);
-    virtual bool  IsKeyDown(irr::EKEY_CODE keyCode) const;
-    const MotionController  *GetAvaibleJoystick() const;
-    const KeysController    *GetAvaibleKeycodes() const;
+  EventGame ();
+  virtual ~EventGame ();
+  virtual bool  OnEvent(const irr::SEvent& event);
+  virtual bool  IsKeyDown(irr::EKEY_CODE keyCode) const;
+  bool		IsKeyDownOneTime(irr::EKEY_CODE keyCode) const;
+  const MotionController  *GetAvaibleJoystick() const;
+  const KeysController    *GetAvaibleKeycodes() const;
 };
 
 #endif /* !EVENT_HPP */

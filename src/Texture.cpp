@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Fri May 13 11:44:36 2016 Victor Gouet
+// Last update Mon May 16 13:47:45 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -42,7 +42,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         // {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
         // {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
         // Players
-        {"ziggs", {BomberManTexture::path + "ziggs_snow.md3", BomberManTexture::path + "ziggs_snow.png"}},
+        {"ziggsSnow", {BomberManTexture::path + "ziggs_snow.md3", BomberManTexture::path + "ziggs_snow.png"}},
 	// Bomb
         {"fireBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
 	{"trackerBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
@@ -58,6 +58,18 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 	{"bonusInvincible", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
         // Items
         {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
+	// MENU
+	{"playerSelection", {"", BomberManTexture::path + "PlayerSelection.png"}},
+	{"menuScene", {"", BomberManTexture::path + "MenuScene.png"}},
+	{"menuSceneStart", {"", BomberManTexture::path + "MenuSceneStart.png"}},
+	{"playerButton", {"", BomberManTexture::path + "PlayerButton.png"}},
+	{"playerButtonIa", {"", BomberManTexture::path + "PlayerButtonIaEasy.png"}},
+        {"ziggsGeneral", {BomberManTexture::path + "ziggs_general.md3", BomberManTexture::path + "ziggs_general.png"}},
+        {"ziggsMad", {BomberManTexture::path + "ziggs_mad.md3", BomberManTexture::path + "ziggs_mad.png"}},
+        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs.png"}},
+        {"IAEasy", {"", BomberManTexture::path + "PlayerButtonIaEasy.png"}},
+        {"IAMedium", {"", BomberManTexture::path + "PlayerButtonIaMedium.png"}},
+        {"IAHard", {"", BomberManTexture::path + "PlayerButtonIaHard.png"}}
 };
 
 void BomberManTexture::loadTexture()

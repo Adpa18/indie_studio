@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Wed May 11 17:34:29 2016 Victor Gouet
+// Last update Mon May 16 12:02:49 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -37,12 +37,24 @@ void				GameObjectTimeContainer::add(AGameObject *obj)
   container.push_back(obj);
 }
 
+void				GameObjectTimeContainer::timerStop()
+{
+  std::list<AGameObject *>::iterator	it = container.begin();
+
+  while (it != container.end())
+    {
+      (*it)->wait();
+      ++it;
+    }
+}
+
 void				GameObjectTimeContainer::callTimeOutObjects()
 {
   std::list<AGameObject *>::iterator	it = container.begin();
 
   while (it != container.end())
     {
+      
       (*it)->updateTimeOut();
 
       if ((*it)->isTimeOut())
