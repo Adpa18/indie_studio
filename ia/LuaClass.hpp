@@ -96,6 +96,15 @@ namespace Lua
         {
         }
         /**
+         * \brief A Copy constructor implementation
+         * \param ref The object to copy
+         */
+        LuaClass(classType const &ref) :
+            LuaClass(new classType(ref))
+        {
+
+        }
+        /**
          * \brief overload of referencing operator to get the adress of the real object
          * \return The adress of the real object
          */
@@ -227,6 +236,15 @@ namespace Lua
         static classType *getThis(int n = 1)
         {
             return *(classType **)luaL_checkudata(acquireState(), n, (luaPrefix + className).c_str());
+        }
+        /**
+         * \brief Allows you to get an integer in the lua stack
+         * \param n Correspond to the index on the lua stack
+         * \return The integer at n index in the lua stack
+         */
+        static int getInteger(int n = 1)
+        {
+            return luaL_checkinteger(acquireState(), n);
         }
         /**
          * \brief An implementation of the most basic constructor for a lua class

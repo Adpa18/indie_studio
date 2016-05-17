@@ -24,6 +24,12 @@ public:
     void setDifficulty(const std::string &difficulty);
 
 private:
+    static int  typeAtIndex(lua_State *state);
+    static int  posAtIndex(lua_State *state);
+    static int  getX(lua_State *state);
+    static int  getY(lua_State *state);
+
+private:
     Lua::LuaHandler handler;
     Lua::LuaClass<BomberMap> map;
     std::string behaviour;
@@ -31,5 +37,8 @@ private:
 
 template <>
 const std::string Lua::LuaClass<BomberMap>::className = "BomberMap";
+
+template <>
+const std::string Lua::LuaClass<irr::core::vector2df>::className = "Vector2";
 
 #endif //CPP_INDIE_STUDIO_IAPLAYER_HPP

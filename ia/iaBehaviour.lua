@@ -38,7 +38,13 @@ mapmeta.mt = {
 
 --todo implement the three behaviours
 function easyBehaviour(bomberMap, iaPos)
-
+    local type;
+    local i = 0;
+    repeat
+        type = bomberMap:typeAtIndex(i);
+        print(type);
+        i = i + 1;
+    until (type ~= nil)
 end
 
 function mediumBehaviour(bomberMap, iaPos)
