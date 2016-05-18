@@ -40,8 +40,6 @@ private:
     void SelectNextButton();
     void SelectPrevButton();
 
-    void LoadTextures();
-
 private:
     UIManager m_manager;
     irr::IrrlichtDevice *m_device;
