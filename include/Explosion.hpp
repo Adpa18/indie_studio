@@ -9,6 +9,8 @@
 # include "AGameObject.hpp"
 
 class Explosion : public AGameObject {
+private:
+    irr::scene::IParticleSystemSceneNode    *_ps;
 public:
     Explosion(irr::core::vector2df const &pos, double timeout);
     virtual ~Explosion();
