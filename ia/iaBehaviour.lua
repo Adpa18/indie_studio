@@ -6,23 +6,23 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-mapmeta = {}
-
-function mapmeta.tostring (map)
-    return "{"..map.x..", "..map.y.."}";
-end
-
-function mapmeta.new (o)
-    setmetatable(o, mapmeta.mt)
-    return o;
-end
-
-mapmeta.prototype = {x=0, y=0};
-mapmeta.mt = {
-    __index = mapmeta.prototype,
-    __tostring = mapmeta.tostring
-}
-
+--mapmeta = {}
+--
+--function mapmeta.tostring (map)
+--    return "{"..map.x..", "..map.y.."}";
+--end
+--
+--function mapmeta.new (o)
+--    setmetatable(o, mapmeta.mt)
+--    return o;
+--end
+--
+--mapmeta.prototype = {x=0, y=0};
+--mapmeta.mt = {
+--    __index = mapmeta.prototype,
+--    __tostring = mapmeta.tostring
+--}
+--
 --function computeIA(x, y)
 --    return x + y;
 --end
@@ -38,13 +38,7 @@ mapmeta.mt = {
 
 --todo implement the three behaviours
 function easyBehaviour(bomberMap, iaPos)
-    local type;
-    local i = 0;
-    repeat
-        type = bomberMap:typeAtIndex(i);
-        print(type);
-        i = i + 1;
-    until (type ~= nil)
+    return (1);
 end
 
 function mediumBehaviour(bomberMap, iaPos)
@@ -55,13 +49,14 @@ function hardBehaviour(bomberMap, iaPos)
 
 end
 
-function testuserdata(bomberMap, iaPos)
+function testuserdata(u)
 --    print(u);
---    local d = Test.new();
---    print(d);
---    d:toto();
+    local d = Test.new();
+    print(d);
+    d:toto();
 --    Test.toto();
---    u:toto();
+    print(u);
+    u:toto();
 --    d:toto();
 --    local test = Map.new({4, 3});
 --    print(test);

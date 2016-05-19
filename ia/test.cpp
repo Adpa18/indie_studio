@@ -4,18 +4,7 @@
 
 #include <iostream>
 #include <typeinfo>
-#include <unistd.h>
 #include "LuaHandler.hpp"
-#include "FunctionConverter.hpp"
-#include "LuaClass.hpp"
-
-typedef struct s_test
-{
-    int x;
-    int y;
-}               t_test;
-
-std::string tototempl("Test");
 
 class testClass
 {
@@ -24,6 +13,13 @@ public:
     {
         std::cout << "Nous sommes des prunes" << std::endl;
         toto = 0;
+    }
+    void onAppelleDesFonctions(Lua::LuaHandler &handler)
+    {
+        Lua::LuaClass<testClass>    test;
+
+        test.dontDelete();
+        handler["easyBehaviour"](&test, &test);
     }
 
 public:
@@ -42,16 +38,18 @@ const std::string Lua::LuaClass<testClass>::className = "Test";
 
 int main()
 {
-    lua_State   *state = Lua::acquireState();
     Lua::LuaHandler  handler;
-    t_test  toto = {54, 32};
-    Lua::LuaClass<testClass>   tutu;
 
+    testClass   tata;
+    Lua::LuaClass<testClass>   tutu;
     Lua::LuaClass<testClass>::LuaPrototype({
-            {"new", Lua::LuaClass<testClass>::defaultConstructor},
-            {"toto", testClass::l_tutumethod},
-            {"__gc", Lua::LuaClass<testClass>::defaultDestructor}
-    }).Register();
+                                                   {"new", Lua::LuaClass<testClass>::defaultConstructor},
+                                                   {"toto", testClass::l_tutumethod},
+                                                   {"__gc", Lua::LuaClass<testClass>::defaultDestructor}
+                                           }).Register();
+//    lua_pushlightuserdata(Lua::acquireState(), &tutu);
+//    tutu.bindMetatable();
+//    lua_setglobal(Lua::acquireState(), "globit");
     handler.setScript("./iaBehaviour.lua");
 //    Lua::LuaHandler &(*ftpr2)(const std::string &) = NULL;
 
@@ -64,10 +62,23 @@ int main()
 //    void *decal = NULL;
 //
 //    std::cout << handler["computeIA"](2, 3) << std::endl;
-    std::cout << handler["testuserdata"](&tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    for (int i = 0; i < 100; ++i)
+    {
+        tata.onAppelleDesFonctions(handler);
+    }
     //    std::cout << handler["testargs"](2, 2.4, true, "On fait des test") << std::endl;
 //    std::cout << "manger des haricots" << std::endl;
-    lua_close(state);
+    lua_close(Lua::acquireState());
 //    Lua::close(state);
 //    std::cout << "in c++ " << &handler << std::endl;
 //    std::cout << "sizeof handler: " << sizeof(handler) << std::endl;

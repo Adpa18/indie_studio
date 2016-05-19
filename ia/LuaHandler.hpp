@@ -178,9 +178,11 @@ namespace Lua
          * \brief Polymorphism on user data argument. In that case it is recommended to use LuaClass object '&' operator
          * \param topush The argument to push
          */
-        int pushArgs(void *topush)
+        template <typename classtype>
+        int pushArgs(LuaClass<classtype> *topush)
         {
-            lua_pushlightuserdata(state, &topush);
+            lua_pushlightuserdata(state, topush->getUserData());
+            topush->bindMetatable();
             return 0;
         }
 
