@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu May 19 17:09:40 2016 Victor Gouet
+// Last update Thu May 19 18:12:54 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -104,10 +104,13 @@ void    GameManager::run()
                 _state = GAME;
                 onGame();
             }
-            else if (m_gameState >= SPLASH_SCREEN &&
-                     m_gameState <= PAUSE)
+            else
             {
-                _state = MENU;
+	      if (_state != MENU && m_gameState != PAUSE)
+		{
+		  BomberMap::deleteMap();
+		  _state = MENU;
+		}
                 onMenu();
             }
 
@@ -131,7 +134,8 @@ void    GameManager::onMenu()
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
       
-      BomberMap::deleteMap();
+      // std::cout << "DELETE" << std::endl;
+      // BomberMap::deleteMap();
       // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
                 irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
@@ -201,15 +205,6 @@ void    GameManager::onGame()
         //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
 
-    // if (_pause)
-    //   {
-
-    // GameObjectTimeContainer::SharedInstance()->timerStop();
-
-    //     onPause();
-    //   }
-    // else
-    //   {
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 
     std::vector<ACharacter *>::iterator it = characters.begin();
@@ -226,13 +221,18 @@ void    GameManager::onGame()
             it = characters.erase(it);
         }
     }
-    // }
+    if (characters.size() == 0 || characters.size() == 1)
+      {
+	characters.clear();
+	setGameState(CLASSMENT_SCREEN);
+        IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+      }
 }
 
 void    GameManager::willStartGame()
 {
-    BomberMap::newMap(BomberMap::Size::SMALL);
-    BomberMap::getMap()->genMap();
+    // BomberMap::newMap(BomberMap::Size::SMALL);
+    // BomberMap::getMap()->genMap();
 
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 

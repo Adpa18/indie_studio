@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Mon May 16 15:41:51 2016 Victor Gouet
+// Last update Thu May 19 18:04:43 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -28,7 +28,8 @@ public:
         MAIN_MENU = 2,
         MENU_MAP = 3,
         PLAY = 4,
-        PAUSE
+        PAUSE,
+	CLASSMENT_SCREEN
     };
 
   typedef void	(GameManager::*initInstance)(void);
