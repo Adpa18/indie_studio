@@ -15,12 +15,13 @@
 
 class AController {
 private:
-    bool    _used;
+    mutable bool    _used;
 public:
     AController ();
     virtual ~AController ();
     bool    isUsed() const;
     void    useIt();
+  void		stopUseIt() const;
 };
 
 #endif /* !ACONTROLLER_HPP */

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Wed May 11 14:00:18 2016 Victor Gouet
+// Last update Thu May 19 17:01:33 2016 Victor Gouet
 //
 
 #ifndef PLAYER_HPP_
@@ -21,6 +21,7 @@ private:
   EventGame	const &					_eventGame;
   std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
   const MotionController            *_joystick;
+  const KeysController			*keyController;
   // enum MD3_ANIMATION {
   //   IDLE,
   //   RUN,

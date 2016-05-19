@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Sun May 15 12:30:26 2016 Victor Gouet
+// Last update Thu May 19 14:46:55 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -33,7 +33,7 @@ public:
 public:
   BomberMap(std::string const &);
   BomberMap(Size mapSize = SMALL);
-  virtual ~BomberMap();
+  ~BomberMap();
 
 public:
   void  serialize(std::string const &) const;
@@ -71,6 +71,11 @@ private:
 private:
     static BomberMap    *bomberMap;
     irr::scene::ISceneNode    *_ground;
+
+  /* TERRAIN */
+  irr::scene::IAnimatedMesh	*terrain_model;
+  /* LIGHT */
+  std::vector<irr::scene::ILightSceneNode*>	lightVector;
 };
 
 #endif

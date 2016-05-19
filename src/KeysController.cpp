@@ -17,7 +17,6 @@ KeysController::KeysController(std::map<ACharacter::ACTION, irr::EKEY_CODE> cons
 
 KeysController::~KeysController()
 {
-
 }
 
 std::map<ACharacter::ACTION, irr::EKEY_CODE> const  &KeysController::getKeycodes() const

@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed May 11 16:16:25 2016 Victor Gouet
+// Last update Thu May 19 17:02:19 2016 Victor Gouet
 //
 
-#include "ACharacter.hpp"
-#include "Player.hpp"
+#include "../include/ACharacter.hpp"
+#include "../include/Player.hpp"
 #include <iostream>
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
@@ -17,15 +17,22 @@ Player::Player(std::string const &name, irr::core::vector2df const &pos,
 	       EventGame const &eventGame)
   : ACharacter(name, pos, mesh, texture, player), _eventGame(eventGame)
 {
-    (*this)->setName(name.c_str());
+   (*this)->setName(name.c_str());
     this->_joystick = NULL;
-	if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
-		this->_keycodes = _eventGame.GetAvaibleKeycodes()->getKeycodes();
-	}
+    keyController = NULL;
+    if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
+      keyController = _eventGame.GetAvaibleKeycodes();
+      if (keyController)
+      	this->_keycodes = keyController->getKeycodes();
+    }
 }
 
 Player::~Player()
 {
+  if (this->_joystick)
+    this->_joystick->stopUseIt();
+  if (this->keyController)
+    this->keyController->stopUseIt();
 }
 
 void		Player::compute()

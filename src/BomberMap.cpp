@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sun May 15 12:33:19 2016 Victor Gouet
+// Last update Thu May 19 15:36:12 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -16,23 +16,31 @@
 
 BomberMap *BomberMap::bomberMap = NULL;
 
-const int		BomberMap::size_side[3] = {11, 15, 19};
+const int		BomberMap::size_side[3] = {11, 13, 15};
 
 BomberMap::BomberMap(std::string const &)
 {
-
+  
 }
 
 BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize)
 {
+  terrain_model = NULL;
   initSpawn();
 }
 
 BomberMap::~BomberMap()
 {
-  for (std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin(), end = _objects.end() ; it != end ; ++it)
+  std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin();
+  while (it != _objects.end())
     {
-      delete ((*it).first);
+      AGameObject	*obj = (*it).first;
+      delete (obj);
+      it = _objects.begin();
+    }
+  for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
+    {
+      (*it)->remove();
     }
 }
 
@@ -44,7 +52,7 @@ void            BomberMap::genMap()
 
 void			BomberMap::generateGround()
 {
-    irr::scene::IAnimatedMesh *terrain_model;
+    // irr::scene::IAnimatedMesh *terrain_model;
 
     terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
     irr::core::dimension2d<irr::f32>(25, 25), // Tile size
@@ -76,6 +84,7 @@ void			BomberMap::generateGround()
     light->setPosition(irr::core::vector3df(0, 300, 0));
     light->setLightType(irr::video::ELT_POINT);
     light->setLightData(light_data);
+    lightVector.push_back(light);
 //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
 //    light->addAnimator(anim);
 
@@ -84,6 +93,8 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(125, 0, -125));
      light->setRotation(irr::core::vector3df(-45, -45, 0));
+     lightVector.push_back(light);
+
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(125, 0, -125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -92,6 +103,7 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(125, 0, 125));
      light->setRotation(irr::core::vector3df(-45, 225, 0));
+     lightVector.push_back(light);
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(125, 0, 125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -100,6 +112,8 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(-125, 0, -125));
      light->setRotation(irr::core::vector3df(-45, 45, 0));
+     lightVector.push_back(light);
+
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(-125, 0, -125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -108,6 +122,8 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(-125, 0, 125));
      light->setRotation(irr::core::vector3df(-45, 135, 0));
+     lightVector.push_back(light);
+
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(-125, 0, 125), 50.0f);
  //    light->addAnimator(anim);
 

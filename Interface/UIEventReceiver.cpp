@@ -138,16 +138,19 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 {
                     case UIElement::MAP_SELECTION1:
                         // Displays the map preview
-                        BomberMap::newMap(BomberMap::Size::SMALL);
+		      BomberMap::deleteMap();
+		        BomberMap::newMap(BomberMap::Size::SMALL);
                         BomberMap::getMap()->genMap();
                         break;
 
                     case UIElement::MAP_SELECTION2:
+		      BomberMap::deleteMap();
                         BomberMap::newMap(BomberMap::Size::MEDIUM);
                         BomberMap::getMap()->genMap();
                         break;
 
                     case UIElement::MAP_SELECTION3:
+		      BomberMap::deleteMap();
                         BomberMap::newMap(BomberMap::Size::LARGE);
                         BomberMap::getMap()->genMap();
                         break;

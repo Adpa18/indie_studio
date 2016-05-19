@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 16 17:18:32 2016 Victor Gouet
+// Last update Thu May 19 17:09:40 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -130,7 +130,9 @@ void    GameManager::onMenu()
 
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
-        // Camera 1
+      
+      BomberMap::deleteMap();
+      // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
                 irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
                                           IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
@@ -193,7 +195,6 @@ void    GameManager::onGame()
 {
     if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
-        std::cout << "LOL" << std::endl;
         setGameState(PAUSE);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
         uiEventReceiver->DisplayPauseMenu();
@@ -236,11 +237,12 @@ void    GameManager::willStartGame()
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
   characters.clear();
+  IrrlichtController::getDevice()->setEventReceiver(eventGame);
+
   characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
 //  characters.push_back(new Player("RICHARD", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
     characters.push_back(new IAPlayer("Jean-Louis", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 1));
 
-    IrrlichtController::getDevice()->setEventReceiver(eventGame);
     irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
             (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
     camera->setTarget(irr::core::vector3df(0, 0, 0));
@@ -255,7 +257,7 @@ void    GameManager::willStartGame()
 
 void    GameManager::willStartMenu()
 {
-    IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+  IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
 
 }
 

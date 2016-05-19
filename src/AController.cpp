@@ -20,6 +20,11 @@ AController::~AController()
 
 }
 
+void	AController::stopUseIt() const
+{
+  this->_used = false;
+}
+
 bool    AController::isUsed() const
 {
     return (this->_used);
