@@ -23,6 +23,15 @@ class	BomberManTexture
 {
 public:
     static const std::string path;
+    static const std::string smallMap;
+    static const std::string mediumMap;
+    static const std::string largeMap;
+    static const std::string bombs;
+    static const std::string bonus;
+    static const std::string characters;
+    static const std::string gui;
+    static const std::string other;
+
     static const std::map<std::string, struct model> _models;
 
 public:
