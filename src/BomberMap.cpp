@@ -194,7 +194,8 @@ void			BomberMap::generateMap()
 	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
 	{
-	  new Wall(irr::core::vector2df(x, y), Wall::Invicible);
+     int dice = rand() % 3;
+	  new Wall(irr::core::vector2df(x, y), Wall::Invicible, _walls[dice].first, _walls[dice].second);
 	}
       else if (canPutDestructibleWall(x, y))
 	{
@@ -370,7 +371,15 @@ void BomberMap::deserialize()
                                       irr::core::vector2df(repeat, repeat),
                                       reader->getAttributeValueAsInt("transparent")));
         }
-
+        else if (nodeName == "walls")
+        {
+           _walls[0].first = meshesDir + reader->getAttributeValueSafe("mesh1");
+           _walls[0].second = texturesDir + reader->getAttributeValueSafe("texture1");
+           _walls[1].first = meshesDir + reader->getAttributeValueSafe("mesh2");
+           _walls[1].second = texturesDir + reader->getAttributeValueSafe("texture2");
+           _walls[2].first = meshesDir + reader->getAttributeValueSafe("mesh3");
+           _walls[2].second = texturesDir + reader->getAttributeValueSafe("texture3");
+        }
      }
       //  if (reader->getNodeType() == irr::io::EXN_ELEMENT && mapelem.equals_ignore_case(reader->getNodeName()))
       //  {
