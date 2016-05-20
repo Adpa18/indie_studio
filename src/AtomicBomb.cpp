@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 10:51:39 2016 Victor Gouet
-// Last update Fri May 20 12:01:12 2016 Victor Gouet
+// Last update Fri May 20 21:07:15 2016 Victor Gouet
 //
 
 #include "../include/AtomicBomb.hpp"
@@ -78,7 +78,7 @@ bool    AtomicBomb::killObjects(irr::core::vector2df const &pos)
         if (type != AGameObject::BLOCK) {
             AGameObject *obj = (*it);
             obj->dead();
-            if (type != AGameObject::BOOM && obj->isDestructible()) {
+            if (type != AGameObject::BOOM && type != AGameObject::BOMB && obj->isDestructible()) {
                 delete obj;
             }
         }

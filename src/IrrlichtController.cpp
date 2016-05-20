@@ -36,6 +36,7 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
 				     irr::core::dimension2d<irr::u32>(width, height), 32,
 				     false, false, false, 0);
 	}
+       device->getSceneManager()->setShadowColor(irr::video::SColor(100,100,100,1));
     }
   return (device);
 }

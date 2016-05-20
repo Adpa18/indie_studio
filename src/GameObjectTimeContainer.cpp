@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Fri May 20 12:19:23 2016 Victor Gouet
+// Last update Fri May 20 20:38:26 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -48,20 +48,38 @@ void				GameObjectTimeContainer::timerStop()
     }
 }
 
+void				GameObjectTimeContainer::remove(AGameObject *obj)
+{
+  std::list<AGameObject *>::iterator	it = container.begin();
+
+  while (it != container.end())
+    {
+      if (*it == obj)
+	{
+	  it = container.erase(it);
+	}
+      else
+	++it;
+    }
+}
+
 void				GameObjectTimeContainer::callTimeOutObjects()
 {
   std::list<AGameObject *>::iterator	it = container.begin();
 
   while (it != container.end())
     {
-      
-      (*it)->updateTimeOut();
+      if (*it)
+	(*it)->updateTimeOut();
 
-      if ((*it)->isTimeOut())
+      if (*it && (*it)->isTimeOut())
 	{
 	  (*it)->dead();
 	  if ((*it)->isDestructible())
-	    delete (*it);
+	    {
+	      delete (*it);
+	      *it = NULL;
+	    }
 	  it = container.erase(it);
       	}
       else

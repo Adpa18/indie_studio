@@ -58,7 +58,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
             _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
         }
         _node->setMD2Animation(irr::scene::EMAT_STAND);
-	    _node->setID(id++);
+	_node->setID(id++);
     }
     this->setPos(pos);
 }

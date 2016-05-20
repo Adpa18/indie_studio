@@ -232,12 +232,8 @@ void    GameManager::onGame()
 
 void    GameManager::willStartGame()
 {
-  // if (!BomberMap::isInstantiate())
-  //   {
-  //     std::cout << "bomberMap INTANTIATE" << std::endl;
-      BomberMap::newMap(BomberMap::Size::SMALL);
-      BomberMap::getMap()->genMap();
-    // }
+    //BomberMap::newMap(BomberMap::Size::SMALL);
+    //BomberMap::getMap()->genMap();
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
   characters.clear();
@@ -246,14 +242,20 @@ void    GameManager::willStartGame()
   characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
   characters.push_back(new IAPlayer("Jean-Louis", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 1));
   characters.push_back(new Player("RICHARD", spawn[2], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 2, *eventGame));
-
-    irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
-    camera->setTarget(irr::core::vector3df(0, 0, 0));
-
-    camera->setAutomaticCulling(irr::scene::EAC_OFF);
-    camera->setFarValue(1000);
-    camera->setNearValue(10);
+    if (BomberMap::getMap()->get_camera())
+    {
+        IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
+        BomberMap::getMap()->refreshCamera();
+    }
+    else
+    {
+        irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+        (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
+        camera->setTarget(irr::core::vector3df(0, 0, 0));
+        camera->setAutomaticCulling(irr::scene::EAC_OFF);
+        camera->setFarValue(1000);
+        camera->setNearValue(10);
+    }
 //  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
 //									     1.0f, 1.0f, 1.0f));
 

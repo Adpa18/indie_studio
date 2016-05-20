@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Thu May 12 18:33:11 2016 Victor Gouet
+// Last update Fri May 20 16:11:02 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -34,10 +34,14 @@ public:
     };
 
 private:
-    static const std::map<Wall::State, std::string> _types;
+  static const std::map<Wall::State, std::string> _types;
+  // static const std::map<int, std::string> _wallSmallMap;
+  
 
 public:
   Wall(irr::core::vector2df const &pos, State state = Destructible);
+  Wall(irr::core::vector2df const &pos, State state,
+       std::string const &mesh, std::string const &texture);
   virtual ~Wall();
 
 public:

@@ -45,7 +45,11 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)BonusSmallestMan.cpp					\
 			$(SRC_DIR)BonusInvincible.cpp					\
 			$(SRC_DIR)TrackerBomb.cpp					\
+			$(SRC_DIR)Props.cpp						\
+			$(SRC_DIR)Color.cpp						\
 			$(SRC_DIR)AtomicBomb.cpp					\
+			$(SRC_DIR)FragBomb.cpp						\
+			$(SRC_DIR)MiniBomb.cpp						\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 			\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 			\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\

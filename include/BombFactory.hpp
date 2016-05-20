@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:04:37 2016 Victor Gouet
-// Last update Sat May 14 15:10:30 2016 Victor Gouet
+// Last update Fri May 20 19:33:14 2016 Victor Gouet
 //
 
 #ifndef BOMBFACTORY_HPP_
@@ -13,6 +13,7 @@
 
 # include "BombContainer.hpp"
 # include "FireBomb.hpp"
+#include <iostream>
 
 class		BombFactory
 {
@@ -25,7 +26,13 @@ public:
     else
       {
 	std::vector<ABomb *>::const_iterator	cont = container.getBombs().begin();
-	container.addBomb(new T((*cont)));
+
+	ABomb	*ref = *cont;
+
+	ABomb	*bomb = new T(ref->getID());
+
+	container.addBomb(bomb);
+	bomb->setPower(ref->getPower());
       }
   }
 

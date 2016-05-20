@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May 20 12:51:47 2016 Victor Gouet
+// Last update Fri May 20 21:10:23 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -16,6 +16,7 @@
 #include "../include/AtomicBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/TrackerBomb.hpp"
+#include "../include/FragBomb.hpp"
 
 struct SMD3AnimationType
 {
@@ -47,12 +48,10 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
     anime = irr::scene::EMAT_STAND;
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
-  _bombContainer = BombFactory::CreateBombContainer<TrackerBomb>((*this)->getID());
+  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
   BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
-  BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
+  BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
-   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
-   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 
@@ -224,6 +223,7 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
+  return (false);
   return (_dead);
 }
 
