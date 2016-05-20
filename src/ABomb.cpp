@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May 20 12:22:09 2016 Victor Gouet
+// Last update Fri May 20 12:37:17 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -100,9 +100,6 @@ void			ABomb::move(double speed)
 
 void			ABomb::updateTimeOut()
 {
-  static int i = 0;
-
-  std::cout << "updateTimeOut :" << i++ << std::endl;
   (*this)->setScale((*this)->getScale() + 0.008);
   move();
 }
