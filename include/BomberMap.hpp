@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Thu May 19 14:46:55 2016 Victor Gouet
+// Last update Thu May 19 18:26:26 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -45,6 +45,7 @@ public:
   static BomberMap    *getMap();
   static void		newMap(Size mapSize);
   static void		deleteMap();
+  static bool		isInstantiate();
 
 private:
   void			generateMap();

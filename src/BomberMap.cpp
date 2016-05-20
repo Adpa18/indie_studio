@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Thu May 19 15:36:12 2016 Victor Gouet
+// Last update Thu May 19 18:26:29 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -253,6 +253,13 @@ void		BomberMap::deleteMap()
       delete bomberMap;
     }
    bomberMap = NULL;
+}
+
+bool		BomberMap::isInstantiate()
+{
+  if (bomberMap)
+    return (true);
+  return (false);
 }
 
 BomberMap       * BomberMap::getMap()

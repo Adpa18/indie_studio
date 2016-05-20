@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu May 19 18:12:54 2016 Victor Gouet
+// Last update Thu May 19 18:45:02 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -106,11 +106,11 @@ void    GameManager::run()
             }
             else
             {
-	      if (_state != MENU && m_gameState != PAUSE)
-		{
-		  BomberMap::deleteMap();
+	      // if (_state != MENU && m_gameState != PAUSE)
+	      // 	{
+	      // 	  BomberMap::deleteMap();
 		  _state = MENU;
-		}
+		// }
                 onMenu();
             }
 
@@ -202,6 +202,7 @@ void    GameManager::onGame()
         setGameState(PAUSE);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
         uiEventReceiver->DisplayPauseMenu();
+	return ;
         //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
 
@@ -210,15 +211,15 @@ void    GameManager::onGame()
     std::vector<ACharacter *>::iterator it = characters.begin();
     while (it != characters.end())
     {
-        if (!(*it)->isDead())
+      if (!(*it)->isDead())
         {
-            (*it)->compute();
-            ++it;
+	  (*it)->compute();
+	  ++it;
         }
-        else
+      else
         {
-            delete (*it);
-            it = characters.erase(it);
+	  delete (*it);
+	  it = characters.erase(it);
         }
     }
     if (characters.size() == 0 || characters.size() == 1)
@@ -231,9 +232,12 @@ void    GameManager::onGame()
 
 void    GameManager::willStartGame()
 {
-    // BomberMap::newMap(BomberMap::Size::SMALL);
-    // BomberMap::getMap()->genMap();
-
+  // if (!BomberMap::isInstantiate())
+  //   {
+  //     std::cout << "bomberMap INTANTIATE" << std::endl;
+      BomberMap::newMap(BomberMap::Size::SMALL);
+      BomberMap::getMap()->genMap();
+    // }
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
   characters.clear();
