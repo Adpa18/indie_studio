@@ -38,7 +38,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
     _name(name), _player(player), _invincible(invincible)
 {
   t = NULL;
-  life = 1;
+  life = 1000;
   bombPass = false;
   _dead = false;
   this->item = NULL;

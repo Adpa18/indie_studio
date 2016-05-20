@@ -95,7 +95,7 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
     // if (!stop) {
         // new Explosion(pos, 1);
     if (type != AGameObject::BLOCK) {
-        new Explosion(pos, 1);
+        new Explosion(pos, BomberManTexture::getModel("fire").texture, 1);
     }
     // }
     return (stop);

@@ -12,7 +12,7 @@
 #include "../include/Texture.hpp"
 
 // STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
-const std::string BomberManTexture::path = "media/";
+const std::string BomberManTexture::path = "media/_old/";
 const std::string BomberManTexture::smallMap = "media/smallMap/";
 const std::string BomberManTexture::mediumMap = "media/mediumMap/";
 const std::string BomberManTexture::largeMap = "media/largeMap/";
@@ -41,6 +41,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"ziggsMad", {BomberManTexture::characters + "ziggs_mad.md3", BomberManTexture::characters + "ziggs_mad.png"}},
         // Bombes
         {"fireBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
+        {"atomicBomb", {BomberManTexture::bombs + "atomicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
         {"trackerBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
         // Gui
         {"menuScene", {"", BomberManTexture::gui + "MenuScene.png"}},
@@ -53,6 +54,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
         // Other
         {"fire", {"", BomberManTexture::other + "fire.jpg"}},
+        {"fireAtomic", {"", BomberManTexture::other + "fireAtomic.jpg"}},
         {"fireExplosion", {BomberManTexture::path + "cube.md2", ""}},
         // Bonus
         {"bonusBombPass", {BomberManTexture::bonus + "bonusBombPass.md2", BomberManTexture::bonus + "bonusBombPass.png"}},

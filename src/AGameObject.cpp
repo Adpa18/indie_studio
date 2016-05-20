@@ -51,10 +51,13 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
     }
     else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
     {
-        _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
-	_texture = texture;
+        if (texture != "")
+        {
+            _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
+	        _texture = texture;
+            _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
+        }
         _node->setMD2Animation(irr::scene::EMAT_STAND);
-        _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
 	_node->setID(id++);
     }
     this->setPos(pos);

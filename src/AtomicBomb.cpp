@@ -14,8 +14,8 @@
 #include "../include/Explosion.hpp"
 
 AtomicBomb::AtomicBomb(int id)
-  : ABomb(BomberManTexture::getModel("fireBomb").mesh,
-	  BomberManTexture::getModel("fireBomb").texture, 10, id)
+  : ABomb(BomberManTexture::getModel("atomicBomb").mesh,
+	  BomberManTexture::getModel("atomicBomb").texture, 10, id)
 {
 
 }
@@ -87,7 +87,7 @@ bool    AtomicBomb::killObjects(irr::core::vector2df const &pos)
         }
     }
     if (type != AGameObject::BLOCK) {
-        new Explosion(pos, 1);
+        new Explosion(pos, BomberManTexture::getModel("fireAtomic").texture, 1);
     }
     return (stop);
 }
