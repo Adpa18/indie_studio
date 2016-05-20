@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May 20 12:27:46 2016 Victor Gouet
+// Last update Fri May 20 12:51:47 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -38,7 +38,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
     _name(name), _player(player), _invincible(invincible)
 {
   t = NULL;
-  life = 1000;
+  life = 1;
   bombPass = false;
   _dead = false;
   this->item = NULL;
