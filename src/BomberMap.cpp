@@ -189,8 +189,8 @@ void			BomberMap::generateMap()
 	new Wall(irr::core::vector2df(x, y), Wall::Edge);
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
 	new Wall(irr::core::vector2df(x, y), Wall::Invicible);
-      else if (canPutDestructibleWall(x, y))
-	new Wall(irr::core::vector2df(x, y));
+//      else if (canPutDestructibleWall(x, y))
+//	new Wall(irr::core::vector2df(x, y));
     }
   }
 }

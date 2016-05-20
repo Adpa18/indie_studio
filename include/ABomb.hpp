@@ -55,9 +55,9 @@ private:
 
 protected:
   bool			_arrived;
+  irr::core::vector2df	dir;
 
 private:
-  irr::core::vector2df	dir;
   irr::f32		frameDeltaTime;
   irr::f32		then;
 

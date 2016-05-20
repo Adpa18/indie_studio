@@ -28,8 +28,8 @@ public:
 private:
   int		targetID;
   irr::core::vector2df	actual;
-// private:
-//     bool        killObjects(irr::core::vector2df const &pos);
+ private:
+     bool        killObjects(irr::core::vector2df const &pos);
 };
 
 #endif

@@ -55,6 +55,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         // Other
         {"fire", {"", BomberManTexture::other + "fire.jpg"}},
         {"fireAtomic", {"", BomberManTexture::other + "fireAtomic.jpg"}},
+        {"fireTracker", {"", BomberManTexture::other + "fireTracker.jpg"}},
         {"fireExplosion", {BomberManTexture::path + "cube.md2", ""}},
         // Bonus
         {"bonusBombPass", {BomberManTexture::bonus + "bonusBombPass.md2", BomberManTexture::bonus + "bonusBombPass.png"}},

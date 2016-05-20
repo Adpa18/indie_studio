@@ -43,27 +43,89 @@ TrackerBomb::TrackerBomb(ABomb const *other) : ABomb(other)
 
 void	TrackerBomb::updateTimeOut()
 {
-  AGameObject		*target = NULL;
-  irr::core::vector2df	normal;
-  irr::core::vector2df	direction;
+    int                     distance = 0;
+    irr::core::vector2df	pos;
+    irr::core::vector2df	dir(0, 0);
 
   std::vector<AGameObject *>	const &charact = BomberMap::getMap()->getCharacters();
 
+    pos = this->getMapPos();
   for (std::vector<AGameObject *>::const_iterator it = charact.begin(), end = charact.end() ; it != end ; ++it)
     {
-      if ((*(*it))->getID() != characterId && (targetID == (*(*it))->getID() || targetID == -1))
-	{
-	  targetID = (*it)->getID();
-	  target = (*it);
-	}
+        if ((*it)->getID() == characterId)
+            continue;
+        irr::core::vector2df    charPos = (*it)->getMapPos();
+        if (pos.X == charPos.X && (distance == 0 || distance > pos.Y - charPos.Y)) {
+            distance = pos.Y - charPos.Y;
+            dir =irr::core::vector2df(0, (distance > 0) ? -1 : 1);
+            distance = abs(distance);
+        } else if (pos.Y == charPos.Y && (distance == 0 || distance > pos.X - charPos.X)) {
+            distance = pos.X - charPos.X;
+            dir =irr::core::vector2df((distance > 0) ? -1 : 1, 0);
+            distance = abs(distance);
+        }
     }
-  if (!target)
-    return ;
-  // GET LA TARGET MAIS SA BOUGE PAS HELP
+    if (dir != irr::core::vector2df(0, 0))
+        this->setVelocity(dir);
+    move();
 }
 
 void		TrackerBomb::willExplose()
 {
-  std::cout << "BOOM" << std::endl;
-  targetID = -1;
+    irr::core::vector2df        pos = this->getMapPos();
+
+    this->killObjects(pos);
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(-power, 0))) {
+            break;
+        }
+    }
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(power, 0))) {
+            break;
+        }
+    }
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(0, -power))) {
+            break;
+        }
+    }
+    for (int power = 1; power <= this->_power; ++power) {
+        if (this->killObjects(pos + irr::core::vector2df(0, power))) {
+            break;
+        }
+    }
+}
+
+bool    TrackerBomb::killObjects(irr::core::vector2df const &pos)
+{
+    std::vector<AGameObject *>   objs;
+    AGameObject::Type           type;
+    bool                        stop = false;
+
+    type = AGameObject::NONE;
+    objs = BomberMap::getMap()->getObjsFromVector2(pos);
+    for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
+        if (this == (*it)) {
+            continue;
+        }
+        type = (*it)->getType();
+        if (type != AGameObject::BLOCK) {
+            AGameObject *obj = (*it);
+            obj->dead();
+            if (type != AGameObject::BOOM && obj->isDestructible()) {
+                delete obj;
+            }
+        }
+        if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
+            stop = true;
+        }
+    }
+    // if (!stop) {
+    // new Explosion(pos, 1);
+    if (type != AGameObject::BLOCK) {
+        new Explosion(pos, BomberManTexture::getModel("fireTracker").texture, 1);
+    }
+    // }
+    return (stop);
 }
