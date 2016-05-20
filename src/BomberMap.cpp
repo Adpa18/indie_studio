@@ -271,7 +271,6 @@ void BomberMap::deserialize()
    std::string nodeName;
    std::string meshesDir;
    std::string texturesDir;
-   irr::core::vector3df target(0,0,0);
    while (reader && reader->read())
    {
      if (reader->getNodeType() == irr::io::EXN_ELEMENT)
@@ -279,28 +278,26 @@ void BomberMap::deserialize()
         nodeName = (char *) reader->getNodeName();
         if (!initTarget && nodeName == "target")
         {
-           target.X = reader->getAttributeValueAsFloat("px");
-           target.Y = reader->getAttributeValueAsFloat("py");
-           target.Z = reader->getAttributeValueAsFloat("pz");
+           _target.X = reader->getAttributeValueAsFloat("px");
+           _target.Y = reader->getAttributeValueAsFloat("py");
+           _target.Z = reader->getAttributeValueAsFloat("pz");
            initTarget = true;
         }
         if (initTarget && !initCam && nodeName == "camera")
         {
            printf("camera\n");
-           _camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-               (0, irr::core::vector3df(reader->getAttributeValueAsFloat("px"),
-                                        reader->getAttributeValueAsFloat("py"),
-                                        reader->getAttributeValueAsFloat("pz")));
+           _camera_pos.X = reader->getAttributeValueAsFloat("px");
+           _camera_pos.Y = reader->getAttributeValueAsFloat("py");
+           _camera_pos.Z = reader->getAttributeValueAsFloat("pz");
+           _camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, _camera_pos);
            _camera->setAspectRatio(19/9);
            _camera->setFOV(reader->getAttributeValueAsFloat("fov"));
-           _camera->setScale(irr::core::vector3df(1,1,1));
-           _camera->bindTargetAndRotation(true);
-           _camera->setTarget(target);
+           //_camera->setScale(irr::core::vector3df(1,1,1));
+           _camera->setTarget(_target);
            _camera->setAutomaticCulling(irr::scene::EAC_OFF);
            _camera->setFarValue(1000);
            _camera->setNearValue(10);
            initCam = true;
-           std::cout << BomberMap::getMap()->get_camera() << std::endl;
         }
         else if (nodeName == "size")
         {
@@ -391,6 +388,12 @@ void BomberMap::deserialize()
       //  }
    }
    delete reader;
+}
+
+void		BomberMap::refreshCamera()
+{
+   _camera->setPosition(_camera_pos);
+   _camera->setTarget(_target);
 }
 
 void		BomberMap::newMap(Size mapSize)

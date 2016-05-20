@@ -62,6 +62,7 @@ public:
   void  move(AGameObject *obj, const irr::core::vector2df &pos);
   int	getSize() const;
   irr::scene::ICameraSceneNode *get_camera() const;
+  void		refreshCamera();
 
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
   const irr::core::vector2df  get(AGameObject *obj);
@@ -76,7 +77,9 @@ private:
   std::vector<irr::core::vector2df>		_spawner;
   Size						_mapSize;
   const std::string                 _filename;
-  irr::scene::ICameraSceneNode *_camera;
+  irr::scene::ICameraSceneNode      *_camera;
+  irr::core::vector3df              _target;
+  irr::core::vector3df              _camera_pos;
 
 
 private:

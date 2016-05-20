@@ -245,8 +245,7 @@ void    GameManager::willStartGame()
     if (BomberMap::getMap()->get_camera())
     {
         IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
-        BomberMap::getMap()->get_camera()->updateAbsolutePosition();
-        std::cout << BomberMap::getMap()->get_camera()->getPosition().Z << std::endl;
+        BomberMap::getMap()->refreshCamera();
     }
     else
     {
