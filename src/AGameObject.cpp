@@ -54,7 +54,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
         _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
 	_texture = texture;
         _node->setMD2Animation(irr::scene::EMAT_STAND);
-        _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
+        _node->setMaterialFlag(irr::video::EMF_LIGHTING , true);
 	_node->setID(id++);
     }
     this->setPos(pos);

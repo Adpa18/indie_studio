@@ -10,17 +10,19 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <stdlib.h>
+#include "../Irrlicht/irrlicht-1.8.3/include/irrXML.h"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
+#include "../include/Color.hpp"
+//#include "../include/Player.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
 const int		BomberMap::size_side[3] = {11, 15, 19};
 
-BomberMap::BomberMap(std::string const &)
+BomberMap::BomberMap(std::string const &filename) : _mapSize(SMALL)
 {
-
+   deserialize(filename);
 }
 
 BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize)
@@ -170,8 +172,8 @@ void			BomberMap::generateMap()
   }
 }
 
-//void BomberMap::serialize(const std::string &saveFile) const
-//{
+// void BomberMap::serialize(const std::string &saveFile) const
+// {
 //    irr::IrrlichtDevice  *device = IrrlichtController::getDevice();
 //    irr::io::IAttributes *attributes;
 //    irr::io::IXMLWriter *writter;
@@ -189,37 +191,174 @@ void			BomberMap::generateMap()
 //    }
 //    writter->writeClosingTag(L"Map");
 //    writter->drop();
-//}
-//
-//void BomberMap::deserialize(const std::string &loadFile)
-//{
-//    irr::IrrlichtDevice *device = IrrlichtController::getDevice();
-//    irr::io::IAttributes *attributes;
-//    irr::io::IXMLReader *reader;
-//    EventGame   eventGame;
-//    AGameObject *toPush;
-//    irr::core::stringw mapelem(L"attributes");
-//
-//    reader = device->getFileSystem()->createXMLReader(loadFile.c_str());
-//    while (reader->read())
-//    {
-//        if (reader->getNodeType() == irr::io::EXN_ELEMENT && mapelem.equals_ignore_case(reader->getNodeName()))
-//        {
-//            Player  *character;
-//
-//            attributes = device->getFileSystem()->createEmptyAttributes();
-//            attributes->read(reader, true);
-//            toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu.md2", "../media/pikachu.png", 42, eventGame);
-//            (*toPush)->deserializeAttributes(attributes);
-//            character = dynamic_cast<Player *>(toPush);
-//            if (character != NULL)
-//                character->setName((*toPush)->getName());
-//            _objects.push_back(toPush);
-//            attributes->drop();
-//        }
-//    }
-//    reader->drop();
-//}
+// }
+
+void rotate(irr::scene::ISceneNode *node, irr::core::vector3df rot)
+{
+   irr::core::matrix4 m;
+   m.setRotationDegrees(node->getRotation());
+   irr::core::matrix4 n;
+   n.setRotationDegrees(rot);
+   m *= n;
+   node->setRotation( m.getRotationDegrees() );
+   node->updateAbsolutePosition();
+}
+
+//--- turn ship left or right ---
+void turn(irr::scene::ISceneNode *node, irr::f32 rot)
+{
+   rotate(node, irr::core::vector3df(0.0f, rot, 0.0f) );
+}
+
+//--- pitch ship up or down ---
+void pitch(irr::scene::ISceneNode *node, irr::f32 rot)
+{
+   rotate(node, irr::core::vector3df(rot, 0.0f, 0.0f) );
+}
+
+//--- roll ship left or right ---
+void roll(irr::scene::ISceneNode *node, irr::f32 rot)
+{
+   rotate(node, irr::core::vector3df(0.0f, 0.0f, rot) );
+}
+
+void BomberMap::deserialize(const std::string &loadFile)
+{
+   //irr::IrrlichtDevice *device = IrrlichtController::getDevice();
+   irr::io::IrrXMLReader *reader;
+   int initAsset;
+   bool initCam;
+   bool initTarget;
+   //irr::io::IAttributes *attributes;
+   //EventGame   eventGame;
+   //AGameObject *toPush;
+   //irr::core::stringw mapelem(L"attributes");
+   reader = irr::io::createIrrXMLReader(loadFile.c_str());
+   initAsset = 0;
+   initCam = false;
+   initTarget = false;
+   std::string nodeName;
+   std::string meshesDir;
+   std::string texturesDir;
+   irr::core::vector3df target(0,0,0);
+   while (reader && reader->read())
+   {
+     if (reader->getNodeType() == irr::io::EXN_ELEMENT)
+     {
+        nodeName = (char *) reader->getNodeName();
+        if (!initTarget && nodeName == "target")
+        {
+           target.X = reader->getAttributeValueAsFloat("px");
+           target.Y = reader->getAttributeValueAsFloat("py");
+           target.Z = reader->getAttributeValueAsFloat("pz");
+           initTarget = true;
+        }
+        if (initTarget && !initCam && nodeName == "camera")
+        {
+           printf("camera\n");
+           irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+               (0, irr::core::vector3df(reader->getAttributeValueAsFloat("px"),
+                                        reader->getAttributeValueAsFloat("py"),
+                                        reader->getAttributeValueAsFloat("pz")));
+           camera->setAspectRatio(19/9);
+           camera->setFOV(reader->getAttributeValueAsFloat("fov"));
+           camera->setScale(irr::core::vector3df(1,1,1));
+           camera->setTarget(target);
+           camera->setAutomaticCulling(irr::scene::EAC_OFF);
+           camera->setFarValue(1000);
+           camera->setNearValue(10);
+           initCam = true;
+        }
+        else if (nodeName == "size")
+        {
+            _mapSize = (Size) reader->getAttributeValueAsInt("size");
+        }
+        else if (nodeName == "spawn")
+        {
+           printf("spawn\n");
+           _spawner.push_back(irr::core::vector2df(reader->getAttributeValueAsFloat("px"), reader->getAttributeValueAsFloat("py")));
+        }
+        else if (nodeName == "ambient_light")
+        {
+           IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(reader->getAttributeValueAsFloat("r"),
+                                                                                      reader->getAttributeValueAsFloat("g"),
+                                                                                      reader->getAttributeValueAsFloat("b"),
+                                                                                      reader->getAttributeValueAsFloat("a")));
+        }
+        else if (nodeName == "light")
+        {
+           irr::scene::ILightSceneNode*   light;
+           irr::video::SLight             light_data;
+
+           nodeName = reader->getAttributeValueSafe("type");
+           if (nodeName == "spot")
+              light_data.Type = irr::video::ELT_SPOT;
+           else if (nodeName == "point")
+              light_data.Type = irr::video::ELT_POINT;
+           else if (nodeName == "directional")
+              light_data.Type = irr::video::ELT_DIRECTIONAL;
+           light_data.Radius = reader->getAttributeValueAsFloat("radius");
+           light_data.OuterCone = reader->getAttributeValueAsFloat("outer_cone");
+           Color col(reader->getAttributeValueSafe("ambient_color"));
+           light_data.AmbientColor = irr::video::SColorf(col.r, col.g, col.b);
+           col.set(reader->getAttributeValueSafe("specular_color"));
+           light_data.SpecularColor = irr::video::SColorf(col.r, col.g, col.b, col.a);
+           col.set(reader->getAttributeValueSafe("diffuse_color"));
+           light_data.DiffuseColor = irr::video::SColorf(col.r, col.g, col.b, col.a);
+
+           light = IrrlichtController::getSceneManager()->addLightSceneNode();
+           light->setLightData(light_data);
+           light->setRadius(reader->getAttributeValueAsFloat("radius"));
+           light->enableCastShadow(false);
+           light->setPosition(irr::core::vector3df(reader->getAttributeValueAsFloat("px"),
+                                                   reader->getAttributeValueAsFloat("py"),
+                                                   reader->getAttributeValueAsFloat("pz")));
+           light->setRotation(irr::core::vector3df(reader->getAttributeValueAsFloat("rx"),
+                                                   reader->getAttributeValueAsFloat("ry"),
+                                                   reader->getAttributeValueAsFloat("rz")));
+
+           //light->setVisible(true);
+        }
+        else if (nodeName == "meshes_dir")
+        {
+           printf("meshes_dir\n");
+           meshesDir = reader->getAttributeValueSafe("file");
+           initAsset += 1;
+        }
+        else if (nodeName == "textures_dir")
+        {
+           printf("textures_dir\n");
+           texturesDir = reader->getAttributeValueSafe("file");
+           initAsset += 1;
+        }
+        else if (initAsset == 2 && nodeName == "props")
+        {
+           printf("props\n");
+           float repeat = reader->getAttributeValueAsFloat("repeat");
+           _props.push_back(new Props(meshesDir + std::string(reader->getAttributeValueSafe("mesh")),
+                                      texturesDir + std::string(reader->getAttributeValueSafe("texture")),
+                                      irr::core::vector2df(repeat, repeat),
+                                      reader->getAttributeValueAsInt("transparent")));
+        }
+
+     }
+      //  if (reader->getNodeType() == irr::io::EXN_ELEMENT && mapelem.equals_ignore_case(reader->getNodeName()))
+      //  {
+      //      Player  *character;
+       //
+      //      attributes = device->getFileSystem()->createEmptyAttributes();
+      //      attributes->read(reader, true);
+      //      toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu.md2", "../media/pikachu.png", 42, eventGame);
+      //      (*toPush)->deserializeAttributes(attributes);
+      //      character = dynamic_cast<Player *>(toPush);
+      //      if (character != NULL)
+      //          character->setName((*toPush)->getName());
+      //      _objects.push_back(toPush);
+      //      attributes->drop();
+      //  }
+   }
+   delete reader;
+}
 
 void		BomberMap::newMap(Size mapSize)
 {
@@ -227,7 +366,16 @@ void		BomberMap::newMap(Size mapSize)
     {
       delete bomberMap;
     }
-  bomberMap = new BomberMap(mapSize);  
+  bomberMap = new BomberMap(mapSize);
+}
+
+void		BomberMap::newMap(std::string const& filename)
+{
+   if (bomberMap)
+   {
+      delete bomberMap;
+   }
+   bomberMap = new BomberMap(filename);
 }
 
 void		BomberMap::deleteMap()

@@ -15,6 +15,7 @@
 # include <string>
 # include "ACharacter.hpp"
 # include "Wall.hpp"
+# include "Props.hpp"
 
 class	BomberMap
 {
@@ -44,6 +45,7 @@ public:
 public:
   static BomberMap    *getMap();
   static void		newMap(Size mapSize);
+  static void		newMap(std::string const &filename);
   static void		deleteMap();
 
 private:
@@ -64,7 +66,8 @@ public:
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;
-  std::vector<AGameObject *>			_characters;
+  std::vector<Props*> _props;
+  std::vector<AGameObject *>			      _characters;
   std::vector<irr::core::vector2df>		_spawner;
   Size						_mapSize;
 

@@ -229,8 +229,11 @@ void    GameManager::onGame()
 
 void    GameManager::willStartGame()
 {
-    BomberMap::newMap(BomberMap::Size::SMALL);
-    BomberMap::getMap()->genMap();
+
+    BomberMap::newMap("./media/map/map1.xml");
+
+    //BomberMap::newMap(BomberMap::Size::SMALL);
+    //BomberMap::getMap()->genMap();
 
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
@@ -241,14 +244,14 @@ void    GameManager::willStartGame()
                                     BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
 
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
-    irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
-    camera->setTarget(irr::core::vector3df(0, 0, 0));
-
-    camera->setAutomaticCulling(irr::scene::EAC_OFF);
-    camera->setFarValue(1000);
-    camera->setNearValue(10);
-//  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
+//    irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+//            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
+//    camera->setTarget(irr::core::vector3df(0, 0, 0));
+//
+//    camera->setAutomaticCulling(irr::scene::EAC_OFF);
+//    camera->setFarValue(1000);
+//    camera->setNearValue(10);
+////  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
 //									     1.0f, 1.0f, 1.0f));
 
 }
