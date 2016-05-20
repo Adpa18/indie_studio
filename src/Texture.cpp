@@ -13,18 +13,58 @@
 
 // STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
 const std::string BomberManTexture::path = "media/";
+const std::string BomberManTexture::smallMap = "media/smallMap/";
+const std::string BomberManTexture::mediumMap = "media/mediumMap/";
+const std::string BomberManTexture::largeMap = "media/largeMap/";
+const std::string BomberManTexture::bombs = "media/bombs/";
+const std::string BomberManTexture::bonus = "media/bonus/";
+const std::string BomberManTexture::characters = "media/characters/";
+const std::string BomberManTexture::gui = "media/gui/";
+const std::string BomberManTexture::other = "media/other/";
 
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
-        // TrueMap
-        {"mapCurtain", {BomberManTexture::path + "map/meshes/curtain.md3", BomberManTexture::path + "map/textures/Curtain01_D.BMP"}},
-        {"mapGoods", {BomberManTexture::path + "map/meshes/goods.md3", BomberManTexture::path + "map/textures/Goods01_D.BMP"}},
-        {"mapGround", {BomberManTexture::path + "map/meshes/ground.md3", BomberManTexture::path + "map/textures/Ground04_D.BMP"}},
-        {"mapPillar", {BomberManTexture::path + "map/meshes/pillar.md3", BomberManTexture::path + "map/textures/Pillar01_D.BMP"}},
-        {"mapStatue", {BomberManTexture::path + "map/meshes/statue.md3", BomberManTexture::path + "map/textures/Statue01_D.BMP"}},
-        {"mapTable", {BomberManTexture::path + "map/meshes/table.md3", BomberManTexture::path + "map/textures/Table01_D.BMP"}},
-        {"mapTomb", {BomberManTexture::path + "map/meshes/tomb.md3", BomberManTexture::path + "map/textures/Tomb01_D.BMP"}},
-        {"mapWall", {BomberManTexture::path + "map/meshes/wall.md3", BomberManTexture::path + "map/textures/Wall01_D.BMP"}},
+        // smallMap
+        {"mapCurtain", {BomberManTexture::smallMap + "curtain.md3", BomberManTexture::smallMap + "Curtain01_D.BMP"}},
+        {"mapGoods", {BomberManTexture::smallMap + "goods.md3", BomberManTexture::smallMap + "Goods01_D.BMP"}},
+        {"mapGround", {BomberManTexture::smallMap + "ground.md3", BomberManTexture::smallMap + "Ground04_D.BMP"}},
+        {"mapPillar", {BomberManTexture::smallMap + "pillar.md3", BomberManTexture::smallMap + "Pillar01_D.BMP"}},
+        {"mapStatue", {BomberManTexture::smallMap + "statue.md3", BomberManTexture::smallMap + "Statue01_D.BMP"}},
+        {"mapTable", {BomberManTexture::smallMap + "table.md3", BomberManTexture::smallMap + "Table01_D.BMP"}},
+        {"mapTomb", {BomberManTexture::smallMap + "tomb.md3", BomberManTexture::smallMap + "Tomb01_D.BMP"}},
+        {"mapWall", {BomberManTexture::smallMap + "wall.md3", BomberManTexture::smallMap + "Wall01_D.BMP"}},
+        // Characters
+        {"ziggs", {BomberManTexture::characters + "ziggs.md3", BomberManTexture::characters + "ziggs.png"}},
+        {"ziggsPool", {BomberManTexture::characters + "ziggs_pool.md3", BomberManTexture::characters + "ziggs_pool.png"}},
+        {"ziggsSnow", {BomberManTexture::characters + "ziggs_snow.md3", BomberManTexture::characters + "ziggs_snow.png"}},
+        {"ziggsGeneral", {BomberManTexture::characters + "ziggs_general.md3", BomberManTexture::characters + "ziggs_general.png"}},
+        {"ziggsMad", {BomberManTexture::characters + "ziggs_mad.md3", BomberManTexture::characters + "ziggs_mad.png"}},
+        // Bombes
+        {"fireBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
+        {"trackerBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+        // Gui
+        {"menuScene", {"", BomberManTexture::gui + "MenuScene.png"}},
+        {"menuSceneStart", {"", BomberManTexture::gui + "MenuSceneStart.png"}},
+        {"playerSelection", {"", BomberManTexture::gui + "PlayerSelection.png"}},
+        {"playerButton", {"", BomberManTexture::gui + "PlayerButton.png"}},
+        {"playerButtonIa", {"", BomberManTexture::gui + "PlayerButtonIaEasy.png"}},
+        {"IAEasy", {"", BomberManTexture::gui + "PlayerButtonIaEasy.png"}},
+        {"IAMedium", {"", BomberManTexture::gui + "PlayerButtonIaMedium.png"}},
+        {"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
+        // Other
+        {"fire", {"", BomberManTexture::other + "fire.jpg"}},
+        {"fireExplosion", {BomberManTexture::path + "cube.md2", ""}},
+        // Bonus
+        {"bonusBombPass", {BomberManTexture::bonus + "bonusBombPass.md2", BomberManTexture::bonus + "bonusBombPass.png"}},
+        {"bonusFireBomb", {BomberManTexture::bonus + "bonusFireBomb.md2", BomberManTexture::bonus + "bonusFireBomb.png"}},
+        {"bonusPower", {BomberManTexture::bonus + "bonusPower.md2", BomberManTexture::bonus + "bonusPower.png"}},
+        {"bonusSpeed", {BomberManTexture::bonus + "bonusSpeed.md2", BomberManTexture::bonus + "bonusSpeed.png"}},
+        {"bonusBiggestMan", {BomberManTexture::bonus + "bonusBiggestMan.md2", BomberManTexture::bonus + "bonusBiggestMan.png"}},
+        {"bonusSmallestMan", {BomberManTexture::bonus + "bonusSmallestMan.md3", BomberManTexture::bonus + "bonusSmallestMan.png"}},
+        {"bonusInvincible", {BomberManTexture::bonus + "bonusInvincible.md2", BomberManTexture::bonus + "bonusInvincible.png"}},
+        // Items
+        {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
+
         // BomberMap
         {"ground", {"", BomberManTexture::path + "grass.png"}},
         {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
@@ -50,36 +90,6 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         // {"cubeIndestructible", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
         // {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
         // {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
-        // Players
-        {"ziggsSnow", {BomberManTexture::path + "ziggs_snow.md3", BomberManTexture::path + "ziggs_snow.png"}},
-	// Bomb
-        {"fire", {"", BomberManTexture::path + "fire.jpg"}},
-        {"fireBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
-    	{"trackerBomb", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
-	// Explosion
-        {"fireExplosion", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "explosion.jpg"}},
-        // Bonus
-        {"bonusBombPass", {BomberManTexture::path + "pokeball.md2", BomberManTexture::path + "pokeball.png"}},
-        {"bonusFireBomb", {BomberManTexture::path + "salameche.md2", BomberManTexture::path + "salameche.png"}},
-        {"bonusPower", {BomberManTexture::path + "carapuce.md2", BomberManTexture::path + "carapuce.png"}},
-        {"bonusSpeed", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
-        {"bonusBiggestMan", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
-        {"bonusSmallestMan", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
-	    {"bonusInvincible", {BomberManTexture::path + "cube.md2", BomberManTexture::path + "cubeIndestructible.png"}},
-        // Items
-        {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
-	// MENU
-	    {"playerSelection", {"", BomberManTexture::path + "PlayerSelection.png"}},
-	    {"menuScene", {"", BomberManTexture::path + "MenuScene.png"}},
-	    {"menuSceneStart", {"", BomberManTexture::path + "MenuSceneStart.png"}},
-	    {"playerButton", {"", BomberManTexture::path + "PlayerButton.png"}},
-	    {"playerButtonIa", {"", BomberManTexture::path + "PlayerButtonIaEasy.png"}},
-        {"ziggsGeneral", {BomberManTexture::path + "ziggs_general.md3", BomberManTexture::path + "ziggs_general.png"}},
-        {"ziggsMad", {BomberManTexture::path + "ziggs_mad.md3", BomberManTexture::path + "ziggs_mad.png"}},
-        {"ziggs", {BomberManTexture::path + "ziggs.md3", BomberManTexture::path + "ziggs.png"}},
-        {"IAEasy", {"", BomberManTexture::path + "PlayerButtonIaEasy.png"}},
-        {"IAMedium", {"", BomberManTexture::path + "PlayerButtonIaMedium.png"}},
-        {"IAHard", {"", BomberManTexture::path + "PlayerButtonIaHard.png"}}
 };
 
 void BomberManTexture::loadTexture()
@@ -96,5 +106,9 @@ void BomberManTexture::loadTexture()
 
 const struct model &BomberManTexture::getModel(const std::string &model)
 {
-    return (_models.find(model)->second);
+    const std::map<std::string, struct model>::const_iterator   it = _models.find(model);
+
+    if (it == _models.end())
+        throw std::runtime_error("Failed to load Model : " + model);
+    return (it->second);
 }
