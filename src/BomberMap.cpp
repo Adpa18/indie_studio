@@ -10,7 +10,6 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <stdlib.h>
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 
@@ -128,6 +127,16 @@ void			BomberMap::generateGround()
  //    light->addAnimator(anim);
 
 //    anim->drop();
+
+
+    this->loadModel(BomberManTexture::getModel("mapCurtain")); // BadScale
+    this->loadModel(BomberManTexture::getModel("mapGoods")); // BadScale
+    this->loadModel(BomberManTexture::getModel("mapGround")); // BadScale
+    this->loadModel(BomberManTexture::getModel("mapPillar")); // OK
+    this->loadModel(BomberManTexture::getModel("mapStatue")); // BadScale
+    this->loadModel(BomberManTexture::getModel("mapTable")); // BadScale
+    this->loadModel(BomberManTexture::getModel("mapTomb")); // BadScale
+    this->loadModel(BomberManTexture::getModel("mapWall")); // BadPos Stair
 }
 
 int	BomberMap::getSize() const
@@ -318,4 +327,22 @@ std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vecto
 const irr::core::vector2df  BomberMap::get(AGameObject *obj)
 {
     return (this->_objects[obj]);
+}
+
+void    BomberMap::loadModel(struct model mod)
+{
+    irr::scene::IAnimatedMesh           *meshNode;
+    irr::scene::IAnimatedMeshSceneNode  *node;
+
+    if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mod.mesh.c_str())))
+    {
+        IrrlichtController::getDevice()->drop();
+        throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
+    }
+    else if ((node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
+    {
+        node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(mod.texture.c_str()));
+        node->setMD2Animation(irr::scene::EMAT_STAND);
+        node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
+    }
 }

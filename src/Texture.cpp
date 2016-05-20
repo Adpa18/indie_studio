@@ -16,6 +16,15 @@ const std::string BomberManTexture::path = "media/";
 
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
+        // TrueMap
+        {"mapCurtain", {BomberManTexture::path + "map/meshes/curtain.md3", BomberManTexture::path + "map/textures/Curtain01_D.BMP"}},
+        {"mapGoods", {BomberManTexture::path + "map/meshes/goods.md3", BomberManTexture::path + "map/textures/Goods01_D.BMP"}},
+        {"mapGround", {BomberManTexture::path + "map/meshes/ground.md3", BomberManTexture::path + "map/textures/Ground04_D.BMP"}},
+        {"mapPillar", {BomberManTexture::path + "map/meshes/pillar.md3", BomberManTexture::path + "map/textures/Pillar01_D.BMP"}},
+        {"mapStatue", {BomberManTexture::path + "map/meshes/statue.md3", BomberManTexture::path + "map/textures/Statue01_D.BMP"}},
+        {"mapTable", {BomberManTexture::path + "map/meshes/table.md3", BomberManTexture::path + "map/textures/Table01_D.BMP"}},
+        {"mapTomb", {BomberManTexture::path + "map/meshes/tomb.md3", BomberManTexture::path + "map/textures/Tomb01_D.BMP"}},
+        {"mapWall", {BomberManTexture::path + "map/meshes/wall.md3", BomberManTexture::path + "map/textures/Wall01_D.BMP"}},
         // BomberMap
         {"ground", {"", BomberManTexture::path + "grass.png"}},
         {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},

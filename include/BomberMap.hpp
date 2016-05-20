@@ -15,6 +15,7 @@
 # include <string>
 # include "ACharacter.hpp"
 # include "Wall.hpp"
+# include "Texture.hpp"
 
 class	BomberMap
 {
@@ -62,6 +63,8 @@ public:
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
   const irr::core::vector2df  get(AGameObject *obj);
   std::vector<AGameObject *> const &getCharacters() const;
+
+    void    loadModel(struct model mod);
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;
