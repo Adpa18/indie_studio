@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Thu May 19 15:36:12 2016 Victor Gouet
+// Last update Fri May 20 10:39:09 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -131,6 +131,16 @@ void			BomberMap::generateGround()
  //    light->addAnimator(anim);
 
 //    anim->drop();
+
+
+    // this->loadModel(BomberManTexture::getModel("mapCurtain")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapGoods")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapGround")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapPillar")); // OK
+    // this->loadModel(BomberManTexture::getModel("mapStatue")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapTable")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapTomb")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapWall")); // BadPos Stair
 }
 
 int	BomberMap::getSize() const
@@ -411,6 +421,13 @@ void		BomberMap::deleteMap()
    bomberMap = NULL;
 }
 
+bool		BomberMap::isInstantiate()
+{
+  if (bomberMap)
+    return (true);
+  return (false);
+}
+
 BomberMap       * BomberMap::getMap()
 {
     if (!bomberMap) {
@@ -467,4 +484,22 @@ std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vecto
 const irr::core::vector2df  BomberMap::get(AGameObject *obj)
 {
     return (this->_objects[obj]);
+}
+
+void    BomberMap::loadModel(struct model mod)
+{
+    irr::scene::IAnimatedMesh           *meshNode;
+    irr::scene::IAnimatedMeshSceneNode  *node;
+
+    if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mod.mesh.c_str())))
+    {
+        IrrlichtController::getDevice()->drop();
+        throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
+    }
+    else if ((node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
+    {
+        node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(mod.texture.c_str()));
+        node->setMD2Animation(irr::scene::EMAT_STAND);
+        node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
+    }
 }

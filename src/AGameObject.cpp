@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Thu May 19 15:40:31 2016 Victor Gouet
+// Last update Fri May 20 12:23:23 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -51,10 +51,13 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
     }
     else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
     {
-        _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
-	_texture = texture;
+        if (texture != "")
+        {
+            _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
+	        _texture = texture;
+            _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
+        }
         _node->setMD2Animation(irr::scene::EMAT_STAND);
-        _node->setMaterialFlag(irr::video::EMF_LIGHTING , true);
 	_node->setID(id++);
     }
     this->setPos(pos);
@@ -119,12 +122,14 @@ bool				AGameObject::isTimeOut() const
   struct tm	y2k;
   double	seconds;
 
+  if (_timeout == -1)
+    return (true);
+
   memset(&y2k, 0, sizeof(y2k));
   y2k.tm_year = 100;
   y2k.tm_mday = 1;
 
   timer = time(NULL);
-
   seconds = difftime(timer, mktime(&y2k));
   return (seconds >= (_timer + _timeout));
 }
@@ -142,6 +147,11 @@ void			AGameObject::setTimeOut(double timeout)
   y2k.tm_mday = 1;
   _timer = difftime(timer, mktime(&y2k));	
   GameObjectTimeContainer::SharedInstance()->add(this);
+}
+
+double			AGameObject::getTimeOutObj() const
+{
+  return (_timeout);
 }
 
 void			      AGameObject::updateTimeOut()

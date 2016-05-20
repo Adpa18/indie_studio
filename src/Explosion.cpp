@@ -5,7 +5,7 @@
 #include "Texture.hpp"
 #include "Explosion.hpp"
 
-Explosion::Explosion(irr::core::vector2df const &pos, double timeout)
+Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture, double timeout)
         : AGameObject(pos, BomberManTexture::getModel("fireExplosion").mesh,
         BomberManTexture::getModel("fireExplosion").texture, Type::BOOM, timeout)
 {
@@ -27,7 +27,7 @@ Explosion::Explosion(irr::core::vector2df const &pos, double timeout)
     _ps->setScale(irr::core::vector3df(1,1,1));
     _ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
-    _ps->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(BomberManTexture::getModel("fire").texture.c_str()));
+    _ps->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
 

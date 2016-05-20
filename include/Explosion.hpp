@@ -12,7 +12,7 @@ class Explosion : public AGameObject {
 private:
     irr::scene::IParticleSystemSceneNode    *_ps;
 public:
-    Explosion(irr::core::vector2df const &pos, double timeout);
+    Explosion(irr::core::vector2df const &pos, std::string const &texture, double timeout);
     virtual ~Explosion();
 
 public:

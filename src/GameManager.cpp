@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu May 19 18:12:54 2016 Victor Gouet
+// Last update Fri May 20 11:25:41 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -106,11 +106,11 @@ void    GameManager::run()
             }
             else
             {
-	      if (_state != MENU && m_gameState != PAUSE)
-		{
-		  BomberMap::deleteMap();
+	      // if (_state != MENU && m_gameState != PAUSE)
+	      // 	{
+	      // 	  BomberMap::deleteMap();
 		  _state = MENU;
-		}
+		// }
                 onMenu();
             }
 
@@ -202,6 +202,7 @@ void    GameManager::onGame()
         setGameState(PAUSE);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
         uiEventReceiver->DisplayPauseMenu();
+	return ;
         //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
 
@@ -210,23 +211,23 @@ void    GameManager::onGame()
     std::vector<ACharacter *>::iterator it = characters.begin();
     while (it != characters.end())
     {
-        if (!(*it)->isDead())
+      if (!(*it)->isDead())
         {
-            (*it)->compute();
-            ++it;
+	  (*it)->compute();
+	  ++it;
         }
-        else
+      else
         {
-            delete (*it);
-            it = characters.erase(it);
+	  delete (*it);
+	  it = characters.erase(it);
         }
     }
-    if (characters.size() == 0 || characters.size() == 1)
-      {
-	characters.clear();
-	setGameState(CLASSMENT_SCREEN);
-        IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
-      }
+    // if (characters.size() == 0 || characters.size() == 1)
+    //   {
+    // 	characters.clear();
+    // 	setGameState(CLASSMENT_SCREEN);
+    //     IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+    //   }
 }
 
 void    GameManager::willStartGame()

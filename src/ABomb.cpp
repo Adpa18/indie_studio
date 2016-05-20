@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Sat May 14 17:27:28 2016 Victor Gouet
+// Last update Fri May 20 12:37:17 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -26,6 +26,7 @@ ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout
   (*this)->setVisible(false);
   _power = 1;
   __active = false;
+  (*this)->setScale(irr::core::vector3df(1, 1, 1));
 }
 
 ABomb::ABomb(ABomb const *other)
@@ -38,7 +39,7 @@ ABomb::ABomb(ABomb const *other)
 
 ABomb	&ABomb::operator=(ABomb const *other)
 {
-  timeout = other->timeout;
+  // timeout = other->timeout;
   characterId = other->characterId;
   _arrived = true;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
@@ -54,6 +55,11 @@ ABomb	&ABomb::operator=(ABomb const *other)
 
 ABomb::~ABomb()
 {
+}
+
+double		ABomb::getTimeOut() const
+{
+  return (this->timeout);
 }
 
 void			ABomb::setVelocity(irr::core::vector2df const &_dir)
@@ -83,6 +89,7 @@ void			ABomb::move(double speed)
 	      if (objs.size() > 0)
 		_arrived = true;
 	      this->setPos(this->getMapPos() + dir);
+	      then = now;
 	      return;
 	    }
 	  (*this)->setPosition(irr::core::vector3df((*this)->getPosition().X + dir.X * frameDeltaTime * speed, 0, (*this)->getPosition().Z + dir.Y * frameDeltaTime * speed));
@@ -93,6 +100,7 @@ void			ABomb::move(double speed)
 
 void			ABomb::updateTimeOut()
 {
+  (*this)->setScale((*this)->getScale() + 0.008);
   move();
 }
 
@@ -105,6 +113,7 @@ void                        ABomb::dead()
       willExplose();
       disable();
     }
+  (*this)->setScale(irr::core::vector3df(1, 1, 1));
 }
 
 bool			ABomb::isDestructible() const
@@ -120,11 +129,13 @@ bool			ABomb::isUse() const
 void		ABomb::disable()
 {
   this->setPos(irr::core::vector2df(-1000, -1000));
+  setTimeOut(-1);
 }
 
 void			ABomb::operator<<(irr::core::vector2df
 					  const &pos)
 {
+  (*this)->setScale(irr::core::vector3df(1, 1, 1));
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   (*this)->setVisible(true);
   use = true;

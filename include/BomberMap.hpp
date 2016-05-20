@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Thu May 19 14:46:55 2016 Victor Gouet
+// Last update Thu May 19 18:26:26 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -16,7 +16,7 @@
 # include "ACharacter.hpp"
 # include "Wall.hpp"
 # include "Props.hpp"
-
+# include "Texture.hpp"
 class	BomberMap
 {
 public:
@@ -47,6 +47,7 @@ public:
   static void		newMap(Size mapSize);
   static void		newMap(std::string const &filename);
   static void		deleteMap();
+  static bool		isInstantiate();
 
 
 private:
@@ -65,6 +66,8 @@ public:
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
   const irr::core::vector2df  get(AGameObject *obj);
   std::vector<AGameObject *> const &getCharacters() const;
+
+    void    loadModel(struct model mod);
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;
