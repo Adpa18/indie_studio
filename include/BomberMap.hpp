@@ -80,6 +80,7 @@ private:
   irr::scene::ICameraSceneNode      *_camera;
   irr::core::vector3df              _target;
   irr::core::vector3df              _camera_pos;
+  std::pair<std::string , std::string> _walls[3];
 
 private:
     static BomberMap    *bomberMap;

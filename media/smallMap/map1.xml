@@ -27,11 +27,16 @@
     <props mesh="pillar.md3" texture="pillar_d.png" />
     <props mesh="statue.md3" texture="statue_d.png" />
     <props mesh="table.md3" texture="table_d.png" />
-
-    <!-- <props mesh="tomb.md3" texture="Tomb01_D.BMP" /> -->
     <props mesh="wall_left.md3" texture="wall_left.png" />
-
     <props mesh="wall_right.md3" texture="wall_right.png" />
     <props mesh="weapon.md3" texture="weapon_d.png" />
 
+    <walls
+            mesh1="tomb1.md3"
+            texture1="tomb1.bmp"
+            mesh2="tomb2.md3"
+            texture2="tomb2.bmp"
+            mesh3="tomb3.md3"
+            texture3="tomb3.bmp"
+    />
 </config>
