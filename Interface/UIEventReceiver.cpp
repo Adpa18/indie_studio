@@ -144,7 +144,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                             state = 0;
                             BomberMap::deleteMap();
                             //BomberMap::newMap(BomberMap::Size::SMALL);
-                            BomberMap::newMap("./media/map/map1.xml");
+                            BomberMap::newMap("./media/smallMap/map1.xml");
 			    BomberMap::getMap()->genMap();
                         }
                         break;

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Mon May 16 13:47:45 2016 Victor Gouet
+// Last update Fri May 20 15:36:27 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -25,14 +25,33 @@ const std::string BomberManTexture::other = "media/other/";
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
         // smallMap
-        {"mapCurtain", {BomberManTexture::smallMap + "curtain.md3", BomberManTexture::smallMap + "Curtain01_D.BMP"}},
-        {"mapGoods", {BomberManTexture::smallMap + "goods.md3", BomberManTexture::smallMap + "Goods01_D.BMP"}},
-        {"mapGround", {BomberManTexture::smallMap + "ground.md3", BomberManTexture::smallMap + "Ground04_D.BMP"}},
-        {"mapPillar", {BomberManTexture::smallMap + "pillar.md3", BomberManTexture::smallMap + "Pillar01_D.BMP"}},
-        {"mapStatue", {BomberManTexture::smallMap + "statue.md3", BomberManTexture::smallMap + "Statue01_D.BMP"}},
-        {"mapTable", {BomberManTexture::smallMap + "table.md3", BomberManTexture::smallMap + "Table01_D.BMP"}},
-        {"mapTomb", {BomberManTexture::smallMap + "tomb.md3", BomberManTexture::smallMap + "Tomb01_D.BMP"}},
-        {"mapWall", {BomberManTexture::smallMap + "wall.md3", BomberManTexture::smallMap + "Wall01_D.BMP"}},
+        // {"mapCurtain", {BomberManTexture::smallMap + "curtain.md3", BomberManTexture::smallMap + "Curtain01_D.BMP"}},
+        // {"mapGoods", {BomberManTexture::smallMap + "goods.md3", BomberManTexture::smallMap + "Goods01_D.BMP"}},
+        // {"mapGround", {BomberManTexture::smallMap + "ground.md3", BomberManTexture::smallMap + "Ground04_D.BMP"}},
+        // {"mapPillar", {BomberManTexture::smallMap + "pillar.md3", BomberManTexture::smallMap + "Pillar01_D.BMP"}},
+        // {"mapStatue", {BomberManTexture::smallMap + "statue.md3", BomberManTexture::smallMap + "Statue01_D.BMP"}},
+        // {"mapTable", {BomberManTexture::smallMap + "table.md3", BomberManTexture::smallMap + "Table01_D.BMP"}},
+        // {"mapTomb", {BomberManTexture::smallMap + "tomb.md3", BomberManTexture::smallMap + "Tomb01_D.BMP"}},
+        // {"mapWall", {BomberManTexture::smallMap + "wall.md3", BomberManTexture::smallMap + "Wall01_D.BMP"}},
+
+	{"carpet", {BomberManTexture::smallMap + "meshes/carpet.md3", BomberManTexture::smallMap + "textures/Carpet01_D.png"}},
+	{"carpet5", {BomberManTexture::smallMap + "meshes/carpet5.md3", BomberManTexture::smallMap + "textures/Carpet03_D.png"}},
+	{"chest3", {BomberManTexture::smallMap + "meshes/chest3.md3", BomberManTexture::smallMap + "textures/Chest03_D.BMP"}},
+	{"chest4", {BomberManTexture::smallMap + "meshes/chest4.md3", BomberManTexture::smallMap + "textures/Chest04_D.BMP"}},
+	{"curtain", {BomberManTexture::smallMap + "meshes/curtain.md3", BomberManTexture::smallMap + "textures/curtain_d.png"}},
+	{"goods", {BomberManTexture::smallMap + "meshes/goods.md3", BomberManTexture::smallMap + "textures/goods_d.png"}},
+	{"ground", {BomberManTexture::smallMap + "meshes/ground.md3", BomberManTexture::smallMap + "textures/ground_d1.png"}},
+	{"light", {BomberManTexture::smallMap + "meshes/light.md3", BomberManTexture::smallMap + "textures/Light01_D.png"}},
+	{"pillar", {BomberManTexture::smallMap + "meshes/pillar.md3", BomberManTexture::smallMap + "textures/pillar_d.png"}},
+	{"statue", {BomberManTexture::smallMap + "meshes/statue.md3", BomberManTexture::smallMap + "textures/statue_d.png"}},
+	{"table", {BomberManTexture::smallMap + "meshes/table.md3", BomberManTexture::smallMap + "textures/table_d.png"}},
+	{"wall_left", {BomberManTexture::smallMap + "meshes/wall_left.md3", BomberManTexture::smallMap + "textures/wall_left.png"}},
+	{"wall_right", {BomberManTexture::smallMap + "meshes/wall_right.md3", BomberManTexture::smallMap + "textures/wall_right.png"}},
+	{"weapon", {BomberManTexture::smallMap + "meshes/weapon.md3", BomberManTexture::smallMap + "textures/weapon_d.png"}},
+
+
+
+
         // Characters
         {"ziggs", {BomberManTexture::characters + "ziggs.md3", BomberManTexture::characters + "ziggs.png"}},
         {"ziggsPool", {BomberManTexture::characters + "ziggs_pool.md3", BomberManTexture::characters + "ziggs_pool.png"}},

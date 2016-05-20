@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Thu May 19 18:26:26 2016 Victor Gouet
+// Last update Fri May 20 16:04:38 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -80,7 +80,6 @@ private:
   irr::scene::ICameraSceneNode      *_camera;
   irr::core::vector3df              _target;
   irr::core::vector3df              _camera_pos;
-
 
 private:
     static BomberMap    *bomberMap;
