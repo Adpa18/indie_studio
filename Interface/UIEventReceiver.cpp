@@ -19,6 +19,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
  */
 bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 {
+    //Permet de ne la load qu'au changement de state
+    static int state = -1;
     if (event.EventType == irr::EET_KEY_INPUT_EVENT)
     {
         switch (event.KeyInput.Key)
@@ -137,20 +139,34 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 switch (id)
                 {
                     case UIElement::MAP_SELECTION1:
-                        // Displays the map preview
-                        //BomberMap::newMap(BomberMap::Size::SMALL);
-                        //BomberMap::getMap()->genMap();
+                        if (state != 0)
+                        {
+                            state = 0;
+                            BomberMap::deleteMap();
+                            //BomberMap::newMap(BomberMap::Size::SMALL);
+                            BomberMap::newMap("./media/map/map1.xml");
+                        }
                         break;
 
                     case UIElement::MAP_SELECTION2:
-                        BomberMap::newMap(BomberMap::Size::MEDIUM);
-                        BomberMap::getMap()->genMap();
+                        if (state != 1)
+                        {
+                            state = 1;
+                            BomberMap::deleteMap();
+                            BomberMap::newMap(BomberMap::Size::MEDIUM);
+                            BomberMap::getMap()->genMap();
+                        }
                         break;
 
                     case UIElement::MAP_SELECTION3:
-                        BomberMap::newMap(BomberMap::Size::LARGE);
-                        BomberMap::getMap()->genMap();
-                        break;
+                        if (state != 2)
+                        {
+                            state = 2;
+                            BomberMap::deleteMap();
+                            BomberMap::newMap(BomberMap::Size::LARGE);
+                            BomberMap::getMap()->genMap();
+                        }
+                      break;
 
                     default:
                         break;

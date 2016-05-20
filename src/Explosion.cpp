@@ -33,12 +33,11 @@ Explosion::Explosion(irr::core::vector2df const &pos, double timeout)
 
 Explosion::~Explosion()
 {
-
+  _ps->setEmitter(0);
 }
 
 void        Explosion::dead()
 {
-    _ps->setEmitter(0);
 }
 
 bool        Explosion::isDestructible() const

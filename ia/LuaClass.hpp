@@ -69,13 +69,12 @@ namespace Lua
         LuaClass(classType *thisptr) :
                 userData(NULL),
                 thisptr(thisptr),
-                state(acquireState()),
-                todelete(true)
+                todelete(true),
+                state(acquireState())
         {
             userData = static_cast<classType **>(lua_newuserdata(state, sizeof(*userData)));
+            bindMetatable();
             *userData = thisptr;
-            luaL_getmetatable(state, (luaPrefix + className).c_str());
-            lua_setmetatable(state, -2);
         }
         /**
          * \brief An other constructor that will be used like the constructor of the object
@@ -102,15 +101,35 @@ namespace Lua
         LuaClass(classType const &ref) :
             LuaClass(new classType(ref))
         {
-
+        }
+        /**
+         * \brief The lua class copy constructor
+         * \param ref A reference on the object to copy
+         */
+        LuaClass(LuaClass<classType> const &ref) :
+                LuaClass(ref.thisptr)
+        {
+            dontDelete();
+        }
+        /**
+         * \brief The copy operator of a lua class
+         * \param ref A reference on the object to copy
+         * \return A reference on this pointer
+         */
+        LuaClass    &operator=(LuaClass<classType> const &ref)
+        {
+            thisptr = ref.thisptr;
+            *userData = thisptr;
+            dontDelete();
+            return (*this);
         }
         /**
          * \brief overload of referencing operator to get the adress of the real object
          * \return The adress of the real object
          */
-        classType   *operator&()
+        classType   **getUserData()
         {
-            return (thisptr);
+            return (userData);
         }
         /**
          * \brief Destructor that will delete the object only if the todelete construcor argument have been set to true
@@ -126,6 +145,30 @@ namespace Lua
         void dontDelete(void)
         {
             todelete = false;
+        }
+        /**
+         * \brief Bind a metatable to the user data
+         */
+        void bindMetatable(void)
+        {
+            luaL_getmetatable(state, (luaPrefix + className).c_str());
+            lua_setmetatable(state, -2);
+        }
+        /**
+         * \brief Access the reference of the overloaded pointer
+         * \return A reference on internal pointer
+         */
+        classType   &operator*(void)
+        {
+            return (*thisptr);
+        }
+        /**
+         * \brief Allow the user to access methods on internal pointer
+         * \return The internal pointer
+         */
+        classType   *operator->(void)
+        {
+            return (thisptr);
         }
 
     public:
@@ -208,9 +251,9 @@ namespace Lua
                     return;
                 registered = true;
                 luaL_newmetatable(state, (luaPrefix + className).c_str());
-                luaL_setfuncs(state, &getRegs()[0], 0);
                 lua_pushvalue(state, -1);
-                lua_setfield(state, -1, "__index");
+                lua_setfield(state, -2, "__index");
+                luaL_setfuncs(state, &getRegs()[0], 0);
                 lua_setglobal(state, className.c_str());
                 registeredClasses.push_back(className);
             }

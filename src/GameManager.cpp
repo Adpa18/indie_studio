@@ -5,12 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 16 17:18:32 2016 Victor Gouet
+// Last update Thu May 19 18:12:54 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
+#include "../ia/IAPlayer.hpp"
 
 GameManager *GameManager::GM = NULL;
 
@@ -103,10 +104,13 @@ void    GameManager::run()
                 _state = GAME;
                 onGame();
             }
-            else if (m_gameState >= SPLASH_SCREEN &&
-                     m_gameState <= PAUSE)
+            else
             {
-                _state = MENU;
+	      if (_state != MENU && m_gameState != PAUSE)
+		{
+		  BomberMap::deleteMap();
+		  _state = MENU;
+		}
                 onMenu();
             }
 
@@ -129,7 +133,10 @@ void    GameManager::onMenu()
 
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
-        // Camera 1
+      
+      // std::cout << "DELETE" << std::endl;
+      // BomberMap::deleteMap();
+      // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
                 irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
                                           IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
@@ -192,22 +199,12 @@ void    GameManager::onGame()
 {
     if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
-        std::cout << "LOL" << std::endl;
         setGameState(PAUSE);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
         uiEventReceiver->DisplayPauseMenu();
         //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
 
-    // if (_pause)
-    //   {
-
-    // GameObjectTimeContainer::SharedInstance()->timerStop();
-
-    //     onPause();
-    //   }
-    // else
-    //   {
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 
     std::vector<ACharacter *>::iterator it = characters.begin();
@@ -224,41 +221,49 @@ void    GameManager::onGame()
             it = characters.erase(it);
         }
     }
-    // }
+    if (characters.size() == 0 || characters.size() == 1)
+      {
+	characters.clear();
+	setGameState(CLASSMENT_SCREEN);
+        IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+      }
 }
 
 void    GameManager::willStartGame()
 {
-
-    BomberMap::newMap("./media/map/map1.xml");
-
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
-
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
-    characters.clear();
-    characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh,
-                                    BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
-    characters.push_back(new Player("RICHARD", spawn[1], BomberManTexture::getModel("ziggs").mesh,
-                                    BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+  characters.clear();
+  IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
-    IrrlichtController::getDevice()->setEventReceiver(eventGame);
-//    irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-//            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
-//    camera->setTarget(irr::core::vector3df(0, 0, 0));
-//
-//    camera->setAutomaticCulling(irr::scene::EAC_OFF);
-//    camera->setFarValue(1000);
-//    camera->setNearValue(10);
-////  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
+  characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+//  characters.push_back(new Player("RICHARD", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
+    characters.push_back(new IAPlayer("Jean-Louis", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 1));
+    if (BomberMap::getMap()->get_camera())
+    {
+        IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
+        BomberMap::getMap()->get_camera()->updateAbsolutePosition();
+        std::cout << BomberMap::getMap()->get_camera()->getPosition().Z << std::endl;
+    }
+    else
+    {
+        irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
+        camera->setTarget(irr::core::vector3df(0, 0, 0));
+        camera->setAutomaticCulling(irr::scene::EAC_OFF);
+        camera->setFarValue(1000);
+        camera->setNearValue(10);
+    }
+//  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
 //									     1.0f, 1.0f, 1.0f));
 
 }
 
 void    GameManager::willStartMenu()
 {
-    IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+  IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
 
 }
 

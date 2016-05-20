@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Sun May 15 12:30:26 2016 Victor Gouet
+// Last update Thu May 19 14:46:55 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -34,11 +34,11 @@ public:
 public:
   BomberMap(std::string const &);
   BomberMap(Size mapSize = SMALL);
-  virtual ~BomberMap();
+  ~BomberMap();
 
 public:
   void  serialize(std::string const &) const;
-  void  deserialize(std::string const &);
+  void  deserialize();
   void  genMap();
   std::vector<irr::core::vector2df> const	&getSpawn() const;
 
@@ -47,6 +47,7 @@ public:
   static void		newMap(Size mapSize);
   static void		newMap(std::string const &filename);
   static void		deleteMap();
+
 
 private:
   void			generateMap();
@@ -59,6 +60,7 @@ public:
   void  remove(AGameObject *obj);
   void  move(AGameObject *obj, const irr::core::vector2df &pos);
   int	getSize() const;
+  irr::scene::ICameraSceneNode *get_camera() const;
 
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
   const irr::core::vector2df  get(AGameObject *obj);
@@ -70,10 +72,18 @@ private:
   std::vector<AGameObject *>			      _characters;
   std::vector<irr::core::vector2df>		_spawner;
   Size						_mapSize;
+  const std::string                 _filename;
+  irr::scene::ICameraSceneNode *_camera;
+
 
 private:
     static BomberMap    *bomberMap;
     irr::scene::ISceneNode    *_ground;
+
+  /* TERRAIN */
+  irr::scene::IAnimatedMesh	*terrain_model;
+  /* LIGHT */
+  std::vector<irr::scene::ILightSceneNode*>	lightVector;
 };
 
 #endif

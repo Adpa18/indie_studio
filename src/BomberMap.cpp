@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sun May 15 12:33:19 2016 Victor Gouet
+// Last update Thu May 19 15:36:12 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -18,23 +18,32 @@
 
 BomberMap *BomberMap::bomberMap = NULL;
 
-const int		BomberMap::size_side[3] = {11, 15, 19};
+const int		BomberMap::size_side[3] = {11, 13, 15};
 
-BomberMap::BomberMap(std::string const &filename) : _mapSize(SMALL)
+BomberMap::BomberMap(std::string const &filename) : _mapSize(SMALL), _filename(filename)
 {
-   deserialize(filename);
 }
 
-BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize)
+BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
 {
+  terrain_model = NULL;
+   _camera = NULL;
   initSpawn();
 }
 
 BomberMap::~BomberMap()
 {
-  for (std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin(), end = _objects.end() ; it != end ; ++it)
+  std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin();
+   std::cout << "size = " << _objects.size() << std::endl;
+  while (it != _objects.end())
     {
-      delete ((*it).first);
+      AGameObject	*obj = (*it).first;
+      delete (obj);
+      it = _objects.begin();
+    }
+  for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
+    {
+      (*it)->remove();
     }
 }
 
@@ -46,7 +55,7 @@ void            BomberMap::genMap()
 
 void			BomberMap::generateGround()
 {
-    irr::scene::IAnimatedMesh *terrain_model;
+    // irr::scene::IAnimatedMesh *terrain_model;
 
     terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
     irr::core::dimension2d<irr::f32>(25, 25), // Tile size
@@ -78,6 +87,7 @@ void			BomberMap::generateGround()
     light->setPosition(irr::core::vector3df(0, 300, 0));
     light->setLightType(irr::video::ELT_POINT);
     light->setLightData(light_data);
+    lightVector.push_back(light);
 //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
 //    light->addAnimator(anim);
 
@@ -86,6 +96,8 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(125, 0, -125));
      light->setRotation(irr::core::vector3df(-45, -45, 0));
+     lightVector.push_back(light);
+
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(125, 0, -125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -94,6 +106,7 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(125, 0, 125));
      light->setRotation(irr::core::vector3df(-45, 225, 0));
+     lightVector.push_back(light);
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(125, 0, 125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -102,6 +115,8 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(-125, 0, -125));
      light->setRotation(irr::core::vector3df(-45, 45, 0));
+     lightVector.push_back(light);
+
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(-125, 0, -125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -110,6 +125,8 @@ void			BomberMap::generateGround()
      light->setLightData(light_data);
      light->setPosition(irr::core::vector3df(-125, 0, 125));
      light->setRotation(irr::core::vector3df(-45, 135, 0));
+     lightVector.push_back(light);
+
  //    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(-125, 0, 125), 50.0f);
  //    light->addAnimator(anim);
 
@@ -222,7 +239,11 @@ void roll(irr::scene::ISceneNode *node, irr::f32 rot)
    rotate(node, irr::core::vector3df(0.0f, 0.0f, rot) );
 }
 
-void BomberMap::deserialize(const std::string &loadFile)
+irr::scene::ICameraSceneNode *BomberMap::get_camera() const {
+   return _camera;
+}
+
+void BomberMap::deserialize()
 {
    //irr::IrrlichtDevice *device = IrrlichtController::getDevice();
    irr::io::IrrXMLReader *reader;
@@ -233,7 +254,7 @@ void BomberMap::deserialize(const std::string &loadFile)
    //EventGame   eventGame;
    //AGameObject *toPush;
    //irr::core::stringw mapelem(L"attributes");
-   reader = irr::io::createIrrXMLReader(loadFile.c_str());
+   reader = irr::io::createIrrXMLReader(_filename.c_str());
    initAsset = 0;
    initCam = false;
    initTarget = false;
@@ -256,18 +277,20 @@ void BomberMap::deserialize(const std::string &loadFile)
         if (initTarget && !initCam && nodeName == "camera")
         {
            printf("camera\n");
-           irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+           _camera = IrrlichtController::getSceneManager()->addCameraSceneNode
                (0, irr::core::vector3df(reader->getAttributeValueAsFloat("px"),
                                         reader->getAttributeValueAsFloat("py"),
                                         reader->getAttributeValueAsFloat("pz")));
-           camera->setAspectRatio(19/9);
-           camera->setFOV(reader->getAttributeValueAsFloat("fov"));
-           camera->setScale(irr::core::vector3df(1,1,1));
-           camera->setTarget(target);
-           camera->setAutomaticCulling(irr::scene::EAC_OFF);
-           camera->setFarValue(1000);
-           camera->setNearValue(10);
+           _camera->setAspectRatio(19/9);
+           _camera->setFOV(reader->getAttributeValueAsFloat("fov"));
+           _camera->setScale(irr::core::vector3df(1,1,1));
+           _camera->bindTargetAndRotation(true);
+           _camera->setTarget(target);
+           _camera->setAutomaticCulling(irr::scene::EAC_OFF);
+           _camera->setFarValue(1000);
+           _camera->setNearValue(10);
            initCam = true;
+           std::cout << BomberMap::getMap()->get_camera() << std::endl;
         }
         else if (nodeName == "size")
         {
@@ -376,6 +399,7 @@ void		BomberMap::newMap(std::string const& filename)
       delete bomberMap;
    }
    bomberMap = new BomberMap(filename);
+   bomberMap->deserialize();
 }
 
 void		BomberMap::deleteMap()

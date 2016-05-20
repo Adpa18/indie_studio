@@ -78,9 +78,10 @@ bool 	EventGame::IsKeyDown(irr::EKEY_CODE keyCode) const
 const MotionController  *EventGame::GetAvaibleJoystick() const
 {
     for (std::map<int, MotionController *>::const_iterator it = this->_joysticks.begin(); it != this->_joysticks.end(); ++it) {
-        if (!it->second->isUsed()) {
-            it->second->useIt();
-            return (it->second);
+      if (it->second)
+	if (!(it->second->isUsed())) {
+	  it->second->useIt();
+	  return (it->second);
         }
     }
     return (NULL);
@@ -89,9 +90,10 @@ const MotionController  *EventGame::GetAvaibleJoystick() const
 const KeysController    *EventGame::GetAvaibleKeycodes() const
 {
     for (std::vector<KeysController *>::const_iterator it = this->_keymaps.begin(); it != this->_keymaps.end(); ++it) {
+      if (*it)
         if (!(*it)->isUsed()) {
-            (*it)->useIt();
-            return (*it);
+	  (*it)->useIt();
+	  return (*it);
         }
     }
     return (NULL);
