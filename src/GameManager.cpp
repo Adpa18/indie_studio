@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu May 19 18:45:02 2016 Victor Gouet
+// Last update Fri May 20 11:25:41 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -222,12 +222,12 @@ void    GameManager::onGame()
 	  it = characters.erase(it);
         }
     }
-    if (characters.size() == 0 || characters.size() == 1)
-      {
-	characters.clear();
-	setGameState(CLASSMENT_SCREEN);
-        IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
-      }
+    // if (characters.size() == 0 || characters.size() == 1)
+    //   {
+    // 	characters.clear();
+    // 	setGameState(CLASSMENT_SCREEN);
+    //     IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+    //   }
 }
 
 void    GameManager::willStartGame()

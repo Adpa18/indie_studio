@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Thu May 19 18:26:29 2016 Victor Gouet
+// Last update Fri May 20 10:39:09 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -129,14 +129,14 @@ void			BomberMap::generateGround()
 //    anim->drop();
 
 
-    this->loadModel(BomberManTexture::getModel("mapCurtain")); // BadScale
-    this->loadModel(BomberManTexture::getModel("mapGoods")); // BadScale
-    this->loadModel(BomberManTexture::getModel("mapGround")); // BadScale
-    this->loadModel(BomberManTexture::getModel("mapPillar")); // OK
-    this->loadModel(BomberManTexture::getModel("mapStatue")); // BadScale
-    this->loadModel(BomberManTexture::getModel("mapTable")); // BadScale
-    this->loadModel(BomberManTexture::getModel("mapTomb")); // BadScale
-    this->loadModel(BomberManTexture::getModel("mapWall")); // BadPos Stair
+    // this->loadModel(BomberManTexture::getModel("mapCurtain")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapGoods")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapGround")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapPillar")); // OK
+    // this->loadModel(BomberManTexture::getModel("mapStatue")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapTable")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapTomb")); // BadScale
+    // this->loadModel(BomberManTexture::getModel("mapWall")); // BadPos Stair
 }
 
 int	BomberMap::getSize() const

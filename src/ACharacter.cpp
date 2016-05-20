@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sat May 14 22:34:11 2016 Victor Gouet
+// Last update Fri May 20 12:27:46 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -13,6 +13,7 @@
 #include "../include/BombFactory.hpp"
 #include <iostream>
 #include "../include/ABonus.hpp"
+#include "../include/AtomicBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/TrackerBomb.hpp"
 
@@ -47,7 +48,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
-  BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
+  BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
    // BombFactory::AddBomb<FireBomb>(*_bombContainer);
    // BombFactory::AddBomb<FireBomb>(*_bombContainer);
   setMD3Animation(MD3_ANIMATION::STAY);

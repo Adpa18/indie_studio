@@ -1,74 +1,68 @@
 //
-// FireBomb.cpp for FIRE in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-//
+// AtomicBomb.cpp for ATOMIC in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
+// 
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-//
-// Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri May 20 11:47:21 2016 Victor Gouet
+// 
+// Started on  Fri May 20 10:51:39 2016 Victor Gouet
+// Last update Fri May 20 12:01:12 2016 Victor Gouet
 //
 
-#include "../include/FireBomb.hpp"
+#include "../include/AtomicBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Explosion.hpp"
 
-FireBomb::FireBomb(int id)
+AtomicBomb::AtomicBomb(int id)
   : ABomb(BomberManTexture::getModel("fireBomb").mesh,
-	  BomberManTexture::getModel("fireBomb").texture, 3, id)
+	  BomberManTexture::getModel("fireBomb").texture, 10, id)
 {
 
 }
 
-FireBomb::~FireBomb()
+AtomicBomb::~AtomicBomb()
 {
 
 }
 
-FireBomb	&FireBomb::operator=(ABomb const *other)
+AtomicBomb	&AtomicBomb::operator=(ABomb const *other)
 {
   use = false;
-  timeout = 3;
+  timeout = 10;
   (*this)->setVisible(false);
   this->_power = other->getPower();
   return (*this);
 }
 
-FireBomb::FireBomb(ABomb const *other) : ABomb(other)
+AtomicBomb::AtomicBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
 
 #include <iostream>
 
-void		FireBomb::willExplose()
+void		AtomicBomb::willExplose()
 {
     irr::core::vector2df        pos = this->getMapPos();
 
     this->killObjects(pos);
-    for (int power = 1; power <= this->_power; ++power) {
-        if (this->killObjects(pos + irr::core::vector2df(-power, 0))) {
-            break;
-        }
-    }
-    for (int power = 1; power <= this->_power; ++power) {
-        if (this->killObjects(pos + irr::core::vector2df(power, 0))) {
-            break;
-        }
-    }
-    for (int power = 1; power <= this->_power; ++power) {
-        if (this->killObjects(pos + irr::core::vector2df(0, -power))) {
-            break;
-        }
-    }
-    for (int power = 1; power <= this->_power; ++power) {
-        if (this->killObjects(pos + irr::core::vector2df(0, power))) {
-            break;
-        }
-    }
+    std::cout << "BOMB atomic !!" << std::endl;
+    // std::cout << _power << std::endl;
+    for (int y = -2 ; y <= 2 ; ++y)
+      {
+	for (int x = -2 ; x <= 2 ; ++x)
+	  {
+	    irr::core::vector2df	newPos = pos + irr::core::vector2df(x, y);
+	    if (newPos.X < 0 || newPos.Y < 0
+		|| newPos.X > BomberMap::getMap()->getSize()
+		|| newPos.Y > BomberMap::getMap()->getSize())
+	      continue;
+	    this->killObjects(newPos);
+	  }
+      }
 }
 
-bool    FireBomb::killObjects(irr::core::vector2df const &pos)
+bool    AtomicBomb::killObjects(irr::core::vector2df const &pos)
 {
     std::vector<AGameObject *>   objs;
     AGameObject::Type           type;
@@ -92,11 +86,8 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
             stop = true;
         }
     }
-    // if (!stop) {
-        // new Explosion(pos, 1);
     if (type != AGameObject::BLOCK) {
         new Explosion(pos, 1);
     }
-    // }
     return (stop);
 }
