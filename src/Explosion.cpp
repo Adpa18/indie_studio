@@ -19,6 +19,7 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     irr::core::dimension2df(10.f,10.f),
     irr::core::dimension2df(20.f,20.f));
     _ps->setEmitter(em);
+
     em->drop();
     irr::scene::IParticleAffector* paf = _ps->createFadeOutParticleAffector();
     _ps->addAffector(paf);

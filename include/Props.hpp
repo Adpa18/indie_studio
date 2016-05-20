@@ -13,6 +13,7 @@ class Props : public AGameObject {
 public:
   Props(const std::string &mesh,
         const std::string &texture, irr::core::vector2df const &, int transparent);
+  virtual ~Props();
 
 public:
   virtual void                        dead();

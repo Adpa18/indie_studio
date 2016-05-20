@@ -21,3 +21,9 @@ void Props::dead() {
 bool Props::isDestructible() const {
    return false;
 }
+
+
+Props::~Props()
+{
+
+}

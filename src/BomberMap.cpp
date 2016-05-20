@@ -10,7 +10,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "../Irrlicht/irrlicht-1.8.3/include/irrXML.h"
+#include "irrXML.h"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Color.hpp"
@@ -33,13 +33,12 @@ BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
 
 BomberMap::~BomberMap()
 {
-  std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin();
-   std::cout << "size = " << _objects.size() << std::endl;
-  while (it != _objects.end())
+  std::map<AGameObject*, irr::core::vector2df>::iterator it_o = _objects.begin();
+  while (it_o != _objects.end())
     {
-      AGameObject	*obj = (*it).first;
+      AGameObject	*obj = (*it_o).first;
       delete (obj);
-      it = _objects.begin();
+       it_o = _objects.begin();
     }
   for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
     {
@@ -285,7 +284,6 @@ void BomberMap::deserialize()
         }
         if (initTarget && !initCam && nodeName == "camera")
         {
-           printf("camera\n");
            _camera_pos.X = reader->getAttributeValueAsFloat("px");
            _camera_pos.Y = reader->getAttributeValueAsFloat("py");
            _camera_pos.Z = reader->getAttributeValueAsFloat("pz");
@@ -305,7 +303,6 @@ void BomberMap::deserialize()
         }
         else if (nodeName == "spawn")
         {
-           printf("spawn\n");
            _spawner.push_back(irr::core::vector2df(reader->getAttributeValueAsFloat("px"), reader->getAttributeValueAsFloat("py")));
         }
         else if (nodeName == "ambient_light")
@@ -351,19 +348,16 @@ void BomberMap::deserialize()
         }
         else if (nodeName == "meshes_dir")
         {
-           printf("meshes_dir\n");
            meshesDir = reader->getAttributeValueSafe("file");
            initAsset += 1;
         }
         else if (nodeName == "textures_dir")
         {
-           printf("textures_dir\n");
            texturesDir = reader->getAttributeValueSafe("file");
            initAsset += 1;
         }
         else if (initAsset == 2 && nodeName == "props")
         {
-           printf("props\n");
            float repeat = reader->getAttributeValueAsFloat("repeat");
            _props.push_back(new Props(meshesDir + std::string(reader->getAttributeValueSafe("mesh")),
                                       texturesDir + std::string(reader->getAttributeValueSafe("texture")),
