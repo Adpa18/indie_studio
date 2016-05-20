@@ -1,32 +1,34 @@
 //
-// FireBomb.cpp for FIRE in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-//
+// FragBomb.cpp for FRAG in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
+// 
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-//
-// Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri May 20 21:08:41 2016 Victor Gouet
+// 
+// Started on  Fri May 20 16:22:17 2016 Victor Gouet
+// Last update Fri May 20 21:08:56 2016 Victor Gouet
 //
 
-#include "../include/FireBomb.hpp"
+#include "../include/FragBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Explosion.hpp"
+#include "../include/MiniBomb.hpp"
 
-FireBomb::FireBomb(int id)
-  : ABomb(BomberManTexture::getModel("fireBomb").mesh,
-	  BomberManTexture::getModel("fireBomb").texture, 3, id)
+FragBomb::FragBomb(int id)
+  : ABomb(BomberManTexture::getModel("fragBomb").mesh,
+	  BomberManTexture::getModel("fragBomb").texture, 3, id)
+{
+  vec = NULL;
+}
+
+FragBomb::~FragBomb()
 {
 
 }
 
-FireBomb::~FireBomb()
+FragBomb	&FragBomb::operator=(ABomb const *other)
 {
-
-}
-
-FireBomb	&FireBomb::operator=(ABomb const *other)
-{
+  vec = NULL;
   use = false;
   timeout = 3;
   (*this)->setVisible(false);
@@ -34,41 +36,82 @@ FireBomb	&FireBomb::operator=(ABomb const *other)
   return (*this);
 }
 
-FireBomb::FireBomb(ABomb const *other) : ABomb(other)
+FragBomb::FragBomb(ABomb const *other) : ABomb(other)
 {
+  vec = NULL;
   *this = other;
 }
 
 #include <iostream>
 
-void		FireBomb::willExplose()
+void		FragBomb::willExplose()
 {
     irr::core::vector2df        pos = this->getMapPos();
-
+    MiniBomb			*mini;
+    
     this->killObjects(pos);
-    for (int power = 1; power <= this->_power; ++power) {
+
+    int power;
+
+    vec = NULL;
+    for (power = 1; power <= this->_power; ++power) {
         if (this->killObjects(pos + irr::core::vector2df(-power, 0))) {
             break;
         }
     }
-    for (int power = 1; power <= this->_power; ++power) {
+    if (vec)
+      {
+	mini = new MiniBomb();
+	*mini << *vec;
+	delete vec;
+      }
+    vec = NULL;
+
+    for (power = 1; power <= this->_power; ++power) {
         if (this->killObjects(pos + irr::core::vector2df(power, 0))) {
             break;
         }
     }
-    for (int power = 1; power <= this->_power; ++power) {
+
+    if (vec)
+      {
+	mini = new MiniBomb();
+	*mini << *vec;
+	delete vec;
+      }
+    vec = NULL;
+
+    for (power = 1; power <= this->_power; ++power) {
         if (this->killObjects(pos + irr::core::vector2df(0, -power))) {
             break;
         }
     }
-    for (int power = 1; power <= this->_power; ++power) {
+
+    if (vec)
+      {
+	mini = new MiniBomb();
+	*mini << *vec;
+	delete vec;
+      }
+    vec = NULL;
+
+    for (power = 1; power <= this->_power; ++power) {
         if (this->killObjects(pos + irr::core::vector2df(0, power))) {
             break;
         }
     }
+
+    if (vec)
+      {
+	mini = new MiniBomb();
+	*mini << *vec;
+	delete vec;
+      }
+    vec = NULL;
+
 }
 
-bool    FireBomb::killObjects(irr::core::vector2df const &pos)
+bool    FragBomb::killObjects(irr::core::vector2df const &pos)
 {
     std::vector<AGameObject *>   objs;
     AGameObject::Type           type;
@@ -92,11 +135,11 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
             stop = true;
         }
     }
-    // if (!stop) {
-        // new Explosion(pos, 1);
     if (type != AGameObject::BLOCK) {
-        new Explosion(pos, BomberManTexture::getModel("fire").texture, 1);
+      if (vec)
+	delete vec;
+      vec = new irr::core::vector2df(pos);
+      new Explosion(pos, BomberManTexture::getModel("fire").texture, 1);
     }
-    // }
     return (stop);
 }

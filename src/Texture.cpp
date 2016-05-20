@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Fri May 20 15:36:27 2016 Victor Gouet
+// Last update Fri May 20 16:52:25 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -60,6 +60,8 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"ziggsMad", {BomberManTexture::characters + "ziggs_mad.md3", BomberManTexture::characters + "ziggs_mad.png"}},
         // Bombes
         {"fireBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
+	{"fragBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
+	{"miniBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
         {"atomicBomb", {BomberManTexture::bombs + "atomicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
         {"trackerBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
         // Gui
@@ -73,6 +75,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
         // Other
         {"fire", {"", BomberManTexture::other + "fire.jpg"}},
+
         {"fireAtomic", {"", BomberManTexture::other + "fireAtomic.jpg"}},
         {"fireExplosion", {BomberManTexture::path + "cube.md2", ""}},
         // Bonus
