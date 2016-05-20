@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Sat May 14 17:22:34 2016 Victor Gouet
+// Last update Fri May 20 16:08:54 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -18,10 +18,23 @@ const std::map<Wall::State, std::string>  Wall::_types = {
         {Edge, "edge"},
 };
 
+// const std::map<int, std::string>  Wall::_wallSmallMap = {
+//         {0, "cubeIndestructible"},
+//         {1, "cubeDestructible"},
+//         {2, "edge"},
+// };
+
 Wall::Wall(irr::core::vector2df const &pos, State state)
   : AGameObject(pos, BomberManTexture::getModel(_types.find(state)->second).mesh,
                 BomberManTexture::getModel(_types.find(state)->second).texture,
                 (state == Destructible) ? OTHER : BLOCK), _state(state)
+{
+    (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
+}
+
+Wall::Wall(irr::core::vector2df const &pos, State state,
+	   std::string const &mesh, std::string const &texture)
+  : AGameObject(pos, mesh, texture, (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
     (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
 }

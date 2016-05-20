@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 14:24:03 2016 Victor Gouet
-// Last update Thu May 12 14:38:10 2016 Victor Gouet
+// Last update Fri May 20 15:30:47 2016 Victor Gouet
 //
 
 #ifndef TEXTURE_HPP_
@@ -23,6 +23,7 @@ class	BomberManTexture
 {
 public:
     static const std::string path;
+  
     static const std::string smallMap;
     static const std::string mediumMap;
     static const std::string largeMap;
