@@ -11,7 +11,7 @@
     <spawn px="9" py="1" />
     <spawn px="1" py="9" />
 
-    <ambient_light r="0.6" g="0.6" b="0.8" a="1" />
+    <ambient_light r="0.8" g="0.8" b="1" a="1" />
 
     <meshes_dir file="./media/map/meshes/" />
     <textures_dir file="./media/map/textures/" />
@@ -27,7 +27,7 @@
     <props mesh="pillar.md3" texture="pillar_d.png" />
     <props mesh="statue.md3" texture="statue_d.png" />
     <props mesh="table.md3" texture="table_d.png" />
-    <props mesh="tomb.md3" texture="Tomb01_D.BMP" />
+    <!-- <props mesh="tomb.md3" texture="Tomb01_D.BMP" /> -->
     <props mesh="wall_left.md3" texture="wall_left.png" />
     <props mesh="wall_right.md3" texture="wall_right.png" />
     <props mesh="weapon.md3" texture="weapon_d.png" />

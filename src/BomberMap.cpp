@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Fri May 20 13:22:31 2016 Victor Gouet
+// Last update Fri May 20 15:05:09 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -18,7 +18,7 @@
 
 BomberMap *BomberMap::bomberMap = NULL;
 
-const int		BomberMap::size_side[3] = {11, 13, 15};
+const int		BomberMap::size_side[3] = {9, 13, 15};
 
 BomberMap::BomberMap(std::string const &filename) : _mapSize(SMALL), _filename(filename)
 {
@@ -50,7 +50,7 @@ BomberMap::~BomberMap()
 void            BomberMap::genMap()
 {
     this->generateMap();
-    this->generateGround();
+    // this->generateGround();
 }
 
 void			BomberMap::generateGround()
