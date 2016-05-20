@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Fri May 20 10:39:09 2016 Victor Gouet
+// Last update Fri May 20 13:22:31 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -34,7 +34,7 @@ BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
 BomberMap::~BomberMap()
 {
   std::map<AGameObject*, irr::core::vector2df>::iterator it = _objects.begin();
-   std::cout << "size = " << _objects.size() << std::endl;
+   // std::cout << "size = " << _objects.size() << std::endl;
   while (it != _objects.end())
     {
       AGameObject	*obj = (*it).first;
