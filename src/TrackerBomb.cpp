@@ -17,8 +17,7 @@ TrackerBomb::TrackerBomb(int id)
   : ABomb(BomberManTexture::getModel("trackerBomb").mesh,
 	  BomberManTexture::getModel("trackerBomb").texture, 5, id)
 {
-  targetID = -1;
-  actual = getMapPos();
+    _last_dir = irr::core::vector2df(0, 0);
 }
 
 TrackerBomb::~TrackerBomb()
@@ -45,7 +44,6 @@ void	TrackerBomb::updateTimeOut()
 {
     int                     distance = 0;
     irr::core::vector2df	pos;
-    irr::core::vector2df	dir(0, 0);
 
   std::vector<AGameObject *>	const &charact = BomberMap::getMap()->getCharacters();
 
@@ -57,16 +55,15 @@ void	TrackerBomb::updateTimeOut()
         irr::core::vector2df    charPos = (*it)->getMapPos();
         if (pos.X == charPos.X && (distance == 0 || distance > pos.Y - charPos.Y)) {
             distance = pos.Y - charPos.Y;
-            dir =irr::core::vector2df(0, (distance > 0) ? -1 : 1);
+            _last_dir =irr::core::vector2df(0, (distance > 0) ? -1 : 1);
             distance = abs(distance);
         } else if (pos.Y == charPos.Y && (distance == 0 || distance > pos.X - charPos.X)) {
             distance = pos.X - charPos.X;
-            dir =irr::core::vector2df((distance > 0) ? -1 : 1, 0);
+            _last_dir =irr::core::vector2df((distance > 0) ? -1 : 1, 0);
             distance = abs(distance);
         }
     }
-    if (dir != irr::core::vector2df(0, 0))
-        this->setVelocity(dir);
+    this->setVelocity(_last_dir);
     move();
 }
 
@@ -95,6 +92,7 @@ void		TrackerBomb::willExplose()
             break;
         }
     }
+    _last_dir = irr::core::vector2df(0, 0);
 }
 
 bool    TrackerBomb::killObjects(irr::core::vector2df const &pos)

@@ -48,6 +48,8 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   _bombContainer = BombFactory::CreateBombContainer<TrackerBomb>((*this)->getID());
+  BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
+  BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
    // BombFactory::AddBomb<FireBomb>(*_bombContainer);
    // BombFactory::AddBomb<FireBomb>(*_bombContainer);

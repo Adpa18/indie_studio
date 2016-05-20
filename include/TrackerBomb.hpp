@@ -26,8 +26,7 @@ public:
   virtual void	updateTimeOut();
 
 private:
-  int		targetID;
-  irr::core::vector2df	actual;
+  irr::core::vector2df	_last_dir;
  private:
      bool        killObjects(irr::core::vector2df const &pos);
 };

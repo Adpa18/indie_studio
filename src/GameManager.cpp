@@ -244,7 +244,7 @@ void    GameManager::willStartGame()
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
   characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
-  characters.push_back(new Player("RICHARD", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 2, *eventGame));
+  characters.push_back(new Player("RICHARD", spawn[2], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 2, *eventGame));
   characters.push_back(new IAPlayer("Jean-Louis", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 1));
 
     irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
