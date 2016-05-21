@@ -38,6 +38,7 @@ GameManager::GameManager()
     m_cameras[3] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr,
                                                                              irr::core::vector3df(400, 12, -30),
                                                                              irr::core::vector3df(400, 12, 0));
+    IAPlayer::initIA();
 }
 
 GameManager::~GameManager()
@@ -45,6 +46,7 @@ GameManager::~GameManager()
     delete uiManager;
     delete uiEventReceiver;
     delete eventGame;
+    IAPlayer::shutDownIA();
 }
 
 GameManager *GameManager::SharedInstance()

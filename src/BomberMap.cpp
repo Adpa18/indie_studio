@@ -488,8 +488,8 @@ std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vecto
     std::vector<AGameObject *>  objs;
 
     for (std::map<AGameObject*, irr::core::vector2df>::const_iterator it = this->_objects.begin(); it != this->_objects.end(); ++it) {
-        if ((*it).second == pos) {
-            objs.push_back((*it).first);
+        if (it->second == pos) {
+            objs.push_back(it->first);
         }
     }
     return (objs);
