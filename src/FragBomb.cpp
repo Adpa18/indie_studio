@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:22:17 2016 Victor Gouet
-// Last update Fri May 20 21:08:56 2016 Victor Gouet
+// Last update Sat May 21 11:51:00 2016 Victor Gouet
 //
 
 #include "../include/FragBomb.hpp"
@@ -127,7 +127,9 @@ bool    FragBomb::killObjects(irr::core::vector2df const &pos)
         if (type != AGameObject::BLOCK) {
             AGameObject *obj = (*it);
             obj->dead();
-            if (type != AGameObject::BOOM && type != AGameObject::BOMB && obj->isDestructible()) {
+            if (type != AGameObject::BOOM &&
+		!obj->isObjectTimeOut()
+		&& obj->isDestructible()) {
                 delete obj;
             }
         }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May 20 21:10:23 2016 Victor Gouet
+// Last update Sat May 21 12:01:28 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -48,10 +48,18 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
     anime = irr::scene::EMAT_STAND;
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
-  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
-  BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
-  BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  _bombContainer = BombFactory::CreateBombContainer<AtomicBomb>((*this)->getID());
+  BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
+  
+  // Atomic Bomb
+  // FragBomb
+  // TrackerBomb
+  
   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 

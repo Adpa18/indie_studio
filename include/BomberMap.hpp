@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Fri May 20 16:04:38 2016 Victor Gouet
+// Last update Sat May 21 11:39:10 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
