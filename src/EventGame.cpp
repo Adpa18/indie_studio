@@ -11,21 +11,24 @@
 #include "../include/EventGame.hpp"
 #include <iostream>
 
-const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> EventGame::_keycodes({{
-    {ACharacter::LEFT, irr::KEY_LEFT},
-    {ACharacter::RIGHT, irr::KEY_RIGHT},
-    {ACharacter::UP, irr::KEY_UP},
-      {ACharacter::DOWN, irr::KEY_DOWN},
-	{ACharacter::BOMB, irr::KEY_SPACE},
-	{ACharacter::ACT, irr::KEY_KEY_I}
-},{
-    {ACharacter::LEFT, irr::KEY_KEY_Q},
-    {ACharacter::RIGHT, irr::KEY_KEY_D},
-    {ACharacter::UP, irr::KEY_KEY_Z},
-    {ACharacter::DOWN, irr::KEY_KEY_S},
-      {ACharacter::BOMB, irr::KEY_EXECUT},
-	{ACharacter::ACT, irr::KEY_KEY_K}
-}});
+const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> EventGame::_keycodes({
+    {
+      {ACharacter::LEFT, irr::KEY_LEFT},
+	{ACharacter::RIGHT, irr::KEY_RIGHT},
+	  {ACharacter::UP, irr::KEY_UP},
+	    {ACharacter::DOWN, irr::KEY_DOWN},
+	      {ACharacter::BOMB, irr::KEY_SPACE},
+		{ACharacter::ACT, irr::KEY_KEY_I}
+    },
+      {
+	{ACharacter::LEFT, irr::KEY_KEY_Q},
+	  {ACharacter::RIGHT, irr::KEY_KEY_D},
+	    {ACharacter::UP, irr::KEY_KEY_Z},
+	      {ACharacter::DOWN, irr::KEY_KEY_W},
+		{ACharacter::BOMB, irr::KEY_KEY_L},
+		  {ACharacter::ACT, irr::KEY_KEY_K}
+      }
+  });
 
 EventGame::EventGame()
 {

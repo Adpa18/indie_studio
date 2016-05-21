@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Sat May 21 11:50:42 2016 Victor Gouet
+// Last update Sat May 21 14:30:55 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
@@ -97,7 +97,7 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
     // if (!stop) {
         // new Explosion(pos, 1);
     if (type != AGameObject::BLOCK) {
-        new Explosion(pos, BomberManTexture::getModel("fire").texture, 1);
+        new Explosion(pos, BomberManTexture::getModel("fire").texture, 0.5);
     }
     // }
     return (stop);

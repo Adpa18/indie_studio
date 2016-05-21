@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Sat May 21 12:39:59 2016 Victor Gouet
+// Last update Sat May 21 14:02:36 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -23,8 +23,6 @@
 # include "BonusBiggestMan.hpp"
 # include "BonusSmallestMan.hpp"
 # include "BonusInvincible.hpp"
-
-// TODO A METTRE DANS DEAD WALL
 # include "BonusTrackerBomb.hpp"
 # include "BonusFragBomb.hpp"
 # include "BonusAtomicBomb.hpp"
