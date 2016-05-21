@@ -5,6 +5,7 @@
 #include "PlayerSelectionBoxContainer.hpp"
 #include "../include/Texture.hpp"
 
+// TODO: one character selected means its unavailable for others
 PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
             m_manager(uiManager)
 {
@@ -75,5 +76,17 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
     for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         (*it)->SetFocus((*it)->GetId() == id);
+    }
+}
+
+void PlayerSelectionBoxContainer::PlayerJoin()
+{
+    for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    {
+        if ((*it)->GetIaStatus())
+        {
+            (*it)->SetIaStatus(false);
+            break;
+        }
     }
 }

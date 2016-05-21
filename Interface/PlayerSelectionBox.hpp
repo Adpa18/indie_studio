@@ -30,6 +30,9 @@ public:
     irr::gui::IGUIButton const& GetButton() const;
     void SetFocus(bool bIsFocused) const;
 
+    bool GetIaStatus() const;
+    void SetIaStatus(bool isIA);
+
 private:
     UIManager *m_manager;
     irr::video::IVideoDriver *m_driver;

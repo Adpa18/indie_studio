@@ -120,6 +120,7 @@ void PlayerSelectionBox::Update()
 {
     if (!m_bIsIaPlayer)
     {
+        m_image->setImage(nullptr);
         if (m_modelNode == nullptr && m_models.size() > 0)
         {
             irr::scene::IAnimatedMesh *mesh = m_sceneManager->getMesh(BomberManTexture::getModel(m_models.front()).mesh.c_str());
@@ -159,4 +160,15 @@ void PlayerSelectionBox::SetFocus(bool bIsFocused) const
     {
         m_button->setImage(m_driver->getTexture(BomberManTexture::getModel("playerButton").texture.c_str()));
     }
+}
+
+bool PlayerSelectionBox::GetIaStatus() const
+{
+    return m_bIsIaPlayer;
+}
+
+void PlayerSelectionBox::SetIaStatus(bool isIA)
+{
+    m_bIsIaPlayer = isIA;
+    Update();
 }

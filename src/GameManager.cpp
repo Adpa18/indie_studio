@@ -135,10 +135,10 @@ void    GameManager::onMenu()
 
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
-      
-      // std::cout << "DELETE" << std::endl;
-      // BomberMap::deleteMap();
-      // Camera 1
+        // Moves the main camera away
+        //camera->setPosition(irr::core::vector3df(-10000, 250, -10000));
+
+        // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
                 irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
                                           IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
@@ -167,6 +167,9 @@ void    GameManager::onMenu()
                                           IrrlichtController::width * 0.99, IrrlichtController::height * 0.85));
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[3]);
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
+        // HACK: Moves the last used camera away
+        m_cameras[3]->setPosition(irr::core::vector3df(-40000, 12, -30));
+
     }
     else if (GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
     {
@@ -178,11 +181,11 @@ void    GameManager::onMenu()
 
         // Moves the main camera away
         irr::scene::ICameraSceneNode *mainCam = IrrlichtController::getSceneManager()->getActiveCamera();
-        mainCam->setPosition(irr::core::vector3df(10000, 250, 10000));
+        mainCam->setPosition(irr::core::vector3df(-10000, 250, -10000));
 
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         // Y is vertial axe
-        m_cameras[0]->setPosition(irr::core::vector3df(-300 * cos(x += 0.02), 250, -300 * sin(y += 0.02)));
+        m_cameras[0]->setPosition(irr::core::vector3df(-300 * cos(x += 0.01), 250, -300 * sin(y += 0.01)));
         m_cameras[0]->setTarget(irr::core::vector3df(0, 0, 0));
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
 

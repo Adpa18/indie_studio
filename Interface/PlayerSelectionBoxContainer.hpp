@@ -23,6 +23,7 @@ public:
     void SelectLeft();
     void SelectRight();
     void UpdateBoxes(irr::s32 id);
+    void PlayerJoin();
 
 private:
     // Knows which box is selected by P1
