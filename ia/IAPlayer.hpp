@@ -14,6 +14,7 @@ public:
     static const std::string     easyLvl;
     static const std::string     mediumLvl;
     static const std::string     hardLvl;
+    static Lua::LuaHandler       handler;
 
 public:
     IAPlayer(std::string const &, irr::core::vector2df const &, const std::string &, const std::string &, int);
@@ -23,6 +24,10 @@ public:
     virtual void compute();
     void setDifficulty(const std::string &difficulty);
 
+public:
+    static void initIA();
+    static void shutDownIA();
+
 private:
     static int  typeAtIndex(lua_State *state);
     static int  posAtIndex(lua_State *state);
@@ -31,7 +36,6 @@ private:
     static int  getY(lua_State *state);
 
 private:
-    Lua::LuaHandler handler;
     std::string behaviour;
 };
 

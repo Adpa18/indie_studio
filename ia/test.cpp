@@ -77,7 +77,7 @@ int main()
 //    lua_pushlightuserdata(Lua::acquireState(), &tutu);
 //    tutu.bindMetatable();
 //    lua_setglobal(Lua::acquireState(), "globit");
-    handler.setScript("./iaBehaviour.lua");
+    handler.setScript("./helloworld.lua");
 //    Lua::LuaHandler &(*ftpr2)(const std::string &) = NULL;
 
 //    ftpr2 = FunctionConverter::methodToFptr<Lua::LuaHandler &(*)(const std::string &)>(handler, &Lua::LuaHandler::operator[]);
