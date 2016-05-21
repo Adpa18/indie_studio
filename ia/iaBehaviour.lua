@@ -38,6 +38,33 @@
 
 --todo implement the three behaviours
 function easyBehaviour(bomberMap, iaPos)
+    local i = 0;
+    local lim = MapW * MapH;
+
+    print("wid: "..MapW);
+    print("hei: "..MapH);
+--    print(bomberMap);
+    while (i < lim) do
+        local x = (i % MapW);
+        local y = math.floor(i / MapW);
+        print("------index: "..i.."------");
+        print("lua x: "..x);
+        print("lua y: "..y);
+        local objs = bomberMap:objsAtPos(x, y);
+        local j = 0;
+        local type;
+        repeat
+--            print("before typeAtIndex");
+            type = objs:typeAtIndex(j);
+--            print("after typeAtIndex");
+            if (type ~= nil) then
+                print("for j = "..j.." | type: "..type);
+            end
+            j = j + 1;
+        until (type == nil);
+        i = i + 1;
+        print("-----------------");
+    end
     return (1);
 end
 
@@ -49,14 +76,18 @@ function hardBehaviour(bomberMap, iaPos)
 
 end
 
-function testuserdata(u)
+function testuserdata(tutu, titi)
+    tutu:toto();
+    local i = Jelly.new();
+    i:jellow();
+--    titi:jellow();
 --    print(u);
-    local d = Test.new();
-    print(d);
-    d:toto();
+--    local d = Test.new();
+--    print(d);
+--    d:toto();
 --    Test.toto();
-    print(u);
-    u:toto();
+--    print(u);
+--    u:toto();
 --    d:toto();
 --    local test = Map.new({4, 3});
 --    print(test);

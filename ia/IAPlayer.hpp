@@ -26,12 +26,12 @@ public:
 private:
     static int  typeAtIndex(lua_State *state);
     static int  posAtIndex(lua_State *state);
+    static int  objsAtPos(lua_State *state);
     static int  getX(lua_State *state);
     static int  getY(lua_State *state);
 
 private:
     Lua::LuaHandler handler;
-    Lua::LuaClass<BomberMap> map;
     std::string behaviour;
 };
 

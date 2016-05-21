@@ -26,26 +26,7 @@ namespace Lua
     static std::vector<std::string> registeredClasses;
     static const std::string luaPrefix = "luaL_";
 
-    /**
-     * \brief Function which will initialise the lua library and return the apropriate state
-     * \param toset The lua state to set if you want to change the singleton
-     * \return The pointer on the singleton that represent a lua state
-     */
-    static lua_State    *acquireState(lua_State *toset = NULL)
-    {
-        static lua_State   *state = NULL;
-
-        if (toset == NULL && state == NULL)
-        {
-            state = luaL_newstate();
-            luaL_openlibs(state);
-        }
-        else if (toset != NULL)
-        {
-            state = toset;
-        }
-        return (state);
-    }
+    lua_State    *acquireState(lua_State *toset = NULL);
 
     /**
      * \brief Template class that overload a class to be a Lua usable class
@@ -319,6 +300,32 @@ namespace Lua
     protected:
         lua_State   *state;
     };
+
+    int          pushVar(void);
+    int          pushVar(int topush);
+    int          pushVar(double topush);
+    int          pushVar(bool topush);
+    int          pushVar(const char *topush);
+
+    /**
+     * \brief Polymorphism on user data argument. In that case it is recommended to use LuaClass object '&' operator
+     * \param topush The argument to push
+     */
+    template<typename classtype>
+    int          pushVar(classtype *topush)
+    {
+        LuaClass<classtype> luaconv(topush);
+
+        luaconv.dontDelete();
+        return 0;
+    }
+
+    template <typename topushtype>
+    void        setGlobalValue(topushtype topush, const std::string &varname)
+    {
+        pushVar(topush);
+        lua_setglobal(Lua::acquireState(), varname.c_str());
+    }
 };
 
 #endif //CPP_INDIE_STUDIO_LUACLASS_HPP
