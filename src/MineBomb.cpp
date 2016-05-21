@@ -1,62 +1,118 @@
 //
-// MiniBomb.cpp for MINI in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
+// MineBomb.cpp for MINE in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
 // 
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
 // 
-// Started on  Fri May 20 16:31:36 2016 Victor Gouet
-// Last update Sat May 21 14:13:29 2016 Victor Gouet
+// Started on  Sat May 21 21:18:14 2016 Victor Gouet
+// Last update Sat May 21 22:43:05 2016 Victor Gouet
 //
 
-#include "../include/MiniBomb.hpp"
+#include "../include/MineBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Explosion.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
 
-MiniBomb::MiniBomb(int id)
-  : ABomb(BomberManTexture::getModel("miniBomb").mesh,
-	  BomberManTexture::getModel("miniBomb").texture, 0.5, id)
+MineBomb::MineBomb(int id)
+  : ABomb(BomberManTexture::getModel("mineBomb").mesh,
+	  BomberManTexture::getModel("mineBomb").texture, 100, id)
 {
   this->_power = 1;
   use = false;
-  timeout = 0.5;
+  timeout = 100;
   (*this)->setVisible(false);
   (*this)->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
+  this->setType(AGameObject::NONE);
+
+  time_t	timer;
+  struct tm	y2k;
+
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  secRef = difftime(timer, mktime(&y2k));
 }
 
-MiniBomb::~MiniBomb()
+MineBomb::~MineBomb()
 {
 
 }
 
-MiniBomb	&MiniBomb::operator=(ABomb const *other)
+MineBomb	&MineBomb::operator=(ABomb const *other)
 {
   use = false;
-  timeout = 0.5;
+  timeout = 100;
   (*this)->setVisible(false);
   this->_power = 1;
-  (*this)->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
+  (*this)->setScale(irr::core::vector3df(0, 0, 0));
+  this->setType(AGameObject::NONE);
+  time_t	timer;
+  struct tm	y2k;
+
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  secRef = difftime(timer, mktime(&y2k));
   return (*this);
 }
 
-MiniBomb::MiniBomb(ABomb const *other) : ABomb(other)
+MineBomb::MineBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
 
 #include <iostream>
 
-void		MiniBomb::disable()
+void		MineBomb::disable()
 {
 }
 
-bool		MiniBomb::isDestructible() const
+bool		MineBomb::isDestructible() const
 {
   return (true);
 }
 
-void		MiniBomb::willExplose()
+void		MineBomb::updateTimeOut()
+{
+  if (getTimeOutObj() == 1.5)
+    {
+      (*this)->setScale((*this)->getScale() + 0.004);
+      return ;
+    }
+
+  time_t	timer;
+  struct tm	y2k;
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  double time = difftime(timer, mktime(&y2k));
+  
+  if (time < secRef + 3)
+    {
+      (*this)->setVisible(false);
+      return ;
+    }
+
+  std::vector<AGameObject *> const &caracter = BomberMap::getMap()->getCharacters();
+  std::vector<AGameObject *>::const_iterator	it = caracter.begin();
+
+  while (it != caracter.end())
+    {
+      if ((*it)->getMapPos() == this->getMapPos())
+	{
+	  (*this)->setVisible(true);
+	  (*this)->setScale(irr::core::vector3df(0.2, 0.2, 0.2));
+	  setTimeOutWithoutInContainer(1.5);
+	}
+      ++it;
+    }
+}
+
+void		MineBomb::willExplose()
 {
     irr::core::vector2df        pos = this->getMapPos();
 
@@ -83,7 +139,7 @@ void		MiniBomb::willExplose()
     }
 }
 
-bool    MiniBomb::killObjects(irr::core::vector2df const &pos)
+bool    MineBomb::killObjects(irr::core::vector2df const &pos)
 {
     std::vector<AGameObject *>   objs;
     AGameObject::Type           type;
