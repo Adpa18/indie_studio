@@ -11,9 +11,9 @@ function easyBehaviour(bomberMap, iaPos)
     local i = 0;
     local lim = MapW * MapH;
 
-    print("wid: "..MapW);
-    print("hei: "..MapH);
-    print("iapos("..iaPos:getX()..", "..iaPos:getY()..")");
+--    print("wid: "..MapW);
+--    print("hei: "..MapH);
+--    print("iapos("..iaPos:getX()..", "..iaPos:getY()..")");
     while (i < lim) do
         local x = (i % MapW);
         local y = math.floor(i / MapW);
@@ -23,13 +23,13 @@ function easyBehaviour(bomberMap, iaPos)
         repeat
             type = objs:typeAtIndex(j);
             if (type ~= nil) then
-                print("Object n°"..j.." at ("..x..", "..y..") of type "..type);
+--                print("Object n°"..j.." at ("..x..", "..y..") of type "..type);
             end
             j = j + 1;
         until (type == nil);
         i = i + 1;
     end
-    return (1);
+    return (math.random(IDLE, ACT));
 end
 
 function mediumBehaviour(bomberMap, iaPos)
