@@ -10,7 +10,8 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
         m_manager(uiManager),
         m_bIsIaPlayer(bIsIaPlayer),
         m_pos(pos),
-        m_playerID(playerID)
+        m_playerID(playerID),
+        m_id(elemName)
 {
     // Get all the needed vars
     m_driver = m_manager->GetDevice()->getVideoDriver();
@@ -141,4 +142,21 @@ void PlayerSelectionBox::Update()
 irr::gui::IGUIButton const &PlayerSelectionBox::GetButton() const
 {
     return *m_button;
+}
+
+UIElement::Menu PlayerSelectionBox::GetId() const
+{
+    return m_id;
+}
+
+void PlayerSelectionBox::SetFocus(bool bIsFocused) const
+{
+    if (bIsFocused)
+    {
+        m_button->setImage(m_driver->getTexture(BomberManTexture::getModel("playerButtonSelected").texture.c_str()));
+    }
+    else
+    {
+        m_button->setImage(m_driver->getTexture(BomberManTexture::getModel("playerButton").texture.c_str()));
+    }
 }

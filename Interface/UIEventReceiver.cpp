@@ -141,19 +141,19 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION1:
                         if (state != 0)
                         {
-			  std::cout << "SMALL" << std::endl;
+			                std::cout << "SMALL" << std::endl;
                             state = 0;
                             BomberMap::deleteMap();
                             //BomberMap::newMap(BomberMap::Size::SMALL);
                             BomberMap::newMap("./media/smallMap/map1.xml");
-			    BomberMap::getMap()->genMap();
+			                BomberMap::getMap()->genMap();
                         }
                         break;
 
                     case UIElement::MAP_SELECTION2:
                         if (state != 1)
                         {
-			  std::cout << "MEDIUM" << std::endl;
+			                std::cout << "MEDIUM" << std::endl;
                             state = 1;
                             BomberMap::deleteMap();
                             BomberMap::newMap("./media/smallMap/map1.xml");
@@ -164,13 +164,24 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION3:
                         if (state != 2)
                         {
-			  std::cout << "LARGE" << std::endl;
+			                std::cout << "LARGE" << std::endl;
                             state = 2;
                             BomberMap::deleteMap();
                             BomberMap::newMap("./media/smallMap/map1.xml");
                             BomberMap::getMap()->genMap();
                         }
                       break;
+
+                    // For the player selection menu
+                    case UIElement::MAIN_MENU_BUTTON_1P:
+                    case UIElement::MAIN_MENU_BUTTON_2P:
+                    case UIElement::MAIN_MENU_BUTTON_3P:
+                    case UIElement::MAIN_MENU_BUTTON_4P:
+                        if (m_boxContainer != nullptr)
+                        {
+                            m_boxContainer->UpdateBoxes(id);
+                        }
+                        break;
 
                     default:
                         break;

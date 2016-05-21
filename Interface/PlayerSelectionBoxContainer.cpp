@@ -5,9 +5,10 @@
 #include "PlayerSelectionBoxContainer.hpp"
 #include "../include/Texture.hpp"
 
-PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager)
+PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
+            m_manager(uiManager)
 {
-    m_boxes.push_back(new PlayerSelectionBox(uiManager, BomberManTexture::getModel("playerButton").texture.c_str(),
+    m_boxes.push_back(new PlayerSelectionBox(uiManager, BomberManTexture::getModel("playerButtonSelected").texture.c_str(),
                                              irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
                                                                        IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
                                              UIElement::MAIN_MENU_BUTTON_1P, false, UIElement::PLAYERBOX_1, 1));
@@ -58,6 +59,7 @@ void PlayerSelectionBoxContainer::SelectLeft()
     PlayerSelectionBox *box = m_boxes.back();
     m_boxes.pop_back();
     m_boxes.push_front(box);
+    m_manager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
 }
 
 void PlayerSelectionBoxContainer::SelectRight()
@@ -65,4 +67,13 @@ void PlayerSelectionBoxContainer::SelectRight()
     PlayerSelectionBox *box = m_boxes.front();
     m_boxes.pop_front();
     m_boxes.push_back(box);
+    m_manager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
+}
+
+void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
+{
+    for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    {
+        (*it)->SetFocus((*it)->GetId() == id);
+    }
 }

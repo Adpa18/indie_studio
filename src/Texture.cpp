@@ -72,6 +72,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"IAEasy", {"", BomberManTexture::gui + "PlayerButtonIaEasy.png"}},
         {"IAMedium", {"", BomberManTexture::gui + "PlayerButtonIaMedium.png"}},
         {"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
+		{"playerButtonSelected", {"", BomberManTexture::gui + "PlayerButtonSelected.png"}},
 
         // Other
         {"fire", {"", BomberManTexture::other + "fire.jpg"}},

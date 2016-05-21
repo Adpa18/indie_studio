@@ -26,7 +26,9 @@ public:
     void SelectNext();
     void SelectPrev();
     void AddSprite(irr::io::path sprite);
+    UIElement::Menu GetId() const;
     irr::gui::IGUIButton const& GetButton() const;
+    void SetFocus(bool bIsFocused) const;
 
 private:
     UIManager *m_manager;
@@ -41,6 +43,7 @@ private:
     std::list<std::string> m_models;
     int m_playerID;
     irr::gui::IGUIButton *m_button;
+    UIElement::Menu m_id;
 };
 
 

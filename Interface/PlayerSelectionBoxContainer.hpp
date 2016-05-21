@@ -22,10 +22,12 @@ public:
     void SelectDown();
     void SelectLeft();
     void SelectRight();
+    void UpdateBoxes(irr::s32 id);
 
 private:
     // Knows which box is selected by P1
     std::list<PlayerSelectionBox*> m_boxes;
+    UIManager *m_manager;
 };
 
 
