@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Fri May 20 12:23:23 2016 Victor Gouet
+// Last update Sat May 21 11:47:13 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -100,6 +100,11 @@ void				AGameObject::removeAnnimation()
 irr::scene::ISceneNodeAnimator	*AGameObject::getAnimator() const
 {
   return (anime);
+}
+
+bool					AGameObject::isObjectTimeOut() const
+{
+  return (!(_timeout == -1));
 }
 
 void					AGameObject::wait()

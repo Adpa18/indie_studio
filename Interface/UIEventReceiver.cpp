@@ -141,6 +141,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION1:
                         if (state != 0)
                         {
+			  std::cout << "SMALL" << std::endl;
                             state = 0;
                             BomberMap::deleteMap();
                             //BomberMap::newMap(BomberMap::Size::SMALL);
@@ -152,9 +153,10 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION2:
                         if (state != 1)
                         {
+			  std::cout << "MEDIUM" << std::endl;
                             state = 1;
                             BomberMap::deleteMap();
-                            BomberMap::newMap(BomberMap::Size::MEDIUM);
+                            BomberMap::newMap("./media/smallMap/map1.xml");
                             BomberMap::getMap()->genMap();
                         }
                         break;
@@ -162,9 +164,10 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION3:
                         if (state != 2)
                         {
+			  std::cout << "LARGE" << std::endl;
                             state = 2;
                             BomberMap::deleteMap();
-                            BomberMap::newMap(BomberMap::Size::LARGE);
+                            BomberMap::newMap("./media/smallMap/map1.xml");
                             BomberMap::getMap()->genMap();
                         }
                       break;

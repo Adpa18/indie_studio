@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Fri May 20 16:09:53 2016 Victor Gouet
+// Last update Sat May 21 11:40:08 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -38,8 +38,9 @@ BomberMap::~BomberMap()
     {
       AGameObject	*obj = (*it_o).first;
       delete (obj);
-       it_o = _objects.begin();
+      it_o = _objects.begin();
     }
+
   for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
     {
       (*it)->remove();
@@ -55,6 +56,7 @@ void            BomberMap::genMap()
 void			BomberMap::generateGround()
 {
     // irr::scene::IAnimatedMesh *terrain_model;
+
 
     terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
     irr::core::dimension2d<irr::f32>(25, 25), // Tile size
@@ -194,7 +196,7 @@ void			BomberMap::generateMap()
 	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
 	{
-     int dice = rand() % 3;
+	  int dice = rand() % 3;
 	  new Wall(irr::core::vector2df(x, y), Wall::Invicible, _walls[dice].first, _walls[dice].second);
 	}
       else if (canPutDestructibleWall(x, y))

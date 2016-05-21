@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 13 11:04:11 2016 Victor Gouet
-// Last update Sat May 14 17:14:49 2016 Victor Gouet
+// Last update Sat May 21 11:51:23 2016 Victor Gouet
 //
 
 #include "../include/TrackerBomb.hpp"
@@ -111,7 +111,9 @@ bool    TrackerBomb::killObjects(irr::core::vector2df const &pos)
         if (type != AGameObject::BLOCK) {
             AGameObject *obj = (*it);
             obj->dead();
-            if (type != AGameObject::BOOM && obj->isDestructible()) {
+            if (type != AGameObject::BOOM &&
+		!obj->isObjectTimeOut()
+		&& obj->isDestructible()) {
                 delete obj;
             }
         }

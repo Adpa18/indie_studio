@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Fri May 20 21:08:41 2016 Victor Gouet
+// Last update Sat May 21 11:50:42 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
@@ -84,7 +84,9 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
         if (type != AGameObject::BLOCK) {
             AGameObject *obj = (*it);
             obj->dead();
-            if (type != AGameObject::BOOM && type != AGameObject::BOMB && obj->isDestructible()) {
+            if (type != AGameObject::BOOM
+		&& !obj->isObjectTimeOut()
+		&& obj->isDestructible()) {
                 delete obj;
             }
         }
