@@ -6,6 +6,7 @@
 #include "UIEventReceiver.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameManager.hpp"
+#include "../Video/Video.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -240,6 +241,10 @@ void UIEventReceiver::DisplayMainMenu()
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
 {
+    Video *video = new Video();
+
+    video->start();
+    delete video;
     irr::gui::IGUIImage *image = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND, L"", true);

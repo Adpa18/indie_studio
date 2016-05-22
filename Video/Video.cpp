@@ -11,8 +11,8 @@
 #include "Video.hpp"
 #include "../include/IrrlichtController.hpp"
 
-const std::string     Video::default_path_video = "../intro/video/";
-const std::string     Video::default_path_sound = "../intro/sound/";
+const std::string     Video::default_path_video = "./intro/video/";
+const std::string     Video::default_path_sound = "./intro/sound/";
 
 Video::Video(const std::string path)
 {
@@ -53,20 +53,18 @@ void	Video::start()
     while (device->run() && i < this->files.size())
     {
         if (i == 24)
-            engine->play2D((default_path_sound + "intro.wav").c_str(), true);
+            engine->play2D((default_path_sound + "intro.wav").c_str(), false);
         timerFrame = clock();
         irr::video::ITexture *tex = driver->getTexture((this->files[i]).c_str());
-	img->setImage(tex);
-	img->setScaleImage(true);
+	    img->setImage(tex);
+	    img->setScaleImage(true);
         driver->beginScene(true, true, irr::video::SColor(0,0,0,0));
-	IrrlichtController::getGUIEnvironment()->drawAll();
-	driver->endScene();
+	    IrrlichtController::getGUIEnvironment()->drawAll();
+	    driver->endScene();
         driver->removeTexture(tex);
         timerFrame = clock() - timerFrame;
         if (static_cast<float>(timerFrame) / CLOCKS_PER_SEC < 1.0 / 23.975)
             usleep(1000000.0 / 23.975 - static_cast<float>(timerFrame) / CLOCKS_PER_SEC * 1000000.0);
         ++i;
     }
-    engine->drop();
-  device->drop();
 }

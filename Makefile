@@ -60,9 +60,9 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp		\
 			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				\
-			$(SRC_IA)IAPlayer.cpp   \
-			$(SRC_IA)LuaFunctions.cpp
-			## $(SRC_VIDEO_DIR)Video.cpp					\
+			$(SRC_IA)IAPlayer.cpp   					\
+			$(SRC_IA)LuaFunctions.cpp					\
+			$(SRC_VIDEO_DIR)Video.cpp
 
 OBJ			=	$(SRC:%cpp=%o)
 

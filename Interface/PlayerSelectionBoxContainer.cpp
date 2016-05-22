@@ -24,7 +24,7 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
     m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
                                              irr::core::rect<irr::s32>(IrrlichtController::width * 0.262, IrrlichtController::height * 0.445,
                                                                        IrrlichtController::width * 0.49, IrrlichtController::height * 0.85),
-                                             UIElement::MAIN_MENU_BUTTON_2P, false, UIElement::PLAYERBOX_2, 2));
+                                             UIElement::MAIN_MENU_BUTTON_2P, true, UIElement::PLAYERBOX_2, 2));
     m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
                                              irr::core::rect<irr::s32>(IrrlichtController::width * 0.515, IrrlichtController::height * 0.445,
                                                                        IrrlichtController::width * 0.743, IrrlichtController::height * 0.85),
