@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sun May 22 21:17:23 2016 Victor Gouet
+// Last update Sun May 22 22:32:00 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -197,19 +197,19 @@ void			BomberMap::generateMap()
   for (int y = 0; y < BomberMap::size_side[_mapSize]; ++y) {
     for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
       if (x == 0 || y == 0 || x == BomberMap::size_side[_mapSize] - 1
-	  || y == BomberMap::size_side[_mapSize] - 1)
-	{
-	  new Wall(irr::core::vector2df(x, y), Wall::Edge);
-	}
+      	  || y == BomberMap::size_side[_mapSize] - 1)
+      	{
+      	  new Wall(irr::core::vector2df(x, y), Wall::Edge);
+      	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
-	{
-	  int dice = rand() % 3;
-	  new Wall(irr::core::vector2df(x, y), Wall::Invicible, _walls[dice].first, _walls[dice].second);
-	}
+      	{
+      	  int dice = rand() % 3;
+      	  new Wall(irr::core::vector2df(x, y), Wall::Invicible, _walls[dice].first, _walls[dice].second);
+      	}
       else if (canPutDestructibleWall(x, y))
-	{
-	  new Wall(irr::core::vector2df(x, y));
-	}
+      	{
+      	  new Wall(irr::core::vector2df(x, y));
+      	}
     }
   }
 }

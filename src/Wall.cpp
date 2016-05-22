@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Sun May 22 22:16:53 2016 Victor Gouet
+// Last update Sun May 22 22:27:28 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -25,7 +25,8 @@ Wall::Wall(irr::core::vector2df const &pos, State state)
                 (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
     (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
-    dataFile = new DataFile(pos, state);
+    dataFile = new DataFile(pos, state, BomberManTexture::getModel(_types.find(state)->second).mesh,
+			    BomberManTexture::getModel(_types.find(state)->second).texture);
 }
 
 Wall::Wall(irr::core::vector2df const &pos, State state,
@@ -33,7 +34,7 @@ Wall::Wall(irr::core::vector2df const &pos, State state,
   : AGameObject(pos, mesh, texture, (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
     (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
-    dataFile = new DataFile(pos, state);
+    dataFile = new DataFile(pos, state, mesh, texture);
 }
 
 Wall::~Wall()
@@ -107,9 +108,14 @@ void		        Wall::save(std::string const &fileName)
   ofs.close();
 }
 
-Wall::DataFile::DataFile(irr::core::vector2df const &pos, State state)
+Wall::DataFile::DataFile(irr::core::vector2df const &pos, State state, std::string const &mesh, std::string const &texture)
   : pos(pos), state(state)
 {
+  bzero(this->mesh, sizeof(this->mesh));
+  bzero(this->texture, sizeof(this->texture));
+
+  memcpy(this->mesh, mesh.c_str(), mesh.size());
+  memcpy(this->texture, texture.c_str(), texture.size());
 }
 
 Wall::DataFile::~DataFile()
@@ -118,5 +124,5 @@ Wall::DataFile::~DataFile()
 
 void		Wall::DataFile::convertToWall() const
 {
-  new Wall(this->pos, state);
+  new Wall(this->pos, state, mesh, texture);
 }

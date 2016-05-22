@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sun May 22 21:01:37 2016 Victor Gouet
-// Last update Sun May 22 22:12:41 2016 Victor Gouet
+// Last update Sun May 22 22:33:52 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -49,9 +49,6 @@ void		SaveMap::save()
 	  std::cout << fileName << std::endl;
 
 	  wall->save(fileName);
-	  // std::ofstream	ofs(fileName, std::ios::binary | std::ios::out | std::ios::trunc);
-	  // ofs.write((char *)wall, sizeof(*wall));
-	  // ofs.close();
 	}
     }
   chdir("..");
@@ -62,12 +59,6 @@ void		SaveMap::load(std::string const &directory)
   DIR		*dir;
   struct dirent	*dirent;
 
-  // mkdir("tmp", 0777);
-  // if (chdir("tmp") == -1)
-  //   {
-  //     std::cout << "failed to load map" << std::endl;
-  //     return ;
-  //   }
   if ((dir = opendir(directory.c_str())) == NULL)
     {
       std::cerr << "failed to open dir" + directory << std::endl;
@@ -82,9 +73,8 @@ void		SaveMap::load(std::string const &directory)
       ifs.open(file.c_str(), std::ios::in | std::fstream::binary);
       if (ifs.is_open())
       	{
-	  // Wall	*wall = new Wall();
 	  Wall::DataFile	data;
-	  // std::cout << "open AND READ " + std::string(dirent->d_name) << std::endl;
+
 	  ifs.read((char *)&data, sizeof(data));
 	  data.convertToWall();
 	  ifs.close();

@@ -5,7 +5,7 @@
 // Login   <tavern_d@epitech.net>
 //
 // Started on  Thu Apr 28 11:55:48 2016 Matthieu Tavernier
-// Last update Tue May 17 17:01:31 2016 Matthieu Tavernier
+// Last update Sun May 22 22:28:38 2016 Victor Gouet
 //
 
 #include "Video.hpp"
@@ -39,6 +39,7 @@ Video::~Video()
 
 void	Video::start()
 {
+  return;
     irr::IrrlichtDevice* device = IrrlichtController::getDevice();
     irrklang::ISoundEngine *engine = irrklang::createIrrKlangDevice();
     if (!engine)

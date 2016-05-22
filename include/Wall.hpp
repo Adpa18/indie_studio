@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Sun May 22 22:16:38 2016 Victor Gouet
+// Last update Sun May 22 22:24:43 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -54,7 +54,7 @@ public:
   {
   public:
     DataFile() {}
-    DataFile(irr::core::vector2df const &pos, State state);
+    DataFile(irr::core::vector2df const &pos, State state, std::string const &mesh, std::string const &texture);
     ~DataFile();
 
   public:
@@ -63,6 +63,8 @@ public:
   private:
     irr::core::vector2df	pos;
     State			state;
+    char			mesh[100];
+    char			texture[100];
   };
 
 public:
