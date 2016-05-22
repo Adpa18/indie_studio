@@ -11,6 +11,7 @@
 class Explosion : public AGameObject {
 private:
     irr::scene::IParticleSystemSceneNode    *_ps;
+  irr::scene::ILightSceneNode    *_light;
 public:
     Explosion(irr::core::vector2df const &pos, std::string const &texture, double timeout);
     virtual ~Explosion();

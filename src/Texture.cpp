@@ -12,7 +12,7 @@
 #include "../include/Texture.hpp"
 
 // STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
-const std::string BomberManTexture::path = "media/_old/";
+const std::string BomberManTexture::path = "media/commons/";
 const std::string BomberManTexture::smallMap = "media/smallMap/";
 const std::string BomberManTexture::mediumMap = "media/mediumMap/";
 const std::string BomberManTexture::largeMap = "media/largeMap/";
@@ -24,15 +24,6 @@ const std::string BomberManTexture::other = "media/other/";
 
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
-        // smallMap
-        // {"mapCurtain", {BomberManTexture::smallMap + "curtain.md3", BomberManTexture::smallMap + "Curtain01_D.BMP"}},
-        // {"mapGoods", {BomberManTexture::smallMap + "goods.md3", BomberManTexture::smallMap + "Goods01_D.BMP"}},
-        // {"mapGround", {BomberManTexture::smallMap + "ground.md3", BomberManTexture::smallMap + "Ground04_D.BMP"}},
-        // {"mapPillar", {BomberManTexture::smallMap + "pillar.md3", BomberManTexture::smallMap + "Pillar01_D.BMP"}},
-        // {"mapStatue", {BomberManTexture::smallMap + "statue.md3", BomberManTexture::smallMap + "Statue01_D.BMP"}},
-        // {"mapTable", {BomberManTexture::smallMap + "table.md3", BomberManTexture::smallMap + "Table01_D.BMP"}},
-        // {"mapTomb", {BomberManTexture::smallMap + "tomb.md3", BomberManTexture::smallMap + "Tomb01_D.BMP"}},
-        // {"mapWall", {BomberManTexture::smallMap + "wall.md3", BomberManTexture::smallMap + "Wall01_D.BMP"}},
 
 	{"carpet", {BomberManTexture::smallMap + "meshes/carpet.md3", BomberManTexture::smallMap + "textures/Carpet01_D.png"}},
 	{"carpet5", {BomberManTexture::smallMap + "meshes/carpet5.md3", BomberManTexture::smallMap + "textures/Carpet03_D.png"}},
