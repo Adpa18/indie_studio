@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Thu May 19 18:04:43 2016 Victor Gouet
+// Last update Sun May 22 15:53:35 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -51,8 +51,8 @@ public:
   EventGame	*getEventGame() const;
   void		setFptr(initInstance _fptr);
 
-    void AddPlayer(PlayerInfo *player);
-    std::list<PlayerInfo*>::const_iterator GetPlayers() const;
+  void AddPlayer(PlayerInfo *player);
+  std::list<PlayerInfo*>::const_iterator GetPlayers() const;
 
 public:
   static GameManager	*SharedInstance();
