@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sun May 22 13:02:16 2016 Victor Gouet
-// Last update Sun May 22 13:05:31 2016 Victor Gouet
+// Last update Sun May 22 13:26:57 2016 Victor Gouet
 //
 
 #ifndef ITEMMINEBOMB_HPP_
@@ -22,7 +22,7 @@ public:
 
 public:
   virtual void		use(irr::core::vector2df const &, irr::core::vector2df const &);
-
+  
 };
 
 #endif

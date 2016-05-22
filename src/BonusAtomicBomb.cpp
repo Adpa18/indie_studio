@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:19:25 2016 Victor Gouet
-// Last update Sat May 21 12:27:29 2016 Victor Gouet
+// Last update Sun May 22 13:26:55 2016 Victor Gouet
 //
 
 #include "../include/BonusAtomicBomb.hpp"
