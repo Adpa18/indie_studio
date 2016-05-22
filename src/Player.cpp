@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sun May 22 13:08:54 2016 Victor Gouet
+// Last update Sun May 22 17:23:22 2016 Victor Gouet
 //
 
 #include "../include/ACharacter.hpp"

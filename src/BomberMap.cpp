@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sat May 21 11:40:08 2016 Victor Gouet
+// Last update Sun May 22 17:32:20 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -15,6 +15,7 @@
 #include "../include/Texture.hpp"
 #include "../include/Color.hpp"
 //#include "../include/Player.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -37,6 +38,7 @@ BomberMap::~BomberMap()
   while (it_o != _objects.end())
     {
       AGameObject	*obj = (*it_o).first;
+      GameObjectTimeContainer::SharedInstance()->remove(obj);
       delete (obj);
       it_o = _objects.begin();
     }

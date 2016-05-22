@@ -108,16 +108,20 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 switch (id)
                 {
                     case UIElement::SPLASH_BUTTON_START:
+		       BomberMap::deleteMap();
+		       state = -1;
                         GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
                         break;
 
                     case UIElement::MAIN_MENU_BUTTON_1P:
+		      //BomberMap::deleteMap();
                         GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
                         fptr = &UIEventReceiver::DisplayMapMenu;
                         break;
 
                     case UIElement::MAP_SELECTION1:
+		      // BomberMap::deleteMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
                         GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                         GameManager::SharedInstance()->setGameState(GameManager::PLAY);
@@ -217,7 +221,6 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
 void UIEventReceiver::DisplayGameHUD()
 {
-    std::cout << "ALORS " << std::endl;
 }
 
 // Show the game main menu
