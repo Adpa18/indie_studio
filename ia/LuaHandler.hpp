@@ -101,7 +101,7 @@ namespace Lua
         {
             int result;
             lua_getglobal(state, toCall.c_str());
-            int dum[sizeof...(Types)] = { (pushArgs(args))... };
+            int dum[sizeof...(Types)] = { (pushVar(args))... };
 
             lua_call(state, sizeof...(Types), 1);
             result = lua_tointeger(state, -1);
@@ -125,65 +125,6 @@ namespace Lua
         lua_State   *getState(void)
         {
             return state;
-        }
-
-        /**
-         * \brief Thoses functions are polymorphisms for arguments push on the lua stack before calling a method
-         */
-    private:
-        /**
-         * \brief Polymorphism on no argument
-         */
-        int    pushArgs(void)
-        {
-            return 0;
-        }
-        /**
-         * \brief Polymorphism on integer argument
-         * \param topush The argument to push
-         */
-        int    pushArgs(int topush)
-        {
-            lua_pushinteger(state, static_cast<lua_Integer >(topush));
-            return 0;
-        }
-        /**
-         * \brief Polymorphism on double argument
-         * \param topush The argument to push
-         */
-        int pushArgs(double topush)
-        {
-            lua_pushnumber(state, topush);
-            return 0;
-        }
-        /**
-         * \brief Polymorphism on boolean argument
-         * \param topush The argument to push
-         */
-        int pushArgs(bool topush)
-        {
-            lua_pushboolean(state, topush);
-            return 0;
-        };
-        /**
-         * \brief Polymorphism on string argument
-         * \param topush The argument to push
-         */
-        int pushArgs(const char *topush)
-        {
-            lua_pushstring(state, topush);
-            return 0;
-        }
-        /**
-         * \brief Polymorphism on user data argument. In that case it is recommended to use LuaClass object '&' operator
-         * \param topush The argument to push
-         */
-        template <typename classtype>
-        int pushArgs(LuaClass<classtype> *topush)
-        {
-            lua_pushlightuserdata(state, topush->getUserData());
-            topush->bindMetatable();
-            return 0;
         }
 
     private:

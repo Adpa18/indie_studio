@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri May 20 12:51:47 2016 Victor Gouet
+// Last update Sat May 21 22:07:10 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -16,6 +16,7 @@
 #include "../include/AtomicBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/TrackerBomb.hpp"
+#include "../include/FragBomb.hpp"
 
 struct SMD3AnimationType
 {
@@ -48,9 +49,18 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
-  BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
-   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
-   // BombFactory::AddBomb<FireBomb>(*_bombContainer);
+
+  // BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
+  
+  // Atomic Bomb
+  // FragBomb
+  // TrackerBomb
+  
+  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 
@@ -222,6 +232,7 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
+  // return (false);
   return (_dead);
 }
 
@@ -266,7 +277,9 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 		return;
 	      }
 	  }
-        else if (type != AGameObject::CHARACTER && type != AGameObject::BOOM) {
+        else if (type != AGameObject::CHARACTER
+		 && type != AGameObject::BOOM
+		 && type != AGameObject::NONE) {
             _arrived = true;
             return;
         }

@@ -10,6 +10,7 @@
 #include "UIManager.hpp"
 #include "UIElements.hpp"
 #include "ISelectionBox.hpp"
+#include "PlayerSelectionBoxContainer.hpp"
 
 /*
  * \brief Represents a box to select the player character.
@@ -18,7 +19,8 @@
 class PlayerSelectionBox : public ISelectionBox
 {
 public:
-    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID);
+    PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const& sprite,
+                       irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID);
     virtual ~PlayerSelectionBox();
 
 public:
@@ -26,10 +28,18 @@ public:
     void SelectNext();
     void SelectPrev();
     void AddSprite(irr::io::path sprite);
+    UIElement::Menu GetId() const;
     irr::gui::IGUIButton const& GetButton() const;
+    void SetFocus(bool bIsFocused) const;
+
+    bool GetIaStatus() const;
+    void SetIaStatus(bool isIA);
+    std::wstring GetPlayerName() const;
+    std::string const& GetSkin() const;
 
 private:
     UIManager *m_manager;
+    PlayerSelectionBoxContainer *m_container;
     irr::video::IVideoDriver *m_driver;
     mutable std::list<irr::video::ITexture*> m_images;
     bool m_bIsIaPlayer;
@@ -41,6 +51,8 @@ private:
     std::list<std::string> m_models;
     int m_playerID;
     irr::gui::IGUIButton *m_button;
+    UIElement::Menu m_id;
+    irr::gui::IGUIEditBox *m_playerName;
 };
 
 

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Fri May 20 12:18:37 2016 Victor Gouet
+// Last update Sat May 21 21:42:05 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -24,8 +24,8 @@ public:
         BOMB = 1 << 1,
         ITEM = 1 << 2,
         BLOCK = 1 << 3,
-				BONUS = 1 << 4,
-				BOOM = 1 << 5,
+	BONUS = 1 << 4,
+	BOOM = 1 << 5,
         OTHER = 1 << 6
     };
 public:
@@ -38,13 +38,16 @@ public:
   irr::scene::IAnimatedMeshSceneNode    *operator->();
   AGameObject::Type                   getType() const;
   void                                setPos(irr::core::vector2df const &pos);
-  irr::core::vector2df                getMapPos() const;
+  irr::core::vector2df               getMapPos() const;
   irr::core::vector2df                getRealPos() const;
   void					setTimeOut(double timeout);
+  void					setTimeOutWithoutInContainer(double timeout);
   void					addAnimation();
   void					removeAnnimation();
   int					getID() const;
   double				getTimeOutObj() const;
+  bool					isObjectTimeOut() const;
+  void					setType(Type);
 
 public:
   virtual void                        dead() = 0;

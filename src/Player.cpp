@@ -5,11 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu May 19 17:02:19 2016 Victor Gouet
+// Last update Sun May 22 17:23:22 2016 Victor Gouet
 //
 
 #include "../include/ACharacter.hpp"
 #include "../include/Player.hpp"
+#include "../include/MineBomb.hpp"
 #include <iostream>
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
@@ -49,6 +50,11 @@ void		Player::compute()
       
   } else {
     // KeysCode
+    // if (_eventGame.IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_H))
+    //   {
+    // 	MineBomb *bomb = new MineBomb(this->getID());
+    // 	*bomb << this->getMapPos();
+    //   }
     if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
       act = ACharacter::ACTION::DOWN;
     } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
@@ -61,7 +67,7 @@ void		Player::compute()
     if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second)) {
       act = ACharacter::ACTION::BOMB;
     }
-    if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::ACT)->second)) {
+    if (_eventGame.IsKeyDownOneTime(this->_keycodes.find(ACharacter::ACTION::ACT)->second)) {
       act = ACharacter::ACTION::ACT;
     }
   }

@@ -1,47 +1,62 @@
 //
-// FireBomb.cpp for FIRE in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-//
+// MiniBomb.cpp for MINI in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
+// 
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-//
-// Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Sun May 22 13:15:20 2016 Victor Gouet
+// 
+// Started on  Fri May 20 16:31:36 2016 Victor Gouet
+// Last update Sun May 22 13:18:25 2016 Victor Gouet
 //
 
-#include "../include/FireBomb.hpp"
+#include "../include/MiniBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Explosion.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
-FireBomb::FireBomb(int id)
-  : ABomb(BomberManTexture::getModel("fireBomb").mesh,
-	  BomberManTexture::getModel("fireBomb").texture, 3, id)
+MiniBomb::MiniBomb(int id)
+  : ABomb(BomberManTexture::getModel("miniBomb").mesh,
+	  BomberManTexture::getModel("miniBomb").texture, 0.5, id)
+{
+  this->_power = 1;
+  use = false;
+  timeout = 0.5;
+  (*this)->setVisible(false);
+  (*this)->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
+}
+
+MiniBomb::~MiniBomb()
 {
 
 }
 
-FireBomb::~FireBomb()
-{
-
-}
-
-FireBomb	&FireBomb::operator=(ABomb const *other)
+MiniBomb	&MiniBomb::operator=(ABomb const *other)
 {
   use = false;
-  timeout = 3;
+  timeout = 0.5;
   (*this)->setVisible(false);
-  this->_power = other->getPower();
+  this->_power = 1;
+  (*this)->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
   return (*this);
 }
 
-FireBomb::FireBomb(ABomb const *other) : ABomb(other)
+MiniBomb::MiniBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
 
 #include <iostream>
 
-void		FireBomb::willExplose()
+void		MiniBomb::disable()
+{
+}
+
+bool		MiniBomb::isDestructible() const
+{
+  return (true);
+}
+
+void		MiniBomb::willExplose()
 {
     irr::core::vector2df        pos = this->getMapPos();
 
@@ -68,7 +83,7 @@ void		FireBomb::willExplose()
     }
 }
 
-bool    FireBomb::killObjects(irr::core::vector2df const &pos)
+bool    MiniBomb::killObjects(irr::core::vector2df const &pos)
 {
     std::vector<AGameObject *>   objs;
     AGameObject::Type           type;
@@ -87,18 +102,15 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
             if (type != AGameObject::BOOM
 		&& !obj->isObjectTimeOut()
 		&& obj->isDestructible()) {
-                delete obj;
+		delete obj;
             }
         }
         if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {
             stop = true;
         }
     }
-    // if (!stop) {
-        // new Explosion(pos, 1);
     if (type != AGameObject::BLOCK) {
-        new Explosion(pos, BomberManTexture::getModel("fire").texture, 0.5);
+        new Explosion(pos, BomberManTexture::getModel("fire").texture, 1);
     }
-    // }
     return (stop);
 }

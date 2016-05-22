@@ -19,7 +19,7 @@ public:
         Lua::LuaClass<testClass>    test;
 
         test.dontDelete();
-        handler["easyBehaviour"](&test, &test);
+        handler["testuserdata"](&test, &test);
     }
 
 public:
@@ -36,21 +36,48 @@ private:
 template <>
 const std::string Lua::LuaClass<testClass>::className = "Test";
 
+class jellyClass
+{
+public:
+    jellyClass()
+    {
+        std::cout << "Jelly in" << std::endl;
+        tata = 0;
+    }
+
+public:
+    static int l_tatamethod(lua_State *)
+    {
+        std::cout << "jelly tata" << std::endl;
+        return (1);
+    }
+
+private:
+    int tata;
+};
+
+template <>
+const std::string Lua::LuaClass<jellyClass>::className = "Jelly";
+
 int main()
 {
     Lua::LuaHandler  handler;
-
-    testClass   tata;
-    Lua::LuaClass<testClass>   tutu;
+    testClass   tutu;
+    jellyClass   titi;
     Lua::LuaClass<testClass>::LuaPrototype({
                                                    {"new", Lua::LuaClass<testClass>::defaultConstructor},
                                                    {"toto", testClass::l_tutumethod},
-                                                   {"__gc", Lua::LuaClass<testClass>::defaultDestructor}
+//                                                   {"__gc", Lua::LuaClass<testClass>::defaultDestructor}
                                            }).Register();
+    Lua::LuaClass<jellyClass>::LuaPrototype({
+                                                    {"new", Lua::LuaClass<jellyClass>::defaultConstructor},
+                                                    {"jellow", jellyClass::l_tatamethod},
+//                                                    {"__gc", Lua::LuaClass<jellyClass>::defaultDestructor}
+                                            }).Register();
 //    lua_pushlightuserdata(Lua::acquireState(), &tutu);
 //    tutu.bindMetatable();
 //    lua_setglobal(Lua::acquireState(), "globit");
-    handler.setScript("./iaBehaviour.lua");
+    handler.setScript("./helloworld.lua");
 //    Lua::LuaHandler &(*ftpr2)(const std::string &) = NULL;
 
 //    ftpr2 = FunctionConverter::methodToFptr<Lua::LuaHandler &(*)(const std::string &)>(handler, &Lua::LuaHandler::operator[]);
@@ -72,9 +99,14 @@ int main()
 //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
 //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
 //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+//    for (int i = 0; i < 100; ++i)
+//    {
+//        tata.onAppelleDesFonctions(handler);
+//    }
     for (int i = 0; i < 100; ++i)
     {
-        tata.onAppelleDesFonctions(handler);
+        std::cout << "test + jelly" << std::endl;
+        handler["testuserdata"](&tutu, &titi);
     }
     //    std::cout << handler["testargs"](2, 2.4, true, "On fait des test") << std::endl;
 //    std::cout << "manger des haricots" << std::endl;

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri May 20 12:37:17 2016 Victor Gouet
+// Last update Sat May 21 21:27:23 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -13,6 +13,7 @@
 #include "../include/ABomb.hpp"
 #include "../include/BombFactory.hpp"
 #include "../include/BomberMap.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
 ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout, int id) :
   AGameObject(irr::core::vector2df(-1000, -1000),

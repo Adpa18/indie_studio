@@ -44,6 +44,7 @@ Explosion::~Explosion()
 
 void        Explosion::dead()
 {
+  _ps->setEmitter(0);
 }
 
 bool        Explosion::isDestructible() const

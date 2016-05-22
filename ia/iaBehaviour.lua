@@ -6,39 +6,30 @@
 -- To change this template use File | Settings | File Templates.
 --
 
---mapmeta = {}
---
---function mapmeta.tostring (map)
---    return "{"..map.x..", "..map.y.."}";
---end
---
---function mapmeta.new (o)
---    setmetatable(o, mapmeta.mt)
---    return o;
---end
---
---mapmeta.prototype = {x=0, y=0};
---mapmeta.mt = {
---    __index = mapmeta.prototype,
---    __tostring = mapmeta.tostring
---}
---
---function computeIA(x, y)
---    return x + y;
---end
---
---function testargs(a, b, c, d)
---    print("a: "..a);
---    print("b: "..b);
---    print(c);
---    print(d);
---end
---
---testobj = {state = 4};
-
 --todo implement the three behaviours
 function easyBehaviour(bomberMap, iaPos)
-    return (1);
+    local i = 0;
+    local lim = MapW * MapH;
+
+--    print("wid: "..MapW);
+--    print("hei: "..MapH);
+--    print("iapos("..iaPos:getX()..", "..iaPos:getY()..")");
+    while (i < lim) do
+        local x = (i % MapW);
+        local y = math.floor(i / MapW);
+        local objs = bomberMap:objsAtPos(x, y);
+        local j = 0;
+        local type;
+        repeat
+            type = objs:typeAtIndex(j);
+            if (type ~= nil) then
+--                print("Object n°"..j.." at ("..x..", "..y..") of type "..type);
+            end
+            j = j + 1;
+        until (type == nil);
+        i = i + 1;
+    end
+    return (math.random(IDLE, ACT));
 end
 
 function mediumBehaviour(bomberMap, iaPos)
@@ -48,30 +39,3 @@ end
 function hardBehaviour(bomberMap, iaPos)
 
 end
-
-function testuserdata(u)
---    print(u);
-    local d = Test.new();
-    print(d);
-    d:toto();
---    Test.toto();
-    print(u);
-    u:toto();
---    d:toto();
---    local test = Map.new({4, 3});
---    print(test);
---    local a = testobj;
---    setmetatable(a, mapmeta);
---    print("a: '");
---    print(a:state);
---    print("'");
---    setmetatable(u, {state, script})
---    print("in lua: ")
---    print(u);
---    print(u:state);
---    print(getmetatable(u))
-end
-
---function data()
---    return 2;
---end

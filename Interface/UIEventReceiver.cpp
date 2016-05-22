@@ -108,16 +108,20 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 switch (id)
                 {
                     case UIElement::SPLASH_BUTTON_START:
+		       BomberMap::deleteMap();
+		       state = -1;
                         GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
                         break;
 
                     case UIElement::MAIN_MENU_BUTTON_1P:
+		      //BomberMap::deleteMap();
                         GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
                         fptr = &UIEventReceiver::DisplayMapMenu;
                         break;
 
                     case UIElement::MAP_SELECTION1:
+		      // BomberMap::deleteMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
                         GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                         GameManager::SharedInstance()->setGameState(GameManager::PLAY);
@@ -141,20 +145,22 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION1:
                         if (state != 0)
                         {
+			                std::cout << "SMALL" << std::endl;
                             state = 0;
                             BomberMap::deleteMap();
                             //BomberMap::newMap(BomberMap::Size::SMALL);
                             BomberMap::newMap("./media/smallMap/map1.xml");
-			    BomberMap::getMap()->genMap();
+			                BomberMap::getMap()->genMap();
                         }
                         break;
 
                     case UIElement::MAP_SELECTION2:
                         if (state != 1)
                         {
+			                std::cout << "MEDIUM" << std::endl;
                             state = 1;
                             BomberMap::deleteMap();
-                            BomberMap::newMap(BomberMap::Size::MEDIUM);
+                            BomberMap::newMap("./media/smallMap/map1.xml");
                             BomberMap::getMap()->genMap();
                         }
                         break;
@@ -162,12 +168,24 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION3:
                         if (state != 2)
                         {
+			                std::cout << "LARGE" << std::endl;
                             state = 2;
                             BomberMap::deleteMap();
-                            BomberMap::newMap(BomberMap::Size::LARGE);
+                            BomberMap::newMap("./media/smallMap/map1.xml");
                             BomberMap::getMap()->genMap();
                         }
                       break;
+
+                    // For the player selection menu
+                    case UIElement::MAIN_MENU_BUTTON_1P:
+                    case UIElement::MAIN_MENU_BUTTON_2P:
+                    case UIElement::MAIN_MENU_BUTTON_3P:
+                    case UIElement::MAIN_MENU_BUTTON_4P:
+                        if (m_boxContainer != nullptr)
+                        {
+                            m_boxContainer->UpdateBoxes(id);
+                        }
+                        break;
 
                     default:
                         break;
@@ -184,13 +202,13 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     // Updates menu visibility according to the current game state
     if (fptr != nullptr)
     {
-        m_manager.ClearEnv();
-        m_buttons.clear();
         if (m_boxContainer != nullptr)
         {
             delete m_boxContainer;
             m_boxContainer = nullptr;
         }
+        m_manager.ClearEnv();
+        m_buttons.clear();
         (this->*fptr)();
         GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
     }
@@ -203,7 +221,6 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
 void UIEventReceiver::DisplayGameHUD()
 {
-    std::cout << "ALORS " << std::endl;
 }
 
 // Show the game main menu

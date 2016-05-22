@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Fri May 20 16:08:54 2016 Victor Gouet
+// Last update Sun May 22 13:08:22 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -48,7 +48,7 @@ void                        Wall::dead()
 {
   int			i;
 
-  i = rand() % 8;
+  i = 11;//rand() % 10;
   switch (i)
     {
     case 0:
@@ -74,6 +74,18 @@ void                        Wall::dead()
       break;
     case 7:
       new BonusInvincible(this->getMapPos());
+      break;
+    case 8:
+      new BonusTrackerBomb(this->getMapPos());
+      break;
+    case 9:
+      new BonusFragBomb(this->getMapPos());
+      break;
+    case 10:
+      new BonusAtomicBomb(this->getMapPos());
+      break;
+    case 11:
+      new ItemMineBomb(this->getMapPos());
       break;
     default:
       break;

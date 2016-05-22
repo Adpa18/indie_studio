@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Fri May 20 16:08:52 2016 Victor Gouet
+// Last update Sun May 22 13:08:06 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -14,6 +14,7 @@
 # include <map>
 # include <string>
 # include "AGameObject.hpp"
+
 # include "BonusSpeed.hpp"
 # include "BonusPower.hpp"
 # include "BonusFireBomb.hpp"
@@ -22,6 +23,10 @@
 # include "BonusBiggestMan.hpp"
 # include "BonusSmallestMan.hpp"
 # include "BonusInvincible.hpp"
+# include "BonusTrackerBomb.hpp"
+# include "BonusFragBomb.hpp"
+# include "BonusAtomicBomb.hpp"
+# include "ItemMineBomb.hpp"
 
 class	Wall : public AGameObject
 {

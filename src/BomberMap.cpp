@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Fri May 20 16:09:53 2016 Victor Gouet
+// Last update Sun May 22 17:32:20 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -15,6 +15,7 @@
 #include "../include/Texture.hpp"
 #include "../include/Color.hpp"
 //#include "../include/Player.hpp"
+#include "../include/GameObjectTimeContainer.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -37,9 +38,11 @@ BomberMap::~BomberMap()
   while (it_o != _objects.end())
     {
       AGameObject	*obj = (*it_o).first;
+      GameObjectTimeContainer::SharedInstance()->remove(obj);
       delete (obj);
-       it_o = _objects.begin();
+      it_o = _objects.begin();
     }
+
   for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
     {
       (*it)->remove();
@@ -55,6 +58,7 @@ void            BomberMap::genMap()
 void			BomberMap::generateGround()
 {
     // irr::scene::IAnimatedMesh *terrain_model;
+
 
     terrain_model = IrrlichtController::getSceneManager()->addHillPlaneMesh("ground",
     irr::core::dimension2d<irr::f32>(25, 25), // Tile size
@@ -194,7 +198,7 @@ void			BomberMap::generateMap()
 	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
 	{
-     int dice = rand() % 3;
+	  int dice = rand() % 3;
 	  new Wall(irr::core::vector2df(x, y), Wall::Invicible, _walls[dice].first, _walls[dice].second);
 	}
       else if (canPutDestructibleWall(x, y))
@@ -486,8 +490,8 @@ std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vecto
     std::vector<AGameObject *>  objs;
 
     for (std::map<AGameObject*, irr::core::vector2df>::const_iterator it = this->_objects.begin(); it != this->_objects.end(); ++it) {
-        if ((*it).second == pos) {
-            objs.push_back((*it).first);
+        if (it->second == pos) {
+            objs.push_back(it->first);
         }
     }
     return (objs);

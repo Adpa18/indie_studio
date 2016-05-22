@@ -6,7 +6,9 @@
 #define CPP_INDIE_STUDIO_PLAYERSELECTIONBOXCONTAINER_HPP
 
 #include <list>
-#include "PlayerSelectionBox.hpp"
+#include "UIManager.hpp"
+
+class PlayerSelectionBox;
 
 /*
  * \brief Container managing all the player boxes in the GUI
@@ -22,10 +24,21 @@ public:
     void SelectDown();
     void SelectLeft();
     void SelectRight();
+    void UpdateBoxes(irr::s32 id);
+    void PlayerJoin();
+
+    void SelectSkin(std::string const& skin);
+    void UnselectSkin(std::string const& skin);
+    bool IsSkinAvailable(std::string const& skin) const;
+
+private:
+    void SaveSelection();
 
 private:
     // Knows which box is selected by P1
     std::list<PlayerSelectionBox*> m_boxes;
+    UIManager *m_manager;
+    std::list<std::string> m_availableSkins;
 };
 
 
