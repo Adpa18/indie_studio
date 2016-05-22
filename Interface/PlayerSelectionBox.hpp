@@ -10,6 +10,7 @@
 #include "UIManager.hpp"
 #include "UIElements.hpp"
 #include "ISelectionBox.hpp"
+#include "PlayerSelectionBoxContainer.hpp"
 
 /*
  * \brief Represents a box to select the player character.
@@ -18,7 +19,8 @@
 class PlayerSelectionBox : public ISelectionBox
 {
 public:
-    PlayerSelectionBox(UIManager *uiManager, irr::io::path const& sprite, irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID);
+    PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const& sprite,
+                       irr::core::rect<irr::s32> pos, UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID);
     virtual ~PlayerSelectionBox();
 
 public:
@@ -37,6 +39,7 @@ public:
 
 private:
     UIManager *m_manager;
+    PlayerSelectionBoxContainer *m_container;
     irr::video::IVideoDriver *m_driver;
     mutable std::list<irr::video::ITexture*> m_images;
     bool m_bIsIaPlayer;

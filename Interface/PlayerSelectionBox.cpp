@@ -2,12 +2,15 @@
 // Created by veyrie_f on 5/11/16.
 //
 
+#include <algorithm>
+#include <iostream>
 #include "PlayerSelectionBox.hpp"
 #include "../include/Texture.hpp"
 
-PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
+PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
                                        UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :
         m_manager(uiManager),
+        m_container(container),
         m_bIsIaPlayer(bIsIaPlayer),
         m_pos(pos),
         m_playerID(playerID),
@@ -38,10 +41,13 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     m_models.push_back("ziggsGeneral");
     m_models.push_back("ziggsMad");
     m_models.push_back("ziggsSnow");
+    m_models.push_back("ziggsPool");
     m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAEasy").texture.c_str()));
     m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAMedium").texture.c_str()));
     m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAHard").texture.c_str()));
 
+    // Updates the selected character
+    SelectNext();
     Update();
 }
 
@@ -63,9 +69,7 @@ void PlayerSelectionBox::SelectNext()
     {
         if (m_images.size() > 0)
         {
-            irr::video::ITexture *t = m_images.front();
-            m_images.pop_front();
-            m_images.push_back(t);
+            std::rotate(m_images.begin(), std::next(m_images.begin(), 1), m_images.end());
         }
     }
     else
@@ -77,10 +81,12 @@ void PlayerSelectionBox::SelectNext()
         }
         if (m_models.size() > 0)
         {
-            std::string string = m_models.back();
-            m_models.pop_back();
-            m_models.push_front(string);
-
+            m_container->UnselectSkin(m_models.front());
+            do
+            {
+                std::rotate(m_models.begin(), std::next(m_models.begin(), 1), m_models.end());
+            } while (!m_container->IsSkinAvailable(m_models.front()));
+            m_container->SelectSkin(m_models.front());
         }
     }
     Update();
@@ -96,9 +102,7 @@ void PlayerSelectionBox::SelectPrev()
     {
         if (m_images.size() > 0)
         {
-            irr::video::ITexture *t = m_images.back();
-            m_images.pop_back();
-            m_images.push_front(t);
+            std::rotate(m_images.begin(), std::prev(m_images.end(), 1), m_images.end());
         }
     }
     else
@@ -110,10 +114,12 @@ void PlayerSelectionBox::SelectPrev()
         }
         if (m_models.size() > 0)
         {
-            std::string string = m_models.front();
-            m_models.pop_front();
-            m_models.push_back(string);
-
+            m_container->UnselectSkin(m_models.front());
+            do
+            {
+                std::rotate(m_models.begin(), std::prev(m_models.end(), 1), m_models.end());
+            } while (!m_container->IsSkinAvailable(m_models.front()));
+            m_container->SelectSkin(m_models.front());
         }
     }
     Update();
