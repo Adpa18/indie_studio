@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun May 22 15:50:29 2016 Victor Gouet
+// Last update Sun May 22 16:04:03 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -239,6 +239,7 @@ void    GameManager::willStartGame()
 {
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
+  std::cout << "START" << std::endl;
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
   characters.clear();
@@ -246,28 +247,30 @@ void    GameManager::willStartGame()
 
   int		i = 0;
 
-  // for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
-  //   {
-  //     if ((*it)->GetIsIA())
-  // 	{
-  // 	  characters.push_back(new IAPlayer((*it)->GetName(),
-  // 					    spawn[i],
-  // 					    BomberManTexture::getModel((*it)->GetSkin()).mesh,
-  // 					    BomberManTexture::getModel((*it)->GetSkin()).texture,
-  // 					    i));
-  // 	}
-  //     else
-  // 	{
+  for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
+    {
+      std::cout << (*it)->GetName() << std::endl;
+
+      if ((*it)->GetIsIA())
+  	{
+  	  characters.push_back(new IAPlayer((*it)->GetName(),
+  					    spawn[i],
+  					    BomberManTexture::getModel((*it)->GetSkin()).mesh,
+  					    BomberManTexture::getModel((*it)->GetSkin()).texture,
+  					    i));
+  	}
+      else
+  	{
 	  
-  // 	  characters.push_back(new Player((*it)->GetName(),
-  // 					    spawn[i],
-  // 					    BomberManTexture::getModel((*it)->GetSkin()).mesh,
-  // 					    BomberManTexture::getModel((*it)->GetSkin()).texture,
-  // 					  i, *eventGame));
-  // 	}
-  //     it = m_playerInfo.erase(it);
-  //     ++i;
-  //   }
+  	  characters.push_back(new Player((*it)->GetName(),
+  					    spawn[i],
+  					    BomberManTexture::getModel((*it)->GetSkin()).mesh,
+  					    BomberManTexture::getModel((*it)->GetSkin()).texture,
+  					  i, *eventGame));
+  	}
+      it = m_playerInfo.erase(it);
+      ++i;
+    }
 
   // characters.push_back(new Player("ROGER", spawn[0], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 0, *eventGame));
   // characters.push_back(new IAPlayer("Jean-Louis", spawn[1], BomberManTexture::getModel("ziggs").mesh, BomberManTexture::getModel("ziggs").texture, 1));
