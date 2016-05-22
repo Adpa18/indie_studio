@@ -54,6 +54,7 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)BonusAtomicBomb.cpp					\
 			$(SRC_DIR)BonusTrackerBomb.cpp					\
 			$(SRC_DIR)MineBomb.cpp						\
+			$(SRC_DIR)ItemMineBomb.cpp					\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 			\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 			\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\

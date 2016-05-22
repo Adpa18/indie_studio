@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:31:36 2016 Victor Gouet
-// Last update Sat May 21 14:13:29 2016 Victor Gouet
+// Last update Sun May 22 13:18:25 2016 Victor Gouet
 //
 
 #include "../include/MiniBomb.hpp"
@@ -96,7 +96,7 @@ bool    MiniBomb::killObjects(irr::core::vector2df const &pos)
             continue;
         }
         type = (*it)->getType();
-        if (type != AGameObject::BLOCK) {
+        if (type != AGameObject::BLOCK && type != AGameObject::NONE) {
             AGameObject *obj = (*it);
             obj->dead();
             if (type != AGameObject::BOOM

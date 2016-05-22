@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Sat May 21 21:44:29 2016 Victor Gouet
+// Last update Sun May 22 13:11:44 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -98,6 +98,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 
         // Items
         {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
+	{"itemMineBomb", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
 
         // BomberMap
         {"ground", {"", BomberManTexture::path + "grass.png"}},

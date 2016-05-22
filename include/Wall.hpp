@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Sat May 21 14:02:36 2016 Victor Gouet
+// Last update Sun May 22 13:08:06 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -26,6 +26,7 @@
 # include "BonusTrackerBomb.hpp"
 # include "BonusFragBomb.hpp"
 # include "BonusAtomicBomb.hpp"
+# include "ItemMineBomb.hpp"
 
 class	Wall : public AGameObject
 {

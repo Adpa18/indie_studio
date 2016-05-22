@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 21:18:14 2016 Victor Gouet
-// Last update Sat May 21 22:43:05 2016 Victor Gouet
+// Last update Sun May 22 13:18:07 2016 Victor Gouet
 //
 
 #include "../include/MineBomb.hpp"
@@ -152,7 +152,7 @@ bool    MineBomb::killObjects(irr::core::vector2df const &pos)
             continue;
         }
         type = (*it)->getType();
-        if (type != AGameObject::BLOCK) {
+        if (type != AGameObject::BLOCK && type != AGameObject::NONE) {
             AGameObject *obj = (*it);
             obj->dead();
             if (type != AGameObject::BOOM

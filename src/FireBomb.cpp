@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Sat May 21 14:30:55 2016 Victor Gouet
+// Last update Sun May 22 13:15:20 2016 Victor Gouet
 //
 
 #include "../include/FireBomb.hpp"
@@ -81,7 +81,7 @@ bool    FireBomb::killObjects(irr::core::vector2df const &pos)
             continue;
         }
         type = (*it)->getType();
-        if (type != AGameObject::BLOCK) {
+        if (type != AGameObject::BLOCK && type != AGameObject::NONE) {
             AGameObject *obj = (*it);
             obj->dead();
             if (type != AGameObject::BOOM
