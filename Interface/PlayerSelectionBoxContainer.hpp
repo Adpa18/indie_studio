@@ -26,6 +26,9 @@ public:
     void PlayerJoin();
 
 private:
+    void SaveSelection();
+
+private:
     // Knows which box is selected by P1
     std::list<PlayerSelectionBox*> m_boxes;
     UIManager *m_manager;

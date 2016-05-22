@@ -25,6 +25,14 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, irr::io::path const
     m_button->setUseAlphaChannel(true);
     m_button->setDrawBorder(false);
 
+    // Creates the name input field box
+    m_playerName = m_manager->GetEnv()->addEditBox(L"", irr::core::rect<irr::s32>(pos.UpperLeftCorner.X,
+                                                                  IrrlichtController::height * 0.88,
+                                                                  pos.LowerRightCorner.X,
+                                                                  IrrlichtController::height * 0.91));
+    m_playerName->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+    m_playerName->setText((L"Player " + std::to_wstring(playerID)).c_str());
+
     // Loads the models and the sprites
     m_models.push_back("ziggs");
     m_models.push_back("ziggsGeneral");
@@ -171,4 +179,14 @@ void PlayerSelectionBox::SetIaStatus(bool isIA)
 {
     m_bIsIaPlayer = isIA;
     Update();
+}
+
+std::wstring const PlayerSelectionBox::GetPlayerName() const
+{
+    return std::wstring(m_playerName->getText());
+}
+
+std::string const &PlayerSelectionBox::GetSkin() const
+{
+    return m_models.front();
 }

@@ -286,3 +286,16 @@ void        GameManager::setFptr(initInstance _fptr)
 {
     this->fptr = _fptr;
 }
+
+void GameManager::AddPlayer(PlayerInfo *player)
+{
+    if (player != nullptr)
+    {
+        m_playerInfo.push_back(player);
+    }
+}
+
+std::list<PlayerInfo *>::const_iterator GameManager::GetPlayers() const
+{
+    return m_playerInfo.begin();
+}

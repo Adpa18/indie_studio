@@ -32,6 +32,8 @@ public:
 
     bool GetIaStatus() const;
     void SetIaStatus(bool isIA);
+    std::wstring const GetPlayerName() const;
+    std::string const& GetSkin() const;
 
 private:
     UIManager *m_manager;
@@ -47,6 +49,7 @@ private:
     int m_playerID;
     irr::gui::IGUIButton *m_button;
     UIElement::Menu m_id;
+    irr::gui::IGUIEditBox *m_playerName;
 };
 
 

@@ -4,6 +4,7 @@
 
 #include "PlayerSelectionBoxContainer.hpp"
 #include "../include/Texture.hpp"
+#include "../include/GameManager.hpp"
 
 // TODO: one character selected means its unavailable for others
 PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
@@ -31,6 +32,7 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
 
 PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
 {
+    SaveSelection();
     for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         delete (*it);
@@ -73,7 +75,7 @@ void PlayerSelectionBoxContainer::SelectRight()
 
 void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
 {
-    for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         (*it)->SetFocus((*it)->GetId() == id);
     }
@@ -81,12 +83,24 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
 
 void PlayerSelectionBoxContainer::PlayerJoin()
 {
-    for (std::list<PlayerSelectionBox*>::iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         if ((*it)->GetIaStatus())
         {
             (*it)->SetIaStatus(false);
             break;
         }
+    }
+}
+
+// TODO: handle ia strength
+void PlayerSelectionBoxContainer::SaveSelection()
+{
+    for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    {
+        GameManager::SharedInstance()->AddPlayer(new PlayerInfo(std::string((*it)->GetPlayerName().begin(), (*it)->GetPlayerName().end()),
+                                                                (*it)->GetSkin(),
+                                                                (*it)->GetIaStatus(),
+                                                                PlayerInfo::EASY));
     }
 }

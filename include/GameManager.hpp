@@ -18,6 +18,7 @@
 # include "EventGame.hpp"
 # include "Player.hpp"
 # include "BomberMap.hpp"
+#include "../Interface/PlayerInfo.hpp"
 
 class	GameManager
 {
@@ -49,6 +50,9 @@ public:
   UIManager	*getUIManager() const;
   EventGame	*getEventGame() const;
   void		setFptr(initInstance _fptr);
+
+    void AddPlayer(PlayerInfo *player);
+    std::list<PlayerInfo*>::const_iterator GetPlayers() const;
 
 public:
   static GameManager	*SharedInstance();
@@ -84,6 +88,8 @@ private:
 
     // Cameras for the menu selection
     irr::scene::ICameraSceneNode *m_cameras[4];
+    // List of players to be spawned
+    std::list<PlayerInfo*> m_playerInfo;
 
 private:
   static GameManager	*GM;
