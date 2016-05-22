@@ -327,3 +327,13 @@ std::list<PlayerInfo *>::const_iterator GameManager::GetPlayers() const
 {
     return m_playerInfo.begin();
 }
+
+std::string GameManager::ToString(std::wstring const &str)
+{
+    return std::string(str.begin(), str.end());
+}
+
+std::wstring GameManager::ToWstring(std::string const &str)
+{
+    return std::wstring(str.begin(), str.end());
+}

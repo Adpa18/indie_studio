@@ -54,6 +54,9 @@ public:
   void AddPlayer(PlayerInfo *player);
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
 
+    static std::string ToString(std::wstring const& str);
+    static std::wstring ToWstring(std::string const& str);
+
 public:
   static GameManager	*SharedInstance();
 

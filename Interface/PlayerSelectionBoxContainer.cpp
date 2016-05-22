@@ -98,7 +98,8 @@ void PlayerSelectionBoxContainer::SaveSelection()
 {
     for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
-        GameManager::SharedInstance()->AddPlayer(new PlayerInfo(std::string((*it)->GetPlayerName().begin(), (*it)->GetPlayerName().end()),
+        std::cout << GameManager::ToString((*it)->GetPlayerName()) << std::endl;
+        GameManager::SharedInstance()->AddPlayer(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
                                                                 (*it)->GetSkin(),
                                                                 (*it)->GetIaStatus(),
                                                                 PlayerInfo::EASY));

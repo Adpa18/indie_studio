@@ -32,7 +32,7 @@ public:
 
     bool GetIaStatus() const;
     void SetIaStatus(bool isIA);
-    std::wstring const GetPlayerName() const;
+    std::wstring GetPlayerName() const;
     std::string const& GetSkin() const;
 
 private:

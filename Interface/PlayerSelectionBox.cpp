@@ -181,7 +181,7 @@ void PlayerSelectionBox::SetIaStatus(bool isIA)
     Update();
 }
 
-std::wstring const PlayerSelectionBox::GetPlayerName() const
+std::wstring PlayerSelectionBox::GetPlayerName() const
 {
     return std::wstring(m_playerName->getText());
 }
