@@ -198,13 +198,13 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     // Updates menu visibility according to the current game state
     if (fptr != nullptr)
     {
-        m_manager.ClearEnv();
-        m_buttons.clear();
         if (m_boxContainer != nullptr)
         {
             delete m_boxContainer;
             m_boxContainer = nullptr;
         }
+        m_manager.ClearEnv();
+        m_buttons.clear();
         (this->*fptr)();
         GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
     }
