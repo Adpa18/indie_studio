@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Sun May 22 13:08:06 2016 Victor Gouet
+// Last update Sun May 22 22:16:38 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -50,14 +50,34 @@ public:
   virtual ~Wall();
 
 public:
+  class		DataFile
+  {
+  public:
+    DataFile() {}
+    DataFile(irr::core::vector2df const &pos, State state);
+    ~DataFile();
+
+  public:
+    void		convertToWall() const;
+
+  private:
+    irr::core::vector2df	pos;
+    State			state;
+  };
+
+public:
   virtual void                        dead();
   virtual bool				isDestructible() const;
+
+public:
+  void		        save(std::string const &);
 
 public:
   State			getState() const;
 
 private:
   State			_state;
+  DataFile		*dataFile;
 };
 
 #endif

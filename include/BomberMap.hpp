@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Sat May 21 11:39:10 2016 Victor Gouet
+// Last update Sun May 22 21:09:30 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -61,6 +61,7 @@ public:
   void  remove(AGameObject *obj);
   void  move(AGameObject *obj, const irr::core::vector2df &pos);
   int	getSize() const;
+  std::map<AGameObject *, irr::core::vector2df>	const &getObjects() const;
   irr::scene::ICameraSceneNode *get_camera() const;
   void		refreshCamera();
 

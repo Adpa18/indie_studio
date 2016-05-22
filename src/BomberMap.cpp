@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sun May 22 17:32:20 2016 Victor Gouet
+// Last update Sun May 22 21:17:23 2016 Victor Gouet
 //
 
 #include <cstdlib>
@@ -47,6 +47,11 @@ BomberMap::~BomberMap()
     {
       (*it)->remove();
     }
+}
+
+std::map<AGameObject *, irr::core::vector2df>	const &BomberMap::getObjects() const
+{
+  return (_objects);
 }
 
 void            BomberMap::genMap()

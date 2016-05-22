@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun May 22 17:36:09 2016 Victor Gouet
+// Last update Sun May 22 21:31:48 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -200,6 +200,7 @@ void    GameManager::onMenu()
     IrrlichtController::getSceneManager()->setActiveCamera(camera);
 }
 
+#include "../include/SaveMap.hpp"
 void    GameManager::onGame()
 {
     if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
@@ -210,6 +211,15 @@ void    GameManager::onGame()
 	return ;
         //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
+    if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
+      {
+	SaveMap().save();
+      }
+    
+    if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_R))
+      {
+	SaveMap().load("tmp");
+      }
 
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 
