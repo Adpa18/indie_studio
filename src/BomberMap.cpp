@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Mon May 23 22:38:14 2016 Victor Gouet
+// Last update Mon May 23 23:39:54 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -22,6 +22,7 @@
 #include "../ia/IAPlayer.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
 #include "../include/GameManager.hpp"
+#include "../include/AGameObjectFactory.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -253,75 +254,13 @@ void	BomberMap::save() const
   for (std::map<AGameObject *, irr::core::vector2df>::const_iterator it = _objects.begin(),
 	 end = _objects.end() ; it != end ; ++it)
     {
-      // Wall	*wall;
-      // Player	*player;
-      // IAPlayer	*ia;
-      
-      // irr::core::vector2df	pos = it->second;
-      // std::string		meshStr = it->first->getMesh();
-      // std::string		textureStr = it->first->getTexture();
-      
-      // std::wstring		xValue = L"" + std::to_wstring(pos.X);
-      // std::wstring		yValue = L"" + std::to_wstring(pos.Y);
-      // std::wstring		mesh = L"" ;
-      // mesh.assign(meshStr.begin(), meshStr.end());
-
-      // std::wstring		texture = L"";
-      // texture.assign(textureStr.begin(), textureStr.end());
-
-      // if ((wall = dynamic_cast<Wall *>(it->first)))
-      // 	{
-	  it->first->serialize(xmlr);
-	  // std::wstring		state = L"" + std::to_wstring(wall->getState());
-	  
-	  // xmlr->writeElement(L"Wall", true,
-	  // 		     L"x", xValue.c_str(),
-	  // 		     L"y", yValue.c_str(),
-	  // 		     L"state", state.c_str(),
-	  // 		     L"mesh", mesh.c_str(),
-	  // 		     L"texture", texture.c_str()
-	  // 		     );
-	  // xmlr->writeLineBreak();
-	  
-      // 	}
-      // else if ((player = dynamic_cast<Player *>(it->first)))
-      // 	{
-      // 	  it->first->serialize(xmlr);
-	  // std::wstring		playerName = L"";
-	  // playerName.assign(player->getName().begin(), player->getName().end());
-	  
-	  // xmlr->writeElement(L"Player", true,
-	  // 		     L"x", xValue.c_str(),
-	  // 		     L"y", yValue.c_str(),
-	  // 		     L"mesh", mesh.c_str(),
-	  // 		     L"texture", texture.c_str(),
-	  // 		     L"name", playerName.c_str()
-	  // 		     );
-	  // xmlr->writeLineBreak();
-	// }
-      // else if ((ia = dynamic_cast<IAPlayer *>(it->first)))
-      // 	{
-	  // it->first->serialize(xmlr);
-	//   std::wstring		playerName = L"";
-	//   playerName.assign(ia->getName().begin(), ia->getName().end());
-
-	//   xmlr->writeElement(L"IAPlayer", true,
-	// 		     L"x", xValue.c_str(),
-	// 		     L"y", yValue.c_str(),
-	// 		     L"mesh", mesh.c_str(),
-	// 		     L"texture", texture.c_str(),
-	// 		     L"name", playerName.c_str() 
-	// 		     );
-	//   xmlr->writeLineBreak();
-	// }
+      it->first->serialize(xmlr);
     }
 
   xmlr->writeClosingTag(L"mapSave");
   xmlr->drop();
   chdir("..");
 }
-
-#include "../include/AGameObjectFactory.hpp"
 
 void		BomberMap::createMapFromSave(std::string const &filename)
 {
@@ -336,41 +275,6 @@ void		BomberMap::createMapFromSave(std::string const &filename)
 	{
 	  nodeName = (char *) reader->getNodeName();
 	  factory.instantiateGameObjectFromXMLFile(reader, nodeName);
-	  if (nodeName == "Wall")
-	    {
-	      // new Wall(irr::core::vector2df(reader->getAttributeValueAsFloat("x"),
-	      // 				    reader->getAttributeValueAsFloat("y")),
-	      // 	       (Wall::State)reader->getAttributeValueAsInt("state"),
-	      // 	       reader->getAttributeValueSafe("mesh"),
-	      // 	       reader->getAttributeValueSafe("texture"));
-	    }
-	  else if (nodeName == "Info")
-	    {
-	      // BomberMap::newMap(reader->getAttributeValueSafe("decor"));
-	    }
-	  else if (nodeName == "Player")
-	    {
-	      // irr::core::vector2df	pos(reader->getAttributeValueAsFloat("x"),
-	      // 				    reader->getAttributeValueAsFloat("y"));
-
-	      // PlayerInfo *player = new PlayerInfo(std::string(reader->getAttributeValueSafe("name")),
-	      // 					  std::string(reader->getAttributeValueSafe("mesh")),
-	      // 					  std::string(reader->getAttributeValueSafe("texture")));
-	      // player->setPos(pos);
-	      // GameManager::SharedInstance()->AddPlayer(player);
-	    }
-	  else if (nodeName == "IAPlayer")
-	    {
-	      // irr::core::vector2df	pos(reader->getAttributeValueAsFloat("x"),
-	      // 				    reader->getAttributeValueAsFloat("y"));
-
-	      // PlayerInfo *iaPlayer = new PlayerInfo(std::string(reader->getAttributeValueSafe("name")),
-	      // 					    std::string(reader->getAttributeValueSafe("mesh")),
-	      // 					    std::string(reader->getAttributeValueSafe("texture")),
-	      // 					    true);
-	      // iaPlayer->setPos(pos);
-	      // GameManager::SharedInstance()->AddPlayer(iaPlayer);
-	    }
 	}
     }
 }
