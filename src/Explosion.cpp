@@ -31,6 +31,7 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     _ps->setScale(irr::core::vector3df(1,1,1));
     _ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
+    particuleTexture = texture;
     _ps->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
@@ -47,7 +48,7 @@ void		Explosion::serialize(irr::io::IXMLWriter *xmlr) const
   irr::core::vector2df	pos = getMapPos();
 
   std::string		meshStr = getMesh();
-  std::string		textureStr = getTexture();
+  std::string		textureStr = particuleTexture;
   
   std::wstring		xValue = L"" + std::to_wstring(pos.X);
   std::wstring		yValue = L"" + std::to_wstring(pos.Y);

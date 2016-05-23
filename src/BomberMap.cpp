@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Mon May 23 19:27:59 2016 Victor Gouet
+// Last update Mon May 23 22:38:14 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -102,7 +102,7 @@ void			BomberMap::generateGround()
     light->setLightType(irr::video::ELT_POINT);
     light->setLightData(light_data);
     lightVector.push_back(light);
-//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
+//    anim = IrrlichtController::getSceneManager()->createaFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
 //    light->addAnimator(anim);
 
      light = IrrlichtController::getSceneManager()->addLightSceneNode();
@@ -321,10 +321,13 @@ void	BomberMap::save() const
   chdir("..");
 }
 
+#include "../include/AGameObjectFactory.hpp"
+
 void		BomberMap::createMapFromSave(std::string const &filename)
 {
   irr::io::IrrXMLReader	*reader;
   std::string nodeName;
+  AGameObjectFactory	factory;
 
   reader = irr::io::createIrrXMLReader(filename.c_str());
   while (reader && reader->read())
@@ -332,40 +335,41 @@ void		BomberMap::createMapFromSave(std::string const &filename)
       if (reader->getNodeType() == irr::io::EXN_ELEMENT)
 	{
 	  nodeName = (char *) reader->getNodeName();
+	  factory.instantiateGameObjectFromXMLFile(reader, nodeName);
 	  if (nodeName == "Wall")
 	    {
-	      new Wall(irr::core::vector2df(reader->getAttributeValueAsFloat("x"),
-					    reader->getAttributeValueAsFloat("y")),
-		       (Wall::State)reader->getAttributeValueAsInt("state"),
-		       reader->getAttributeValueSafe("mesh"),
-		       reader->getAttributeValueSafe("texture"));
+	      // new Wall(irr::core::vector2df(reader->getAttributeValueAsFloat("x"),
+	      // 				    reader->getAttributeValueAsFloat("y")),
+	      // 	       (Wall::State)reader->getAttributeValueAsInt("state"),
+	      // 	       reader->getAttributeValueSafe("mesh"),
+	      // 	       reader->getAttributeValueSafe("texture"));
 	    }
 	  else if (nodeName == "Info")
 	    {
-	      BomberMap::newMap(reader->getAttributeValueSafe("decor"));
+	      // BomberMap::newMap(reader->getAttributeValueSafe("decor"));
 	    }
 	  else if (nodeName == "Player")
 	    {
-	      irr::core::vector2df	pos(reader->getAttributeValueAsFloat("x"),
-					    reader->getAttributeValueAsFloat("y"));
+	      // irr::core::vector2df	pos(reader->getAttributeValueAsFloat("x"),
+	      // 				    reader->getAttributeValueAsFloat("y"));
 
-	      PlayerInfo *player = new PlayerInfo(std::string(reader->getAttributeValueSafe("name")),
-						  std::string(reader->getAttributeValueSafe("mesh")),
-						  std::string(reader->getAttributeValueSafe("texture")));
-	      player->setPos(pos);
-	      GameManager::SharedInstance()->AddPlayer(player);
+	      // PlayerInfo *player = new PlayerInfo(std::string(reader->getAttributeValueSafe("name")),
+	      // 					  std::string(reader->getAttributeValueSafe("mesh")),
+	      // 					  std::string(reader->getAttributeValueSafe("texture")));
+	      // player->setPos(pos);
+	      // GameManager::SharedInstance()->AddPlayer(player);
 	    }
 	  else if (nodeName == "IAPlayer")
 	    {
-	      irr::core::vector2df	pos(reader->getAttributeValueAsFloat("x"),
-					    reader->getAttributeValueAsFloat("y"));
+	      // irr::core::vector2df	pos(reader->getAttributeValueAsFloat("x"),
+	      // 				    reader->getAttributeValueAsFloat("y"));
 
-	      PlayerInfo *iaPlayer = new PlayerInfo(std::string(reader->getAttributeValueSafe("name")),
-						    std::string(reader->getAttributeValueSafe("mesh")),
-						    std::string(reader->getAttributeValueSafe("texture")),
-						    true);
-	      iaPlayer->setPos(pos);
-	      GameManager::SharedInstance()->AddPlayer(iaPlayer);
+	      // PlayerInfo *iaPlayer = new PlayerInfo(std::string(reader->getAttributeValueSafe("name")),
+	      // 					    std::string(reader->getAttributeValueSafe("mesh")),
+	      // 					    std::string(reader->getAttributeValueSafe("texture")),
+	      // 					    true);
+	      // iaPlayer->setPos(pos);
+	      // GameManager::SharedInstance()->AddPlayer(iaPlayer);
 	    }
 	}
     }
