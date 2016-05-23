@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Mon May 23 17:33:47 2016 Victor Gouet
+// Last update Mon May 23 19:27:59 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -253,64 +253,67 @@ void	BomberMap::save() const
   for (std::map<AGameObject *, irr::core::vector2df>::const_iterator it = _objects.begin(),
 	 end = _objects.end() ; it != end ; ++it)
     {
-      Wall	*wall;
-      Player	*player;
-      IAPlayer	*ia;
+      // Wall	*wall;
+      // Player	*player;
+      // IAPlayer	*ia;
       
-      irr::core::vector2df	pos = it->second;
-      std::string		meshStr = it->first->getMesh();
-      std::string		textureStr = it->first->getTexture();
+      // irr::core::vector2df	pos = it->second;
+      // std::string		meshStr = it->first->getMesh();
+      // std::string		textureStr = it->first->getTexture();
       
-      std::wstring		xValue = L"" + std::to_wstring(pos.X);
-      std::wstring		yValue = L"" + std::to_wstring(pos.Y);
-      std::wstring		mesh = L"" ;
-      mesh.assign(meshStr.begin(), meshStr.end());
+      // std::wstring		xValue = L"" + std::to_wstring(pos.X);
+      // std::wstring		yValue = L"" + std::to_wstring(pos.Y);
+      // std::wstring		mesh = L"" ;
+      // mesh.assign(meshStr.begin(), meshStr.end());
 
-      std::wstring		texture = L"";
-      texture.assign(textureStr.begin(), textureStr.end());
+      // std::wstring		texture = L"";
+      // texture.assign(textureStr.begin(), textureStr.end());
 
-      if ((wall = dynamic_cast<Wall *>(it->first)))
-	{
-	  std::wstring		state = L"" + std::to_wstring(wall->getState());
+      // if ((wall = dynamic_cast<Wall *>(it->first)))
+      // 	{
+	  it->first->serialize(xmlr);
+	  // std::wstring		state = L"" + std::to_wstring(wall->getState());
 	  
-	  xmlr->writeElement(L"Wall", true,
-			     L"x", xValue.c_str(),
-			     L"y", yValue.c_str(),
-			     L"state", state.c_str(),
-			     L"mesh", mesh.c_str(),
-			     L"texture", texture.c_str()
-			     );
-	  xmlr->writeLineBreak();
+	  // xmlr->writeElement(L"Wall", true,
+	  // 		     L"x", xValue.c_str(),
+	  // 		     L"y", yValue.c_str(),
+	  // 		     L"state", state.c_str(),
+	  // 		     L"mesh", mesh.c_str(),
+	  // 		     L"texture", texture.c_str()
+	  // 		     );
+	  // xmlr->writeLineBreak();
 	  
-	}
-      else if ((player = dynamic_cast<Player *>(it->first)))
-	{
-	  std::wstring		playerName = L"";
-	  playerName.assign(player->getName().begin(), player->getName().end());
+      // 	}
+      // else if ((player = dynamic_cast<Player *>(it->first)))
+      // 	{
+      // 	  it->first->serialize(xmlr);
+	  // std::wstring		playerName = L"";
+	  // playerName.assign(player->getName().begin(), player->getName().end());
 	  
-	  xmlr->writeElement(L"Player", true,
-			     L"x", xValue.c_str(),
-			     L"y", yValue.c_str(),
-			     L"mesh", mesh.c_str(),
-			     L"texture", texture.c_str(),
-			     L"name", playerName.c_str()
-			     );
-	  xmlr->writeLineBreak();
-	}
-      else if ((ia = dynamic_cast<IAPlayer *>(it->first)))
-	{
-	  std::wstring		playerName = L"";
-	  playerName.assign(ia->getName().begin(), ia->getName().end());
+	  // xmlr->writeElement(L"Player", true,
+	  // 		     L"x", xValue.c_str(),
+	  // 		     L"y", yValue.c_str(),
+	  // 		     L"mesh", mesh.c_str(),
+	  // 		     L"texture", texture.c_str(),
+	  // 		     L"name", playerName.c_str()
+	  // 		     );
+	  // xmlr->writeLineBreak();
+	// }
+      // else if ((ia = dynamic_cast<IAPlayer *>(it->first)))
+      // 	{
+	  // it->first->serialize(xmlr);
+	//   std::wstring		playerName = L"";
+	//   playerName.assign(ia->getName().begin(), ia->getName().end());
 
-	  xmlr->writeElement(L"IAPlayer", true,
-			     L"x", xValue.c_str(),
-			     L"y", yValue.c_str(),
-			     L"mesh", mesh.c_str(),
-			     L"texture", texture.c_str(),
-			     L"name", playerName.c_str() 
-			     );
-	  xmlr->writeLineBreak();
-	}
+	//   xmlr->writeElement(L"IAPlayer", true,
+	// 		     L"x", xValue.c_str(),
+	// 		     L"y", yValue.c_str(),
+	// 		     L"mesh", mesh.c_str(),
+	// 		     L"texture", texture.c_str(),
+	// 		     L"name", playerName.c_str() 
+	// 		     );
+	//   xmlr->writeLineBreak();
+	// }
     }
 
   xmlr->writeClosingTag(L"mapSave");

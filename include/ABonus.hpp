@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 13:18:58 2016 Victor Gouet
-// Last update Mon May  9 13:53:08 2016 Victor Gouet
+// Last update Mon May 23 19:18:46 2016 Victor Gouet
 //
 
 #ifndef ABONUS_HPP_
@@ -17,11 +17,17 @@ class		ABonus	: public AGameObject
 {
 public:
   ABonus(irr::core::vector2df const &, std::string const &mesh,
-	 std::string const &texture, Type type = OTHER);
+	 std::string const &texture, std::string const &nameType,
+	 Type type = OTHER);
   virtual ~ABonus();
 
 public:
   virtual void take(ACharacter &) = 0;
+  // virtual void	serialize() const;
+  virtual void		serialize(irr::io::IXMLWriter *) const;
+
+private:
+  std::string		nameType;
 };
 
 #endif

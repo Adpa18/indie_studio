@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
-// Last update Thu May 12 18:21:44 2016 Victor Gouet
+// Last update Mon May 23 18:34:51 2016 Victor Gouet
 //
 
 #include "../include/BonusBiggestMan.hpp"
@@ -13,7 +13,7 @@
 
 BonusBiggestMan::BonusBiggestMan(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusBiggestMan").mesh,
-	   BomberManTexture::getModel("bonusBiggestMan").texture, BONUS)
+	   BomberManTexture::getModel("bonusBiggestMan").texture, "BonusBiggestMan", BONUS)
 {
 
 }

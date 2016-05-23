@@ -22,6 +22,7 @@ public:
 
 public:
     virtual void compute();
+  virtual void	        serialize(irr::io::IXMLWriter *xmlr) const;
     void setDifficulty(const std::string &difficulty);
     const std::string   &getDifficulty(void) const;
 

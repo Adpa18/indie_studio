@@ -42,6 +42,31 @@ Explosion::~Explosion()
   _ps->setEmitter(0);
 }
 
+void		Explosion::serialize(irr::io::IXMLWriter *xmlr) const
+{
+  irr::core::vector2df	pos = getMapPos();
+
+  std::string		meshStr = getMesh();
+  std::string		textureStr = getTexture();
+  
+  std::wstring		xValue = L"" + std::to_wstring(pos.X);
+  std::wstring		yValue = L"" + std::to_wstring(pos.Y);
+  std::wstring		mesh = L"" ;
+  mesh.assign(meshStr.begin(), meshStr.end());
+  
+  std::wstring		texture = L"";
+  texture.assign(textureStr.begin(), textureStr.end());
+
+
+  xmlr->writeElement(L"Explosion", true,
+		     L"x", xValue.c_str(),
+		     L"y", yValue.c_str(),
+		     L"mesh", mesh.c_str(),
+		     L"texture", texture.c_str()
+		     );
+  xmlr->writeLineBreak();
+}
+
 void        Explosion::dead()
 {
   _ps->setEmitter(0);

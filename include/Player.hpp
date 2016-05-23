@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu May 19 17:01:33 2016 Victor Gouet
+// Last update Mon May 23 18:07:47 2016 Victor Gouet
 //
 
 #ifndef PLAYER_HPP_
@@ -22,11 +22,6 @@ private:
   std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
   const MotionController            *_joystick;
   const KeysController			*keyController;
-  // enum MD3_ANIMATION {
-  //   IDLE,
-  //   RUN,
-  //   ATTACk
-  // };
 
 public:
   Player(std::string const &name, irr::core::vector2df const &pos,
@@ -36,6 +31,7 @@ public:
 
 public:
   virtual void		compute();
+  virtual void		serialize(irr::io::IXMLWriter *) const;
   // void            setMD3Animation(MD3_ANIMATION anim);
 };
 

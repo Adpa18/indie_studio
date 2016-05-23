@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Sun May 22 22:27:28 2016 Victor Gouet
+// Last update Mon May 23 18:02:38 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -40,6 +40,33 @@ Wall::Wall(irr::core::vector2df const &pos, State state,
 Wall::~Wall()
 {
   delete dataFile;
+}
+
+void		Wall::serialize(irr::io::IXMLWriter *xmlr) const
+{
+  irr::core::vector2df	pos = getMapPos();
+
+  std::string		meshStr = getMesh();
+  std::string		textureStr = getTexture();
+  
+  std::wstring		xValue = L"" + std::to_wstring(pos.X);
+  std::wstring		yValue = L"" + std::to_wstring(pos.Y);
+  std::wstring		mesh = L"" ;
+
+  mesh.assign(meshStr.begin(), meshStr.end());
+
+  std::wstring		texture = L"";
+  texture.assign(textureStr.begin(), textureStr.end());
+  std::wstring		state = L"" + std::to_wstring(getState());
+  
+  xmlr->writeElement(L"Wall", true,
+		     L"x", xValue.c_str(),
+		     L"y", yValue.c_str(),
+		     L"state", state.c_str(),
+		     L"mesh", mesh.c_str(),
+		     L"texture", texture.c_str()
+		     );
+  xmlr->writeLineBreak();
 }
 
 void                        Wall::dead()

@@ -19,6 +19,7 @@ public:
 public:
     virtual void                        dead();
     virtual bool				isDestructible() const;
+  virtual void	        serialize(irr::io::IXMLWriter *) const;
 };
 
 #endif //CPP_INDIE_STUDIO_EXPLOSION_HPP

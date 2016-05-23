@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:05:25 2016 Victor Gouet
-// Last update Tue May 10 15:06:13 2016 Victor Gouet
+// Last update Mon May 23 18:35:39 2016 Victor Gouet
 //
 
 #include "../include/BonusPower.hpp"
@@ -13,7 +13,7 @@
 
 BonusPower::BonusPower(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusPower").mesh,
-	   BomberManTexture::getModel("bonusPower").texture, BONUS)
+	   BomberManTexture::getModel("bonusPower").texture, "BonusPower", BONUS)
 {
 
 }

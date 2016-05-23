@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:37:03 2016 Victor Gouet
-// Last update Tue May 10 15:08:02 2016 Victor Gouet
+// Last update Mon May 23 18:35:59 2016 Victor Gouet
 //
 
 #include "../include/BonusSpeed.hpp"
@@ -13,7 +13,7 @@
 
 BonusSpeed::BonusSpeed(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusSpeed").mesh,
-	   BomberManTexture::getModel("bonusSpeed").texture, BONUS)
+	   BomberManTexture::getModel("bonusSpeed").texture, "BonusSpeed", BONUS)
 {
 
 }

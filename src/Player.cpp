@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sun May 22 17:23:22 2016 Victor Gouet
+// Last update Mon May 23 18:17:15 2016 Victor Gouet
 //
 
+#include <iostream>
 #include "../include/ACharacter.hpp"
 #include "../include/Player.hpp"
 #include "../include/MineBomb.hpp"
-#include <iostream>
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
 	       std::string const &mesh, std::string const &texture, int player,
@@ -34,6 +34,34 @@ Player::~Player()
     this->_joystick->stopUseIt();
   if (this->keyController)
     this->keyController->stopUseIt();
+}
+
+void		Player::serialize(irr::io::IXMLWriter *xmlr) const
+{
+  irr::core::vector2df	pos = getMapPos();
+
+  std::string		meshStr = getMesh();
+  std::string		textureStr = getTexture();
+  
+  std::wstring		xValue = L"" + std::to_wstring(pos.X);
+  std::wstring		yValue = L"" + std::to_wstring(pos.Y);
+  std::wstring		mesh = L"" ;
+  mesh.assign(meshStr.begin(), meshStr.end());
+  
+  std::wstring		texture = L"";
+  texture.assign(textureStr.begin(), textureStr.end());
+
+  std::wstring		playerName = L"";
+  playerName.assign(getName().begin(), getName().end());
+  
+  xmlr->writeElement(L"IAPlayer", true,
+		     L"x", xValue.c_str(),
+		     L"y", yValue.c_str(),
+		     L"mesh", mesh.c_str(),
+		     L"texture", texture.c_str(),
+		     L"name", playerName.c_str() 
+		     );
+  xmlr->writeLineBreak();
 }
 
 void		Player::compute()

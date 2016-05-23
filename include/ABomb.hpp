@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Sat May 21 15:04:11 2016 Victor Gouet
+// Last update Mon May 23 19:05:56 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_
@@ -42,6 +42,7 @@ public:
   virtual void          dead();
   virtual bool		isDestructible() const;
   virtual void		updateTimeOut();
+  virtual void		serialize(irr::io::IXMLWriter *) const;
 
 public:
   virtual void		willExplose() = 0;

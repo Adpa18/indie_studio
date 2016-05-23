@@ -69,6 +69,33 @@ void IAPlayer::shutDownIA()
     lua_close(Lua::acquireState());
 }
 
+void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
+{
+  irr::core::vector2df	pos = getMapPos();
+  std::string		meshStr = getMesh();
+  std::string		textureStr = getTexture();
+  
+  std::wstring		xValue = L"" + std::to_wstring(pos.X);
+  std::wstring		yValue = L"" + std::to_wstring(pos.Y);
+  std::wstring		mesh = L"" ;
+  mesh.assign(meshStr.begin(), meshStr.end());
+  
+  std::wstring		texture = L"";
+  texture.assign(textureStr.begin(), textureStr.end());
+
+  std::wstring		playerName = L"";
+  playerName.assign(getName().begin(), getName().end());
+  
+  xmlr->writeElement(L"IAPlayer", true,
+		     L"x", xValue.c_str(),
+		     L"y", yValue.c_str(),
+		     L"mesh", mesh.c_str(),
+		     L"texture", texture.c_str(),
+		     L"name", playerName.c_str() 
+		     );
+  xmlr->writeLineBreak();
+}
+
 //todo implement methods to get the type/pos of the object at index
 IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, const std::string &mesh, const std::string &texture, int player) :
     ACharacter(name, pos, mesh, texture, player),

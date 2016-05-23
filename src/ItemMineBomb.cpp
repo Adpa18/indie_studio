@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sun May 22 12:58:37 2016 Victor Gouet
-// Last update Sun May 22 13:24:29 2016 Victor Gouet
+// Last update Mon May 23 19:09:26 2016 Victor Gouet
 //
 
 #include "../include/ItemMineBomb.hpp"
@@ -14,7 +14,7 @@
 
 ItemMineBomb::ItemMineBomb(irr::core::vector2df const &pos)
   : AItem(pos, BomberManTexture::getModel("itemMineBomb").mesh,
-	  BomberManTexture::getModel("itemMineBomb").texture, ITEM)
+	  BomberManTexture::getModel("itemMineBomb").texture, "ItemMineBomb", ITEM)
 {
 }
 

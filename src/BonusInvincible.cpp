@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:24:43 2016 Victor Gouet
-// Last update Thu May 12 18:29:03 2016 Victor Gouet
+// Last update Mon May 23 18:35:31 2016 Victor Gouet
 //
 
 #include "../include/BonusInvincible.hpp"
@@ -13,7 +13,7 @@
 
 BonusInvincible::BonusInvincible(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusInvincible").mesh,
-	   BomberManTexture::getModel("bonusInvincible").texture, BONUS)
+	   BomberManTexture::getModel("bonusInvincible").texture, "BonusInvincible", BONUS)
 {
 
 }
