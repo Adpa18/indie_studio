@@ -6,30 +6,152 @@
 -- To change this template use File | Settings | File Templates.
 --
 
---todo implement the three behaviours
-function easyBehaviour(bomberMap, iaPos)
-    local i = 0;
-    local lim = MapW * MapH;
+function dirTab()
+    return {Vector2.creat(1, 0), Vector2.creat(-1, 0), Vector2.creat(0, 1), Vector2.creat(0, -1)}, {RIGHT, LEFT, UP, DOWN};
+end
 
+posSeen = {};
+
+function findFirstImpasse(bomberMap, pos)
+    posSeen[pos:getX() + pos:getY() * MapW] = true;
+--    print("We are on ("..pos:getX()..", "..pos:getY()..")");
+    for i=0,9 do
+        local xloop = pos:getX() - 1 + (i % 3);
+        local yloop = pos:getY() - 1 + math.floor(i / 3);
+
+        if (posSeen[xloop + MapW * yloop] == nil and xloop < MapW and xloop >= 0 and yloop < MapH and yloop >= 0) then
+            local tolook = bomberMap:objsAtPos(xloop, yloop);
+
+--            print("We are checking ("..xloop..", "..yloop..")");
+--            print("    this case has "..tolook:size().." type");
+            if (tolook:size() == 0) then
+--                print("from ("..pos:getX()..", "..pos:getY()..") case("..xloop..", "..yloop..") is empty");
+                local togo = Vector2.creat(xloop, yloop);
+--                print("to go: ("..togo:getX()..", "..togo:getY()..")");
+--                togo:setX(xloop);
+--                togo:setY(yloop);
+                return (findFirstImpasse(bomberMap, togo));
+            end
+        end
+    end
+    return (pos);
+end
+
+function isCraignos(bomberMap, pos)
+    local i = 0;
+    local posToCheck = dirTab();
+
+    print("pos: ("..pos:getX()..", "..pos:getY()..")");
+    while (i <= 3 and (posToCheck[1] ~= nil or posToCheck[2] ~= nil or posToCheck[3] ~= nil or posToCheck[4] ~= nil)) do
+        for j=1,4 do
+            if (posToCheck[j] ~= nil) then
+                local newpos = pos:add(posToCheck[j]:mul(i));
+
+                print("checking: ("..newpos:getX()..", "..newpos:getY()..")");
+                print("    result of ("..posToCheck[j]:getX()..", "..posToCheck[j]:getY()..") * "..i.." + ("..pos:getX()..", "..pos:getY()..")");
+                if (newpos:getX() < MapW and newpos:getX() >= 0 and newpos:getY() < MapH and newpos:getY() >= 0) then
+                    local tolook = bomberMap:objsAtPos(newpos:getX(), newpos:getY());
+
+                    if (tolook:hasType(BLOCK) or tolook:hasType(BONUS) or tolook:hasType(OTHER)) then
+                        posToCheck[j] = nil;
+                    elseif (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+                        print("is craignos");
+                        return (true);
+                    end
+                else
+                    posToCheck[j] = nil;
+                end
+            end
+        end
+        i = i + 1;
+    end
+    print("is not craignos");
+    return (false);
+end
+
+function getUncraignosMove(bomberMap, pos)
+    local tocheck, moves = dirTab();
+    local possib = {};
+    local i = 1;
+
+    for j=1,4 do
+        local gonnasee = pos:add(tocheck[j]);
+        if (isCraignos(bomberMap, gonnasee)) then
+            possib[i] = moves[j];
+            i = i + 1;
+        end
+    end
+    return possib, i;
+end
+
+function waitBombOrMove(bomberMap, pos, focus)
+    local uncmov, nbmov = getUncraignosMove(bomberMap, pos);
+
+    print("wait bomb or move from: ("..pos:getX()..", "..pos:getY()..")");
+    if (pos:equal(focus) and isCraignos(bomberMap, pos) == false) then
+        if (nbmov == 0) then
+            print("idle");
+            return IDLE;
+        end
+        --bomb
+        print("bomb");
+        posSeen = {};
+        return BOMB, findFirstImpasse(bomberMap, pos);
+    end
+    print("move");
+    --find impasse and move
+    if (nbmov > 0) then
+        return uncmov[math.random(1, nbmov)];
+    end
+    return math.random(LEFT, DOWN);
+end
+
+--todo implement the three behaviours
+function easyBehaviour(bomberMap, iaPos, focusPos)
 --    print("wid: "..MapW);
 --    print("hei: "..MapH);
 --    print("iapos("..iaPos:getX()..", "..iaPos:getY()..")");
-    while (i < lim) do
-        local x = (i % MapW);
-        local y = math.floor(i / MapW);
-        local objs = bomberMap:objsAtPos(x, y);
-        local j = 0;
-        local type;
-        repeat
-            type = objs:typeAtIndex(j);
-            if (type ~= nil) then
+--    for i = 0,(MapW * MapH) do
+--        local x = (i % MapW);
+--        local y = math.floor(i / MapW);
+--        local objs = bomberMap:objsAtPos(x, y);
+--        local j = 0;
+--        local type;
+--        repeat
+--            type = objs:typeAtIndex(j);
+--            if (type ~= nil) then
 --                print("Object n°"..j.." at ("..x..", "..y..") of type "..type);
-            end
-            j = j + 1;
-        until (type == nil);
-        i = i + 1;
+--            end
+--            j = j + 1;
+--        until (type == nil);
+--    end
+--    if (bomberMap:objsAtPos(7, 7):hasType(BOMB)) then
+--        print("(7, 7): has type bomb: true");
+--    else
+--        print("(7, 7): has type bomb: false");
+--    end
+    local fimp;
+    local action;
+
+    if (focusPos:getX() == -1 and focusPos:getY() == -1) then
+        fimp = findFirstImpasse(bomberMap, iaPos);
+        action = math.random(LEFT, DOWN);
+    else
+        action, fimp = waitBombOrMove(bomberMap, iaPos, focusPos);
     end
-    return (math.random(IDLE, ACT));
+
+    if (fimp ~= nil) then
+        print("First impasse: ("..fimp:getX()..", "..fimp:getY()..")");
+        focusPos:setX(fimp:getX());
+        focusPos:setY(fimp:getY());
+    end
+
+--    if (action == nil) then
+--        action = math.random(LEFT, DOWN);
+--    end
+
+    iaPos:del();
+    return (action--[[math.random(IDLE, ACT)]]);
 end
 
 function mediumBehaviour(bomberMap, iaPos)
