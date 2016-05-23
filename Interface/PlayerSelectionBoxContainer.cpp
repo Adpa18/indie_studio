@@ -20,7 +20,7 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
     m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButtonSelected").texture.c_str(),
                                              irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
                                                                        IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                             UIElement::MAIN_MENU_BUTTON_1P, false, UIElement::PLAYERBOX_1, 1));
+                                             UIElement::MAIN_MENU_BUTTON_1P, true, UIElement::PLAYERBOX_1, 1));
     m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
                                              irr::core::rect<irr::s32>(IrrlichtController::width * 0.262, IrrlichtController::height * 0.445,
                                                                        IrrlichtController::width * 0.49, IrrlichtController::height * 0.85),
@@ -80,20 +80,27 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
     }
 }
 
-void PlayerSelectionBoxContainer::PlayerJoin()
+void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 {
-    for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
+    /*for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
         if ((*it)->GetIaStatus())
         {
             (*it)->SetIaStatus(false);
+            (*it)->SelectNext();
             break;
         }
+    }*/
+    if (!(*std::next(m_boxes.begin(), playerID - 1))->GetIaStatus())
+    {
+        return;
     }
+    (*std::next(m_boxes.begin(), playerID - 1))->SetIaStatus(false);
+    (*std::next(m_boxes.begin(), playerID - 1))->SelectNext();
 }
 
 // TODO: handle ia strength
-// TODO: full AI game
+// TODO: full AI game -> relative rotations in list to go
 // TODO: keyboard shorcuts
 // TODO: resume saved games
 // TODO: redo gui assets

@@ -52,6 +52,14 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 }
                 break;
 
+            case irr::KEY_SPACE:
+                if (m_boxContainer != nullptr)
+                {
+                    m_boxContainer->PlayerJoin(1);
+                    return true;
+                }
+                break;
+
             case irr::KEY_DOWN:
                 if (event.KeyInput.PressedDown)
                 {
@@ -290,23 +298,23 @@ void UIEventReceiver::DisplayMapMenu()
 // Pause menu from pause button
 void UIEventReceiver::DisplayPauseMenu()
 {
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 2.5 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 2.5 + 50),
-                        nullptr, UIElement::CONTINUE, L"Continue", L"");
+                        nullptr, UIElement::CONTINUE, L"Continue", L""));
 
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 2.0 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::SPLASH_BUTTON_START, L"Menu", L"");
+                        nullptr, UIElement::SPLASH_BUTTON_START, L"Menu", L""));
 
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 1.66 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 1.66 + 50),
-                        nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L"");
+                        nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L""));
 }
 
 // Screen displayed between level loading

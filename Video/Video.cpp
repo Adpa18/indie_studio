@@ -77,4 +77,5 @@ void	Video::Run()
             usleep(1000000.0 / 23.975 - static_cast<float>(timerFrame) / CLOCKS_PER_SEC * 1000000.0);
         ++i;
     }
+    engine->stopAllSounds();
 }
