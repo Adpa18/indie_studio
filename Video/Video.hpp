@@ -20,17 +20,20 @@
 # include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
 # include "../IrrKlang/include/irrKlang.h"
 
-class				Video
+class Video
 {
 private:
-    static const std::string    default_path_video;
-    static const std::string    default_path_sound;
+    static const std::string default_path_video;
+    static const std::string default_path_sound;
 public:
-  Video(const std::string path = default_path_video);
-  ~Video();
-  void				start();
+    Video(const std::string path = default_path_video);
+    ~Video();
+
+public:
+    void Run();
+
 private:
-  std::vector<std::string>	files;
+    std::vector<std::string> files;
 };
 
 #endif /* !VIDEO_HPP_ */

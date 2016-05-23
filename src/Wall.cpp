@@ -5,9 +5,10 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Fri May 20 18:31:59 2016 Victor Gouet
+// Last update Sun May 22 22:27:28 2016 Victor Gouet
 //
 
+#include <fstream>
 #include <iostream>
 #include "../include/Wall.hpp"
 #include "../include/Texture.hpp"
@@ -18,18 +19,14 @@ const std::map<Wall::State, std::string>  Wall::_types = {
         {Edge, "edge"},
 };
 
-// const std::map<int, std::string>  Wall::_wallSmallMap = {
-//         {0, "cubeIndestructible"},
-//         {1, "cubeDestructible"},
-//         {2, "edge"},
-// };
-
 Wall::Wall(irr::core::vector2df const &pos, State state)
   : AGameObject(pos, BomberManTexture::getModel(_types.find(state)->second).mesh,
                 BomberManTexture::getModel(_types.find(state)->second).texture,
                 (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
     (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
+    dataFile = new DataFile(pos, state, BomberManTexture::getModel(_types.find(state)->second).mesh,
+			    BomberManTexture::getModel(_types.find(state)->second).texture);
 }
 
 Wall::Wall(irr::core::vector2df const &pos, State state,
@@ -37,18 +34,19 @@ Wall::Wall(irr::core::vector2df const &pos, State state,
   : AGameObject(pos, mesh, texture, (state == Destructible) ? OTHER : BLOCK), _state(state)
 {
     (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
+    dataFile = new DataFile(pos, state, mesh, texture);
 }
 
 Wall::~Wall()
 {
-  
+  delete dataFile;
 }
 
 void                        Wall::dead()
 {
   int			i;
 
-  i = 2;//rand() % 8;
+  i = 11;//rand() % 10;
   switch (i)
     {
     case 0:
@@ -75,6 +73,18 @@ void                        Wall::dead()
     case 7:
       new BonusInvincible(this->getMapPos());
       break;
+    case 8:
+      new BonusTrackerBomb(this->getMapPos());
+      break;
+    case 9:
+      new BonusFragBomb(this->getMapPos());
+      break;
+    case 10:
+      new BonusAtomicBomb(this->getMapPos());
+      break;
+    case 11:
+      new ItemMineBomb(this->getMapPos());
+      break;
     default:
       break;
     }
@@ -88,4 +98,31 @@ bool				Wall::isDestructible() const
 Wall::State			Wall::getState() const
 {
   return (_state);
+}
+
+void		        Wall::save(std::string const &fileName)
+{
+  std::ofstream	ofs(fileName, std::ios::binary | std::ios::out | std::ios::trunc);
+
+  ofs.write((char *)dataFile, sizeof(*dataFile));
+  ofs.close();
+}
+
+Wall::DataFile::DataFile(irr::core::vector2df const &pos, State state, std::string const &mesh, std::string const &texture)
+  : pos(pos), state(state)
+{
+  bzero(this->mesh, sizeof(this->mesh));
+  bzero(this->texture, sizeof(this->texture));
+
+  memcpy(this->mesh, mesh.c_str(), mesh.size());
+  memcpy(this->texture, texture.c_str(), texture.size());
+}
+
+Wall::DataFile::~DataFile()
+{
+}
+
+void		Wall::DataFile::convertToWall() const
+{
+  new Wall(this->pos, state, mesh, texture);
 }

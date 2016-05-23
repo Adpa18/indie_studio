@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Sat May 21 11:47:13 2016 Victor Gouet
+// Last update Sat May 21 21:42:58 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -121,6 +121,11 @@ void					AGameObject::wait()
   _timeout = timeSec - _timer + _rltimeout;
 }
 
+void				AGameObject::setType(Type type)
+{
+  this->_type = type;
+}
+
 bool				AGameObject::isTimeOut() const
 {
   time_t	timer;
@@ -137,6 +142,20 @@ bool				AGameObject::isTimeOut() const
   timer = time(NULL);
   seconds = difftime(timer, mktime(&y2k));
   return (seconds >= (_timer + _timeout));
+}
+
+void			AGameObject::setTimeOutWithoutInContainer(double timeout)
+{
+  time_t	timer;
+  struct tm	y2k;
+  
+  this->_timeout = timeout;
+  _rltimeout = timeout;
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  _timer = difftime(timer, mktime(&y2k));	
 }
 
 void			AGameObject::setTimeOut(double timeout)

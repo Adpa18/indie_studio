@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:31:36 2016 Victor Gouet
-// Last update Sat May 21 11:49:12 2016 Victor Gouet
+// Last update Sun May 22 13:18:25 2016 Victor Gouet
 //
 
 #include "../include/MiniBomb.hpp"
@@ -22,6 +22,7 @@ MiniBomb::MiniBomb(int id)
   use = false;
   timeout = 0.5;
   (*this)->setVisible(false);
+  (*this)->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
 }
 
 MiniBomb::~MiniBomb()
@@ -35,6 +36,7 @@ MiniBomb	&MiniBomb::operator=(ABomb const *other)
   timeout = 0.5;
   (*this)->setVisible(false);
   this->_power = 1;
+  (*this)->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
   return (*this);
 }
 
@@ -94,7 +96,7 @@ bool    MiniBomb::killObjects(irr::core::vector2df const &pos)
             continue;
         }
         type = (*it)->getType();
-        if (type != AGameObject::BLOCK) {
+        if (type != AGameObject::BLOCK && type != AGameObject::NONE) {
             AGameObject *obj = (*it);
             obj->dead();
             if (type != AGameObject::BOOM

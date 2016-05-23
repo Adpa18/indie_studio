@@ -20,6 +20,9 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     irr::core::dimension2df(20.f,20.f));
     _ps->setEmitter(em);
 
+    _light = IrrlichtController::getSceneManager()->addLightSceneNode(0, (*this)->getPosition(), irr::video::SColor(255, 255, 204, 0), 500);
+    _light->setLightType(irr::video::ELT_POINT);
+    _light->enableCastShadow(false);
     em->drop();
     irr::scene::IParticleAffector* paf = _ps->createFadeOutParticleAffector();
     _ps->addAffector(paf);
@@ -32,13 +35,16 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
 
+
 Explosion::~Explosion()
 {
+    _light->remove();
   _ps->setEmitter(0);
 }
 
 void        Explosion::dead()
 {
+  _ps->setEmitter(0);
 }
 
 bool        Explosion::isDestructible() const

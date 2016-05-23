@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Fri May 20 20:38:26 2016 Victor Gouet
+// Last update Sun May 22 17:39:07 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -20,7 +20,7 @@ GameObjectTimeContainer::GameObjectTimeContainer()
 
 GameObjectTimeContainer::~GameObjectTimeContainer()
 {
-
+  
 }
 
 GameObjectTimeContainer *GameObjectTimeContainer::SharedInstance()

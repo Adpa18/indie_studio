@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Sat May 21 12:13:43 2016 Victor Gouet
+// Last update Sun May 22 13:11:44 2016 Victor Gouet
 //
 
 #include <iostream>
 #include "../include/Texture.hpp"
 
 // STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
-const std::string BomberManTexture::path = "media/_old/";
+const std::string BomberManTexture::path = "media/commons/";
 const std::string BomberManTexture::smallMap = "media/smallMap/";
 const std::string BomberManTexture::mediumMap = "media/mediumMap/";
 const std::string BomberManTexture::largeMap = "media/largeMap/";
@@ -24,15 +24,6 @@ const std::string BomberManTexture::other = "media/other/";
 
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
-        // smallMap
-        // {"mapCurtain", {BomberManTexture::smallMap + "curtain.md3", BomberManTexture::smallMap + "Curtain01_D.BMP"}},
-        // {"mapGoods", {BomberManTexture::smallMap + "goods.md3", BomberManTexture::smallMap + "Goods01_D.BMP"}},
-        // {"mapGround", {BomberManTexture::smallMap + "ground.md3", BomberManTexture::smallMap + "Ground04_D.BMP"}},
-        // {"mapPillar", {BomberManTexture::smallMap + "pillar.md3", BomberManTexture::smallMap + "Pillar01_D.BMP"}},
-        // {"mapStatue", {BomberManTexture::smallMap + "statue.md3", BomberManTexture::smallMap + "Statue01_D.BMP"}},
-        // {"mapTable", {BomberManTexture::smallMap + "table.md3", BomberManTexture::smallMap + "Table01_D.BMP"}},
-        // {"mapTomb", {BomberManTexture::smallMap + "tomb.md3", BomberManTexture::smallMap + "Tomb01_D.BMP"}},
-        // {"mapWall", {BomberManTexture::smallMap + "wall.md3", BomberManTexture::smallMap + "Wall01_D.BMP"}},
 
 	{"carpet", {BomberManTexture::smallMap + "meshes/carpet.md3", BomberManTexture::smallMap + "textures/Carpet01_D.png"}},
 	{"carpet5", {BomberManTexture::smallMap + "meshes/carpet5.md3", BomberManTexture::smallMap + "textures/Carpet03_D.png"}},
@@ -62,6 +53,8 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 	{"miniBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
         {"atomicBomb", {BomberManTexture::bombs + "atomicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
         {"trackerBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+	{"mineBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+
 
         // Gui
         {"menuScene", {"", BomberManTexture::gui + "MenuScene.png"}},
@@ -72,6 +65,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"IAEasy", {"", BomberManTexture::gui + "PlayerButtonIaEasy.png"}},
         {"IAMedium", {"", BomberManTexture::gui + "PlayerButtonIaMedium.png"}},
         {"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
+		{"playerButtonSelected", {"", BomberManTexture::gui + "PlayerButtonSelected.png"}},
 
         // Other
         {"fire", {"", BomberManTexture::other + "fire.jpg"}},
@@ -95,6 +89,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 
         // Items
         {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
+	{"itemMineBomb", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
 
         // BomberMap
         {"ground", {"", BomberManTexture::path + "grass.png"}},

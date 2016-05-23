@@ -6,6 +6,7 @@
 #include "UIEventReceiver.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameManager.hpp"
+#include "../Video/Video.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -47,6 +48,14 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 {
                     GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                     fptr = &UIEventReceiver::DisplayMainMenu;
+                    return true;
+                }
+                break;
+
+            case irr::KEY_SPACE:
+                if (m_boxContainer != nullptr)
+                {
+                    m_boxContainer->PlayerJoin(1);
                     return true;
                 }
                 break;
@@ -108,16 +117,20 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 switch (id)
                 {
                     case UIElement::SPLASH_BUTTON_START:
+		       BomberMap::deleteMap();
+		       state = -1;
                         GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
                         break;
 
                     case UIElement::MAIN_MENU_BUTTON_1P:
+		      //BomberMap::deleteMap();
                         GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
                         fptr = &UIEventReceiver::DisplayMapMenu;
                         break;
 
                     case UIElement::MAP_SELECTION1:
+		      // BomberMap::deleteMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
                         GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                         GameManager::SharedInstance()->setGameState(GameManager::PLAY);
@@ -141,19 +154,19 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION1:
                         if (state != 0)
                         {
-			  std::cout << "SMALL" << std::endl;
+			                std::cout << "SMALL" << std::endl;
                             state = 0;
                             BomberMap::deleteMap();
                             //BomberMap::newMap(BomberMap::Size::SMALL);
                             BomberMap::newMap("./media/smallMap/map1.xml");
-			    BomberMap::getMap()->genMap();
+			                BomberMap::getMap()->genMap();
                         }
                         break;
 
                     case UIElement::MAP_SELECTION2:
                         if (state != 1)
                         {
-			  std::cout << "MEDIUM" << std::endl;
+			                std::cout << "MEDIUM" << std::endl;
                             state = 1;
                             BomberMap::deleteMap();
                             BomberMap::newMap("./media/smallMap/map1.xml");
@@ -164,13 +177,24 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                     case UIElement::MAP_SELECTION3:
                         if (state != 2)
                         {
-			  std::cout << "LARGE" << std::endl;
+			                std::cout << "LARGE" << std::endl;
                             state = 2;
                             BomberMap::deleteMap();
                             BomberMap::newMap("./media/smallMap/map1.xml");
                             BomberMap::getMap()->genMap();
                         }
                       break;
+
+                    // For the player selection menu
+                    case UIElement::MAIN_MENU_BUTTON_1P:
+                    case UIElement::MAIN_MENU_BUTTON_2P:
+                    case UIElement::MAIN_MENU_BUTTON_3P:
+                    case UIElement::MAIN_MENU_BUTTON_4P:
+                        if (m_boxContainer != nullptr)
+                        {
+                            m_boxContainer->UpdateBoxes(id);
+                        }
+                        break;
 
                     default:
                         break;
@@ -187,13 +211,13 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     // Updates menu visibility according to the current game state
     if (fptr != nullptr)
     {
-        m_manager.ClearEnv();
-        m_buttons.clear();
         if (m_boxContainer != nullptr)
         {
             delete m_boxContainer;
             m_boxContainer = nullptr;
         }
+        m_manager.ClearEnv();
+        m_buttons.clear();
         (this->*fptr)();
         GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
     }
@@ -206,7 +230,6 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
 void UIEventReceiver::DisplayGameHUD()
 {
-    std::cout << "ALORS " << std::endl;
 }
 
 // Show the game main menu
@@ -226,6 +249,10 @@ void UIEventReceiver::DisplayMainMenu()
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
 {
+    Video *video = new Video();
+
+    video->Run();
+    delete video;
     irr::gui::IGUIImage *image = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
@@ -271,23 +298,23 @@ void UIEventReceiver::DisplayMapMenu()
 // Pause menu from pause button
 void UIEventReceiver::DisplayPauseMenu()
 {
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 2.5 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 2.5 + 50),
-                        nullptr, UIElement::CONTINUE, L"Continue", L"");
+                        nullptr, UIElement::CONTINUE, L"Continue", L""));
 
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 2.0 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::SPLASH_BUTTON_START, L"Menu", L"");
+                        nullptr, UIElement::SPLASH_BUTTON_START, L"Menu", L""));
 
-    m_manager.AddButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 1.66 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 1.66 + 50),
-                        nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L"");
+                        nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L""));
 }
 
 // Screen displayed between level loading

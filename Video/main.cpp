@@ -14,6 +14,6 @@ int	main()
 {
   Video	*test = new Video();
 
-  test->start();
+  test->Run();
   return (0);
 }

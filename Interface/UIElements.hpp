@@ -5,8 +5,6 @@
 #ifndef CPP_INDIE_STUDIO_UIELEMENTS_HPP
 #define CPP_INDIE_STUDIO_UIELEMENTS_HPP
 
-// TODO: video playback handler
-
 // Holds all the element enum for the window
 namespace UIElement
 {
