@@ -243,7 +243,7 @@ void UIEventReceiver::DisplaySplashScreen()
 {
     Video *video = new Video();
 
-    video->start();
+    video->Run();
     delete video;
     irr::gui::IGUIImage *image = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),

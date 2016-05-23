@@ -30,7 +30,7 @@ public:
     ~Video();
 
 public:
-    void start();
+    void Run();
 
 private:
     std::vector<std::string> files;

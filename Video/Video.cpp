@@ -38,9 +38,8 @@ Video::~Video()
 {
 }
 
-void	Video::start()
+void	Video::Run()
 {
-  return;
     irr::IrrlichtDevice* device = IrrlichtController::getDevice();
     irrklang::ISoundEngine *engine = irrklang::createIrrKlangDevice();
     if (!engine)
