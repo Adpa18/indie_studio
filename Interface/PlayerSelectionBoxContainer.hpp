@@ -25,7 +25,7 @@ public:
     void SelectLeft();
     void SelectRight();
     void UpdateBoxes(irr::s32 id);
-    void PlayerJoin();
+    void PlayerJoin(int playerID);
 
     void SelectSkin(std::string const& skin);
     void UnselectSkin(std::string const& skin);

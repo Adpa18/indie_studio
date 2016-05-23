@@ -162,6 +162,9 @@ void    GameManager::onMenu()
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
 
         // Camera 4
+        // HACK
+        m_cameras[3]->setPosition(irr::core::vector3df(400, 12, -30));
+        m_cameras[3]->setTarget(irr::core::vector3df(400, 12, 0));
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
                 irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
                                           IrrlichtController::width * 0.99, IrrlichtController::height * 0.85));
