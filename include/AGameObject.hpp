@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Sat May 21 21:42:05 2016 Victor Gouet
+// Last update Mon May 23 14:11:53 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -48,6 +48,8 @@ public:
   double				getTimeOutObj() const;
   bool					isObjectTimeOut() const;
   void					setType(Type);
+  std::string			const	&getTexture() const;
+  std::string			const	&getMesh() const;
 
 public:
   virtual void                        dead() = 0;
@@ -61,6 +63,7 @@ public:
 
 private:
   std::string				_texture;
+  std::string				_mesh;
 
 private:
   irr::scene::IAnimatedMeshSceneNode	*_node;

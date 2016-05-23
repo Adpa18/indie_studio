@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Sun May 22 21:09:30 2016 Victor Gouet
+// Last update Mon May 23 15:03:09 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -17,6 +17,7 @@
 # include "Wall.hpp"
 # include "Props.hpp"
 # include "Texture.hpp"
+
 class	BomberMap
 {
 public:
@@ -37,7 +38,7 @@ public:
   ~BomberMap();
 
 public:
-  void  serialize(std::string const &) const;
+  void  save() const;
   void  deserialize();
   void  genMap();
   std::vector<irr::core::vector2df> const	&getSpawn() const;
@@ -46,15 +47,17 @@ public:
   static BomberMap    *getMap();
   static void		newMap(Size mapSize);
   static void		newMap(std::string const &filename);
+  static void		createMapFromSave(std::string const &filename);
   static void		deleteMap();
   static bool		isInstantiate();
-
+  
 
 private:
   void			generateMap();
   void		        generateGround();
   bool			canPutDestructibleWall(int x, int y) const;
   void			initSpawn();
+  std::string		getCurrentDate() const;
 
 public:
   void  add(AGameObject* obj, const irr::core::vector2df &pos);
@@ -64,12 +67,11 @@ public:
   std::map<AGameObject *, irr::core::vector2df>	const &getObjects() const;
   irr::scene::ICameraSceneNode *get_camera() const;
   void		refreshCamera();
-
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
   const irr::core::vector2df  get(AGameObject *obj);
   std::vector<AGameObject *> const &getCharacters() const;
 
-    void    loadModel(struct model mod);
+  void    loadModel(struct model mod);
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;

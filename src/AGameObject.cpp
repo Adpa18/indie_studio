@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Sat May 21 21:42:58 2016 Victor Gouet
+// Last update Mon May 23 14:12:18 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -42,7 +42,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
       {
 	_timer = 0;
       }
-
+    _mesh = mesh;
     if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
     {
         IrrlichtController::getDevice()->drop();
@@ -54,7 +54,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
         if (texture != "")
         {
             _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
-	        _texture = texture;
+	    _texture = texture;
             _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
         }
         _node->setMD2Animation(irr::scene::EMAT_STAND);
@@ -72,6 +72,17 @@ AGameObject::~AGameObject()
     //  (*this)->remove();
     // this->_node->removeAll();
     // this->_node->remove();
+}
+
+
+std::string			const	&AGameObject::getTexture() const
+{
+  return (_texture);
+}
+
+std::string			const	&AGameObject::getMesh() const
+{
+  return (_mesh);
 }
 
 int				AGameObject::getID() const
