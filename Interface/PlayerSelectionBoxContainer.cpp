@@ -93,6 +93,11 @@ void PlayerSelectionBoxContainer::PlayerJoin()
 }
 
 // TODO: handle ia strength
+// TODO: full AI game
+// TODO: keyboard shorcuts
+// TODO: resume saved games
+// TODO: redo gui assets
+// TODO: where is Matthieu ? Matthieu is in the kitchen
 void PlayerSelectionBoxContainer::SaveSelection()
 {
     for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
