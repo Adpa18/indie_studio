@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:31:11 2016 Victor Gouet
-// Last update Sat May 21 12:32:13 2016 Victor Gouet
+// Last update Mon May 23 18:36:09 2016 Victor Gouet
 //
 
 #include "../include/BonusTrackerBomb.hpp"
@@ -15,7 +15,7 @@
 
 BonusTrackerBomb::BonusTrackerBomb(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusTrackerBomb").mesh,
-    BomberManTexture::getModel("bonusTrackerBomb").texture, BONUS)
+	   BomberManTexture::getModel("bonusTrackerBomb").texture, "BonusTrackerBomb", BONUS)
 {
 }
 

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Sat May 21 21:27:23 2016 Victor Gouet
+// Last update Mon May 23 19:06:14 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -61,6 +61,10 @@ ABomb::~ABomb()
 double		ABomb::getTimeOut() const
 {
   return (this->timeout);
+}
+
+void		ABomb::serialize(irr::io::IXMLWriter *) const
+{
 }
 
 void			ABomb::setVelocity(irr::core::vector2df const &_dir)

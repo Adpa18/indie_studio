@@ -157,9 +157,9 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 			                std::cout << "SMALL" << std::endl;
                             state = 0;
                             BomberMap::deleteMap();
-                            //BomberMap::newMap(BomberMap::Size::SMALL);
+			    // BomberMap::createMapFromSave("tmpSaveMap/MapSave2016-05-23.23:35:43.xml");
                             BomberMap::newMap("./media/smallMap/map1.xml");
-			                BomberMap::getMap()->genMap();
+			    BomberMap::getMap()->genMap();
                         }
                         break;
 

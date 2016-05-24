@@ -320,6 +320,15 @@ namespace Lua
         return 0;
     }
 
+    template<typename classtype>
+    int          pushVar(classtype topush)
+    {
+        LuaClass<classtype> luaconv(topush);
+
+        luaconv.dontDelete();
+        return 0;
+    }
+
     template <typename topushtype>
     void        setGlobalValue(topushtype topush, const std::string &varname)
     {

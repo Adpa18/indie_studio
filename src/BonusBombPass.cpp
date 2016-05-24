@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:15:24 2016 Victor Gouet
-// Last update Thu May 12 13:18:47 2016 Victor Gouet
+// Last update Mon May 23 18:35:01 2016 Victor Gouet
 //
 
 #include "../include/BonusBombPass.hpp"
@@ -13,7 +13,7 @@
 
 BonusBombPass::BonusBombPass(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusBombPass").mesh,
-	   BomberManTexture::getModel("bonusBombPass").texture, BONUS)
+	   BomberManTexture::getModel("bonusBombPass").texture, "BonusBombPass", BONUS)
 {
 
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Sun May 22 22:24:43 2016 Victor Gouet
+// Last update Mon May 23 18:00:16 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -70,6 +70,7 @@ public:
 public:
   virtual void                        dead();
   virtual bool				isDestructible() const;
+  virtual void		serialize(irr::io::IXMLWriter *) const;
 
 public:
   void		        save(std::string const &);

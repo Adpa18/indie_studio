@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:04:39 2016 Victor Gouet
-// Last update Sat May 21 12:08:40 2016 Victor Gouet
+// Last update Mon May 23 18:35:21 2016 Victor Gouet
 //
 
 #include "../include/BonusFragBomb.hpp"
@@ -15,7 +15,7 @@
 
 BonusFragBomb::BonusFragBomb(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusFragBomb").mesh,
-    BomberManTexture::getModel("bonusFragBomb").texture, BONUS)
+	   BomberManTexture::getModel("bonusFragBomb").texture, "BonusFragBomb", BONUS)
 {
 
 }

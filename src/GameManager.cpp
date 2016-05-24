@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun May 22 22:33:35 2016 Victor Gouet
+// Last update Mon May 23 16:29:31 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -203,7 +203,6 @@ void    GameManager::onMenu()
     IrrlichtController::getSceneManager()->setActiveCamera(camera);
 }
 
-#include "../include/SaveMap.hpp"
 void    GameManager::onGame()
 {
     if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
@@ -214,16 +213,11 @@ void    GameManager::onGame()
 	return ;
         //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
-    // if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
-    //   {
-    // 	SaveMap().save();
-    //   }
+    if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
+      {
+	BomberMap::getMap()->save();
+      }
     
-    // if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_R))
-    //   {
-    // 	SaveMap().load("tmp");
-    //   }
-
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 
     std::vector<ACharacter *>::iterator it = characters.begin();
@@ -264,18 +258,18 @@ void    GameManager::willStartGame()
       if ((*it)->GetIsIA())
       	{
       	  characters.push_back(new IAPlayer((*it)->GetName(),
-      					    spawn[i],
-      					    BomberManTexture::getModel((*it)->GetSkin()).mesh,
-      					    BomberManTexture::getModel((*it)->GetSkin()).texture,
+      					    (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+      					    (*it)->GetMesh(),
+      					    (*it)->GetTexture(),
       					    i));
       	}
       else
       	{
 	  
       	  characters.push_back(new Player((*it)->GetName(),
-      	  				    spawn[i],
-      	  				    BomberManTexture::getModel((*it)->GetSkin()).mesh,
-      	  				    BomberManTexture::getModel((*it)->GetSkin()).texture,
+					  (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+					  (*it)->GetMesh(),
+					  (*it)->GetTexture(),
       	  				  i, *eventGame));
       	}
       delete (*it);

@@ -18,6 +18,11 @@ void Props::dead() {
 
 }
 
+void				Props::serialize(irr::io::IXMLWriter *) const
+{
+
+}
+
 bool Props::isDestructible() const {
    return false;
 }

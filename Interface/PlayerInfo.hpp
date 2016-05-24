@@ -6,6 +6,7 @@
 #define CPP_INDIE_STUDIO_PLAYERINFO_HPP
 
 #include <iostream>
+#include "../include/IrrlichtController.hpp"
 
 /*
  * \brief This class hold the info concerning a player
@@ -17,20 +18,34 @@ public:
     { EASY, MEDIUM, HARD };
 
 public:
+
     PlayerInfo(std::string const& name, std::string const& skin, bool bIsIa = false, IAStrength strength = EASY);
+
+  PlayerInfo(std::string const& name,
+	     std::string const& mesh,
+	     std::string const& texture,
+	     bool bIsIa = false,
+	     IAStrength strength = EASY);
     ~PlayerInfo();
 
 public:
-    std::string const& GetName() const;
-    std::string const& GetSkin() const;
-    bool GetIsIA() const;
-    IAStrength GetIAStrength() const;
+void	setPos(irr::core::vector2df const &pos);
+
+public:
+  std::string const& GetName() const;
+  std::string const &GetMesh() const;
+  std::string const &GetTexture() const;
+  bool GetIsIA() const;
+  IAStrength GetIAStrength() const;
+irr::core::vector2df const *GetPos() const;
 
 private:
-    std::string m_name;
-    std::string m_skin;
-    bool m_isIa;
-    IAStrength m_strength;
+  std::string m_name;
+  std::string _mesh;
+  std::string _texture;
+  bool m_isIa;
+  IAStrength m_strength;
+irr::core::vector2df	*pos;
 };
 
 

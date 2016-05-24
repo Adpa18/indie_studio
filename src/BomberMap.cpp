@@ -5,17 +5,24 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sun May 22 22:32:00 2016 Victor Gouet
+// Last update Mon May 23 23:39:54 2016 Victor Gouet
 //
 
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <ctime>
 #include <cstdlib>
 #include <iostream>
 #include "irrXML.h"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
 #include "../include/Color.hpp"
-//#include "../include/Player.hpp"
+#include "../include/Player.hpp"
+#include "../ia/IAPlayer.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
+#include "../include/GameManager.hpp"
+#include "../include/AGameObjectFactory.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 
@@ -96,7 +103,7 @@ void			BomberMap::generateGround()
     light->setLightType(irr::video::ELT_POINT);
     light->setLightData(light_data);
     lightVector.push_back(light);
-//    anim = IrrlichtController::getSceneManager()->createFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
+//    anim = IrrlichtController::getSceneManager()->createaFlyCircleAnimator(irr::core::vector3df(0, 100, 0), 250.0f);
 //    light->addAnimator(anim);
 
      light = IrrlichtController::getSceneManager()->addLightSceneNode();
@@ -214,27 +221,67 @@ void			BomberMap::generateMap()
   }
 }
 
-// void BomberMap::serialize(const std::string &saveFile) const
-// {
-//    irr::IrrlichtDevice  *device = IrrlichtController::getDevice();
-//    irr::io::IAttributes *attributes;
-//    irr::io::IXMLWriter *writter;
-//
-//    writter = device->getFileSystem()->createXMLWriter(saveFile.c_str());
-//    writter->writeXMLHeader();
-//    writter->writeElement(L"Map");
-//    writter->writeLineBreak();
-//    for (std::vector<AGameObject *>::const_iterator it = _objects.begin(), end = _objects.end(); it != end; ++it)
-//    {
-//        attributes = device->getFileSystem()->createEmptyAttributes();
-//        (**it)->serializeAttributes(attributes);
-//        attributes->write(writter, false, L"attributes");
-//        delete(attributes);
-//    }
-//    writter->writeClosingTag(L"Map");
-//    writter->drop();
-// }
+std::string		BomberMap::getCurrentDate() const
+{
+  time_t     now = time(0);
+  struct tm  tstruct;
+  char       buf[80];
+  tstruct = *localtime(&now);
 
+  strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+  return buf;
+}
+
+void	BomberMap::save() const
+{
+  mkdir("tmpSaveMap", 0777);
+  if (chdir("tmpSaveMap") == -1)
+    return ;
+  irr::IrrlichtDevice  *device = irr::createDevice(irr::video::EDT_NULL);
+  std::string		fileNameMap = "MapSave" + getCurrentDate() + ".xml";
+  irr::io::IXMLWriter* xmlr = device->getFileSystem()->createXMLWriter(fileNameMap.c_str());
+
+  xmlr->writeXMLHeader();
+
+  std::wstring	fileName = L"";
+
+  fileName.assign(_filename.begin(), _filename.end());
+
+  xmlr->writeElement(L"Info", true, L"decor", fileName.c_str());
+  xmlr->writeLineBreak();
+
+  for (std::map<AGameObject *, irr::core::vector2df>::const_iterator it = _objects.begin(),
+	 end = _objects.end() ; it != end ; ++it)
+    {
+      it->first->serialize(xmlr);
+    }
+
+  xmlr->writeClosingTag(L"mapSave");
+  xmlr->drop();
+  if (chdir("..") == -1)
+    std::cout << "Can't back to directory" << std::endl;
+}
+
+void		BomberMap::createMapFromSave(std::string const &filename)
+{
+  irr::io::IrrXMLReader	*reader;
+  std::string nodeName;
+  AGameObjectFactory	factory;
+
+  reader = irr::io::createIrrXMLReader(filename.c_str());
+  while (reader && reader->read())
+    {
+      if (reader->getNodeType() == irr::io::EXN_ELEMENT)
+	{
+	  nodeName = (char *) reader->getNodeName();
+	  factory.instantiateGameObjectFromXMLFile(reader, nodeName);
+	}
+    }
+}
+
+
+// TODO A ENLEVER FONCTION C
 void rotate(irr::scene::ISceneNode *node, irr::core::vector3df rot)
 {
    irr::core::matrix4 m;

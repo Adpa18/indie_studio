@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 17:42:59 2016 Victor Gouet
-// Last update Wed May 11 17:59:29 2016 Victor Gouet
+// Last update Mon May 23 19:09:34 2016 Victor Gouet
 //
 
 #include "../include/ItemThrow.hpp"
@@ -14,7 +14,7 @@
 
 ItemThrow::ItemThrow(irr::core::vector2df const &pos)
   : AItem(pos, BomberManTexture::getModel("itemThrow").mesh,
-	  BomberManTexture::getModel("itemThrow").texture, ITEM)
+	  BomberManTexture::getModel("itemThrow").texture, "ItemMineBomb", ITEM)
 {
 
 }

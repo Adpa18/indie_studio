@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
-// Last update Sat May 21 12:27:38 2016 Victor Gouet
+// Last update Mon May 23 18:35:12 2016 Victor Gouet
 //
 
 #include "../include/BonusFireBomb.hpp"
@@ -15,7 +15,7 @@
 
 BonusFireBomb::BonusFireBomb(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusFireBomb").mesh,
-    BomberManTexture::getModel("bonusFireBomb").texture, BONUS)
+	   BomberManTexture::getModel("bonusFireBomb").texture, "BonusFireBomb", BONUS)
 {
 }
 
