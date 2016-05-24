@@ -41,21 +41,21 @@ function isCraignos(bomberMap, pos)
     local i = 0;
     local posToCheck = dirTab();
 
-    print("pos: ("..pos:getX()..", "..pos:getY()..")");
+--    print("check pos: ("..pos:getX()..", "..pos:getY()..")");
     while (i <= 3 and (posToCheck[1] ~= nil or posToCheck[2] ~= nil or posToCheck[3] ~= nil or posToCheck[4] ~= nil)) do
         for j=1,4 do
             if (posToCheck[j] ~= nil) then
                 local newpos = pos:add(posToCheck[j]:mul(i));
 
-                print("checking: ("..newpos:getX()..", "..newpos:getY()..")");
-                print("    result of ("..posToCheck[j]:getX()..", "..posToCheck[j]:getY()..") * "..i.." + ("..pos:getX()..", "..pos:getY()..")");
+--                print("checking: ("..newpos:getX()..", "..newpos:getY()..")");
+--                print("    result of ("..posToCheck[j]:getX()..", "..posToCheck[j]:getY()..") * "..i.." + ("..pos:getX()..", "..pos:getY()..")");
                 if (newpos:getX() < MapW and newpos:getX() >= 0 and newpos:getY() < MapH and newpos:getY() >= 0) then
                     local tolook = bomberMap:objsAtPos(newpos:getX(), newpos:getY());
 
                     if (tolook:hasType(BLOCK) or tolook:hasType(BONUS) or tolook:hasType(OTHER)) then
                         posToCheck[j] = nil;
                     elseif (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
-                        print("is craignos");
+--                        print("is craignos");
                         return (true);
                     end
                 else
@@ -65,20 +65,40 @@ function isCraignos(bomberMap, pos)
         end
         i = i + 1;
     end
-    print("is not craignos");
+--    print("is not craignos");
     return (false);
 end
 
 function getUncraignosMove(bomberMap, pos)
     local tocheck, moves = dirTab();
     local possib = {};
-    local i = 1;
+    local i = 0;
 
     for j=1,4 do
         local gonnasee = pos:add(tocheck[j]);
-        if (isCraignos(bomberMap, gonnasee)) then
-            possib[i] = moves[j];
+        if (bomberMap:objsAtPos(gonnasee:getX(), gonnasee:getY()):size() == 0 and isCraignos(bomberMap, gonnasee) == false) then
+--            print("We found a pos: "..moves[j]);
             i = i + 1;
+            possib[i] = moves[j];
+--        else
+--            print("Position "..moves[j].." not valid");
+        end
+--        print("index: "..j);
+    end
+    return possib, i;
+end
+
+function getPossiblePos(bomberMap, pos)
+    local tocheck, moves = dirTab();
+    local possib = {};
+    local i = 0;
+
+    for j=1,4 do
+        local gonnasee = pos:add(tocheck[j]);
+        local tocheck = bomberMap:objsAtPos(gonnasee:getX(), gonnasee:getY());
+        if (tocheck:size() == 0 or tocheck:hasType(BONUS) or tocheck:hasType(ITEM)) then
+            i = i + 1;
+            possib[i] = moves[j];
         end
     end
     return possib, i;
@@ -86,24 +106,39 @@ end
 
 function waitBombOrMove(bomberMap, pos, focus)
     local uncmov, nbmov = getUncraignosMove(bomberMap, pos);
+    local possibMove, nbPossib = getPossiblePos(bomberMap, pos);
 
-    print("wait bomb or move from: ("..pos:getX()..", "..pos:getY()..")");
-    if (pos:equal(focus) and isCraignos(bomberMap, pos) == false) then
+--    print("wait bomb or move from: ("..pos:getX()..", "..pos:getY()..")");
+    if (pos:equal(focus)) then
+--        print("-----------------it is equal-----------------");
+        if (isCraignos(bomberMap, pos)) then
+--            print("-----------------but craignos-----------------");
+--            print("arrived to focus but craignos");
+            return math.random(LEFT, DOWN), findFirstImpasse(bomberMap, pos);
+        end
+--        print("-----------------and not craignos-----------------");
         if (nbmov == 0) then
-            print("idle");
+--            print("idle");
             return IDLE;
         end
         --bomb
-        print("bomb");
+--        print("bomb");
         posSeen = {};
-        return BOMB, findFirstImpasse(bomberMap, pos);
+        return DROPBOMB, findFirstImpasse(bomberMap, pos);
     end
-    print("move");
+--    print("move");
     --find impasse and move
     if (nbmov > 0) then
+--        for d=1,nbmov do
+--            print("index: "..d);
+--            print("can move to: "..uncmov[d]);
+--        end
         return uncmov[math.random(1, nbmov)];
     end
-    return math.random(LEFT, DOWN);
+    if (nbPossib > 0) then
+        return possibMove[math.random(1, nbPossib)];
+    end
+    return (IDLE);
 end
 
 --todo implement the three behaviours
@@ -141,7 +176,7 @@ function easyBehaviour(bomberMap, iaPos, focusPos)
     end
 
     if (fimp ~= nil) then
-        print("First impasse: ("..fimp:getX()..", "..fimp:getY()..")");
+--        print("First impasse: ("..fimp:getX()..", "..fimp:getY()..")");
         focusPos:setX(fimp:getX());
         focusPos:setY(fimp:getY());
     end
