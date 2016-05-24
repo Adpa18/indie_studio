@@ -255,7 +255,8 @@ void    GameManager::willStartGame()
 
   for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
-      if ((*it)->GetIsIA())
+        //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
+      if (i == 0/*(*it)->GetIsIA()*/)
       	{
       	  characters.push_back(new IAPlayer((*it)->GetName(),
       					    (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),

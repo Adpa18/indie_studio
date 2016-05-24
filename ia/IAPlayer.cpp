@@ -111,7 +111,8 @@ IAPlayer::~IAPlayer()
 
 void IAPlayer::compute()
 {
-    this->action(static_cast<ACharacter::ACTION>(IAPlayer::handler[behaviour](BomberMap::getMap(), getMapPos(), &focus)));
+    Lua::setGlobalValue(BomberMap::getMap(), "bomberMap");
+    this->action(static_cast<ACharacter::ACTION>(IAPlayer::handler[behaviour](getMapPos(), &focus)));
 }
 
 void IAPlayer::setDifficulty(const std::string &difficulty)
