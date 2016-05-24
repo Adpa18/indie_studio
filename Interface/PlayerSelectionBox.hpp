@@ -11,6 +11,7 @@
 #include "UIElements.hpp"
 #include "ISelectionBox.hpp"
 #include "PlayerSelectionBoxContainer.hpp"
+#include "PlayerInfo.hpp"
 
 /*
  * \brief Represents a box to select the player character.
@@ -27,7 +28,6 @@ public:
     void Update();
     void SelectNext();
     void SelectPrev();
-    void AddSprite(irr::io::path sprite);
     UIElement::Menu GetId() const;
     irr::gui::IGUIButton const& GetButton() const;
     void SetFocus(bool bIsFocused) const;
@@ -36,18 +36,18 @@ public:
     void SetIaStatus(bool isIA);
     std::wstring GetPlayerName() const;
     std::string const& GetSkin() const;
+    PlayerInfo::IAStrength GetIAStrength() const;
 
 private:
     UIManager *m_manager;
     PlayerSelectionBoxContainer *m_container;
     irr::video::IVideoDriver *m_driver;
-    mutable std::list<irr::video::ITexture*> m_images;
+    mutable std::list<std::string> m_images;
     bool m_bIsIaPlayer;
     irr::core::rect<irr::s32> m_pos;
     irr::scene::ISceneManager *m_sceneManager;
     irr::gui::IGUIImage *m_image;
     irr::scene::IAnimatedMeshSceneNode *m_modelNode = nullptr;
-    //std::list<irr::scene::IAnimatedMesh*> m_models;
     std::list<std::string> m_models;
     int m_playerID;
     irr::gui::IGUIButton *m_button;

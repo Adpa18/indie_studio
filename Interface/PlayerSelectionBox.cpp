@@ -42,9 +42,12 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
     m_models.push_back("ziggsMad");
     m_models.push_back("ziggsSnow");
     m_models.push_back("ziggsPool");
-    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAEasy").texture.c_str()));
-    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAMedium").texture.c_str()));
-    m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAHard").texture.c_str()));
+    //m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAEasy").texture.c_str()));
+    //m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAMedium").texture.c_str()));
+    //m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAHard").texture.c_str()));
+    m_images.push_back("IAEasy");
+    m_images.push_back("IAMedium");
+    m_images.push_back("IAHard");
 
     // Updates the selected character
     SelectNext();
@@ -125,11 +128,6 @@ void PlayerSelectionBox::SelectPrev()
     Update();
 }
 
-void PlayerSelectionBox::AddSprite(irr::io::path sprite)
-{
-    m_images.push_back(m_driver->getTexture(sprite));
-}
-
 void PlayerSelectionBox::Update()
 {
     if (!m_bIsIaPlayer)
@@ -150,7 +148,8 @@ void PlayerSelectionBox::Update()
     }
     else
     {
-        m_image->setImage(m_images.front());
+        //m_image->setImage(m_images.front());
+        m_image->setImage(m_driver->getTexture(BomberManTexture::getModel(m_images.front()).texture.c_str()));
     }
 }
 
@@ -195,4 +194,21 @@ std::wstring PlayerSelectionBox::GetPlayerName() const
 std::string const &PlayerSelectionBox::GetSkin() const
 {
     return m_models.front();
+}
+
+PlayerInfo::IAStrength PlayerSelectionBox::GetIAStrength() const
+{
+    if (m_images.front() == "IAEasy")
+    {
+        return PlayerInfo::IAStrength::EASY;
+    }
+    if (m_images.front() == "IAMedium")
+    {
+        return PlayerInfo::IAStrength::MEDIUM;
+    }
+    if (m_images.front() == "IAHard")
+    {
+        return PlayerInfo::IAStrength::HARD;
+    }
+    return PlayerInfo::IAStrength::EASY;
 }
