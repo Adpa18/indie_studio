@@ -325,6 +325,19 @@ void GameManager::AddPlayer(PlayerInfo *player)
     }
 }
 
+void GameManager::ClearPlayers()
+{
+    m_playerInfo.clear();
+}
+
+void GameManager::AddPlayerFromUI(PlayerInfo *player)
+{
+    if (player != nullptr)
+    {
+        m_playerInfoUI.push_back(player);
+    }
+}
+
 std::list<PlayerInfo *>::const_iterator GameManager::GetPlayers() const
 {
     return m_playerInfo.begin();
@@ -338,4 +351,10 @@ std::string GameManager::ToString(std::wstring const &str)
 std::wstring GameManager::ToWstring(std::string const &str)
 {
     return std::wstring(str.begin(), str.end());
+}
+
+void GameManager::SwapCharacterList()
+{
+    m_playerInfo.clear();
+    m_playerInfo.merge(m_playerInfoUI);
 }
