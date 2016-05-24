@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sat May 21 22:07:10 2016 Victor Gouet
+// Last update Tue May 24 13:05:07 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -34,9 +34,9 @@ static const SMD3AnimationType MD3AnimationTypeList[3] =
 
 ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
 		       std::string const &mesh, std::string const &texture, int player,
-		       bool invincible)
+		       int score, bool invincible)
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
-    _name(name), _player(player), _invincible(invincible)
+    _name(name), _player(player), _score(score), _invincible(invincible)
 {
   t = NULL;
   life = 1;
@@ -73,7 +73,7 @@ void			ACharacter::onInvinciblePeriode(double time)
   mutex.lock();
   _invincible = true;
   mutex.unlock();
-  usleep(time);//time);
+  usleep(time);
   mutex.lock();
   _invincible = false;
   mutex.unlock();
@@ -236,6 +236,11 @@ bool		ACharacter::isDead() const
   return (_dead);
 }
 
+int		ACharacter::getScore() const
+{
+  return (_score);
+}
+
 void            ACharacter::moveTo(irr::core::vector2df const &dir)
 {
     std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir);
@@ -250,6 +255,7 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 	    if (((bonus = dynamic_cast<ABonus *>(*it))) != NULL)
 	      {
 		bonus->take(*this);
+		_score += 5;
 		delete bonus;
 	      }
 	  }
@@ -261,6 +267,7 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 	      {
 		if (this->item)
 		  delete (this->item);
+		_score += 5;
 		this->item = item;
 		this->item->dead();
 	      }
