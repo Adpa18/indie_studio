@@ -22,6 +22,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 {
     //Permet de ne la load qu'au changement de state
     static int state = -1;
+
     if (event.EventType == irr::EET_KEY_INPUT_EVENT)
     {
         switch (event.KeyInput.Key)
@@ -113,6 +114,29 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
         switch (event.GUIEvent.EventType)
         {
+            case irr::gui::EGET_LISTBOX_CHANGED:
+            {
+                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event.GUIEvent.Caller;
+                std::cout << "Map name = " << "./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())) << std::endl;
+                state = 0;
+                BomberMap::deleteMap();
+                if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
+                {
+                    BomberMap::newMap("./media/smallMap/map1.xml");
+                    BomberMap::getMap()->genMap();
+                }
+                else
+                {
+                    BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
+                }
+                break;
+            }
+            case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
+                fptr = &UIEventReceiver::DisplayGameHUD;
+                GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+                GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                break;
+
             case irr::gui::EGET_BUTTON_CLICKED:
                 switch (id)
                 {
@@ -125,6 +149,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
                     case UIElement::MAIN_MENU_BUTTON_1P:
 		      //BomberMap::deleteMap();
+                    std::cout << "ICIIII" << std::endl;
                         GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
                         fptr = &UIEventReceiver::DisplayMapMenu;
                         break;
@@ -211,6 +236,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     // Updates menu visibility according to the current game state
     if (fptr != nullptr)
     {
+        std::cout << "1 .ICI" << std::endl;
         if (m_boxContainer != nullptr)
         {
             delete m_boxContainer;
@@ -218,8 +244,11 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         }
         m_manager.ClearEnv();
         m_buttons.clear();
+        std::cout << "2 .ICI ptr = " << fptr << std::endl;
         (this->*fptr)();
+        std::cout << "3 .ICI" << std::endl;
         GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
+        std::cout << "4 .ICI" << std::endl;
     }
     fptr = nullptr;
 
@@ -275,24 +304,54 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
-    irr::gui::IGUIButton *b1 = m_manager.GetEnv()->addButton(
+    /*irr::gui::IGUIButton *b1 = m_manager.GetEnv()->addButton(
             irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                       IrrlichtController::width * 0.95, IrrlichtController::height * 0.3),
-            nullptr, UIElement::MAP_SELECTION1, L"Map 1", L"");
+            nullptr, UIElement::MAP_SELECTION1, L"Map 1", L"");*/
 
-    irr::gui::IGUIButton *b2 = m_manager.GetEnv()->addButton(
+    /*irr::gui::IGUIButton *b2 = m_manager.GetEnv()->addButton(
             irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.4,
                                       IrrlichtController::width * 0.95, IrrlichtController::height * 0.6),
-            nullptr, UIElement::MAP_SELECTION2, L"Map 2", L"");
+            nullptr, UIElement::MAP_SELECTION2, L"Map 2", L"");*/
 
-    irr::gui::IGUIButton *b3 = m_manager.GetEnv()->addButton(
+    /*irr::gui::IGUIButton *b3 = m_manager.GetEnv()->addButton(
             irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.7,
                                       IrrlichtController::width * 0.95, IrrlichtController::height * 0.9),
-            nullptr, UIElement::MAP_SELECTION3, L"Map 3", L"");
+            nullptr, UIElement::MAP_SELECTION3, L"Map 3", L"");*/
 
-    m_buttons.push_back(b1);
-    m_buttons.push_back(b2);
-    m_buttons.push_back(b3);
+    //m_buttons.push_back(b1);
+    //m_buttons.push_back(b2);
+    //m_buttons.push_back(b3);
+
+    irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
+                                                             IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
+    m_manager.GetEnv()->setFocus(listBox);
+    listBox->setSelected(listBox->addItem(L"Map 1"));
+
+    // Looks for saved games
+    DIR *dir = opendir("tmpSaveMap");
+    if (dir != nullptr)
+    {
+        for (dirent *files = readdir(dir); files != NULL; files = readdir(dir))
+        {
+            if (files->d_type == 8)
+            {
+                listBox->addItem(GameManager::ToWstring(std::string(files->d_name)).c_str());
+            }
+        }
+    }
+
+    // TODO: variable de classe + voir pour le stack des persos
+    static bool mabit = false;
+    // Creates default map
+    if (!mabit)
+    {
+        mabit = true;
+        std::cout << "je te promets gros fpd je l'appelle qu'une fois" << std::endl;
+        BomberMap::deleteMap();
+        BomberMap::newMap("./media/smallMap/map1.xml");
+        BomberMap::getMap()->genMap();
+    }
 }
 
 // Pause menu from pause button
