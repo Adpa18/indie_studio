@@ -2,6 +2,7 @@
 // Created by wery_a on 11/05/16.
 //
 
+#include <BomberMap.hpp>
 #include "Texture.hpp"
 #include "Explosion.hpp"
 
@@ -36,7 +37,7 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     particuleTexture = texture;
     _ps->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-
+   BomberMap::getMap()->add(this, this->getMapPos());
 }
 
 void			Explosion::updateTimeOut()
@@ -59,6 +60,7 @@ Explosion::~Explosion()
 {
     _light->remove();
   _ps->setEmitter(0);
+   BomberMap::getMap()->remove(this);
 }
 
 void		Explosion::serialize(irr::io::IXMLWriter *xmlr) const

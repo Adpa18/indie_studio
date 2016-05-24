@@ -154,8 +154,128 @@ function easyBehaviour(bomberMap, iaPos, focusPos)
     return (action--[[math.random(IDLE, ACT)]]);
 end
 
-function mediumBehaviour(bomberMap, iaPos)
+function findFirstSafe(bomberMap, iaPos)
+  local dirX = { -1, 1, 0, 0 };
+  local dirY = { 0, 0, 1, -1 };
+  local distance = {};
+  local direction = {};
+  local tolook;
 
+  for y=0,MapH do
+    for x=0,MapW do
+      distance[y] = {};
+      direction[y] = {};
+      tolook = bomberMap:objsAtPos(x, y);
+      if (tolook:hasType(BLOCK)) then
+        distance[y][x] = -1;
+      elseif (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+        distance[y][x] = -2;
+      else
+        distance[y][x] = 0;
+      end
+      direction[y][x] = -1;
+    end
+  end
+  if (iaPos:getX() - 1 >= 0) then
+    direction[iaPos:getY()][iaPos:getX() - 1] = LEFT;
+  end
+  if (iaPos:getX() + 1 < MapW) then
+    direction[iaPos:getY()][iaPos:getX() + 1] = RIGHT;
+  end
+  if (iaPos:getY() + 1 < MapH) then
+    direction[iaPos:getY() + 1][iaPos:getX()] = UP;
+  end
+  if (iaPos:getY() - 1 >= 0) then
+    direction[iaPos:getY() - 1][iaPos:getX()] = DOWN;
+  end
+  local dist = 0;
+  for j=LEFT,DOWN do
+    tolook = bomberMap:objsAtPos(iaPos:getX() + dirX[j], iaPos:getY() + dirY[j]);
+    if (tolook:hasType(BLOCK) == false) then
+      return j;
+    end
+  end
+  local dist = 1;
+  for y=0,MapH do
+    for x=0,MapW do
+      if (distance[y][x] == dist) then
+        if (distance[y][x + 1] == -2 and direction[y][x + 1] == -1) then
+          direction[y][x + 1] = direction[y][x];
+          distance[y][x + 1]= dist + 1;
+        elseif (distance[y][x - 1] ~= -1) then
+          return direction[y][x];
+        end
+        if (distance[y][x + 1] == -2 and direction[y][x - 1] == -1) then
+          direction[y][x - 1] = direction[y][x];
+          distance[y][x - 1]= dist + 1;
+        elseif (distance[y][x - 1] ~= -1) then
+          return direction[y][x];
+        end
+        if (distance[y][x + 1] == -2 and direction[y + 1][x] == -1) then
+          direction[y + 1][x] = direction[y][x];
+          distance[y + 1][x]= dist + 1;
+        elseif (distance[y][x - 1] ~= -1) then
+          return direction[y][x];
+        end
+        if (distance[y][x + 1] == -2 and direction[y - 1][x] == -1) then
+          direction[y - 1][x] = direction[y][x];
+          distance[y - 1][x]= dist + 1;
+        elseif (distance[y][x - 1] ~= -1) then
+          return direction[y][x];
+        end
+      end
+    end
+  end
+  return math.random(LEFT, DOWN);
+end
+
+function getObjectif(bomberMap, iaPos)
+
+  local dirX = { -1, 1, 0, 0 };
+  local dirY = { 0, 0, 1, -1 };
+  local tolook;
+  local objectif = {};
+  local choice;
+  local dice;
+
+  tolook = bomberMap:objsAtPos(iaPos:getX(), iaPos:getY());
+  if (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+    return findFirstSafe(bomberMap, iaPos);
+  else
+    choice = math.random(LEFT, DOWN);
+  end
+  for c=LEFT,DOWN do
+    objectif[0] = iaPos:getX() + dirX[c];
+    objectif[1] = iaPos:getY() + dirY[c];
+    tolook = bomberMap:objsAtPos(objectif[0], objectif[1]);
+    dice = math.random(0, 7);
+    if (tolook:hasType(OTHER) and dice == 0) then
+      return DROPBOMB;
+    end
+  end
+  objectif[0] = iaPos:getX() + dirX[choice];
+  objectif[1] = iaPos:getY() + dirY[choice];
+  tolook = bomberMap:objsAtPos(objectif[0], objectif[1]);
+  if ( tolook:hasType(BLOCK) or tolook:hasType(BOMB) or tolook:hasType(BOOM) ) then
+    choice = 1;
+    while (choice < 5) do
+      objectif[0] = iaPos:getX() + dirX[choice];
+      objectif[1] = iaPos:getY() + dirY[choice];
+      tolook = bomberMap:objsAtPos(objectif[0], objectif[1]);
+      if (tolook:hasType(BLOCK) or tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+        break;
+      end
+      choice = choice + 1;
+    end
+    if (choice == 5) then
+      choice = IDLE;
+    end
+  end
+  return choice;
+end
+
+function mediumBehaviour(bomberMap, iaPos, focusPos)
+  return getObjectif(bomberMap, iaPos);
 end
 
 function hardBehaviour(bomberMap, iaPos)

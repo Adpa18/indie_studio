@@ -28,6 +28,7 @@ ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout
   _power = 1;
   __active = false;
   (*this)->setScale(irr::core::vector3df(1, 1, 1));
+   BomberMap::getMap()->add(this, this->getMapPos());
 }
 
 ABomb::ABomb(ABomb const *other)
@@ -56,6 +57,7 @@ ABomb	&ABomb::operator=(ABomb const *other)
 
 ABomb::~ABomb()
 {
+   BomberMap::getMap()->remove(this);
 }
 
 double		ABomb::getTimeOut() const

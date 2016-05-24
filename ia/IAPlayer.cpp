@@ -46,20 +46,20 @@ void IAPlayer::initIA()
                                                              }).Register();
     Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapW");
     Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapH");
-    Lua::setGlobalValue((int)AGameObject::NONE, "NONE");
-    Lua::setGlobalValue((int)AGameObject::CHARACTER, "CHARACTER");
-    Lua::setGlobalValue((int)AGameObject::BOMB, "BOMB");
-    Lua::setGlobalValue((int)AGameObject::ITEM, "ITEM");
-    Lua::setGlobalValue((int)AGameObject::BLOCK, "BLOCK");
-    Lua::setGlobalValue((int)AGameObject::BONUS, "BONUS");
-    Lua::setGlobalValue((int)AGameObject::BOOM, "BOOM");
-    Lua::setGlobalValue((int)AGameObject::OTHER, "OTHER");
+    Lua::setGlobalValue((int)AGameObject::Type::NONE, "NONE");
+    Lua::setGlobalValue((int)AGameObject::Type::CHARACTER, "CHARACTER");
+    Lua::setGlobalValue((int)AGameObject::Type::BOMB, "BOMB");
+    Lua::setGlobalValue((int)AGameObject::Type::ITEM, "ITEM");
+    Lua::setGlobalValue((int)AGameObject::Type::BLOCK, "BLOCK");
+    Lua::setGlobalValue((int)AGameObject::Type::BONUS, "BONUS");
+    Lua::setGlobalValue((int)AGameObject::Type::BOOM, "BOOM");
+    Lua::setGlobalValue((int)AGameObject::Type::OTHER, "OTHER");
     Lua::setGlobalValue((int)ACharacter::IDLE, "IDLE");
     Lua::setGlobalValue((int)ACharacter::LEFT, "LEFT");
     Lua::setGlobalValue((int)ACharacter::RIGHT, "RIGHT");
     Lua::setGlobalValue((int)ACharacter::UP, "UP");
     Lua::setGlobalValue((int)ACharacter::DOWN, "DOWN");
-    Lua::setGlobalValue((int)ACharacter::BOMB, "BOMB");
+    Lua::setGlobalValue((int)ACharacter::BOMB, "DROPBOMB");
     Lua::setGlobalValue((int)ACharacter::ACT, "ACT");
     handler.setScript("./ia/iaBehaviour.lua");
 }
@@ -74,24 +74,24 @@ void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
   irr::core::vector2df	pos = getMapPos();
   std::string		meshStr = getMesh();
   std::string		textureStr = getTexture();
-  
+
   std::wstring		xValue = L"" + std::to_wstring(pos.X);
   std::wstring		yValue = L"" + std::to_wstring(pos.Y);
   std::wstring		mesh = L"" ;
   mesh.assign(meshStr.begin(), meshStr.end());
-  
+
   std::wstring		texture = L"";
   texture.assign(textureStr.begin(), textureStr.end());
 
   std::wstring		playerName = L"";
   playerName.assign(getName().begin(), getName().end());
-  
+
   xmlr->writeElement(L"IAPlayer", true,
 		     L"x", xValue.c_str(),
 		     L"y", yValue.c_str(),
 		     L"mesh", mesh.c_str(),
 		     L"texture", texture.c_str(),
-		     L"name", playerName.c_str() 
+		     L"name", playerName.c_str()
 		     );
   xmlr->writeLineBreak();
 }
@@ -99,7 +99,7 @@ void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
 //todo implement methods to get the type/pos of the object at index
 IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, const std::string &mesh, const std::string &texture, int player) :
     ACharacter(name, pos, mesh, texture, player),
-    behaviour(IAPlayer::easyLvl),
+    behaviour(IAPlayer::mediumLvl),
     focus(-1, -1)
 {
 }

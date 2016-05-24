@@ -513,7 +513,7 @@ void  BomberMap::add(AGameObject* obj, const irr::core::vector2df &pos)
 {
   this->_objects[obj] = pos;
   if (obj->getType() == AGameObject::CHARACTER)
-    _characters.push_back(obj);
+     _characters.push_back(obj);
 }
 
 void  BomberMap::remove(AGameObject *obj)
