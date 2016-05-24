@@ -149,14 +149,14 @@ void			ABomb::operator<<(irr::core::vector2df
   this->setPos(pos);
    irr::core::vector2df        mpos = this->getMapPos();
    for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(-power, 0), AGameObject::Type::BOMB);
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(-power, 0), AGameObject::Type::BOOM);
    for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(power, 0), AGameObject::Type::BOMB);
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(power, 0), AGameObject::Type::BOOM);
    for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, -power), AGameObject::Type::BOMB);
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, -power), AGameObject::Type::BOOM);
    for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, power), AGameObject::Type::BOMB);
-    BomberMap::getMap()->setDangerAtPos(mpos, AGameObject::Type::BLOCK);
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, power), AGameObject::Type::BOOM);
+    BomberMap::getMap()->setDangerAtPos(mpos, AGameObject::Type::BOMB);
    BomberMap::getMap()->displayDangerMap();
 }
 

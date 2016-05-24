@@ -233,7 +233,11 @@ function findFirstSafe(iaPos)
     distance[y] = {};
     direction[y] = {};
     for x=0,MapW do
-      distance[y][x] = bomberMap:getDangerAtPos(x, y);
+      tolook = bomberMap:getDangerAtPos(x, y);
+      if (tolook == OTHER) then
+        distance[y][x] = BLOCK;
+      end
+      distance[y][x] = tolook;
       direction[y][x] = -1;
     end
   end
@@ -260,35 +264,44 @@ function findFirstSafe(iaPos)
     end
   end
   local dist = 1;
-  for i=1,20 do
+  for i=1,30 do
     for y=0,MapH -1 do
       for x=0,MapW - 1 do
         if (distance[y][x] == dist) then
-          if (distance[y][x + 1] == BOMB) then
+          if (distance[y][x + 1] == BOOM) then
             direction[y][x + 1] = direction[y][x];
             distance[y][x + 1]= dist + 1;
           elseif (distance[y][x + 1] == NONE) then
             return direction[y][x];
           end
-          if (x > 0 and distance[y][x - 1] == BOMB) then
+          if (x > 0 and distance[y][x - 1] == BOOM) then
             direction[y][x - 1] = direction[y][x];
             distance[y][x - 1]= dist + 1;
           elseif (x > 0 and distance[y][x - 1] == NONE) then
             return direction[y][x];
           end
-          if (distance[y + 1][x] == BOMB) then
+          if (distance[y + 1][x] == BOOM) then
             direction[y + 1][x] = direction[y][x];
             distance[y + 1][x]= dist + 1;
           elseif (distance[y + 1][x] == NONE) then
             return direction[y][x];
           end
-          if (y > 0 and distance[y - 1][x] == BOMB) then
+          if (y > 0 and distance[y - 1][x] == BOOM) then
             direction[y - 1][x] = direction[y][x];
             distance[y - 1][x]= dist + 1;
           elseif (y > 0 and distance[y - 1][x] == NONE) then
             return direction[y][x];
           end
         end
+      end
+    end
+  end
+  -- le random qui debloque ^^'
+  if (bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY()) == BOMB) then
+    for c=LEFT,DOWN do
+      tolook = bomberMap:getDangerAtPos(iaPos:getX() + dirX[c], iaPos:getY() + dirY[c]);
+      if (tolook ~= BLOCK and tolook ~= BOMB) then
+        return c;
       end
     end
   end
@@ -311,9 +324,14 @@ function getObjectif(iaPos)
 --    return findFirstSafe(iaPos);
 --=======
   tolook = bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY());
-  if (tolook == BLOCK or tolook == BOMB) then
-    return findFirstSafe(iaPos);
+--<<<<<<< HEAD
+--  if (tolook == BLOCK or tolook == BOMB) then
+--    return findFirstSafe(iaPos);
 -->>>>>>> cb0f730bb527cd37ce9f49244e0b40ace1011836
+--=======
+  if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
+    return findFirstSafe(bomberMap, iaPos);
+-->>>>>>> 601129810d907b19feac186fbc834db03dacc9ad
   else
     choice = math.random(LEFT, DOWN);
   end
@@ -321,12 +339,18 @@ function getObjectif(iaPos)
     objectif[0] = iaPos:getX() + dirX[c];
     objectif[1] = iaPos:getY() + dirY[c];
     tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-    dice = math.random(0, 7);
     if (tolook == NONE) then
       hasexit = true;
     end
-    if (tolook == OTHER and hasexit == true) then
-      return DROPBOMB;
+  end
+  if (hasexit) then
+    for c=LEFT,DOWN do
+      objectif[0] = iaPos:getX() + dirX[c];
+      objectif[1] = iaPos:getY() + dirY[c];
+      tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
+      if (tolook == OTHER or bomberMap:objsAtPos(objectif[0], objectif[1]):hasType(CHARACTER)) then
+        return DROPBOMB;
+      end
     end
   end
   if (hasexit == false) then
@@ -335,13 +359,13 @@ function getObjectif(iaPos)
   objectif[0] = iaPos:getX() + dirX[choice];
   objectif[1] = iaPos:getY() + dirY[choice];
   tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-  if (tolook == BLOCK or tolook == BOMB) then
+  if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     choice = 1;
     while (choice < 5) do
       objectif[0] = iaPos:getX() + dirX[choice];
       objectif[1] = iaPos:getY() + dirY[choice];
       tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-      if (tolook == BLOCK or tolook == BOMB) then
+      if (tolook == NONE) then
         break;
       end
       choice = choice + 1;

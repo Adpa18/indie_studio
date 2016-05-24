@@ -52,7 +52,9 @@ public:
   void		setFptr(initInstance _fptr);
 
   void AddPlayer(PlayerInfo *player);
+    void AddPlayerFromUI(PlayerInfo *player);
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
+    void ClearPlayers();
 
     static std::string ToString(std::wstring const& str);
     static std::wstring ToWstring(std::string const& str);
@@ -68,6 +70,7 @@ public:
   void	willStartGame();
   void	willStartMenu();
   // void	onPause();
+    void SwapCharacterList();
 
 private:
   enum	State
@@ -93,6 +96,7 @@ private:
     irr::scene::ICameraSceneNode *m_cameras[4];
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
+    std::list<PlayerInfo*> m_playerInfoUI;
 
 private:
   static GameManager	*GM;
