@@ -79,6 +79,7 @@ public:
   void setDangerAtPos(int x, int y, int value);
   int getDangerAtPos(const irr::core::vector2df &pos) const;
   void setDangerAtPos(const irr::core::vector2df &pos, int value);
+  void displayDangerMap();
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;

@@ -214,21 +214,21 @@ void			BomberMap::generateMap()
       	  || y == BomberMap::size_side[_mapSize] - 1)
       	{
       	  new Wall(irr::core::vector2df(x, y), Wall::Edge);
-           _danger_map[y][x] = 1;
+           _danger_map[y][x] = AGameObject::Type::BLOCK;
       	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
       	{
       	  int dice = rand() % 3;
       	  new Wall(irr::core::vector2df(x, y), Wall::Invicible, _walls[dice].first, _walls[dice].second);
-           _danger_map[y][x] = 1;
+           _danger_map[y][x] = AGameObject::Type::BLOCK;
       	}
       else if (canPutDestructibleWall(x, y))
       	{
       	  new Wall(irr::core::vector2df(x, y));
-           _danger_map[y][x] = 0;
+           _danger_map[y][x] = AGameObject::Type::OTHER;
       	}
        else
-         _danger_map[y][x] = 0;
+         _danger_map[y][x] = AGameObject::Type::NONE;
     }
   }
 }
@@ -585,16 +585,49 @@ void    BomberMap::loadModel(struct model mod)
 }
 
 int BomberMap::getDangerAtPos(int x, int y) const {
-   return _danger_map[y][x];
+   if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
+      return _danger_map[y][x];
+   return _danger_map[0][0];
 }
 void BomberMap::setDangerAtPos(int x, int y, int value) {
-   _danger_map[y][x] = value;
+   if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
+   {
+      if (_danger_map[y][x] == AGameObject::Type::BLOCK && value != AGameObject::Type::NONE)
+         return ;
+      _danger_map[y][x] = value;
+   }
 }
 
 int BomberMap::getDangerAtPos(const irr::core::vector2df &pos) const {
-   return _danger_map[(int)pos.Y][(int)pos.X];
+   int x = (int) pos.X;
+   int y = (int) pos.Y;
+
+   if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
+      return _danger_map[y][x];
+   return _danger_map[0][0];
 }
 
 void BomberMap::setDangerAtPos(const irr::core::vector2df &pos, int value) {
-   _danger_map[(int)pos.Y][(int)pos.X] = value;
+   int x = (int) pos.X;
+   int y = (int) pos.Y;
+
+   if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
+   {
+     if (_danger_map[y][x] == AGameObject::Type::BLOCK && value == AGameObject::Type::BOMB)
+      return ;
+     _danger_map[y][x] = value;
+   }
+}
+
+void BomberMap::displayDangerMap() {
+   std::stringstream ss;
+   
+   ss << std::endl;
+   for (int y = BomberMap::size_side[_mapSize] - 1; y >= 0; --y) {
+      for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
+         ss << _danger_map[y][x] << ", ";
+      }
+      ss << std::endl;
+   }
+   std::cout << ss.str();
 }

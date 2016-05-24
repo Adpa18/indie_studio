@@ -28,16 +28,6 @@ ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout
   _power = 1;
   __active = false;
   (*this)->setScale(irr::core::vector3df(1, 1, 1));
-   irr::core::vector2df        pos = this->getMapPos();
-
-   for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(-power, 0), 1);
-   for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(power, 0), 1);
-   for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(0, -power), 1);
-   for (int power = 1; power <= this->_power; ++power)
-      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(0, power), 1);
 }
 
 ABomb::ABomb(ABomb const *other)
@@ -157,6 +147,17 @@ void			ABomb::operator<<(irr::core::vector2df
   use = true;
   this->setTimeOut(timeout);
   this->setPos(pos);
+   irr::core::vector2df        mpos = this->getMapPos();
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(-power, 0), AGameObject::Type::BOMB);
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(power, 0), AGameObject::Type::BOMB);
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, -power), AGameObject::Type::BOMB);
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, power), AGameObject::Type::BOMB);
+    BomberMap::getMap()->setDangerAtPos(mpos, AGameObject::Type::BLOCK);
+   BomberMap::getMap()->displayDangerMap();
 }
 
 void			ABomb::setPower(int power)
