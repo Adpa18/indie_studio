@@ -195,6 +195,7 @@ function waitBombOrMove(pos, focus)
 end
 
 --todo implement the three behaviours
+--todo ajouter la simulation du possage de bombes
 function easyBehaviour(iaPos, focusPos)
     local fimp;
     local action;

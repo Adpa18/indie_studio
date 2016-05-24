@@ -62,6 +62,8 @@ private:
   bool			canPutDestructibleWall(int x, int y) const;
   void			initSpawn();
   std::string		getCurrentDate() const;
+    void      addDeflagration(ABomb *, irr::core::vector2df const &);
+
 
 public:
   void  add(AGameObject* obj, const irr::core::vector2df &pos);
@@ -79,6 +81,7 @@ public:
   void setDangerAtPos(int x, int y, int value);
   int getDangerAtPos(const irr::core::vector2df &pos) const;
   void setDangerAtPos(const irr::core::vector2df &pos, int value);
+    void    refreshDangerMap(void);
   void displayDangerMap();
 
 private:

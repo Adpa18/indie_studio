@@ -34,6 +34,7 @@ BomberMap::BomberMap(std::string const &filename) : _mapSize(SMALL), _filename(f
    _danger_map = new int*[size_side[_mapSize]];
    for(int i = 0; i < size_side[_mapSize]; ++i)
       _danger_map[i] = new int[size_side[_mapSize]];
+    refreshDangerMap();
 }
 
 BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
@@ -44,6 +45,7 @@ BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
   terrain_model = NULL;
    _camera = NULL;
   initSpawn();
+    refreshDangerMap();
 }
 
 BomberMap::~BomberMap()
@@ -523,30 +525,149 @@ std::vector<AGameObject *> const &BomberMap::getCharacters() const
 
 void  BomberMap::add(AGameObject* obj, const irr::core::vector2df &pos)
 {
-  this->_objects[obj] = pos;
-  if (obj->getType() == AGameObject::CHARACTER)
-     _characters.push_back(obj);
+    this->_objects[obj] = pos;
+    if (obj->getType() == AGameObject::CHARACTER)
+        _characters.push_back(obj);
+    if (obj->getType() == AGameObject::BOMB)
+    {
+//        std::cout << "\e[32madd object at (" << pos.X << ", " << pos.Y << ")\e[0m" << std::endl << "-----------------" << std::endl;
+        if (static_cast<int>(pos.X) >= 0 && static_cast<int>(pos.X) < size_side[_mapSize] && static_cast<int>(pos.Y) >= 0 && static_cast<int>(pos.Y) < size_side[_mapSize])
+        {
+            _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::BLOCK;
+            addDeflagration(dynamic_cast<ABomb *>(obj), pos);
+            displayDangerMap();
+        }
+    }
 }
 
 void  BomberMap::remove(AGameObject *obj)
 {
-  this->_objects.erase(obj);
-  if (obj->getType() == AGameObject::CHARACTER)
+    irr::core::vector2df    pos;
+
+    pos = obj->getMapPos();
+    this->_objects.erase(obj);
+    if (obj->getType() == AGameObject::CHARACTER)
     {
-      std::vector<AGameObject *>::iterator	it = _characters.begin();
-      while (it != _characters.end())
-	{
-	  if (*it == obj)
-	    it = _characters.erase(it);
-	  else
-	    ++it;
-	}
+        std::vector<AGameObject *>::iterator	it = _characters.begin();
+        while (it != _characters.end())
+        {
+            if (*it == obj)
+                it = _characters.erase(it);
+            else
+                ++it;
+        }
+    }
+    if (obj->getType() == AGameObject::BOMB)
+    {
+//        std::cout << "\e[31mremove object (" << pos.X << ", " << pos.Y << ")\e[0m" << std::endl << "-----------------" << std::endl;
+        if (static_cast<int>(pos.X) >= 0 && static_cast<int>(pos.X) < size_side[_mapSize] && static_cast<int>(pos.Y) >= 0 && static_cast<int>(pos.Y) < size_side[_mapSize])
+        {
+            _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::NONE;
+            refreshDangerMap();
+            displayDangerMap();
+        }
+    }
+}
+
+void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &pos)
+{
+    irr::core::vector2df    newpos;
+    std::vector<irr::core::vector2df>    dir = {
+            {1, 0},
+            {-1, 0},
+            {0, 1},
+            {0, -1}
+    };
+
+    for (int i = 1, max = bomb->getPower(); i <= max; ++i)
+    {
+        std::vector<irr::core::vector2df>::iterator it = dir.begin();
+
+//        std::cout << "range " << i << std::endl;
+        while (it != dir.end())
+        {
+            newpos = pos + *it * i;
+            int &tocheck = _danger_map[static_cast<int>(newpos.Y)][static_cast<int>(newpos.X)];
+            if (tocheck != AGameObject::BLOCK && tocheck != AGameObject::OTHER)
+            {
+//                std::cout << "add a deflag at (" << newpos.X << ", " << newpos.Y << ")" << std::endl;
+                tocheck = AGameObject::BOMB;
+                ++it;
+            }
+            else
+                it = dir.erase(it);
+        }
+    }
+}
+
+//todo regarder pourquoi la map n'est pas actualisées dans certains cas de fin d'explosion
+void BomberMap::refreshDangerMap(void)
+{
+    irr::core::vector2df        pos;
+    std::vector<AGameObject *>  tocheck;
+    std::map<irr::core::vector2df, ABomb *> mapBombs;
+
+    for (int i = 0, max = size_side[_mapSize] * size_side[_mapSize]; i < max; ++i)
+    {
+        pos = irr::core::vector2df(i % size_side[_mapSize], i / size_side[_mapSize]);
+        tocheck = getObjsFromVector2(pos);
+        _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::NONE;
+        for (std::vector<AGameObject *>::iterator it = tocheck.begin(), end = tocheck.end(); it != end; ++it)
+        {
+//            std::cout << "type: " << (*it)->getType() << " on (" << pos.X << ", " << pos.Y << ")" << std::endl;
+            if ((*it)->getType() == AGameObject::BOMB)
+                mapBombs[pos] = dynamic_cast<ABomb *>(*it);
+            switch ((*it)->getType())
+            {
+                case AGameObject::BLOCK:
+//                    std::cout << "\e[33mblocked\e[0m" << std::endl;
+                    _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::BLOCK;
+                    break;
+                case AGameObject::BOMB:
+//                    std::cout << "\e[33mbombed\e[0m" << std::endl;
+                    _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::BLOCK;
+                    break;
+                case AGameObject::BOOM:
+//                    std::cout << "\e[33mboomed\e[0m" << std::endl;
+                    _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::BOMB;
+                    break;
+                case AGameObject::OTHER:
+//                    std::cout << "\e[33mothered\e[0m" << std::endl;
+                    _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::OTHER;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    for (std::map<irr::core::vector2df, ABomb *>::iterator it = mapBombs.begin(), end = mapBombs.end(); it != end; ++it)
+    {
+//        std::cout << "add a deflagration of " << it->second->getPower() << " from (" << it->first.X << ", " << it->first.Y << ")" << std::endl;
+        addDeflagration(it->second, it->first);
     }
 }
 
 void  BomberMap::move(AGameObject *obj, const irr::core::vector2df &pos)
 {
+    irr::core::vector2df    expos = obj->getMapPos();
+
+//    std::cout << "type: " << obj->getType() << " on (" << pos.X << ", " << pos.Y << ")" << std::endl;
     this->_objects[obj] = pos;
+    if (obj->getType() == AGameObject::BOMB)
+    {
+//        std::cout << "\e[32mmove object at (" << pos.X << ", " << pos.Y << ")\e[0m" << std::endl << "-----------------" << std::endl;
+        if (static_cast<int>(pos.X) >= 0 && static_cast<int>(pos.X) < size_side[_mapSize] && static_cast<int>(pos.Y) >= 0 && static_cast<int>(pos.Y) < size_side[_mapSize])
+        {
+//            std::cout << "On actualise" << std::endl;
+            _danger_map[static_cast<int>(pos.Y)][static_cast<int>(pos.X)] = AGameObject::BLOCK;
+        }
+        else if (expos.X >= 0 && expos.X < size_side[_mapSize] && expos.Y >= 0 && expos.Y < size_side[_mapSize])
+        {
+            _danger_map[static_cast<int>(expos.Y)][static_cast<int>(expos.X)] = AGameObject::NONE;
+        }
+        refreshDangerMap();
+        displayDangerMap();
+    }
 }
 
 std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vector2df &pos) const
@@ -626,7 +747,7 @@ void BomberMap::displayDangerMap() {
    ss << std::endl;
    for (int y = BomberMap::size_side[_mapSize] - 1; y >= 0; --y) {
       for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
-         ss << _danger_map[y][x] << ", ";
+         ss << _danger_map[y][x] << ",\t";
       }
       ss << std::endl;
    }
