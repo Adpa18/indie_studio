@@ -92,13 +92,12 @@ void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 }
 
 // TODO: keyboard shortcuts + player join with controller
-// TODO: resume saved games
 // TODO: redo gui assets
 void PlayerSelectionBoxContainer::SaveSelection()
 {
     for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
-        GameManager::SharedInstance()->AddPlayer(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
+        GameManager::SharedInstance()->AddPlayerFromUI(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
                                                                 (*it)->GetSkin(),
                                                                 (*it)->GetIaStatus(),
                                                                 (*it)->GetIAStrength()));

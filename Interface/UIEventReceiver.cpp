@@ -117,8 +117,6 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
             case irr::gui::EGET_LISTBOX_CHANGED:
             {
                 irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event.GUIEvent.Caller;
-                std::cout << "Map name = " << "./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())) << std::endl;
-                state = 0;
                 BomberMap::deleteMap();
                 if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
                 {
@@ -127,15 +125,25 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 }
                 else
                 {
+                    GameManager::SharedInstance()->ClearPlayers();
                     BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
                 }
                 break;
             }
             case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
+            {
+                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event.GUIEvent.Caller;
+                // Empties the list of players if the map is a saved one
+                if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
+                {
+                    GameManager::SharedInstance()->SwapCharacterList();
+                }
                 fptr = &UIEventReceiver::DisplayGameHUD;
                 GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                 GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                m_spawned = false;
                 break;
+            }
 
             case irr::gui::EGET_BUTTON_CLICKED:
                 switch (id)
@@ -149,7 +157,6 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
                     case UIElement::MAIN_MENU_BUTTON_1P:
 		      //BomberMap::deleteMap();
-                    std::cout << "ICIIII" << std::endl;
                         GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
                         fptr = &UIEventReceiver::DisplayMapMenu;
                         break;
@@ -236,7 +243,6 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
     // Updates menu visibility according to the current game state
     if (fptr != nullptr)
     {
-        std::cout << "1 .ICI" << std::endl;
         if (m_boxContainer != nullptr)
         {
             delete m_boxContainer;
@@ -244,11 +250,8 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         }
         m_manager.ClearEnv();
         m_buttons.clear();
-        std::cout << "2 .ICI ptr = " << fptr << std::endl;
         (this->*fptr)();
-        std::cout << "3 .ICI" << std::endl;
         GameManager::SharedInstance()->setPrevGameState(GameManager::SharedInstance()->getGameState());
-        std::cout << "4 .ICI" << std::endl;
     }
     fptr = nullptr;
 
@@ -341,13 +344,11 @@ void UIEventReceiver::DisplayMapMenu()
         }
     }
 
-    // TODO: variable de classe + voir pour le stack des persos
-    static bool mabit = false;
+    // TODO: voir pour le stack des persos
     // Creates default map
-    if (!mabit)
+    if (!m_spawned)
     {
-        mabit = true;
-        std::cout << "je te promets gros fpd je l'appelle qu'une fois" << std::endl;
+        m_spawned = true;
         BomberMap::deleteMap();
         BomberMap::newMap("./media/smallMap/map1.xml");
         BomberMap::getMap()->genMap();

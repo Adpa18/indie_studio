@@ -51,6 +51,9 @@ private:
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
     PlayerSelectionBoxContainer *m_boxContainer = nullptr;
+
+    // Avoid multiple spawn of the map
+    bool m_spawned = false;
 };
 
 
