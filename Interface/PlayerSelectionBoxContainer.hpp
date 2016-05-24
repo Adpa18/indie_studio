@@ -39,6 +39,8 @@ private:
     std::list<PlayerSelectionBox*> m_boxes;
     UIManager *m_manager;
     std::list<std::string> m_availableSkins;
+    // Used to save the relative rotation of the P1
+    bool m_joined[4] = {false, false, false, false};
 };
 
 

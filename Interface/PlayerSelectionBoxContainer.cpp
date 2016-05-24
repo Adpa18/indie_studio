@@ -82,29 +82,18 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
 
 void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 {
-    /*for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
-    {
-        if ((*it)->GetIaStatus())
-        {
-            (*it)->SetIaStatus(false);
-            (*it)->SelectNext();
-            break;
-        }
-    }*/
-    if (!(*std::next(m_boxes.begin(), playerID - 1))->GetIaStatus())
+    if (!(*std::next(m_boxes.begin(), playerID - 1))->GetIaStatus() || m_joined[playerID - 1])
     {
         return;
     }
     (*std::next(m_boxes.begin(), playerID - 1))->SetIaStatus(false);
     (*std::next(m_boxes.begin(), playerID - 1))->SelectNext();
+    m_joined[playerID - 1] = true;
 }
 
-// TODO: handle ia strength
-// TODO: full AI game -> relative rotations in list to go
-// TODO: keyboard shorcuts
+// TODO: keyboard shortcuts
 // TODO: resume saved games
 // TODO: redo gui assets
-// TODO: where is Matthieu ? Matthieu is in the kitchen
 void PlayerSelectionBoxContainer::SaveSelection()
 {
     for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
@@ -112,7 +101,7 @@ void PlayerSelectionBoxContainer::SaveSelection()
         GameManager::SharedInstance()->AddPlayer(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
                                                                 (*it)->GetSkin(),
                                                                 (*it)->GetIaStatus(),
-                                                                PlayerInfo::EASY));
+                                                                (*it)->GetIAStrength()));
     }
 }
 
