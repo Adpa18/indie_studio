@@ -76,17 +76,17 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
         {"fireExplosion", {BomberManTexture::path + "cube.md2", ""}},
 
         // Bonus
-        {"bonusBombPass", {BomberManTexture::bonus + "meshes/pass.md3", BomberManTexture::bonus + "textures/pass.png"}},
-        {"bonusFireBomb", {BomberManTexture::bonus + "meshes/fire.md3", BomberManTexture::bonus + "textures/fire.png"}},//
-				{"bonusFragBomb", {BomberManTexture::bonus + "meshes/multibomb.md3", BomberManTexture::bonus + "textures/multibomb.png"}},//
-				{"bonusAtomicBomb", {BomberManTexture::bonus + "meshes/atomic.md3", BomberManTexture::bonus + "textures/atomic.png"}},
-				{"bonusTrackerBomb", {BomberManTexture::bonus + "meshes/tracking.md3", BomberManTexture::bonus + "textures/tracking.png"}},//
+        {"bonusBombPass", {BomberManTexture::bonus + "meshes/pass.md3", BomberManTexture::bonus + "textures/pass_d.png"}},
+        {"bonusFireBomb", {BomberManTexture::bonus + "meshes/fire.md3", BomberManTexture::bonus + "textures/fire_d.png"}},//
+				{"bonusFragBomb", {BomberManTexture::bonus + "meshes/multibomb.md3", BomberManTexture::bonus + "textures/multibomb_d.png"}},//
+				{"bonusAtomicBomb", {BomberManTexture::bonus + "meshes/atomic.md3", BomberManTexture::bonus + "textures/atomic_d.png"}},
+				{"bonusTrackerBomb", {BomberManTexture::bonus + "meshes/tracking.md3", BomberManTexture::bonus + "textures/tracking_d.png"}},//
 
-        {"bonusPower", {BomberManTexture::bonus + "meshes/bomb.md3", BomberManTexture::bonus + "textures/bomb.png"}},//
-        {"bonusSpeed", {BomberManTexture::bonus + "meshes/speed.md3", BomberManTexture::bonus + "textures/speed.png"}},//
-        {"bonusBiggestMan", {BomberManTexture::bonus + "meshes/giant.md3", BomberManTexture::bonus + "textures/giant.png"}},//
-        {"bonusSmallestMan", {BomberManTexture::bonus + "meshes/small.md3", BomberManTexture::bonus + "textures/small.png"}},//
-        {"bonusInvincible", {BomberManTexture::bonus + "meshes/invicible.md3", BomberManTexture::bonus + "textures/invicible.png"}},//
+        {"bonusPower", {BomberManTexture::bonus + "meshes/bomb.md3", BomberManTexture::bonus + "textures/bomb_d.png"}},//
+        {"bonusSpeed", {BomberManTexture::bonus + "meshes/speed.md3", BomberManTexture::bonus + "textures/speed_d.png"}},//
+        {"bonusBiggestMan", {BomberManTexture::bonus + "meshes/giant.md3", BomberManTexture::bonus + "textures/giant_d.png"}},//
+        {"bonusSmallestMan", {BomberManTexture::bonus + "meshes/small.md3", BomberManTexture::bonus + "textures/small_d.png"}},//
+        {"bonusInvincible", {BomberManTexture::bonus + "meshes/invincible.md3", BomberManTexture::bonus + "textures/invincible_d.png"}},//
 
         // Items
         {"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
