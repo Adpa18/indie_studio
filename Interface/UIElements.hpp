@@ -19,6 +19,7 @@ namespace UIElement
         SPLASH_BUTTON_START,
         SPLASH_BACKGROUND,
 
+        MAP_SELECTION,
         MAP_SELECTION1,
         MAP_SELECTION2,
         MAP_SELECTION3,
