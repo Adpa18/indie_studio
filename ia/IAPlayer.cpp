@@ -22,7 +22,8 @@ Lua::LuaHandler       IAPlayer::handler;
 void IAPlayer::initIA()
 {
     Lua::LuaClass<BomberMap>::LuaPrototype({
-                                                   {"objsAtPos", objsAtPos}
+                                                   {"objsAtPos", objsAtPos},
+                                                   {"getDangerAtPos", getDangerAtPos}
                                            }).Register();
     Lua::LuaClass<irr::core::vector2df>::LuaPrototype({
                                                               {"new", Lua::LuaClass<irr::core::vector2df>::defaultConstructor},
@@ -182,6 +183,16 @@ int IAPlayer::objsAtPos(lua_State *)
     Lua::LuaClass<std::vector<AGameObject *> > toreturn(thisptr->getObjsFromVector2(irr::core::vector2df(x, y)));
 
     toreturn.dontDelete();
+    return 1;
+}
+
+int IAPlayer::getDangerAtPos(lua_State *state)
+{
+    BomberMap *thisptr = Lua::LuaClass<BomberMap>::getThis();
+    int x = Lua::LuaClass<BomberMap>::getInteger(2);
+    int y = Lua::LuaClass<BomberMap>::getInteger(3);
+
+    lua_pushinteger(state, static_cast<lua_Integer >(thisptr->getDangerAtPos(irr::core::vector2df(x, y))));
     return 1;
 }
 

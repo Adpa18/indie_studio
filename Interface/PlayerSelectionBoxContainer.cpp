@@ -91,7 +91,7 @@ void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
     m_joined[playerID - 1] = true;
 }
 
-// TODO: keyboard shortcuts
+// TODO: keyboard shortcuts + player join with controller
 // TODO: resume saved games
 // TODO: redo gui assets
 void PlayerSelectionBoxContainer::SaveSelection()
