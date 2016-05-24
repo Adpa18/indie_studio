@@ -1,9 +1,9 @@
 //
 // SaveMap.cpp for SAVE in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
-// 
+//
 // Started on  Sun May 22 21:01:37 2016 Victor Gouet
 // Last update Sun May 22 22:33:52 2016 Victor Gouet
 //
@@ -51,7 +51,11 @@ void		SaveMap::save()
 	  wall->save(fileName);
 	}
     }
-  chdir("..");
+    if (chdir("..") == -1)
+      {
+        std::cout << "failed to load map" << std::endl;
+        return ;
+      }
 }
 
 void		SaveMap::load(std::string const &directory)
