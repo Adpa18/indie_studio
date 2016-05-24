@@ -99,7 +99,7 @@ void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
 //todo implement methods to get the type/pos of the object at index
 IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, const std::string &mesh, const std::string &texture, int player) :
     ACharacter(name, pos, mesh, texture, player),
-    behaviour(IAPlayer::mediumLvl),
+    behaviour(IAPlayer::easyLvl),
     focus(-1, -1)
 {
 }
@@ -160,7 +160,6 @@ int IAPlayer::hasType(lua_State *state)
     int type = Lua::LuaClass<std::vector<AGameObject *>>::getInteger(2);
     bool isOfType = false;
 
-    //std::cout << "has type " << type << std::endl;
     for (std::vector<AGameObject *>::iterator it = thisptr->begin(), end = thisptr->end(); it != end; ++it)
     {
         if ((*it)->getType() == type)
@@ -261,7 +260,7 @@ int IAPlayer::equal(lua_State *state)
     irr::core::vector2df    *cmp = Lua::LuaClass<irr::core::vector2df>::getThis(2);
 
     lua_pushboolean(state, *thisptr == *cmp);
-    return 0;
+    return 1;
 }
 
 const std::string &IAPlayer::getDifficulty(void) const
