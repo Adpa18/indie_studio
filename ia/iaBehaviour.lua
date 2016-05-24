@@ -200,7 +200,11 @@ function findFirstSafe(bomberMap, iaPos)
     distance[y] = {};
     direction[y] = {};
     for x=0,MapW do
-      distance[y][x] = bomberMap:getDangerAtPos(x, y);
+      tolook = bomberMap:getDangerAtPos(x, y);
+      if (tolook == OTHER) then
+        distance[y][x] = BLOCK;
+      end
+      distance[y][x] = tolook;
       direction[y][x] = -1;
     end
   end
@@ -227,7 +231,7 @@ function findFirstSafe(bomberMap, iaPos)
     end
   end
   local dist = 1;
-  for i=1,20 do
+  for i=1,30 do
     for y=0,MapH -1 do
       for x=0,MapW - 1 do
         if (distance[y][x] == dist) then
@@ -259,6 +263,15 @@ function findFirstSafe(bomberMap, iaPos)
       end
     end
   end
+  -- le random qui debloque ^^'
+  if (bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY()) == BOMB) then
+    for c=LEFT,DOWN do
+      tolook = bomberMap:getDangerAtPos(iaPos:getX() + dirX[c], iaPos:getY() + dirY[c]);
+      if (tolook ~= BLOCK and tolook ~= BOMB) then
+        return c;
+      end
+    end
+  end
   return IDLE;
 end
 
@@ -282,12 +295,19 @@ function getObjectif(bomberMap, iaPos)
     objectif[0] = iaPos:getX() + dirX[c];
     objectif[1] = iaPos:getY() + dirY[c];
     tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-    dice = math.random(0, 7);
     if (tolook == NONE) then
       hasexit = true;
     end
-    if (tolook == OTHER and hasexit == true) then
-      return DROPBOMB;
+  end
+  if (hasexit) then
+    for c=LEFT,DOWN do
+      objectif[0] = iaPos:getX() + dirX[c];
+      objectif[1] = iaPos:getY() + dirY[c];
+      tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
+      dice = math.random(0, 10);
+      if (tolook == OTHER) then
+        return DROPBOMB;
+      end
     end
   end
   if (hasexit == false) then
