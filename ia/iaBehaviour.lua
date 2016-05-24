@@ -304,8 +304,7 @@ function getObjectif(bomberMap, iaPos)
       objectif[0] = iaPos:getX() + dirX[c];
       objectif[1] = iaPos:getY() + dirY[c];
       tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-      dice = math.random(0, 10);
-      if (tolook == OTHER) then
+      if (tolook == OTHER or bomberMap:objsAtPos(objectif[0], objectif[1]):hasType(CHARACTER)) then
         return DROPBOMB;
       end
     end
