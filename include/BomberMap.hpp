@@ -18,11 +18,15 @@
 # include "Props.hpp"
 # include "Texture.hpp"
 
+# define SMALL_SIZE 9
+# define MEDIUM_SIZE 13
+# define LARGE_SIZE 15
+
 class	BomberMap
 {
 public:
   static const int	size_side[3];// = {11, 16, 20};
-    static const size_t	scale = 25;
+  static const size_t	scale = 25;
 
 public:
   enum	Size
@@ -50,7 +54,7 @@ public:
   static void		createMapFromSave(std::string const &filename);
   static void		deleteMap();
   static bool		isInstantiate();
-  
+
 
 private:
   void			generateMap();
@@ -70,8 +74,11 @@ public:
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
   const irr::core::vector2df  get(AGameObject *obj);
   std::vector<AGameObject *> const &getCharacters() const;
-
   void    loadModel(struct model mod);
+  int getDangerAtPos(int x, int y) const;
+  void setDangerAtPos(int x, int y, int value);
+  int getDangerAtPos(const irr::core::vector2df &pos) const;
+  void setDangerAtPos(const irr::core::vector2df &pos, int value);
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;
@@ -84,10 +91,10 @@ private:
   irr::core::vector3df              _target;
   irr::core::vector3df              _camera_pos;
   std::pair<std::string , std::string> _walls[3];
-
+  int                                  **_danger_map;
 private:
-    static BomberMap    *bomberMap;
-    irr::scene::ISceneNode    *_ground;
+  static BomberMap    *bomberMap;
+  irr::scene::ISceneNode    *_ground;
 
   /* TERRAIN */
   irr::scene::IAnimatedMesh	*terrain_model;

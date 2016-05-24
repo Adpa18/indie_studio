@@ -160,7 +160,7 @@ int IAPlayer::hasType(lua_State *state)
     int type = Lua::LuaClass<std::vector<AGameObject *>>::getInteger(2);
     bool isOfType = false;
 
-    std::cout << "has type " << type << std::endl;
+    //std::cout << "has type " << type << std::endl;
     for (std::vector<AGameObject *>::iterator it = thisptr->begin(), end = thisptr->end(); it != end; ++it)
     {
         if ((*it)->getType() == type)

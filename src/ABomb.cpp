@@ -28,7 +28,16 @@ ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout
   _power = 1;
   __active = false;
   (*this)->setScale(irr::core::vector3df(1, 1, 1));
-   BomberMap::getMap()->add(this, this->getMapPos());
+   irr::core::vector2df        pos = this->getMapPos();
+
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(-power, 0), 1);
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(power, 0), 1);
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(0, -power), 1);
+   for (int power = 1; power <= this->_power; ++power)
+      BomberMap::getMap()->setDangerAtPos(pos + irr::core::vector2df(0, power), 1);
 }
 
 ABomb::ABomb(ABomb const *other)
