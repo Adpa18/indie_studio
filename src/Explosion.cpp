@@ -67,12 +67,12 @@ void		Explosion::serialize(irr::io::IXMLWriter *xmlr) const
 
   std::string		meshStr = getMesh();
   std::string		textureStr = particuleTexture;
-  
+
   std::wstring		xValue = L"" + std::to_wstring(pos.X);
   std::wstring		yValue = L"" + std::to_wstring(pos.Y);
   std::wstring		mesh = L"" ;
   mesh.assign(meshStr.begin(), meshStr.end());
-  
+
   std::wstring		texture = L"";
   texture.assign(textureStr.begin(), textureStr.end());
 
@@ -93,5 +93,5 @@ void        Explosion::dead()
 
 bool        Explosion::isDestructible() const
 {
-    return (false);
+    return (true);
 }
