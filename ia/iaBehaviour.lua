@@ -231,25 +231,25 @@ function findFirstSafe(bomberMap, iaPos)
     for y=0,MapH -1 do
       for x=0,MapW - 1 do
         if (distance[y][x] == dist) then
-          if (distance[y][x + 1] == BOMB) then
+          if (distance[y][x + 1] == BOOM) then
             direction[y][x + 1] = direction[y][x];
             distance[y][x + 1]= dist + 1;
           elseif (distance[y][x + 1] == NONE) then
             return direction[y][x];
           end
-          if (x > 0 and distance[y][x - 1] == BOMB) then
+          if (x > 0 and distance[y][x - 1] == BOOM) then
             direction[y][x - 1] = direction[y][x];
             distance[y][x - 1]= dist + 1;
           elseif (x > 0 and distance[y][x - 1] == NONE) then
             return direction[y][x];
           end
-          if (distance[y + 1][x] == BOMB) then
+          if (distance[y + 1][x] == BOOM) then
             direction[y + 1][x] = direction[y][x];
             distance[y + 1][x]= dist + 1;
           elseif (distance[y + 1][x] == NONE) then
             return direction[y][x];
           end
-          if (y > 0 and distance[y - 1][x] == BOMB) then
+          if (y > 0 and distance[y - 1][x] == BOOM) then
             direction[y - 1][x] = direction[y][x];
             distance[y - 1][x]= dist + 1;
           elseif (y > 0 and distance[y - 1][x] == NONE) then
@@ -273,7 +273,7 @@ function getObjectif(bomberMap, iaPos)
   local hasexit = false;
 
   tolook = bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY());
-  if (tolook == BLOCK or tolook == BOMB) then
+  if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     return findFirstSafe(bomberMap, iaPos);
   else
     choice = math.random(LEFT, DOWN);
@@ -296,13 +296,13 @@ function getObjectif(bomberMap, iaPos)
   objectif[0] = iaPos:getX() + dirX[choice];
   objectif[1] = iaPos:getY() + dirY[choice];
   tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-  if (tolook == BLOCK or tolook == BOMB) then
+  if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     choice = 1;
     while (choice < 5) do
       objectif[0] = iaPos:getX() + dirX[choice];
       objectif[1] = iaPos:getY() + dirY[choice];
       tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
-      if (tolook == BLOCK or tolook == BOMB) then
+      if (tolook == NONE) then
         break;
       end
       choice = choice + 1;

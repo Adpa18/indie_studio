@@ -592,8 +592,8 @@ int BomberMap::getDangerAtPos(int x, int y) const {
 void BomberMap::setDangerAtPos(int x, int y, int value) {
    if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
    {
-      if (_danger_map[y][x] == AGameObject::Type::BLOCK && value != AGameObject::Type::NONE)
-         return ;
+      if (_danger_map[y][x] == AGameObject::Type::BLOCK)
+         return;
       _danger_map[y][x] = value;
    }
 }
@@ -613,15 +613,16 @@ void BomberMap::setDangerAtPos(const irr::core::vector2df &pos, int value) {
 
    if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
    {
-     if (_danger_map[y][x] == AGameObject::Type::BLOCK && value == AGameObject::Type::BOMB)
-      return ;
-     _danger_map[y][x] = value;
+      if (_danger_map[y][x] == AGameObject::Type::BLOCK)
+         return;
+      _danger_map[y][x] = value;
    }
 }
 
 void BomberMap::displayDangerMap() {
    std::stringstream ss;
-   
+
+   return;
    ss << std::endl;
    for (int y = BomberMap::size_side[_mapSize] - 1; y >= 0; --y) {
       for (int x = 0; x < BomberMap::size_side[_mapSize]; ++x) {
