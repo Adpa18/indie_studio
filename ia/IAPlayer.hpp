@@ -36,6 +36,7 @@ private:
     static int  size(lua_State *state);
     static int  hasType(lua_State *state);
     static int  objsAtPos(lua_State *state);
+  static int getDangerAtPos(lua_State *state);
     static int  createPos(lua_State *state);
     static int  getX(lua_State *state);
     static int  getY(lua_State *state);
