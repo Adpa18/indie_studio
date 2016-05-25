@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Tue May 24 13:05:07 2016 Victor Gouet
+// Last update Wed May 25 10:19:38 2016 Victor Gouet
 //
 
 #include <unistd.h>
+#include <iostream>
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
-#include <iostream>
 #include "../include/ABonus.hpp"
 #include "../include/AtomicBomb.hpp"
 #include "../include/BomberMap.hpp"
