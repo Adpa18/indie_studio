@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Wed May 25 18:34:54 2016 Victor Gouet
+// Last update Wed May 25 22:40:28 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -92,7 +92,7 @@ void			ABomb::move(double speed)
 	}
       if (use && !_arrived)
 	{
-	  if (distance < 0.2)
+	  if (distance < 0.2 || distance > 1)
 	    {
 	      std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir + dir);
 	      if (objs.size() > 0)

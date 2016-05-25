@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 13 11:04:11 2016 Victor Gouet
-// Last update Sun May 22 13:18:40 2016 Victor Gouet
+// Last update Wed May 25 22:45:12 2016 Victor Gouet
 //
 
 #include "../include/TrackerBomb.hpp"
@@ -64,7 +64,7 @@ void	TrackerBomb::updateTimeOut()
         }
     }
     this->setVelocity(_last_dir);
-    move();
+    move(50);
 }
 
 void		TrackerBomb::willExplose()
