@@ -28,7 +28,6 @@ ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout
   _power = 1;
   __active = false;
   (*this)->setScale(irr::core::vector3df(1, 1, 1));
-   BomberMap::getMap()->add(this, this->getMapPos());
 }
 
 ABomb::ABomb(ABomb const *other)
@@ -148,6 +147,17 @@ void			ABomb::operator<<(irr::core::vector2df
   use = true;
   this->setTimeOut(timeout);
   this->setPos(pos);
+//   irr::core::vector2df        mpos = this->getMapPos();
+//   for (int power = 1; power <= this->_power; ++power)
+//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(-power, 0), AGameObject::Type::BOOM);
+//   for (int power = 1; power <= this->_power; ++power)
+//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(power, 0), AGameObject::Type::BOOM);
+//   for (int power = 1; power <= this->_power; ++power)
+//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, -power), AGameObject::Type::BOOM);
+//   for (int power = 1; power <= this->_power; ++power)
+//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, power), AGameObject::Type::BOOM);
+//    BomberMap::getMap()->setDangerAtPos(mpos, AGameObject::Type::BOMB);
+//   BomberMap::getMap()->displayDangerMap();
 }
 
 void			ABomb::setPower(int power)

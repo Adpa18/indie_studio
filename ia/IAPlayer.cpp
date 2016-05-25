@@ -14,6 +14,9 @@ const std::string Lua::LuaClass<irr::core::vector2df>::className = "Vector2";
 template <>
 const std::string Lua::LuaClass<std::vector<AGameObject *> >::className = "GameObjectArray";
 
+template <>
+const std::string Lua::LuaClass<IAPlayer>::className = "IA";
+
 const std::string     IAPlayer::easyLvl = "easyBehaviour";
 const std::string     IAPlayer::mediumLvl = "mediumBehaviour";
 const std::string     IAPlayer::hardLvl = "hardBehaviour";
@@ -22,7 +25,8 @@ Lua::LuaHandler       IAPlayer::handler;
 void IAPlayer::initIA()
 {
     Lua::LuaClass<BomberMap>::LuaPrototype({
-                                                   {"objsAtPos", objsAtPos}
+                                                   {"objsAtPos", objsAtPos},
+                                                   {"getDangerAtPos", getDangerAtPos}
                                            }).Register();
     Lua::LuaClass<irr::core::vector2df>::LuaPrototype({
                                                               {"new", Lua::LuaClass<irr::core::vector2df>::defaultConstructor},
@@ -34,7 +38,7 @@ void IAPlayer::initIA()
                                                               {"mul", mul},
                                                               {"add", add},
                                                               {"equal", equal},
-                                                              {"del", Lua::LuaClass<irr::core::vector2df>::defaultDestructor}
+                                                              {"__gc", Lua::LuaClass<irr::core::vector2df>::defaultDestructor}
                                                       }).Register();
     Lua::LuaClass<std::vector<AGameObject *> >::LuaPrototype({
                                                                      {"new", Lua::LuaClass<std::vector<AGameObject *> >::defaultConstructor},
@@ -44,6 +48,12 @@ void IAPlayer::initIA()
                                                                      {"hasType", hasType},
                                                                      {"__gc", Lua::LuaClass<std::vector<AGameObject *> >::defaultDestructor}
                                                              }).Register();
+    Lua::LuaClass<IAPlayer>::LuaPrototype({
+                                                  {"getPos", getIAPos},
+                                                  {"bombDropSimul", simulateBombDrop},
+                                                  {"getFocus", getIAFocusPos},
+                                                  {"setFocus", setIAFocusPos}
+                                          }).Register();
     Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapW");
     Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapH");
     Lua::setGlobalValue((int)AGameObject::Type::NONE, "NONE");
@@ -111,7 +121,8 @@ IAPlayer::~IAPlayer()
 
 void IAPlayer::compute()
 {
-    this->action(static_cast<ACharacter::ACTION>(IAPlayer::handler[behaviour](BomberMap::getMap(), getMapPos(), &focus)));
+    Lua::setGlobalValue(BomberMap::getMap(), "bomberMap");
+    this->action(static_cast<ACharacter::ACTION>(IAPlayer::handler[behaviour](this)));
 }
 
 void IAPlayer::setDifficulty(const std::string &difficulty)
@@ -181,6 +192,16 @@ int IAPlayer::objsAtPos(lua_State *)
     Lua::LuaClass<std::vector<AGameObject *> > toreturn(thisptr->getObjsFromVector2(irr::core::vector2df(x, y)));
 
     toreturn.dontDelete();
+    return 1;
+}
+
+int IAPlayer::getDangerAtPos(lua_State *state)
+{
+    BomberMap *thisptr = Lua::LuaClass<BomberMap>::getThis();
+    int x = Lua::LuaClass<BomberMap>::getInteger(2);
+    int y = Lua::LuaClass<BomberMap>::getInteger(3);
+
+    lua_pushinteger(state, static_cast<lua_Integer >(thisptr->getDangerAtPos(irr::core::vector2df(x, y))));
     return 1;
 }
 
@@ -266,4 +287,44 @@ int IAPlayer::equal(lua_State *state)
 const std::string &IAPlayer::getDifficulty(void) const
 {
     return behaviour;
+}
+
+int IAPlayer::getIAPos(lua_State *state)
+{
+    IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
+    Lua::LuaClass<irr::core::vector2df> toret(thisptr->getMapPos());
+
+    toret.dontDelete();
+    return 1;
+}
+
+int IAPlayer::simulateBombDrop(lua_State *state)
+{
+    IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
+
+    irr::core::vector2df    fallbackPos = BomberMap::getMap()->canDropBombSafely(thisptr->getBombContainer()->getBomb(), thisptr->getMapPos());
+    if (fallbackPos == irr::core::vector2df(-1, -1))
+        return (0);
+    Lua::LuaClass<irr::core::vector2df> toret(fallbackPos);
+
+    toret.dontDelete();
+    return 1;
+}
+
+int IAPlayer::getIAFocusPos(lua_State *state)
+{
+    IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
+    Lua::LuaClass<irr::core::vector2df> topush(thisptr->focus);
+
+    topush.dontDelete();
+    return 1;
+}
+
+int IAPlayer::setIAFocusPos(lua_State *state)
+{
+    IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
+    irr::core::vector2df *toset = Lua::LuaClass<irr::core::vector2df>::getThis(2);
+
+    thisptr->focus = *toset;
+    return 0;
 }

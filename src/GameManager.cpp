@@ -270,7 +270,8 @@ void    GameManager::willStartGame()
 
   for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
-      if ((*it)->GetIsIA())
+        //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
+      if (i == 0/*(*it)->GetIsIA()*/)
       	{
       	  characters.push_back(new IAPlayer((*it)->GetName(),
       					    (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
@@ -350,6 +351,19 @@ void GameManager::AddPlayer(PlayerInfo *player)
     }
 }
 
+void GameManager::ClearPlayers()
+{
+    m_playerInfo.clear();
+}
+
+void GameManager::AddPlayerFromUI(PlayerInfo *player)
+{
+    if (player != nullptr)
+    {
+        m_playerInfoUI.push_back(player);
+    }
+}
+
 std::list<PlayerInfo *>::const_iterator GameManager::GetPlayers() const
 {
     return m_playerInfo.begin();
@@ -363,4 +377,10 @@ std::string GameManager::ToString(std::wstring const &str)
 std::wstring GameManager::ToWstring(std::string const &str)
 {
     return std::wstring(str.begin(), str.end());
+}
+
+void GameManager::SwapCharacterList()
+{
+    m_playerInfo.clear();
+    m_playerInfo.merge(m_playerInfoUI);
 }

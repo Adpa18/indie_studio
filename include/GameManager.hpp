@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Wed May 25 11:39:51 2016 Victor Gouet
+// Last update Wed May 25 14:39:08 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -52,7 +52,9 @@ public:
   void		setFptr(initInstance _fptr);
 
   void AddPlayer(PlayerInfo *player);
+    void AddPlayerFromUI(PlayerInfo *player);
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
+    void ClearPlayers();
 
   static std::string ToString(std::wstring const& str);
   static std::wstring ToWstring(std::string const& str);
@@ -67,6 +69,7 @@ private:
 public:
   void	willStartGame();
   void	willStartMenu();
+  void SwapCharacterList();
 
 private:
   enum	State
@@ -93,6 +96,7 @@ private:
     irr::scene::ICameraSceneNode *m_cameras[4];
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
+    std::list<PlayerInfo*> m_playerInfoUI;
 
 private:
   static GameManager	*GM;

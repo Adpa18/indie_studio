@@ -31,8 +31,8 @@ public:
     void UnselectSkin(std::string const& skin);
     bool IsSkinAvailable(std::string const& skin) const;
 
-private:
     void SaveSelection();
+private:
 
 private:
     // Knows which box is selected by P1

@@ -3,6 +3,7 @@
 //
 
 #include <BomberMap.hpp>
+#include <iostream>
 #include "Texture.hpp"
 #include "Explosion.hpp"
 
@@ -60,7 +61,10 @@ Explosion::~Explosion()
 {
     _light->remove();
   _ps->setEmitter(0);
-   BomberMap::getMap()->remove(this);
+//    BomberMap::getMap()->refreshDangerMap();
+//  BomberMap::getMap()->setDangerAtPos(this->getMapPos(), AGameObject::Type::NONE);
+//  BomberMap::getMap()->displayDangerMap();
+ BomberMap::getMap()->remove(this);
 }
 
 void		Explosion::serialize(irr::io::IXMLWriter *xmlr) const

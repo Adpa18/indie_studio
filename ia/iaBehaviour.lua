@@ -6,190 +6,152 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-function dirTab()
-    return {Vector2.creat(1, 0), Vector2.creat(-1, 0), Vector2.creat(0, 1), Vector2.creat(0, -1)}, {RIGHT, LEFT, UP, DOWN};
+--[[
+--Function like 'pairs' function for 'for in' in reverse loop
+ ]]
+function ripairs(t)
+    local max = 1
+    while t[max] ~= nil do
+        max = max + 1
+    end
+    local function ripairs_it(t, i)
+        i = i-1
+        local v = t[i]
+        if v ~= nil then
+            return i,v
+        else
+            return nil
+        end
+    end
+    return ripairs_it, t, max
 end
 
+--[[
+--Return a table of 4 directions with the key corresponding to the macro
+ ]]
+function dirTab()
+    return {[RIGHT] = Vector2.creat(1, 0), [LEFT] = Vector2.creat(-1, 0), [UP] = Vector2.creat(0, 1), [DOWN] = Vector2.creat(0, -1)};
+end
+
+--[[
+--Return the direction corresponding to the code send in parameter
+ ]]
+function getDirFromCode(code)
+    return (dirTab()[code]);
+end
+
+--[[
+--Check if the position is in the map
+ ]]
+function isInMap(pos)
+    if (pos:getX() < 0 or pos:getX() >= MapW or
+            pos:getY() < 0 or pos:getY() >= MapH) then
+        return (false);
+    end
+    return (true);
+end
+
+--[[
+--Check if the player can move to pos
+ ]]
+function canMoveOnPos(pos)
+    local tocheck = bomberMap:getDangerAtPos(pos:getX(), pos:getY());
+
+    if (tocheck ~= NONE  or
+            isInMap(pos) == false) then
+        return (false);
+    end
+    return true;
+end
+
+--[[
+--Get all possibles position that the player is allowed to go
+ ]]
+function getPossiblePos(pos)
+    local tocheck = dirTab();
+    local possib = {};
+    local i = 0;
+
+    for k, dir in pairs(tocheck) do
+        local gonnasee = pos:add(dir);
+        if (canMoveOnPos(gonnasee)) then
+            i = i + 1;
+            possib[i] = k;
+        end
+    end
+    return possib, i;
+end
+
+--[[
+--Used for positions that are already saw
+ ]]
 posSeen = {};
 
-function findFirstImpasse(bomberMap, pos)
+--[[
+--Find the first impasse in the map
+ ]]
+function findFirstImpasse(pos)
+    local directions = dirTab();
+
     posSeen[pos:getX() + pos:getY() * MapW] = true;
---    print("We are on ("..pos:getX()..", "..pos:getY()..")");
-    for i=0,9 do
-        local xloop = pos:getX() - 1 + (i % 3);
-        local yloop = pos:getY() - 1 + math.floor(i / 3);
+    for _, dir in pairs(directions) do
+        local togo = pos:add(dir);
 
-        if (posSeen[xloop + MapW * yloop] == nil and xloop < MapW and xloop >= 0 and yloop < MapH and yloop >= 0) then
-            local tolook = bomberMap:objsAtPos(xloop, yloop);
-
---            print("We are checking ("..xloop..", "..yloop..")");
---            print("    this case has "..tolook:size().." type");
-            if (tolook:size() == 0) then
---                print("from ("..pos:getX()..", "..pos:getY()..") case("..xloop..", "..yloop..") is empty");
-                local togo = Vector2.creat(xloop, yloop);
---                print("to go: ("..togo:getX()..", "..togo:getY()..")");
---                togo:setX(xloop);
---                togo:setY(yloop);
-                return (findFirstImpasse(bomberMap, togo));
-            end
+        if (posSeen[togo:getX() + MapW * togo:getY()] == nil and canMoveOnPos(togo)) then
+            return (findFirstImpasse(togo));
         end
     end
     return (pos);
 end
 
-function isCraignos(bomberMap, pos)
-    local i = 0;
-    local posToCheck = dirTab();
+--[[
+--Choose if the IA will move, drop a bomb or idle
+ ]]
+function waitBombOrMove(iaplayer)
+    local possibMove, nbPossib = getPossiblePos(iaplayer:getPos());
 
---    print("check pos: ("..pos:getX()..", "..pos:getY()..")");
-    while (i <= 3 and (posToCheck[1] ~= nil or posToCheck[2] ~= nil or posToCheck[3] ~= nil or posToCheck[4] ~= nil)) do
-        for j=1,4 do
-            if (posToCheck[j] ~= nil) then
-                local newpos = pos:add(posToCheck[j]:mul(i));
-
---                print("checking: ("..newpos:getX()..", "..newpos:getY()..")");
---                print("    result of ("..posToCheck[j]:getX()..", "..posToCheck[j]:getY()..") * "..i.." + ("..pos:getX()..", "..pos:getY()..")");
-                if (newpos:getX() < MapW and newpos:getX() >= 0 and newpos:getY() < MapH and newpos:getY() >= 0) then
-                    local tolook = bomberMap:objsAtPos(newpos:getX(), newpos:getY());
-
-                    if (tolook:hasType(BLOCK) or tolook:hasType(BONUS) or tolook:hasType(OTHER)) then
-                        posToCheck[j] = nil;
-                    elseif (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
---                        print("is craignos");
-                        return (true);
-                    end
-                else
-                    posToCheck[j] = nil;
-                end
-            end
-        end
-        i = i + 1;
-    end
---    print("is not craignos");
-    return (false);
-end
-
-function getUncraignosMove(bomberMap, pos)
-    local tocheck, moves = dirTab();
-    local possib = {};
-    local i = 0;
-
-    for j=1,4 do
-        local gonnasee = pos:add(tocheck[j]);
-        if (bomberMap:objsAtPos(gonnasee:getX(), gonnasee:getY()):size() == 0 and isCraignos(bomberMap, gonnasee) == false) then
---            print("We found a pos: "..moves[j]);
-            i = i + 1;
-            possib[i] = moves[j];
---        else
---            print("Position "..moves[j].." not valid");
-        end
---        print("index: "..j);
-    end
-    return possib, i;
-end
-
-function getPossiblePos(bomberMap, pos)
-    local tocheck, moves = dirTab();
-    local possib = {};
-    local i = 0;
-
-    for j=1,4 do
-        local gonnasee = pos:add(tocheck[j]);
-        local tocheck = bomberMap:objsAtPos(gonnasee:getX(), gonnasee:getY());
-        if (tocheck:size() == 0 or tocheck:hasType(BONUS) or tocheck:hasType(ITEM)) then
-            i = i + 1;
-            possib[i] = moves[j];
-        end
-    end
-    return possib, i;
-end
-
-function waitBombOrMove(bomberMap, pos, focus)
-    local uncmov, nbmov = getUncraignosMove(bomberMap, pos);
-    local possibMove, nbPossib = getPossiblePos(bomberMap, pos);
-
---    print("wait bomb or move from: ("..pos:getX()..", "..pos:getY()..")");
-    if (pos:equal(focus)) then
---        print("-----------------it is equal-----------------");
-        if (isCraignos(bomberMap, pos)) then
---            print("-----------------but craignos-----------------");
---            print("arrived to focus but craignos");
-            return math.random(LEFT, DOWN), findFirstImpasse(bomberMap, pos);
-        end
---        print("-----------------and not craignos-----------------");
-        if (nbmov == 0) then
---            print("idle");
+    if (iaplayer:getPos():equal(iaplayer:getFocus())) then
+        if (nbPossib == 0) then
             return IDLE;
         end
-        --bomb
---        print("bomb");
         posSeen = {};
-        return DROPBOMB, findFirstImpasse(bomberMap, pos);
-    end
---    print("move");
-    --find impasse and move
-    if (nbmov > 0) then
---        for d=1,nbmov do
---            print("index: "..d);
---            print("can move to: "..uncmov[d]);
---        end
-        return uncmov[math.random(1, nbmov)];
+        local nextFocus = iaplayer:bombDropSimul();
+        if (nextFocus == nil) then
+            return (IDLE);
+        end
+        return DROPBOMB, nextFocus;
     end
     if (nbPossib > 0) then
         return possibMove[math.random(1, nbPossib)];
     end
-    return (IDLE);
+    return (math.random(LEFT, DOWN));
 end
 
 --todo implement the three behaviours
-function easyBehaviour(bomberMap, iaPos, focusPos)
---    print("wid: "..MapW);
---    print("hei: "..MapH);
---    print("iapos("..iaPos:getX()..", "..iaPos:getY()..")");
---    for i = 0,(MapW * MapH) do
---        local x = (i % MapW);
---        local y = math.floor(i / MapW);
---        local objs = bomberMap:objsAtPos(x, y);
---        local j = 0;
---        local type;
---        repeat
---            type = objs:typeAtIndex(j);
---            if (type ~= nil) then
---                print("Object n°"..j.." at ("..x..", "..y..") of type "..type);
---            end
---            j = j + 1;
---        until (type == nil);
---    end
---    if (bomberMap:objsAtPos(7, 7):hasType(BOMB)) then
---        print("(7, 7): has type bomb: true");
---    else
---        print("(7, 7): has type bomb: false");
---    end
+--[[
+--Function for an IA easy behaviour
+ ]]
+function easyBehaviour(iaplayer)
     local fimp;
     local action;
+    local focusPos = iaplayer:getFocus();
+    local iaPos = iaplayer:getPos();
 
     if (focusPos:getX() == -1 and focusPos:getY() == -1) then
-        fimp = findFirstImpasse(bomberMap, iaPos);
+        posSeen = {};
+        fimp = findFirstImpasse(iaPos);
         action = math.random(LEFT, DOWN);
     else
-        action, fimp = waitBombOrMove(bomberMap, iaPos, focusPos);
+        action, fimp = waitBombOrMove(iaplayer);
     end
 
     if (fimp ~= nil) then
---        print("First impasse: ("..fimp:getX()..", "..fimp:getY()..")");
-        focusPos:setX(fimp:getX());
-        focusPos:setY(fimp:getY());
+        iaplayer:setFocus(fimp);
     end
-
---    if (action == nil) then
---        action = math.random(LEFT, DOWN);
---    end
-
-    iaPos:del();
-    return (action--[[math.random(IDLE, ACT)]]);
+    return (action);
 end
 
-function findFirstSafe(bomberMap, iaPos)
+function findFirstSafe(iaPos)
   local dirX = { -1, 1, 0, 0 };
   local dirY = { 0, 0, 1, -1 };
   local distance = {};
@@ -197,74 +159,85 @@ function findFirstSafe(bomberMap, iaPos)
   local tolook;
 
   for y=0,MapH do
+    distance[y] = {};
+    direction[y] = {};
     for x=0,MapW do
-      distance[y] = {};
-      direction[y] = {};
-      tolook = bomberMap:objsAtPos(x, y);
-      if (tolook:hasType(BLOCK)) then
-        distance[y][x] = -1;
-      elseif (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
-        distance[y][x] = -2;
-      else
-        distance[y][x] = 0;
+      tolook = bomberMap:getDangerAtPos(x, y);
+      if (tolook == OTHER) then
+        distance[y][x] = BLOCK;
       end
+      distance[y][x] = tolook;
       direction[y][x] = -1;
     end
   end
-  if (iaPos:getX() - 1 >= 0) then
+  if (iaPos:getX() - 1 >= 0 and distance[iaPos:getY()][iaPos:getX() - 1] ~= BLOCK) then
     direction[iaPos:getY()][iaPos:getX() - 1] = LEFT;
+    distance[iaPos:getY()][iaPos:getX() - 1] = 1;
   end
-  if (iaPos:getX() + 1 < MapW) then
+  if (iaPos:getX() + 1 < MapW and distance[iaPos:getY()][iaPos:getX() + 1] ~= BLOCK) then
     direction[iaPos:getY()][iaPos:getX() + 1] = RIGHT;
+    distance[iaPos:getY()][iaPos:getX() + 1] = 1;
   end
-  if (iaPos:getY() + 1 < MapH) then
+  if (iaPos:getY() + 1 < MapH and distance[iaPos:getY() + 1][iaPos:getX()] ~= BLOCK) then
     direction[iaPos:getY() + 1][iaPos:getX()] = UP;
+    distance[iaPos:getY() + 1][iaPos:getX()] = 1;
   end
-  if (iaPos:getY() - 1 >= 0) then
+  if (iaPos:getY() - 1 >= 0 and distance[iaPos:getY() - 1][iaPos:getX()] ~= BLOCK) then
     direction[iaPos:getY() - 1][iaPos:getX()] = DOWN;
+    distance[iaPos:getY() - 1][iaPos:getX()] = 1;
   end
-  local dist = 0;
-  for j=LEFT,DOWN do
-    tolook = bomberMap:objsAtPos(iaPos:getX() + dirX[j], iaPos:getY() + dirY[j]);
-    if (tolook:hasType(BLOCK) == false) then
+  for j=LEFT, DOWN do
+    tolook = bomberMap:getDangerAtPos(iaPos:getX() + dirX[j], iaPos:getY() + dirY[j]);
+    if (tolook == NONE) then
       return j;
     end
   end
   local dist = 1;
-  for y=0,MapH do
-    for x=0,MapW do
-      if (distance[y][x] == dist) then
-        if (distance[y][x + 1] == -2 and direction[y][x + 1] == -1) then
-          direction[y][x + 1] = direction[y][x];
-          distance[y][x + 1]= dist + 1;
-        elseif (distance[y][x - 1] ~= -1) then
-          return direction[y][x];
-        end
-        if (distance[y][x + 1] == -2 and direction[y][x - 1] == -1) then
-          direction[y][x - 1] = direction[y][x];
-          distance[y][x - 1]= dist + 1;
-        elseif (distance[y][x - 1] ~= -1) then
-          return direction[y][x];
-        end
-        if (distance[y][x + 1] == -2 and direction[y + 1][x] == -1) then
-          direction[y + 1][x] = direction[y][x];
-          distance[y + 1][x]= dist + 1;
-        elseif (distance[y][x - 1] ~= -1) then
-          return direction[y][x];
-        end
-        if (distance[y][x + 1] == -2 and direction[y - 1][x] == -1) then
-          direction[y - 1][x] = direction[y][x];
-          distance[y - 1][x]= dist + 1;
-        elseif (distance[y][x - 1] ~= -1) then
-          return direction[y][x];
+  for i=1,30 do
+    for y=0,MapH -1 do
+      for x=0,MapW - 1 do
+        if (distance[y][x] == dist) then
+          if (distance[y][x + 1] == BOOM) then
+            direction[y][x + 1] = direction[y][x];
+            distance[y][x + 1]= dist + 1;
+          elseif (distance[y][x + 1] == NONE) then
+            return direction[y][x];
+          end
+          if (x > 0 and distance[y][x - 1] == BOOM) then
+            direction[y][x - 1] = direction[y][x];
+            distance[y][x - 1]= dist + 1;
+          elseif (x > 0 and distance[y][x - 1] == NONE) then
+            return direction[y][x];
+          end
+          if (distance[y + 1][x] == BOOM) then
+            direction[y + 1][x] = direction[y][x];
+            distance[y + 1][x]= dist + 1;
+          elseif (distance[y + 1][x] == NONE) then
+            return direction[y][x];
+          end
+          if (y > 0 and distance[y - 1][x] == BOOM) then
+            direction[y - 1][x] = direction[y][x];
+            distance[y - 1][x]= dist + 1;
+          elseif (y > 0 and distance[y - 1][x] == NONE) then
+            return direction[y][x];
+          end
         end
       end
     end
   end
-  return math.random(LEFT, DOWN);
+  -- le random qui debloque ^^'
+  if (bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY()) == BOMB) then
+    for c=LEFT,DOWN do
+      tolook = bomberMap:getDangerAtPos(iaPos:getX() + dirX[c], iaPos:getY() + dirY[c]);
+      if (tolook ~= BLOCK and tolook ~= BOMB) then
+        return c;
+      end
+    end
+  end
+  return IDLE;
 end
 
-function getObjectif(bomberMap, iaPos)
+function getObjectif(iaPos)
 
   local dirX = { -1, 1, 0, 0 };
   local dirY = { 0, 0, 1, -1 };
@@ -272,32 +245,56 @@ function getObjectif(bomberMap, iaPos)
   local objectif = {};
   local choice;
   local dice;
+  local hasexit = false;
 
-  tolook = bomberMap:objsAtPos(iaPos:getX(), iaPos:getY());
-  if (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+--<<<<<<< HEAD
+--  tolook = bomberMap:objsAtPos(iaPos:getX(), iaPos:getY());
+--  if (tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+--    return findFirstSafe(iaPos);
+--=======
+  tolook = bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY());
+--<<<<<<< HEAD
+--  if (tolook == BLOCK or tolook == BOMB) then
+--    return findFirstSafe(iaPos);
+-->>>>>>> cb0f730bb527cd37ce9f49244e0b40ace1011836
+--=======
+  if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     return findFirstSafe(bomberMap, iaPos);
+-->>>>>>> 601129810d907b19feac186fbc834db03dacc9ad
   else
     choice = math.random(LEFT, DOWN);
   end
   for c=LEFT,DOWN do
     objectif[0] = iaPos:getX() + dirX[c];
     objectif[1] = iaPos:getY() + dirY[c];
-    tolook = bomberMap:objsAtPos(objectif[0], objectif[1]);
-    dice = math.random(0, 7);
-    if (tolook:hasType(OTHER) and dice == 0) then
-      return DROPBOMB;
+    tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
+    if (tolook == NONE) then
+      hasexit = true;
     end
+  end
+  if (hasexit) then
+    for c=LEFT,DOWN do
+      objectif[0] = iaPos:getX() + dirX[c];
+      objectif[1] = iaPos:getY() + dirY[c];
+      tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
+      if (tolook == OTHER or bomberMap:objsAtPos(objectif[0], objectif[1]):hasType(CHARACTER)) then
+        return DROPBOMB;
+      end
+    end
+  end
+  if (hasexit == false) then
+    return IDLE;
   end
   objectif[0] = iaPos:getX() + dirX[choice];
   objectif[1] = iaPos:getY() + dirY[choice];
-  tolook = bomberMap:objsAtPos(objectif[0], objectif[1]);
-  if ( tolook:hasType(BLOCK) or tolook:hasType(BOMB) or tolook:hasType(BOOM) ) then
+  tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
+  if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     choice = 1;
     while (choice < 5) do
       objectif[0] = iaPos:getX() + dirX[choice];
       objectif[1] = iaPos:getY() + dirY[choice];
-      tolook = bomberMap:objsAtPos(objectif[0], objectif[1]);
-      if (tolook:hasType(BLOCK) or tolook:hasType(BOMB) or tolook:hasType(BOOM)) then
+      tolook = bomberMap:getDangerAtPos(objectif[0], objectif[1]);
+      if (tolook == NONE) then
         break;
       end
       choice = choice + 1;
@@ -309,10 +306,10 @@ function getObjectif(bomberMap, iaPos)
   return choice;
 end
 
-function mediumBehaviour(bomberMap, iaPos, focusPos)
-  return getObjectif(bomberMap, iaPos);
+function mediumBehaviour(iaplayer)
+  return getObjectif(iaplayer:getPos());
 end
 
-function hardBehaviour(bomberMap, iaPos)
+function hardBehaviour(iaPos, focusPos)
 
 end

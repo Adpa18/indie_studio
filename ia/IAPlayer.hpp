@@ -36,6 +36,7 @@ private:
     static int  size(lua_State *state);
     static int  hasType(lua_State *state);
     static int  objsAtPos(lua_State *state);
+  static int getDangerAtPos(lua_State *state);
     static int  createPos(lua_State *state);
     static int  getX(lua_State *state);
     static int  getY(lua_State *state);
@@ -44,6 +45,10 @@ private:
     static int  mul(lua_State *state);
     static int  add(lua_State *state);
     static int  equal(lua_State *state);
+    static int  getIAPos(lua_State *state);
+    static int  simulateBombDrop(lua_State *state);
+    static int  getIAFocusPos(lua_State *state);
+    static int  setIAFocusPos(lua_State *state);
 
 private:
     std::string behaviour;
