@@ -5,15 +5,15 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Mon May 23 19:06:14 2016 Victor Gouet
+// Last update Wed May 25 18:34:54 2016 Victor Gouet
 //
 
 #include <iostream>
 #include <unistd.h>
-#include "../include/ABomb.hpp"
-#include "../include/BombFactory.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/GameObjectTimeContainer.hpp"
+#include "../../include/ABomb.hpp"
+#include "../../include/BombFactory.hpp"
+#include "../../include/BomberMap.hpp"
+#include "../../include/GameObjectTimeContainer.hpp"
 
 ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout, int id) :
   AGameObject(irr::core::vector2df(-1000, -1000),
@@ -83,9 +83,12 @@ void			ABomb::move(double speed)
   if (!_arrived)
     {
       std::vector<AGameObject*>   objs = BomberMap::getMap()->getObjsFromVector2(this->getMapPos() + dir);
-      if (objs.size() > 0)
+      for (std::vector<AGameObject*>::iterator it = objs.begin(), end = objs.end() ; it != end ; ++it)
 	{
-	  _arrived = true;
+	  if ((*it)->getType() == AGameObject::BLOCK
+	      || (*it)->getType() == AGameObject::OTHER
+	      || (*it)->getType() == AGameObject::CHARACTER)
+	    _arrived = true;
 	}
       if (use && !_arrived)
 	{

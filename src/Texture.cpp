@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Sun May 22 13:11:44 2016 Victor Gouet
+// Last update Wed May 25 18:35:48 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -134,6 +134,6 @@ const struct model &BomberManTexture::getModel(const std::string &model)
 	const std::map<std::string, struct model>::const_iterator   it = _models.find(model);
 
 	if (it == _models.end())
-		throw std::runtime_error("Failed to load Model : " + model);
+	  throw std::runtime_error("Failed to load Model : " + model);
 	return (it->second);
 }
