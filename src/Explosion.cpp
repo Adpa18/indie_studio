@@ -61,7 +61,7 @@ Explosion::~Explosion()
 {
     _light->remove();
   _ps->setEmitter(0);
-    BomberMap::getMap()->refreshDangerMap();
+//    BomberMap::getMap()->refreshDangerMap();
 //  BomberMap::getMap()->setDangerAtPos(this->getMapPos(), AGameObject::Type::NONE);
 //  BomberMap::getMap()->displayDangerMap();
  BomberMap::getMap()->remove(this);

@@ -153,13 +153,13 @@ end]]
     return possib, i;
 end]]
 
-function waitBombOrMove(pos, focus)
-    local possibMove, nbPossib = getPossiblePos(pos);
+function waitBombOrMove(iaplayer)
+    local possibMove, nbPossib = getPossiblePos(iaplayer:getPos());
 --    local uncmov, nbmov = getUncraignosMove(possibMove, pos);
 
 --    print("wait bomb or move from: ("..pos:getX()..", "..pos:getY()..")");
 --    print("focus = ("..focus:getX()..", "..focus:getY()..")");
-    if (pos:equal(focus)) then
+    if (iaplayer:getPos():equal(iaplayer:getFocus())) then
 --        print("-----------------it is equal-----------------");
 --        if (isCraignos(pos)) then
 --            print("-----------------but craignos-----------------");
@@ -177,7 +177,12 @@ function waitBombOrMove(pos, focus)
         --bomb
 --        print("bomb");
         posSeen = {};
-        return DROPBOMB, findFirstImpasse(pos);
+        --todo simulate bomb drop
+        local nextFocus = iaplayer:bombDropSimul();
+        if (nextFocus == nil) then
+            return (IDLE);
+        end
+        return DROPBOMB, nextFocus;
     end
 --    print("move");
     --find impasse and move
@@ -196,9 +201,11 @@ end
 
 --todo implement the three behaviours
 --todo ajouter la simulation du possage de bombes
-function easyBehaviour(iaPos, focusPos)
+function easyBehaviour(iaplayer)
     local fimp;
     local action;
+    local focusPos = iaplayer:getFocus();
+    local iaPos = iaplayer:getPos();
 
 --    bomberMap = bommap;
     if (focusPos:getX() == -1 and focusPos:getY() == -1) then
@@ -208,18 +215,15 @@ function easyBehaviour(iaPos, focusPos)
 --        print("first impasse = ("..fimp:getX()..", "..fimp:getY()..")");
     else
 --        action = IDLE;
-        action, fimp = waitBombOrMove(iaPos, focusPos);
+        action, fimp = waitBombOrMove(iaplayer);
     end
 
     if (fimp ~= nil) then
-        focusPos:setX(fimp:getX());
-        focusPos:setY(fimp:getY());
+        iaplayer:setFocus(fimp);
     end
 
 --    bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY());
 --    print("focus = ("..focusPos:getX()..", "..focusPos:getY()..")");
-
-    iaPos:del();
     return (action);
 end
 

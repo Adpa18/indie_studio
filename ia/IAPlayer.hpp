@@ -45,6 +45,10 @@ private:
     static int  mul(lua_State *state);
     static int  add(lua_State *state);
     static int  equal(lua_State *state);
+    static int  getIAPos(lua_State *state);
+    static int  simulateBombDrop(lua_State *state);
+    static int  getIAFocusPos(lua_State *state);
+    static int  setIAFocusPos(lua_State *state);
 
 private:
     std::string behaviour;
