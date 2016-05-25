@@ -216,7 +216,7 @@ void			BomberMap::generateMap()
       if (x == 0 || y == 0 || x == BomberMap::size_side[_mapSize] - 1
       	  || y == BomberMap::size_side[_mapSize] - 1)
       	{
-      	  new Wall(irr::core::vector2df(x, y), Wall::Edge);
+      	  new Wall(irr::core::vector2df(x, y), Wall::Edge, BomberManTexture::getModel("edge").mesh, BomberManTexture::getModel("edge").texture);
            _danger_map[y][x] = AGameObject::Type::BLOCK;
       	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
@@ -227,7 +227,7 @@ void			BomberMap::generateMap()
       	}
       else if (canPutDestructibleWall(x, y))
       	{
-      	  new Wall(irr::core::vector2df(x, y));
+      	  new Wall(irr::core::vector2df(x, y), Wall::Destructible, BomberManTexture::getModel("cubeDestructible").mesh, BomberManTexture::getModel("cubeDestructible").texture);
            _danger_map[y][x] = AGameObject::Type::OTHER;
       	}
        else

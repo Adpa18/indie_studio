@@ -31,7 +31,6 @@ public:
     static const std::string bonus;
     static const std::string characters;
     static const std::string gui;
-    static const std::string other;
 
     static const std::map<std::string, struct model> _models;
 

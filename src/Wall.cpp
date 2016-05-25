@@ -19,16 +19,6 @@ const std::map<Wall::State, std::string>  Wall::_types = {
         {Edge, "edge"},
 };
 
-Wall::Wall(irr::core::vector2df const &pos, State state)
-  : AGameObject(pos, BomberManTexture::getModel(_types.find(state)->second).mesh,
-                BomberManTexture::getModel(_types.find(state)->second).texture,
-                (state == Destructible) ? OTHER : BLOCK), _state(state)
-{
-    (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
-    dataFile = new DataFile(pos, state, BomberManTexture::getModel(_types.find(state)->second).mesh,
-			    BomberManTexture::getModel(_types.find(state)->second).texture);
-}
-
 Wall::Wall(irr::core::vector2df const &pos, State state,
 	   std::string const &mesh, std::string const &texture)
   : AGameObject(pos, mesh, texture, (state == Destructible) ? OTHER : BLOCK), _state(state)
