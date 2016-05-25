@@ -15,7 +15,7 @@ irr::IrrlichtDevice *IrrlichtController::device = NULL;
 size_t    IrrlichtController::width = 1920;
 size_t    IrrlichtController::height = 1080;
 
-irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
+irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
 {
   if (!device)
     {
@@ -24,7 +24,7 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
       height = scrn->height;
       width  = scrn->width;*/
 
-      if (pleinScreen)
+      if (fullScreen)
 	device = irr::createDevice(irr::video::EDT_OPENGL,
 				   irr::core::dimension2d<irr::u32>(width, height), 32,
 				   true, false, false, 0);
@@ -38,6 +38,7 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
 	}
        device->getSceneManager()->setShadowColor(irr::video::SColor(100,100,100,1));
     }
+    device->setWindowCaption(L"ONE TRYYY");
   return (device);
 }
 

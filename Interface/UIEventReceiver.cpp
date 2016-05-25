@@ -45,20 +45,10 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
 /*
  * \brief Should return continue if event is completely handled
  */
-bool UIEventReceiver::OnEvent(const irr::SEvent &event)
+bool UIEventReceiver::OnEvent(const irr::SEvent &event_copy)
 {
-    irr::SEvent event_copy = const_cast<irr::SEvent &>(event);
-
     // Update joysticks inputs
-    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[event_copy.JoystickEvent.Joystick])
-    {
-        m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
-        {
-            event_copy.EventType = irr::EET_KEY_INPUT_EVENT;
-            event_copy.KeyInput.Key = irr::KEY_RETURN;
-        }
-    }
+    HandleJoysticks(event_copy);
 
     // Key inputs
     EVENT_STATE eventState = OnKeyInput(event_copy);
@@ -470,4 +460,62 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent
     }
 
     return NOT_HANDLED;
+}
+
+void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
+{
+    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[event_copy.JoystickEvent.Joystick])
+    {
+        m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
+        long playerID = std::distance(m_joysticks.begin(), m_joysticks.find(event_copy.JoystickEvent.Joystick));
+
+        // Validates on splash screen
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
+        {
+            if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN)
+            {
+                GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
+                fptr = &UIEventReceiver::DisplayMainMenu;
+            }
+        }
+
+        // Joins the party
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CIRCLE))
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->PlayerJoin(playerID);
+            }
+        }
+
+        // Navigates in menus
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
+        {
+            if (m_boxContainer != nullptr)
+            {
+                ACharacter::ACTION act = m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK);
+                switch (act)
+                {
+                    case ACharacter::LEFT:
+                        m_boxContainer->SelectLeft();
+                        break;
+
+                    case ACharacter::RIGHT:
+                        m_boxContainer->SelectRight();
+                        break;
+
+                    case ACharacter::UP:
+                        m_boxContainer->SelectUp();
+                        break;
+
+                    case ACharacter::DOWN:
+                        m_boxContainer->SelectDown();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 }

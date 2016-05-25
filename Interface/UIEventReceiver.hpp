@@ -43,6 +43,8 @@ private:
      * \brief Event handlers
      */
 private:
+    void HandleJoysticks(irr::SEvent const&event);
+
     EVENT_STATE OnKeyInput(const irr::SEvent &event);
     EVENT_STATE OnGUIEvent(const irr::SEvent &event);
 
