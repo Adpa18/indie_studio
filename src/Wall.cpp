@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Mon May 23 18:02:38 2016 Victor Gouet
+// Last update Wed May 25 18:37:58 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -18,16 +18,6 @@ const std::map<Wall::State, std::string>  Wall::_types = {
         {Destructible, "cubeDestructible"},
         {Edge, "edge"},
 };
-
-Wall::Wall(irr::core::vector2df const &pos, State state)
-  : AGameObject(pos, BomberManTexture::getModel(_types.find(state)->second).mesh,
-                BomberManTexture::getModel(_types.find(state)->second).texture,
-                (state == Destructible) ? OTHER : BLOCK), _state(state)
-{
-    (*this)->setScale(irr::core::vector3df(0.8f, 0.8f, 0.8f));
-    dataFile = new DataFile(pos, state, BomberManTexture::getModel(_types.find(state)->second).mesh,
-			    BomberManTexture::getModel(_types.find(state)->second).texture);
-}
 
 Wall::Wall(irr::core::vector2df const &pos, State state,
 	   std::string const &mesh, std::string const &texture)

@@ -29,7 +29,7 @@ public:
 
 	ABomb	*ref = *cont;
 
-	ABomb	*bomb = new T(ref->getID());
+	ABomb	*bomb = new T(userId);
 
 	container.addBomb(bomb);
 	bomb->setPower(ref->getPower());

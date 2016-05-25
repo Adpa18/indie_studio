@@ -83,6 +83,7 @@ public:
   void setDangerAtPos(const irr::core::vector2df &pos, int value);
     void    refreshDangerMap(void);
   void displayDangerMap();
+    irr::core::vector2df canDropBombSafely(ABomb *todrop, const irr::core::vector2df &pos);
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;
