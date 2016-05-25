@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:25:32 2016 Victor Gouet
-// Last update Mon May 23 19:16:04 2016 Victor Gouet
+// Last update Wed May 25 22:11:25 2016 Victor Gouet
 //
 
 #include "../include/ABonus.hpp"
@@ -15,12 +15,12 @@ ABonus::ABonus(irr::core::vector2df const &pos, std::string const &mesh,
 	       std::string const &texture, std::string const &nameType, Type type)
   : AGameObject(pos, mesh, texture, type), nameType(nameType)
 {
-    (*this)->setPosition((*this)->getPosition() + irr::core::vector3df(0, BomberMap::scale / 2, 0));
-		(*this)->setRotation(irr::core::vector3df(40, 0, 0));
-    //(*this)->setScale(irr::core::vector3df(f, 0.5f, 0.5f));
-    irr::scene::ISceneNodeAnimator *anim =IrrlichtController::getSceneManager()->createRotationAnimator(irr::core::vector3df(0,1,0));
-    (*this)->addAnimator(anim);
-    anim->drop();
+  (*this)->setPosition((*this)->getPosition() + irr::core::vector3df(0, BomberMap::scale / 2, 0));
+  (*this)->setRotation(irr::core::vector3df(40, 0, 0));
+  //(*this)->setScale(irr::core::vector3df(f, 0.5f, 0.5f));
+  irr::scene::ISceneNodeAnimator *anim =IrrlichtController::getSceneManager()->createRotationAnimator(irr::core::vector3df(0,1,0));
+  (*this)->addAnimator(anim);
+  anim->drop();
 }
 
 void		ABonus::serialize(irr::io::IXMLWriter *xmlr) const

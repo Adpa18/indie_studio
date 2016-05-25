@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed May 25 14:37:20 2016 Victor Gouet
+// Last update Wed May 25 22:39:38 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -226,7 +226,6 @@ void    GameManager::onGame()
       IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
       uiEventReceiver->DisplayPauseMenu();
       return ;
-      //GameObjectTimeContainer::SharedInstance()->timerStop();
     }
   if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
     {
@@ -238,6 +237,7 @@ void    GameManager::onGame()
   std::vector<ACharacter *>::iterator it = characters.begin();
   while (it != characters.end())
     {
+      AGameObject *test = *it;
       if (!(*it)->isDead())
         {
 	  (*it)->compute();
