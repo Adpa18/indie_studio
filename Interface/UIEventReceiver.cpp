@@ -32,6 +32,13 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     {
         KeyIsDown[i] = false;
     }
+
+    // Sets callbacks for GUI
+    m_guiEvents[irr::gui::EGET_LISTBOX_CHANGED] = &UIEventReceiver::OnListBox;
+    m_guiEvents[irr::gui::EGET_LISTBOX_SELECTED_AGAIN] = &UIEventReceiver::OnListBox;
+    m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
+    m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
+
     DisplaySplashScreen();
 }
 
@@ -40,15 +47,12 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
  */
 bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 {
-    //Permet de ne la load qu'au changement de state
-    static int state = -1;
-    irr::SEvent &event_copy = const_cast<irr::SEvent &>(event);
+    irr::SEvent event_copy = const_cast<irr::SEvent &>(event);
 
     // Update joysticks inputs
     if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[event_copy.JoystickEvent.Joystick])
     {
         m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
-        std::cout << m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS) << std::endl;
         if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
         {
             event_copy.EventType = irr::EET_KEY_INPUT_EVENT;
@@ -56,221 +60,17 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         }
     }
 
-    if (event_copy.EventType == irr::EET_KEY_INPUT_EVENT)
-    {
-        switch (event_copy.KeyInput.Key)
-        {
-            case irr::KEY_ESCAPE:
-                if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
-                {
-                    GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                    IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
-                    // fptr = &UIEventReceiver::DisplayPauseMenu;
-                    // m_gameState = PAUSE;
-                    // return (true);
-                    fptr = &UIEventReceiver::DisplayGameHUD;
-                }
-                else
-                {
-                    IrrlichtController::getDevice()->closeDevice();
-                }
-                break;
+    // Key inputs
+    EVENT_STATE eventState = OnKeyInput(event_copy);
+    if (eventState == HANDELD) return true;
+    if (eventState == NOT_HANDLED) return false;
 
-            case irr::KEY_RETURN:
-                if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN &&
-                    event_copy.KeyInput.PressedDown)
-                {
-                    GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
-                    fptr = &UIEventReceiver::DisplayMainMenu;
-                    return true;
-                }
-                break;
-
-            case irr::KEY_SPACE:
-                if (m_boxContainer != nullptr)
-                {
-                    m_boxContainer->PlayerJoin(1);
-                    return true;
-                }
-                break;
-
-            case irr::KEY_DOWN:
-                if (event_copy.KeyInput.PressedDown)
-                {
-                    SelectNextButton();
-                    if (m_boxContainer != nullptr)
-                    {
-                        m_boxContainer->SelectUp();
-                    }
-                }
-                break;
-
-            case irr::KEY_UP:
-                if (event_copy.KeyInput.PressedDown)
-                {
-                    SelectPrevButton();
-                    if (m_boxContainer != nullptr)
-                    {
-                        m_boxContainer->SelectDown();
-                    }
-                }
-                break;
-
-            case irr::KEY_LEFT:
-                if (event_copy.KeyInput.PressedDown)
-                {
-                    if (m_boxContainer != nullptr)
-                    {
-                        m_boxContainer->SelectLeft();
-                    }
-                }
-                break;
-
-            case irr::KEY_RIGHT:
-                if (event_copy.KeyInput.PressedDown)
-                {
-                    if (m_boxContainer != nullptr)
-                    {
-                        m_boxContainer->SelectRight();
-                    }
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-
+    // GUI events
     if (event_copy.EventType == irr::EET_GUI_EVENT)
     {
-        irr::s32 id = event_copy.GUIEvent.Caller->getID();
-
-        switch (event_copy.GUIEvent.EventType)
-        {
-            case irr::gui::EGET_LISTBOX_CHANGED:
-            {
-                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
-                BomberMap::deleteMap();
-                if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
-                {
-                    BomberMap::newMap("./media/smallMap/map1.xml");
-                    BomberMap::getMap()->genMap();
-                }
-                else
-                {
-                    GameManager::SharedInstance()->ClearPlayers();
-                    BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
-                }
-                break;
-            }
-            case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
-            {
-                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
-                // Empties the list of players if the map is a saved one
-                if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
-                {
-                    GameManager::SharedInstance()->SwapCharacterList();
-                }
-                fptr = &UIEventReceiver::DisplayGameHUD;
-                GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-                GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                m_spawned = false;
-                break;
-            }
-
-            case irr::gui::EGET_BUTTON_CLICKED:
-                switch (id)
-                {
-                    case UIElement::SPLASH_BUTTON_START:
-		       BomberMap::deleteMap();
-		       state = -1;
-                        GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
-                        fptr = &UIEventReceiver::DisplayMainMenu;
-                        break;
-
-                    case UIElement::MAIN_MENU_BUTTON_1P:
-		      //BomberMap::deleteMap();
-                        GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
-                        fptr = &UIEventReceiver::DisplayMapMenu;
-                        break;
-
-                    case UIElement::MAP_SELECTION1:
-		      // BomberMap::deleteMap();
-                        fptr = &UIEventReceiver::DisplayGameHUD;
-                        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-                        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                        break;
-
-                    case UIElement::CONTINUE:
-                        fptr = &UIEventReceiver::DisplayGameHUD;
-                        IrrlichtController::getDevice()->setEventReceiver(
-                                GameManager::SharedInstance()->getEventGame());
-                        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                        break;
-
-                    default:
-                        break;
-                }
-                break;
-
-            case irr::gui::EGET_ELEMENT_FOCUSED:
-                switch (id)
-                {
-                    case UIElement::MAP_SELECTION1:
-                        if (state != 0)
-                        {
-			                std::cout << "SMALL" << std::endl;
-                            state = 0;
-                            BomberMap::deleteMap();
-			    // BomberMap::createMapFromSave("tmpSaveMap/MapSave2016-05-24.10:45:11.xml");
-                            BomberMap::newMap("./media/smallMap/map1.xml");
-			    BomberMap::getMap()->genMap();
-                        }
-                        break;
-
-                    case UIElement::MAP_SELECTION2:
-                        if (state != 1)
-                        {
-			                std::cout << "MEDIUM" << std::endl;
-                            state = 1;
-                            BomberMap::deleteMap();
-                            BomberMap::newMap("./media/smallMap/map1.xml");
-                            BomberMap::getMap()->genMap();
-                        }
-                        break;
-
-                    case UIElement::MAP_SELECTION3:
-                        if (state != 2)
-                        {
-			                std::cout << "LARGE" << std::endl;
-                            state = 2;
-                            BomberMap::deleteMap();
-                            BomberMap::newMap("./media/smallMap/map1.xml");
-                            BomberMap::getMap()->genMap();
-                        }
-                      break;
-
-                    // For the player selection menu
-                    case UIElement::MAIN_MENU_BUTTON_1P:
-                    case UIElement::MAIN_MENU_BUTTON_2P:
-                    case UIElement::MAIN_MENU_BUTTON_3P:
-                    case UIElement::MAIN_MENU_BUTTON_4P:
-                        if (m_boxContainer != nullptr)
-                        {
-                            m_boxContainer->UpdateBoxes(id);
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-                return false;
-                break;
-
-            default:
-                return false;
-                break;
-        }
+        eventState = OnGUIEvent(event_copy);
+        if (eventState == HANDELD) return true;
+        if (eventState == NOT_HANDLED) return false;
     }
 
     // Updates menu visibility according to the current game state
@@ -340,25 +140,6 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
-    /*irr::gui::IGUIButton *b1 = m_manager.GetEnv()->addButton(
-            irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
-                                      IrrlichtController::width * 0.95, IrrlichtController::height * 0.3),
-            nullptr, UIElement::MAP_SELECTION1, L"Map 1", L"");*/
-
-    /*irr::gui::IGUIButton *b2 = m_manager.GetEnv()->addButton(
-            irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.4,
-                                      IrrlichtController::width * 0.95, IrrlichtController::height * 0.6),
-            nullptr, UIElement::MAP_SELECTION2, L"Map 2", L"");*/
-
-    /*irr::gui::IGUIButton *b3 = m_manager.GetEnv()->addButton(
-            irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.7,
-                                      IrrlichtController::width * 0.95, IrrlichtController::height * 0.9),
-            nullptr, UIElement::MAP_SELECTION3, L"Map 3", L"");*/
-
-    //m_buttons.push_back(b1);
-    //m_buttons.push_back(b2);
-    //m_buttons.push_back(b3);
-
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);
@@ -451,7 +232,242 @@ void UIEventReceiver::SelectPrevButton()
     m_buttons.push_front(b);
 }
 
-bool UIEventReceiver::IsKeyDown(irr::EKEY_CODE keyCode) const
+/*
+ * \brief Handles key Input events
+ */
+UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &event_copy)
 {
-    return (KeyIsDown[keyCode]);
+    if (event_copy.EventType == irr::EET_KEY_INPUT_EVENT)
+    {
+        switch (event_copy.KeyInput.Key)
+        {
+            case irr::KEY_ESCAPE:
+                // Unpause the game if in pause state
+                if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
+                {
+                    GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                    IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
+                    fptr = &UIEventReceiver::DisplayGameHUD;
+                }
+                // Quits the game otherwise
+                else
+                {
+                    IrrlichtController::getDevice()->closeDevice();
+                }
+                break;
+
+            case irr::KEY_RETURN:
+                // Enters the main menu
+                if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN &&
+                    event_copy.KeyInput.PressedDown)
+                {
+                    GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
+                    fptr = &UIEventReceiver::DisplayMainMenu;
+                    return HANDELD;
+                }
+                break;
+
+            case irr::KEY_SPACE:
+                // Player 1 joined
+                if (m_boxContainer != nullptr)
+                {
+                    m_boxContainer->PlayerJoin(1);
+                    return HANDELD;
+                }
+                break;
+
+            case irr::KEY_DOWN:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    SelectNextButton();
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectDown();
+                    }
+                }
+                break;
+
+            case irr::KEY_UP:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    SelectPrevButton();
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectUp();
+                    }
+                }
+                break;
+
+            case irr::KEY_LEFT:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectLeft();
+                    }
+                }
+                break;
+
+            case irr::KEY_RIGHT:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectRight();
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+    return IGNORED;
+}
+
+UIEventReceiver::EVENT_STATE UIEventReceiver::OnGUIEvent(const irr::SEvent &event_copy)
+{
+    if (m_guiEvents.find(event_copy.GUIEvent.EventType) != m_guiEvents.end())
+    {
+        return (this->*m_guiEvents[event_copy.GUIEvent.EventType])(event_copy);
+    }
+    return NOT_HANDLED;
+}
+
+UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event_copy)
+{
+    switch (event_copy.GUIEvent.EventType)
+    {
+        case irr::gui::EGET_LISTBOX_CHANGED:
+        {
+            irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
+            BomberMap::deleteMap();
+            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
+            {
+                BomberMap::newMap("./media/smallMap/map1.xml");
+                BomberMap::getMap()->genMap();
+            }
+            else
+            {
+                GameManager::SharedInstance()->ClearPlayers();
+                BomberMap::createMapFromSave(
+                        "./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
+            }
+            break;
+        }
+        case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
+        {
+            irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
+            // Empties the list of players if the map is a saved one
+            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
+            {
+                GameManager::SharedInstance()->SwapCharacterList();
+            }
+            fptr = &UIEventReceiver::DisplayGameHUD;
+            GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+            GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+            m_spawned = false;
+            break;
+        }
+
+        default:
+            break;
+    }
+    return IGNORED;
+}
+
+UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent &event_copy)
+{
+    irr::s32 id = event_copy.GUIEvent.Caller->getID();
+
+    switch (id)
+    {
+        case UIElement::SPLASH_BUTTON_START:
+            BomberMap::deleteMap();
+            GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
+            fptr = &UIEventReceiver::DisplayMainMenu;
+            break;
+
+        case UIElement::MAIN_MENU_BUTTON_1P:
+            GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
+            fptr = &UIEventReceiver::DisplayMapMenu;
+            break;
+
+        case UIElement::MAP_SELECTION1:
+            fptr = &UIEventReceiver::DisplayGameHUD;
+            GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+            GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+            break;
+
+        case UIElement::CONTINUE:
+            fptr = &UIEventReceiver::DisplayGameHUD;
+            IrrlichtController::getDevice()->setEventReceiver(
+                    GameManager::SharedInstance()->getEventGame());
+            GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+            break;
+
+        default:
+            break;
+    }
+    return IGNORED;
+}
+
+UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent &event_copy)
+{
+    //Permet de ne la load qu'au changement de state
+    static int state = -1;
+    irr::s32 id = event_copy.GUIEvent.Caller->getID();
+
+    switch (id)
+    {
+        case UIElement::MAP_SELECTION1:
+            if (state != 0)
+            {
+                std::cout << "SMALL" << std::endl;
+                state = 0;
+                BomberMap::deleteMap();
+                BomberMap::newMap("./media/smallMap/map1.xml");
+                BomberMap::getMap()->genMap();
+            }
+            break;
+
+        case UIElement::MAP_SELECTION2:
+            if (state != 1)
+            {
+                std::cout << "MEDIUM" << std::endl;
+                state = 1;
+                BomberMap::deleteMap();
+                BomberMap::newMap("./media/smallMap/map1.xml");
+                BomberMap::getMap()->genMap();
+            }
+            break;
+
+        case UIElement::MAP_SELECTION3:
+            if (state != 2)
+            {
+                std::cout << "LARGE" << std::endl;
+                state = 2;
+                BomberMap::deleteMap();
+                BomberMap::newMap("./media/smallMap/map1.xml");
+                BomberMap::getMap()->genMap();
+            }
+            break;
+
+            // For the player selection menu
+        case UIElement::MAIN_MENU_BUTTON_1P:
+        case UIElement::MAIN_MENU_BUTTON_2P:
+        case UIElement::MAIN_MENU_BUTTON_3P:
+        case UIElement::MAIN_MENU_BUTTON_4P:
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->UpdateBoxes(id);
+            }
+            break;
+
+        default:
+            return NOT_HANDLED;
+            break;
+    }
+
+    return NOT_HANDLED;
 }
