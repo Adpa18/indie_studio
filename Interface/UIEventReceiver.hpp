@@ -13,6 +13,8 @@
 #include "UIManager.hpp"
 #include "PlayerSelectionBox.hpp"
 #include "PlayerSelectionBoxContainer.hpp"
+#include "../include/MotionController.hpp"
+#include "../include/KeysController.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
@@ -40,6 +42,8 @@ private:
     void SelectNextButton();
     void SelectPrevButton();
 
+    bool IsKeyDown(irr::EKEY_CODE keyCode) const;
+
 private:
     UIManager m_manager;
     irr::IrrlichtDevice *m_device;
@@ -54,6 +58,11 @@ private:
 
     // Avoid multiple spawn of the map
     bool m_spawned = false;
+
+    // Joysticks
+    std::map<int, MotionController *> m_joysticks;
+    std::vector<KeysController *> m_keymaps;
+    mutable bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
 };
 
 

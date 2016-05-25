@@ -11,7 +11,27 @@
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
 {
-    // LoadTextures();
+    irr::core::array<irr::SJoystickInfo>    joystickInfo;
+
+    if (IrrlichtController::getDevice()->activateJoysticks(joystickInfo))
+    {
+        for (size_t i = 0; i < joystickInfo.size(); i++)
+        {
+            if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
+            {
+                m_joysticks[i] = new MotionController(joystickInfo[i]);
+            }
+        }
+    }
+    for (std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>>::const_iterator it = EventGame::_keycodes.begin(); it != EventGame::_keycodes.end(); ++it)
+    {
+        m_keymaps.push_back(new KeysController(*it));
+    }
+
+    for (irr::u32 i=0; i < irr::KEY_KEY_CODES_COUNT; ++i)
+    {
+        KeyIsDown[i] = false;
+    }
     DisplaySplashScreen();
 }
 
@@ -22,10 +42,23 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 {
     //Permet de ne la load qu'au changement de state
     static int state = -1;
+    irr::SEvent &event_copy = const_cast<irr::SEvent &>(event);
 
-    if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+    // Update joysticks inputs
+    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[event_copy.JoystickEvent.Joystick])
     {
-        switch (event.KeyInput.Key)
+        m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
+        std::cout << m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS) << std::endl;
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
+        {
+            event_copy.EventType = irr::EET_KEY_INPUT_EVENT;
+            event_copy.KeyInput.Key = irr::KEY_RETURN;
+        }
+    }
+
+    if (event_copy.EventType == irr::EET_KEY_INPUT_EVENT)
+    {
+        switch (event_copy.KeyInput.Key)
         {
             case irr::KEY_ESCAPE:
                 if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
@@ -45,7 +78,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
 
             case irr::KEY_RETURN:
                 if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN &&
-                    event.KeyInput.PressedDown)
+                    event_copy.KeyInput.PressedDown)
                 {
                     GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                     fptr = &UIEventReceiver::DisplayMainMenu;
@@ -62,7 +95,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 break;
 
             case irr::KEY_DOWN:
-                if (event.KeyInput.PressedDown)
+                if (event_copy.KeyInput.PressedDown)
                 {
                     SelectNextButton();
                     if (m_boxContainer != nullptr)
@@ -73,7 +106,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 break;
 
             case irr::KEY_UP:
-                if (event.KeyInput.PressedDown)
+                if (event_copy.KeyInput.PressedDown)
                 {
                     SelectPrevButton();
                     if (m_boxContainer != nullptr)
@@ -84,7 +117,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 break;
 
             case irr::KEY_LEFT:
-                if (event.KeyInput.PressedDown)
+                if (event_copy.KeyInput.PressedDown)
                 {
                     if (m_boxContainer != nullptr)
                     {
@@ -94,7 +127,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
                 break;
 
             case irr::KEY_RIGHT:
-                if (event.KeyInput.PressedDown)
+                if (event_copy.KeyInput.PressedDown)
                 {
                     if (m_boxContainer != nullptr)
                     {
@@ -108,15 +141,15 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
         }
     }
 
-    if (event.EventType == irr::EET_GUI_EVENT)
+    if (event_copy.EventType == irr::EET_GUI_EVENT)
     {
-        irr::s32 id = event.GUIEvent.Caller->getID();
+        irr::s32 id = event_copy.GUIEvent.Caller->getID();
 
-        switch (event.GUIEvent.EventType)
+        switch (event_copy.GUIEvent.EventType)
         {
             case irr::gui::EGET_LISTBOX_CHANGED:
             {
-                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event.GUIEvent.Caller;
+                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
                 BomberMap::deleteMap();
                 if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
                 {
@@ -132,7 +165,7 @@ bool UIEventReceiver::OnEvent(const irr::SEvent &event)
             }
             case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
             {
-                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event.GUIEvent.Caller;
+                irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
                 // Empties the list of players if the map is a saved one
                 if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
                 {
@@ -344,7 +377,6 @@ void UIEventReceiver::DisplayMapMenu()
         }
     }
 
-    // TODO: voir pour le stack des persos
     // Creates default map
     if (!m_spawned)
     {
@@ -419,3 +451,7 @@ void UIEventReceiver::SelectPrevButton()
     m_buttons.push_front(b);
 }
 
+bool UIEventReceiver::IsKeyDown(irr::EKEY_CODE keyCode) const
+{
+    return (KeyIsDown[keyCode]);
+}
