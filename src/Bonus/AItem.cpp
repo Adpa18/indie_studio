@@ -5,16 +5,22 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:27:09 2016 Victor Gouet
-// Last update Mon May 23 19:16:16 2016 Victor Gouet
+// Last update Wed May 25 22:12:30 2016 Victor Gouet
 //
 
+#include "../../include/BomberMap.hpp"
 #include "../include/AItem.hpp"
 
 AItem::AItem(irr::core::vector2df const &pos, std::string const &mesh,
 	     std::string const &texture, std::string const &nameType, AGameObject::Type type)
   : AGameObject(pos, mesh, texture, type), nameType(nameType)
 {
-
+  (*this)->setPosition((*this)->getPosition() + irr::core::vector3df(0, BomberMap::scale / 2, 0));
+  (*this)->setRotation(irr::core::vector3df(40, 0, 0));
+  //(*this)->setScale(irr::core::vector3df(f, 0.5f, 0.5f));
+  irr::scene::ISceneNodeAnimator *anim =IrrlichtController::getSceneManager()->createRotationAnimator(irr::core::vector3df(0,1,0));
+  (*this)->addAnimator(anim);
+  anim->drop();
 }
 
 AItem::~AItem()
