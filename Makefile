@@ -8,7 +8,7 @@ SRC_BOMBS_DIR	=	src/Bombs/
 
 SRC_BONUS_DIR	=	src/Bonus/
 
-SRC_INTERFACE_DIR=	Interface/
+SRC_INTERFACE_DIR=	src/Interface/
 
 SRC_IA  =   ia/
 
