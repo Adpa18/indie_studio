@@ -8,6 +8,7 @@
 // Last update Wed May 25 14:37:20 2016 Victor Gouet
 //
 
+#include "Intro.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
@@ -25,6 +26,7 @@ GameManager::GameManager()
     uiManager = NULL;
     uiEventReceiver = NULL;
     eventGame = new EventGame();
+    IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     m_cameras[0] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr,
                                                                              irr::core::vector3df(100, 12, -30),
@@ -85,6 +87,9 @@ GameManager::GameState    GameManager::getPrevGameState() const
 
 void    GameManager::run()
 {
+    Intro *intro = new Intro(eventGame);
+    intro->run();
+    delete intro;
     uiManager = new UIManager(IrrlichtController::getDevice(false));
     uiEventReceiver = new UIEventReceiver(*uiManager);
 

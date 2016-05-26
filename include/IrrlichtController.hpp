@@ -13,6 +13,7 @@
 
 //# include <X11/Xlib.h>
 # include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
+# include "../IrrKlang/include/irrKlang.h"
 # include <map>
 
 class AGameObject;
@@ -26,9 +27,11 @@ public:
   static irr::video::IVideoDriver           *getDriver();
   static irr::scene::ISceneManager          *getSceneManager();
   static irr::gui::IGUIEnvironment          *getGUIEnvironment();
+  static irrklang::ISoundEngine             *getIrrKlangDevice();
 
 private:
-    static irr::IrrlichtDevice *device;
+    static irr::IrrlichtDevice      *device;
+    static irrklang::ISoundEngine   *sound;
 public:
     static const size_t	bombSize = 15;
 };
