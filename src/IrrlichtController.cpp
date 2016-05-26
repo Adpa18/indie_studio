@@ -20,7 +20,7 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
 {
       if (!device)
       {
-          /*Display* disp = XOpenDisplay(NULL);
+          /*Display* disp = XOpenDisplay(NULL);s
           Screen*  scrn = DefaultScreenOfDisplay(disp);
           height = scrn->height;
           width  = scrn->width;*/
