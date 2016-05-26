@@ -9,6 +9,7 @@
 //
 
 #include "Intro.hpp"
+#include "SoundManager.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
@@ -268,8 +269,8 @@ void    GameManager::willStartGame()
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
 
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "startGame.wav").c_str(), false);
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "ambianceGame.wav").c_str(), true);
+    SoundManager::play("startGame.wav");;
+    SoundManager::play("ambianceGame.wav", true);
 
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 

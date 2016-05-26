@@ -14,6 +14,7 @@
 #include "../../include/BombFactory.hpp"
 #include "../../include/BomberMap.hpp"
 #include "../../include/GameObjectTimeContainer.hpp"
+#include "SoundManager.hpp"
 
 ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout, int id) :
   AGameObject(irr::core::vector2df(-1000, -1000),
@@ -117,7 +118,7 @@ void                        ABomb::dead()
 {
   if (use)
     {
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "explosion.wav").c_str(), false);
+        SoundManager::play("explosion.wav");;
       _arrived = true;
       use = false;
       willExplose();

@@ -10,6 +10,7 @@
 
 #include "../include/BonusBombPass.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusBombPass::BonusBombPass(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusBombPass").mesh,
@@ -30,6 +31,7 @@ void	        BonusBombPass::take(ACharacter &player)
   std::cout << "Bonus BOMB PASS ADD" << std::endl;
   player.setBombPass(true);
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
+  SoundManager::play("takeBonus.wav");;
 }
 
 void	        BonusBombPass::dead()

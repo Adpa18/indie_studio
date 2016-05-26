@@ -12,6 +12,7 @@
 #include "../include/FragBomb.hpp"
 #include "../include/BombFactory.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusFireBomb::BonusFireBomb(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusFireBomb").mesh,
@@ -30,6 +31,7 @@ void	        BonusFireBomb::take(ACharacter &player)
 {
   std::cout << "Bonus FIRE BOMB ADD" << std::endl;
   BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()), player->getID());
+  SoundManager::play("takeBonus.wav");;
 }
 
 void	        BonusFireBomb::dead()

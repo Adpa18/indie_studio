@@ -7,11 +7,10 @@
 #include <unistd.h>
 #include <iostream>
 #include "IrrlichtController.hpp"
+#include "SoundManager.hpp"
 #include "Intro.hpp"
 
 const std::string     Intro::default_path_video = "./media/intro/video/";
-const std::string     Intro::default_path_sound = "./media/intro/sound/";
-
 
 Intro::Intro(EventGame *eventGame) : eventGame(eventGame)
 {
@@ -41,9 +40,8 @@ void	Intro::run()
 {
     irr::IrrlichtDevice* device = IrrlichtController::getDevice();
     irr::video::IVideoDriver* driver = device->getVideoDriver();
-    irrklang::ISoundEngine *engine = IrrlichtController::getIrrKlangDevice();
     irr::gui::IGUIEnvironment *guiEnv = IrrlichtController::getGUIEnvironment();
-    if (!device || !driver || !engine || !guiEnv || !eventGame) {
+    if (!device || !driver || !guiEnv || !eventGame) {
         return;
     }
     size_t  i = 0;
@@ -56,7 +54,7 @@ void	Intro::run()
             break;
 
         if (i == 24)
-            engine->play2D((default_path_sound + "intro.wav").c_str());
+            SoundManager::play("intro.wav");
         timerFrame = clock();
         irr::video::ITexture *tex = driver->getTexture((this->files[i]).c_str());
         img->setImage(tex);
@@ -70,5 +68,5 @@ void	Intro::run()
             usleep(1000000.0 / 23.975 - static_cast<float>(timerFrame) / CLOCKS_PER_SEC * 1000000.0);
         ++i;
     }
-    engine->stopAllSounds();
+    SoundManager::stopAll();
 }
