@@ -100,9 +100,6 @@ private:
     std::list<PlayerInfo*> m_playerInfoUI;
     std::vector<int>       m_winners;
 
-
-private:
-  static GameManager	*GM;
 };
 
 #endif
