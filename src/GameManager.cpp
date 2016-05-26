@@ -248,11 +248,13 @@ void    GameManager::onGame()
       (*it)->compute();
       ++it;
     }
-    else
-    {
-      delete (*it);
-      it = characters.erase(it);
-    }
+//    else
+//    {
+//      if (characters.size() <= 3)
+//
+//      delete (*it);
+//      it = characters.erase(it);
+//    }
   }
   if (characters.size() <= 1)
   {
@@ -260,6 +262,10 @@ void    GameManager::onGame()
       m_winners.push_back(-1);
     else
       m_winners.push_back(characters.front()->getID());
+    characters.erase(characters.begin(), characters.end());
+    BomberMap::deleteMap();
+    setGameState(CLASSMENT_SCREEN);
+    IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
   }
 }
 
