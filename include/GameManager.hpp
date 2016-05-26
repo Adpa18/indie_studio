@@ -98,7 +98,8 @@ private:
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
-  int                       m_winners[3];
+    std::vector<int>       m_winners;
+
 
 private:
   static GameManager	*GM;
