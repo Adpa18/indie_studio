@@ -66,12 +66,6 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
 
 ACharacter::~ACharacter()
 {
-    if (t)
-    {
-        t->join();
-        delete(t);
-    }
-    delete(_bombContainer);
 }
 
 void			ACharacter::onInvinciblePeriode(double time)

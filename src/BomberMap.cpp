@@ -67,7 +67,7 @@ BomberMap::~BomberMap()
       (*it)->remove();
     }
     for (int i = 0; i < size_side[_mapSize]; ++i)
-        delete(_danger_map[i]);
+        delete [] _danger_map[i];
     delete [] _danger_map;
     IAPlayer::shutDownIA();
 }
