@@ -148,7 +148,7 @@ function easyBehaviour(iaplayer)
     if (fimp ~= nil) then
         iaplayer:setFocus(fimp);
     end
-    return (action);
+    return (DROPBOMB);
 end
 
 function findFirstSafe(iaPos)

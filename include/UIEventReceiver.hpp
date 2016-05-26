@@ -25,6 +25,7 @@ private:
 
 public:
     UIEventReceiver(UIManager const& manager);
+    virtual ~UIEventReceiver();
 
 public:
     virtual bool OnEvent(const irr::SEvent &event);
@@ -38,7 +39,6 @@ private:
     void DisplayMapMenu();
     void DisplayLoadingScreen();
     void DisplayGameHUD();
-    void DisplayGameOver() const;
 
     /*
      * \brief Event handlers

@@ -101,7 +101,7 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
 void                    ACharacter::dead()
 {
   mutex.lock();
-  if (_invincible == true)
+  if (_invincible)
     {
       mutex.unlock();
       return ;
@@ -116,7 +116,10 @@ void                    ACharacter::dead()
       setMoveSpeed(BASICSPEED);
     }
   if (life <= 0)
+  {
     _dead = true;
+    setPos(irr::core::vector2df(-2000, -2000));
+  }
 }
 
 BombContainer		*ACharacter::getBombContainer() const

@@ -55,11 +55,17 @@ BomberMap::~BomberMap()
   while (it_o != _objects.end())
     {
       AGameObject	*obj = (*it_o).first;
-      GameObjectTimeContainer::SharedInstance()->remove(obj);
-      delete (obj);
-      it_o = _objects.begin();
+      if (!dynamic_cast<ACharacter *>(obj))
+      {
+        GameObjectTimeContainer::SharedInstance()->remove(obj);
+        delete (obj);
+        it_o = _objects.begin();
+      }
+      else
+        ++it_o;
     }
-
+  if (_camera)
+    _camera->remove();
   for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
     {
       (*it)->remove();

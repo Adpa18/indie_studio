@@ -4,10 +4,9 @@
 
 #include <dirent.h>
 #include <algorithm>
-#include <unistd.h>
-#include "UIEventReceiver.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameManager.hpp"
+#include "../../include/UIEventReceiver.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/GameManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -39,8 +38,27 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_LISTBOX_SELECTED_AGAIN] = &UIEventReceiver::OnListBox;
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
-
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "welcome.wav").c_str(), false);
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "menu.wav").c_str(), true);
     DisplaySplashScreen();
+}
+
+UIEventReceiver::~UIEventReceiver()
+{
+    if (m_boxContainer != nullptr)
+    {
+        delete m_boxContainer;
+    }
+
+    for (std::map<int, MotionController *>::iterator it = m_joysticks.begin(); it != m_joysticks.end(); ++it)
+    {
+        delete (*it).second;
+    }
+
+    for (std::vector<KeysController *>::iterator it = m_keymaps.begin(); it != m_keymaps.end(); ++it)
+    {
+        delete (*it);
+    }
 }
 
 /*
@@ -91,6 +109,8 @@ void UIEventReceiver::DisplayGameHUD()
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
+    std::cout << "Select Your Player" << std::endl;
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectPlayer.wav").c_str(), false);
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
@@ -132,6 +152,8 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
+    std::cout << "Select Your Map" << std::endl;
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectMap.wav").c_str(), false);
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);
@@ -274,7 +296,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     SelectNextButton();
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectDown();
+                        m_boxContainer->SelectDown(1);
                     }
                 }
                 break;
@@ -285,7 +307,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     SelectPrevButton();
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectUp();
+                        m_boxContainer->SelectUp(1);
                     }
                 }
                 break;
@@ -295,7 +317,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectLeft();
+                        m_boxContainer->SelectLeft(1);
                     }
                 }
                 break;
@@ -305,7 +327,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectRight();
+                        m_boxContainer->SelectRight(1);
                     }
                 }
                 break;
@@ -499,19 +521,19 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
                 switch (act)
                 {
                     case ACharacter::LEFT:
-                        m_boxContainer->SelectLeft();
+                        m_boxContainer->SelectLeft(playerID);
                         break;
 
                     case ACharacter::RIGHT:
-                        m_boxContainer->SelectRight();
+                        m_boxContainer->SelectRight(playerID);
                         break;
 
                     case ACharacter::UP:
-                        m_boxContainer->SelectUp();
+                        m_boxContainer->SelectUp(playerID);
                         break;
 
                     case ACharacter::DOWN:
-                        m_boxContainer->SelectDown();
+                        m_boxContainer->SelectDown(playerID);
                         break;
 
                     default:
@@ -521,3 +543,4 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
     }
 }
+

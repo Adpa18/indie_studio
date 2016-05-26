@@ -117,6 +117,7 @@ void                        ABomb::dead()
 {
   if (use)
     {
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "explosion.wav").c_str(), false);
       _arrived = true;
       use = false;
       willExplose();

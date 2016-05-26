@@ -1,6 +1,6 @@
 //
 // GameManager.hpp for MANAGER in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
 // 
@@ -29,8 +29,8 @@ public:
         MAIN_MENU = 2,
         MENU_MAP = 3,
         PLAY = 4,
-        PAUSE,
-	CLASSMENT_SCREEN
+        PAUSE = 5,
+        RANKING_SCREEN = 6
     };
 
   typedef void	(GameManager::*initInstance)(void);
@@ -65,7 +65,7 @@ public:
 private:
   void	onMenu();
   void	onGame();
-  void  onGameOver();
+  void  displayRankingScreen() const;
 
 public:
   void	willStartGame();
