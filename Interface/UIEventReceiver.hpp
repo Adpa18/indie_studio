@@ -31,7 +31,8 @@ private:
     void DisplaySplashScreen();
     void DisplayMapMenu();
     void DisplayLoadingScreen();
-  void DisplayGameHUD();
+    void DisplayGameHUD();
+    void DisplayGameOver() const;
 
     /*
      * \brief Button handling

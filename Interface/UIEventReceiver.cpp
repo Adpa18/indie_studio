@@ -269,14 +269,19 @@ void UIEventReceiver::DisplayMainMenu()
 {
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
-            nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
+            nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
 
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
-
     m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
 }
+
+void UIEventReceiver::DisplayGameOver() const
+{
+
+}
+
 
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
@@ -418,4 +423,5 @@ void UIEventReceiver::SelectPrevButton()
     m_buttons.pop_back();
     m_buttons.push_front(b);
 }
+
 

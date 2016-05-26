@@ -180,7 +180,7 @@ void			AGameObject::setTimeOut(double timeout)
   memset(&y2k, 0, sizeof(y2k));
   y2k.tm_year = 100;
   y2k.tm_mday = 1;
-  _timer = difftime(timer, mktime(&y2k));	
+  _timer = difftime(timer, mktime(&y2k));
   GameObjectTimeContainer::SharedInstance()->add(this);
 }
 

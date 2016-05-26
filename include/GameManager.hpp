@@ -65,6 +65,7 @@ public:
 private:
   void	onMenu();
   void	onGame();
+  void  onGameOver();
 
 public:
   void	willStartGame();
@@ -97,6 +98,7 @@ private:
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
+  int                       m_winners[3];
 
 private:
   static GameManager	*GM;
