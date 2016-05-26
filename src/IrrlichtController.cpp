@@ -15,6 +15,7 @@ irr::IrrlichtDevice     *IrrlichtController::device = NULL;
 irrklang::ISoundEngine  *IrrlichtController::sound = NULL;
 size_t    IrrlichtController::width = 1920;
 size_t    IrrlichtController::height = 1080;
+const std::string   IrrlichtController::soundPath = "./media/sound/";
 
 irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
 {
@@ -64,6 +65,9 @@ irr::gui::IGUIEnvironment	*IrrlichtController::getGUIEnvironment()
 irrklang::ISoundEngine      *IrrlichtController::getIrrKlangDevice()
 {
     if (!sound)
-        sound = irrklang::createIrrKlangDevice();
+    {
+        if ((sound = irrklang::createIrrKlangDevice()) == nullptr)
+            throw std::runtime_error("IrrKlang error");
+    }
     return (sound);
 }
