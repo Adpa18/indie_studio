@@ -16,12 +16,11 @@ LUA_DIRECTORY   =   $(SRC_IA)lua-5.3.2/src
 
 IrrKlangHome	=	IrrKlang/
 
-SRC_VIDEO_DIR=	Video/
-
 IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
 
 SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)IrrlichtController.cpp		\
+			$(SRC_DIR)Intro.cpp		                \
 			$(SRC_DIR)AGameObject.cpp				\
 			$(SRC_DIR)Player.cpp					\
 			$(SRC_DIR)ACharacter.cpp				\
@@ -44,7 +43,6 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				    \
 			$(SRC_IA)IAPlayer.cpp   					        \
 			$(SRC_IA)LuaFunctions.cpp					        \
-			$(SRC_VIDEO_DIR)Video.cpp                           \
 			$(SRC_BOMBS_DIR)ABomb.cpp						\
 			$(SRC_BOMBS_DIR)BombContainer.cpp				\
 			$(SRC_BOMBS_DIR)AtomicBomb.cpp					\

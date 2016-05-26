@@ -8,6 +8,7 @@
 // Last update Wed May 25 22:39:38 2016 Victor Gouet
 //
 
+#include "Intro.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
@@ -88,6 +89,9 @@ GameManager::GameState    GameManager::getPrevGameState() const
 
 void    GameManager::run()
 {
+  Intro *intro = new Intro(eventGame);
+  intro->run();
+  delete intro;
   uiManager = new UIManager(IrrlichtController::getDevice(false));
   uiEventReceiver = new UIEventReceiver(*uiManager);
 
@@ -292,47 +296,23 @@ void    GameManager::willStartGame()
   for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
   {
     //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
-    if (i == 0/*(*it)->GetIsIA()*/)
-    {
-<<<<<<< HEAD
-      characters.push_back(new IAPlayer((*it)->GetName(),
-                                        (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
-                                        (*it)->GetMesh(),
-                                        (*it)->GetTexture(),
-                                        i));
-=======
-        //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
-      if (/*i == 0*/(*it)->GetIsIA())
-      	{
-      	  characters.push_back(new IAPlayer((*it)->GetName(),
-      					    (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
-      					    (*it)->GetMesh(),
-      					    (*it)->GetTexture(),
-      					    i));
-      	}
-      else
-      	{
-	  
-      	  characters.push_back(new Player((*it)->GetName(),
-					  (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
-					  (*it)->GetMesh(),
-					  (*it)->GetTexture(),
-      	  				  i, *eventGame));
-      	}
-      delete (*it);
-      it = m_playerInfo.erase(it);
-      ++i;
->>>>>>> 23ce8c84e01883d68ab0a153640f15be190a3fbf
-    }
+    if (/*i == 0*/(*it)->GetIsIA())
+      {
+        characters.push_back(new IAPlayer((*it)->GetName(),
+                  (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+                  (*it)->GetMesh(),
+                  (*it)->GetTexture(),
+                  i));
+      }
     else
-    {
+      {
 
-      characters.push_back(new Player((*it)->GetName(),
-                                      (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
-                                      (*it)->GetMesh(),
-                                      (*it)->GetTexture(),
-                                      i, *eventGame));
-    }
+        characters.push_back(new Player((*it)->GetName(),
+          (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+          (*it)->GetMesh(),
+          (*it)->GetTexture(),
+                  i, *eventGame));
+      }
     delete (*it);
     it = m_playerInfo.erase(it);
     ++i;

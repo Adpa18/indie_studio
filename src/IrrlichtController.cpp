@@ -11,7 +11,8 @@
 #include "../include/IrrlichtController.hpp"
 
 // redeclare static member for cpp linkage
-irr::IrrlichtDevice *IrrlichtController::device = NULL;
+irr::IrrlichtDevice     *IrrlichtController::device = NULL;
+irrklang::ISoundEngine  *IrrlichtController::sound = NULL;
 size_t    IrrlichtController::width = 1920;
 size_t    IrrlichtController::height = 1080;
 
@@ -58,4 +59,11 @@ irr::scene::ISceneManager	*IrrlichtController::getSceneManager()
 irr::gui::IGUIEnvironment	*IrrlichtController::getGUIEnvironment()
 {
   return (getDevice()->getGUIEnvironment());
+}
+
+irrklang::ISoundEngine      *IrrlichtController::getIrrKlangDevice()
+{
+    if (!sound)
+        sound = irrklang::createIrrKlangDevice();
+    return (sound);
 }
