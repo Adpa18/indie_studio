@@ -21,7 +21,7 @@
 
 class EventGame : public irr::IEventReceiver {
 
-private:
+public:
     static const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> _keycodes;
 
 private:

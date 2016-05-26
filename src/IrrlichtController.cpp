@@ -16,30 +16,33 @@ irrklang::ISoundEngine  *IrrlichtController::sound = NULL;
 size_t    IrrlichtController::width = 1920;
 size_t    IrrlichtController::height = 1080;
 
-irr::IrrlichtDevice *IrrlichtController::getDevice(bool pleinScreen)
+irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
 {
-  if (!device)
-    {
-      /*Display* disp = XOpenDisplay(NULL);
-      Screen*  scrn = DefaultScreenOfDisplay(disp);
-      height = scrn->height;
-      width  = scrn->width;*/
+      if (!device)
+      {
+          /*Display* disp = XOpenDisplay(NULL);
+          Screen*  scrn = DefaultScreenOfDisplay(disp);
+          height = scrn->height;
+          width  = scrn->width;*/
 
-      if (pleinScreen)
-	device = irr::createDevice(irr::video::EDT_OPENGL,
-				   irr::core::dimension2d<irr::u32>(width, height), 32,
-				   true, false, false, 0);
-      else
-	{
-	  /*height = 640;
-	  width = 640;*/
-	  device = irr::createDevice(irr::video::EDT_OPENGL,
-				     irr::core::dimension2d<irr::u32>(width, height), 32,
-				     false, false, false, 0);
-	}
-       device->getSceneManager()->setShadowColor(irr::video::SColor(100,100,100,1));
-    }
-  return (device);
+          if (fullScreen)
+          {
+              device = irr::createDevice(irr::video::EDT_OPENGL,
+                                         irr::core::dimension2d<irr::u32>(width, height), 32,
+                                         true, false, false, 0);
+          }
+          else
+          {
+              /*height = 640;
+              width = 640;*/
+              device = irr::createDevice(irr::video::EDT_OPENGL,
+                                         irr::core::dimension2d<irr::u32>(width, height), 32,
+                                         false, false, false, 0);
+          }
+          device->getSceneManager()->setShadowColor(irr::video::SColor(100, 100, 100, 1));
+          device->setWindowCaption(L"ONE TRYYY");
+      }
+    return (device);
 }
 
 

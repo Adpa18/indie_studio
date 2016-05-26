@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Sun May 22 13:11:44 2016 Victor Gouet
+// Last update Wed May 25 22:08:08 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -86,8 +86,8 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"bonusInvincible", {BomberManTexture::bonus + "meshes/invincible.md3", BomberManTexture::bonus + "textures/invincible_d.png"}},//
 
 		// Items
-		{"itemThrow", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
-		{"itemMineBomb", {BomberManTexture::path + "bulbizarre.md2", BomberManTexture::path + "bulbizarre.png"}},
+		{"itemThrow", {BomberManTexture::bonus + "meshes/throw.md3", BomberManTexture::bonus + "textures/throw_d.png"}},
+		{"itemMineBomb", {BomberManTexture::bonus + "meshes/mine.md3", BomberManTexture::bonus + "textures/mine_d.png"}},
 
 		// BomberMap
 		{"ground", {"", BomberManTexture::path + "grass.png"}},
@@ -134,6 +134,6 @@ const struct model &BomberManTexture::getModel(const std::string &model)
 	const std::map<std::string, struct model>::const_iterator   it = _models.find(model);
 
 	if (it == _models.end())
-		throw std::runtime_error("Failed to load Model : " + model);
+	  throw std::runtime_error("Failed to load Model : " + model);
 	return (it->second);
 }

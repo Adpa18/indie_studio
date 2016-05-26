@@ -9,8 +9,8 @@
 #include "IrrlichtController.hpp"
 #include "Intro.hpp"
 
-const std::string     Intro::default_path_video = "./intro/video/";
-const std::string     Intro::default_path_sound = "./intro/sound/";
+const std::string     Intro::default_path_video = "./media/intro/video/";
+const std::string     Intro::default_path_sound = "./media/intro/sound/";
 
 
 Intro::Intro(EventGame *eventGame) : eventGame(eventGame)

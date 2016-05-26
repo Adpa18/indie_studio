@@ -48,12 +48,12 @@ PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
 
 void PlayerSelectionBoxContainer::SelectUp()
 {
-    m_boxes.front()->SelectNext();
+    m_boxes.front()->SelectPrev();
 }
 
 void PlayerSelectionBoxContainer::SelectDown()
 {
-    m_boxes.front()->SelectPrev();
+    m_boxes.front()->SelectNext();
 }
 
 void PlayerSelectionBoxContainer::SelectLeft()

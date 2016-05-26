@@ -13,10 +13,16 @@
 #include "UIManager.hpp"
 #include "PlayerSelectionBox.hpp"
 #include "PlayerSelectionBoxContainer.hpp"
+#include "../include/MotionController.hpp"
+#include "../include/KeysController.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
 {
+private:
+    enum EVENT_STATE
+    { HANDELD, NOT_HANDLED, IGNORED };
+
 public:
     UIEventReceiver(UIManager const& manager);
 
@@ -31,7 +37,20 @@ private:
     void DisplaySplashScreen();
     void DisplayMapMenu();
     void DisplayLoadingScreen();
-  void DisplayGameHUD();
+    void DisplayGameHUD();
+
+    /*
+     * \brief Event handlers
+     */
+private:
+    void HandleJoysticks(irr::SEvent const&event);
+
+    EVENT_STATE OnKeyInput(const irr::SEvent &event);
+    EVENT_STATE OnGUIEvent(const irr::SEvent &event);
+
+    EVENT_STATE OnListBox(const irr::SEvent &event);
+    EVENT_STATE OnButtonClicked(const irr::SEvent &event);
+    EVENT_STATE OnElementFocused(const irr::SEvent &event);
 
     /*
      * \brief Button handling
@@ -54,6 +73,13 @@ private:
 
     // Avoid multiple spawn of the map
     bool m_spawned = false;
+
+    // Joysticks
+    std::map<int, MotionController *> m_joysticks;
+    std::vector<KeysController *> m_keymaps;
+    mutable bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
+    typedef EVENT_STATE (UIEventReceiver::*event)(const irr::SEvent &);
+    std::map<irr::gui::EGUI_EVENT_TYPE, event> m_guiEvents;
 };
 
 
