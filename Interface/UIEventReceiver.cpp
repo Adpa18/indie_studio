@@ -2,11 +2,13 @@
 // Created by veyrie_f on 4/27/16.
 //
 
+#include <dirent.h>
+#include <algorithm>
 #include <unistd.h>
 #include "UIEventReceiver.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameManager.hpp"
-#include "../Video/Video.hpp"
+//#include "../Video/Video.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -109,10 +111,10 @@ void UIEventReceiver::DisplayGameOver() const
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
 {
-    Video *video = new Video();
-
-    video->Run();
-    delete video;
+//    Video *video = new Video();
+//
+//    video->Run();
+//    delete video;
     irr::gui::IGUIImage *image = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
