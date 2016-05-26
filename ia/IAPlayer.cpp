@@ -20,9 +20,9 @@ const std::string Lua::LuaClass<IAPlayer>::className = "IA";
 const std::string     IAPlayer::easyLvl = "easyBehaviour";
 const std::string     IAPlayer::mediumLvl = "mediumBehaviour";
 const std::string     IAPlayer::hardLvl = "hardBehaviour";
-Lua::LuaHandler       IAPlayer::handler;
+Lua::LuaHandler       *IAPlayer::handler;
 
-void IAPlayer::initIA()
+void IAPlayer::initIA(int width, int height)
 {
     Lua::LuaClass<BomberMap>::LuaPrototype({
                                                    {"objsAtPos", objsAtPos},
@@ -54,8 +54,8 @@ void IAPlayer::initIA()
                                                   {"getFocus", getIAFocusPos},
                                                   {"setFocus", setIAFocusPos}
                                           }).Register();
-    Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapW");
-    Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapH");
+    Lua::setGlobalValue(width, "MapW");
+    Lua::setGlobalValue(height, "MapH");
     Lua::setGlobalValue((int)AGameObject::Type::NONE, "NONE");
     Lua::setGlobalValue((int)AGameObject::Type::CHARACTER, "CHARACTER");
     Lua::setGlobalValue((int)AGameObject::Type::BOMB, "BOMB");
@@ -71,12 +71,17 @@ void IAPlayer::initIA()
     Lua::setGlobalValue((int)ACharacter::DOWN, "DOWN");
     Lua::setGlobalValue((int)ACharacter::BOMB, "DROPBOMB");
     Lua::setGlobalValue((int)ACharacter::ACT, "ACT");
-    handler.setScript("./ia/iaBehaviour.lua");
+    handler = new Lua::LuaHandler("./ia/iaBehaviour.lua");
 }
 
 void IAPlayer::shutDownIA()
 {
-    lua_close(Lua::acquireState());
+    Lua::LuaClass<BomberMap>::LuaPrototype().Unregister();
+    Lua::LuaClass<irr::core::vector2df>::LuaPrototype().Unregister();
+    Lua::LuaClass<std::vector<AGameObject *> >::LuaPrototype().Unregister();
+    Lua::LuaClass<IAPlayer>::LuaPrototype().Unregister();
+    Lua::acquireState(NULL, true);
+    delete(handler);
 }
 
 void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
@@ -122,7 +127,7 @@ IAPlayer::~IAPlayer()
 void IAPlayer::compute()
 {
     Lua::setGlobalValue(BomberMap::getMap(), "bomberMap");
-    this->action(static_cast<ACharacter::ACTION>(IAPlayer::handler[behaviour](this)));
+    this->action(static_cast<ACharacter::ACTION>((*IAPlayer::handler)[behaviour](this)));
 }
 
 void IAPlayer::setDifficulty(const std::string &difficulty)
@@ -223,7 +228,7 @@ int IAPlayer::getX(lua_State *state)
 {
     irr::core::vector2df    *thisptr = Lua::LuaClass<irr::core::vector2df>::getThis();
 
-    lua_pushnumber(state, thisptr->X);
+    lua_pushinteger(state, static_cast<lua_Integer >(thisptr->X));
     return 1;
 }
 
@@ -231,7 +236,7 @@ int IAPlayer::getY(lua_State *state)
 {
     irr::core::vector2df    *thisptr = Lua::LuaClass<irr::core::vector2df>::getThis();
 
-    lua_pushnumber(state, thisptr->Y);
+    lua_pushinteger(state, static_cast<lua_Integer >(thisptr->Y));
     return 1;
 }
 

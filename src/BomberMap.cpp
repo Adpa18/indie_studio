@@ -36,6 +36,7 @@ BomberMap::BomberMap(std::string const &filename) : _mapSize(SMALL), _filename(f
    for(int i = 0; i < size_side[_mapSize]; ++i)
       _danger_map[i] = new int[size_side[_mapSize]];
     refreshDangerMap();
+    IAPlayer::initIA(size_side[_mapSize], size_side[_mapSize]);
 }
 
 BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
@@ -47,6 +48,7 @@ BomberMap::BomberMap(Size mapSize) : _mapSize(mapSize), _filename("")
    _camera = NULL;
   initSpawn();
     refreshDangerMap();
+    IAPlayer::initIA(size_side[_mapSize], size_side[_mapSize]);
 }
 
 BomberMap::~BomberMap()
@@ -70,6 +72,10 @@ BomberMap::~BomberMap()
     {
       (*it)->remove();
     }
+    for (int i = 0; i < size_side[_mapSize]; ++i)
+        delete [] _danger_map[i];
+    delete [] _danger_map;
+    IAPlayer::shutDownIA();
 }
 
 std::map<AGameObject *, irr::core::vector2df>	const &BomberMap::getObjects() const

@@ -2,6 +2,7 @@
 // Created by gaspar_q on 5/21/16.
 //
 
+#include <iostream>
 #include "LuaClass.hpp"
 
 /**
@@ -9,18 +10,25 @@
  * \param toset The lua state to set if you want to change the singleton
  * \return The pointer on the singleton that represent a lua state
  */
-lua_State *Lua::acquireState(lua_State *toset)
+lua_State *Lua::acquireState(lua_State *toset, bool set)
 {
     static lua_State *state = NULL;
 
-    if (toset == NULL && state == NULL)
+    if (!set && state == NULL)
     {
+//        std::cout << "\e[32mcreating state\e[0m" << std::endl;
         state = luaL_newstate();
         luaL_openlibs(state);
     }
-    else if (toset != NULL)
+    else if (set)
     {
+        if (toset == NULL)
+        {
+            lua_close(state);
+//            std::cout << "closing lua" << std::endl;
+        }
         state = toset;
+//        std::cout << "reset lua state" << std::endl;
     }
     return (state);
 }

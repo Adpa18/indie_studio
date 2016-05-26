@@ -8,9 +8,7 @@
 ** Last update	Fri Apr 29 10:07:53 2016 Adrien WERY
 */
 
-#include <iostream>
-#include "MotionController.hpp"
-#include "ACharacter.hpp"
+#include "../include/MotionController.hpp"
 
 MotionController::MotionController(irr::SJoystickInfo info) : _info(info)
 {

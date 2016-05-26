@@ -56,61 +56,68 @@ private:
     int tata;
 };
 
-template <>
-const std::string Lua::LuaClass<jellyClass>::className = "Jelly";
-
-int main()
+int testfunc()
 {
     Lua::LuaHandler  handler;
     testClass   tutu;
     jellyClass   titi;
     Lua::LuaClass<testClass>::LuaPrototype({
                                                    {"new", Lua::LuaClass<testClass>::defaultConstructor},
-                                                   {"toto", testClass::l_tutumethod},
-//                                                   {"__gc", Lua::LuaClass<testClass>::defaultDestructor}
+                                                   {"toto", testClass::l_tutumethod}
                                            }).Register();
     Lua::LuaClass<jellyClass>::LuaPrototype({
                                                     {"new", Lua::LuaClass<jellyClass>::defaultConstructor},
-                                                    {"jellow", jellyClass::l_tatamethod},
-//                                                    {"__gc", Lua::LuaClass<jellyClass>::defaultDestructor}
+                                                    {"jellow", jellyClass::l_tatamethod}
                                             }).Register();
-//    lua_pushlightuserdata(Lua::acquireState(), &tutu);
-//    tutu.bindMetatable();
-//    lua_setglobal(Lua::acquireState(), "globit");
+    //    lua_pushlightuserdata(Lua::acquireState(), &tutu);
+    //    tutu.bindMetatable();
+    //    lua_setglobal(Lua::acquireState(), "globit");
     handler.setScript("./helloworld.lua");
-//    Lua::LuaHandler &(*ftpr2)(const std::string &) = NULL;
+    //    Lua::LuaHandler &(*ftpr2)(const std::string &) = NULL;
 
-//    ftpr2 = FunctionConverter::methodToFptr<Lua::LuaHandler &(*)(const std::string &)>(handler, &Lua::LuaHandler::operator[]);
-//    ftpr2("toto");*
-//    char *test = NULL;
-//    char *test2 = NULL;
-//    Lua::LuaHandler &(Lua::LuaHandler::*ftpr)(const std::string &) = &Lua::LuaHandler::operator[];
-//    Lua::LuaHandler &(*ftpr2)(const std::string &);
-//    void *decal = NULL;
-//
-//    std::cout << handler["computeIA"](2, 3) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
-//    for (int i = 0; i < 100; ++i)
-//    {
-//        tata.onAppelleDesFonctions(handler);
-//    }
+    //    ftpr2 = FunctionConverter::methodToFptr<Lua::LuaHandler &(*)(const std::string &)>(handler, &Lua::LuaHandler::operator[]);
+    //    ftpr2("toto");*
+    //    char *test = NULL;
+    //    char *test2 = NULL;
+    //    Lua::LuaHandler &(Lua::LuaHandler::*ftpr)(const std::string &) = &Lua::LuaHandler::operator[];
+    //    Lua::LuaHandler &(*ftpr2)(const std::string &);
+    //    void *decal = NULL;
+    //
+    //    std::cout << handler["computeIA"](2, 3) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    std::cout << handler["easyBehaviour"](&tutu, &tutu) << std::endl;
+    //    for (int i = 0; i < 100; ++i)
+    //    {
+    //        tata.onAppelleDesFonctions(handler);
+    //    }
     for (int i = 0; i < 100; ++i)
     {
         std::cout << "test + jelly" << std::endl;
         handler["testuserdata"](&tutu, &titi);
     }
     //    std::cout << handler["testargs"](2, 2.4, true, "On fait des test") << std::endl;
-//    std::cout << "manger des haricots" << std::endl;
-    lua_close(Lua::acquireState());
+    //    std::cout << "manger des haricots" << std::endl;
+    Lua::LuaClass<testClass>::LuaPrototype().Unregister();
+    Lua::LuaClass<jellyClass>::LuaPrototype().Unregister();
+    Lua::acquireState(NULL, true);
+    return 0;
+}
+
+template <>
+const std::string Lua::LuaClass<jellyClass>::className = "Jelly";
+
+int main()
+{
+    testfunc();
+//    testfunc();
 //    Lua::close(state);
 //    std::cout << "in c++ " << &handler << std::endl;
 //    std::cout << "sizeof handler: " << sizeof(handler) << std::endl;

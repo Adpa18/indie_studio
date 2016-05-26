@@ -26,7 +26,7 @@ namespace Lua
     static std::vector<std::string> registeredClasses;
     static const std::string luaPrefix = "luaL_";
 
-    lua_State    *acquireState(lua_State *toset = NULL);
+    lua_State    *acquireState(lua_State *toset = NULL, bool set = false);
 
     /**
      * \brief Template class that overload a class to be a Lua usable class
@@ -229,7 +229,10 @@ namespace Lua
             void Register()
             {
                 if (isRegistered())
+                {
+                    std::cout << "\e[31malready registered: " << className << "\e[0m" << std::endl;
                     return;
+                }
                 registered = true;
                 luaL_newmetatable(state, (luaPrefix + className).c_str());
                 lua_pushvalue(state, -1);
@@ -237,6 +240,14 @@ namespace Lua
                 luaL_setfuncs(state, &getRegs()[0], 0);
                 lua_setglobal(state, className.c_str());
                 registeredClasses.push_back(className);
+            }
+            /**
+             * \brief Will unregister the prototype of the class
+             */
+            void Unregister() const
+            {
+                if (isRegistered())
+                    registeredClasses.erase(std::find(registeredClasses.begin(), registeredClasses.end(), className));
             }
             /**
              * \brief Tells if the prototypes have already been registered, this works even if a new LuaPrototype object is created
@@ -289,6 +300,13 @@ namespace Lua
             classType   *thisptr = getThis();
 
             delete(thisptr);
+            return (1);
+        }
+        /**
+         * \brief An implementation of a null destructor for classes you don't want to delete but for garbage collection
+         */
+        static int destrucNull(lua_State *)
+        {
             return (1);
         }
 

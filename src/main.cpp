@@ -13,5 +13,6 @@
 int	main()
 {
   GameManager::SharedInstance()->run();
+  delete(GameManager::SharedInstance());
   return (0);
 }
