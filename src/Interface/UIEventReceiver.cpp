@@ -4,10 +4,9 @@
 
 #include <dirent.h>
 #include <algorithm>
-#include <unistd.h>
-#include "UIEventReceiver.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameManager.hpp"
+#include "../../include/UIEventReceiver.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/GameManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -39,7 +38,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_LISTBOX_SELECTED_AGAIN] = &UIEventReceiver::OnListBox;
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
-
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "welcome.wav").c_str(), false);
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "menu.wav").c_str(), true);
     DisplaySplashScreen();
 }
 
@@ -91,16 +91,23 @@ void UIEventReceiver::DisplayGameHUD()
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
+    std::cout << "Select Your Player" << std::endl;
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectPlayer.wav").c_str(), false);
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
-            nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
+            nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
 
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
-
     m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
 }
+
+void UIEventReceiver::DisplayGameOver() const
+{
+
+}
+
 
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
@@ -127,6 +134,8 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
+    std::cout << "Select Your Map" << std::endl;
+    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectMap.wav").c_str(), false);
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);

@@ -12,13 +12,13 @@
 # define GAMEMANAGER_HPP_
 
 # include "IrrlichtController.hpp"
-# include "../Interface/UIManager.hpp"
-# include "../Interface/UIEventReceiver.hpp"
+# include "UIManager.hpp"
+# include "UIEventReceiver.hpp"
 # include "FireBomb.hpp"
 # include "EventGame.hpp"
 # include "Player.hpp"
 # include "BomberMap.hpp"
-#include "../Interface/PlayerInfo.hpp"
+# include "PlayerInfo.hpp"
 
 class	GameManager
 {
@@ -65,6 +65,7 @@ public:
 private:
   void	onMenu();
   void	onGame();
+  void  onGameOver();
 
 public:
   void	willStartGame();
@@ -97,6 +98,8 @@ private:
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
+    std::vector<int>       m_winners;
+
 
 private:
   static GameManager	*GM;

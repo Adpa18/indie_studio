@@ -3,9 +3,9 @@
 //
 
 #include <algorithm>
-#include "PlayerSelectionBoxContainer.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameManager.hpp"
+#include "../../include/PlayerSelectionBoxContainer.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/GameManager.hpp"
 
 PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
             m_manager(uiManager)
@@ -35,6 +35,11 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
                                              UIElement::MAIN_MENU_BUTTON_4P, true, UIElement::PLAYERBOX_4, 4));
 
     uiManager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
+
+    for (int i = 0; i < 4; ++i)
+    {
+        m_boxList[i] = *std::next(m_boxes.begin(), i);
+    }
 }
 
 PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
@@ -82,12 +87,12 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
 
 void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 {
-    if (!(*std::next(m_boxes.begin(), playerID - 1))->GetIaStatus() || m_joined[playerID - 1])
+    if (!m_boxList[playerID - 1]->GetIaStatus() || m_joined[playerID - 1])
     {
         return;
     }
-    (*std::next(m_boxes.begin(), playerID - 1))->SetIaStatus(false);
-    (*std::next(m_boxes.begin(), playerID - 1))->SelectNext();
+    m_boxList[playerID - 1]->SetIaStatus(false);
+    m_boxList[playerID - 1]->SelectNext();
     m_joined[playerID - 1] = true;
 }
 

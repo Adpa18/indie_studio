@@ -33,7 +33,8 @@ private:
     static irr::IrrlichtDevice      *device;
     static irrklang::ISoundEngine   *sound;
 public:
-    static const size_t	bombSize = 15;
+    static const size_t         bombSize = 15;
+    static const std::string    soundPath;
 };
 
 #endif
