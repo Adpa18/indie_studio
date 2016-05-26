@@ -11,7 +11,7 @@
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
 {
-    irr::core::array<irr::SJoystickInfo>    joystickInfo;
+    /*irr::core::array<irr::SJoystickInfo>    joystickInfo;
 
     if (IrrlichtController::getDevice()->activateJoysticks(joystickInfo))
     {
@@ -31,7 +31,7 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     for (irr::u32 i=0; i < irr::KEY_KEY_CODES_COUNT; ++i)
     {
         KeyIsDown[i] = false;
-    }
+    }*/
 
     // Sets callbacks for GUI
     m_guiEvents[irr::gui::EGET_LISTBOX_CHANGED] = &UIEventReceiver::OnListBox;
