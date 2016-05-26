@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed May 25 10:19:38 2016 Victor Gouet
+// Last update Wed May 25 22:39:51 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -293,7 +293,7 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
     }
     float   distance = this->getRealPos().getDistanceFrom(this->getMapPos() + dir);
 
-    if (distance < 0.2) {
+    if (distance < 0.2 || distance > 1) {
         _arrived = true;
         this->setPos(this->getMapPos() + dir);
         return;

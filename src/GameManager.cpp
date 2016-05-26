@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed May 25 14:37:20 2016 Victor Gouet
+// Last update Wed May 25 22:39:38 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -294,11 +294,35 @@ void    GameManager::willStartGame()
     //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
     if (i == 0/*(*it)->GetIsIA()*/)
     {
+<<<<<<< HEAD
       characters.push_back(new IAPlayer((*it)->GetName(),
                                         (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
                                         (*it)->GetMesh(),
                                         (*it)->GetTexture(),
                                         i));
+=======
+        //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
+      if (/*i == 0*/(*it)->GetIsIA())
+      	{
+      	  characters.push_back(new IAPlayer((*it)->GetName(),
+      					    (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+      					    (*it)->GetMesh(),
+      					    (*it)->GetTexture(),
+      					    i));
+      	}
+      else
+      	{
+	  
+      	  characters.push_back(new Player((*it)->GetName(),
+					  (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+					  (*it)->GetMesh(),
+					  (*it)->GetTexture(),
+      	  				  i, *eventGame));
+      	}
+      delete (*it);
+      it = m_playerInfo.erase(it);
+      ++i;
+>>>>>>> 23ce8c84e01883d68ab0a153640f15be190a3fbf
     }
     else
     {

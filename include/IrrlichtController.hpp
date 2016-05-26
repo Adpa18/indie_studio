@@ -22,7 +22,7 @@ class	IrrlichtController
 public:
     static size_t    width;
     static size_t    height;
-  static irr::IrrlichtDevice                *getDevice(bool pleinSceen = true);
+  static irr::IrrlichtDevice                *getDevice(bool fullScreen = true);
   static irr::video::IVideoDriver           *getDriver();
   static irr::scene::ISceneManager          *getSceneManager();
   static irr::gui::IGUIEnvironment          *getGUIEnvironment();
