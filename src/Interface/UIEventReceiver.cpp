@@ -144,6 +144,7 @@ void UIEventReceiver::DisplayMapMenu()
             }
         }
     }
+    closedir(dir);
 
     // Creates default map
     if (!m_spawned)
