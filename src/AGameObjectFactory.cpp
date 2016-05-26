@@ -9,21 +9,8 @@
 //
 
 #include "../include/GameManager.hpp"
-#include "../Interface/PlayerInfo.hpp"
 #include "../include/AGameObjectFactory.hpp"
 #include "../include/Explosion.hpp"
-#include "../include/BonusAtomicBomb.hpp"
-#include "../include/BonusBiggestMan.hpp"
-#include "../include/BonusBombPass.hpp"
-#include "../include/BonusFireBomb.hpp"
-#include "../include/BonusFragBomb.hpp"
-#include "../include/BonusInvincible.hpp"
-#include "../include/BonusPower.hpp"
-#include "../include/BonusSmallestMan.hpp"
-#include "../include/BonusSpeed.hpp"
-#include "../include/BonusTrackerBomb.hpp"
-#include "../include/ItemMineBomb.hpp"
-#include "../include/ItemThrow.hpp"
 
 
 AGameObjectFactory::AGameObjectFactory()

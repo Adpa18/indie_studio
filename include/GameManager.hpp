@@ -12,13 +12,13 @@
 # define GAMEMANAGER_HPP_
 
 # include "IrrlichtController.hpp"
-# include "../Interface/UIManager.hpp"
-# include "../Interface/UIEventReceiver.hpp"
+# include "UIManager.hpp"
+# include "UIEventReceiver.hpp"
 # include "FireBomb.hpp"
 # include "EventGame.hpp"
 # include "Player.hpp"
 # include "BomberMap.hpp"
-#include "../Interface/PlayerInfo.hpp"
+# include "PlayerInfo.hpp"
 
 class	GameManager
 {
