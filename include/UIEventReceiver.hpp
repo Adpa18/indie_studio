@@ -8,13 +8,13 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include "../Irrlicht/irrlicht-1.8.3/include/irrlicht.h"
+#include "irrlicht.h"
 #include "UIElements.hpp"
 #include "UIManager.hpp"
 #include "PlayerSelectionBox.hpp"
 #include "PlayerSelectionBoxContainer.hpp"
-#include "../include/MotionController.hpp"
-#include "../include/KeysController.hpp"
+#include "MotionController.hpp"
+#include "KeysController.hpp"
 
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver

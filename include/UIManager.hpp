@@ -7,7 +7,7 @@
 
 #include <stdexcept>
 #include <map>
-#include "../include/IrrlichtController.hpp"
+#include "IrrlichtController.hpp"
 
 class UIManager
 {

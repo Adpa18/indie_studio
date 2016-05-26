@@ -6,7 +6,7 @@
 #define CPP_INDIE_STUDIO_PLAYERINFO_HPP
 
 #include <iostream>
-#include "../include/IrrlichtController.hpp"
+#include "IrrlichtController.hpp"
 
 /*
  * \brief This class hold the info concerning a player
