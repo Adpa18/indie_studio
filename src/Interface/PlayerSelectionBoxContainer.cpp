@@ -87,10 +87,6 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
 
 void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 {
-    if (playerID < 0)
-    {
-        playerID = 0;
-    }
     if (!m_boxList[playerID - 1]->GetIaStatus() || m_joined[playerID - 1])
     {
         return;

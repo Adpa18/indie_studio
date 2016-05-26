@@ -4,10 +4,9 @@
 
 #include <dirent.h>
 #include <algorithm>
-#include <unistd.h>
-#include "UIEventReceiver.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameManager.hpp"
+#include "../../include/UIEventReceiver.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/GameManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
