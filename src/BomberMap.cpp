@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Mon May 23 23:39:54 2016 Victor Gouet
+// Last update Wed May 25 11:25:07 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -216,7 +216,7 @@ void			BomberMap::generateMap()
       if (x == 0 || y == 0 || x == BomberMap::size_side[_mapSize] - 1
       	  || y == BomberMap::size_side[_mapSize] - 1)
       	{
-      	  new Wall(irr::core::vector2df(x, y), Wall::Edge);
+      	  new Wall(irr::core::vector2df(x, y), Wall::Edge, BomberManTexture::getModel("edge").mesh, BomberManTexture::getModel("edge").texture);
            _danger_map[y][x] = AGameObject::Type::BLOCK;
       	}
       else if (x % 2 == 0 && y % 2 == 0 && x != 0 && y != 0)
@@ -227,7 +227,7 @@ void			BomberMap::generateMap()
       	}
       else if (canPutDestructibleWall(x, y))
       	{
-      	  new Wall(irr::core::vector2df(x, y));
+      	  new Wall(irr::core::vector2df(x, y), Wall::Destructible, BomberManTexture::getModel("cubeDestructible").mesh, BomberManTexture::getModel("cubeDestructible").texture);
            _danger_map[y][x] = AGameObject::Type::OTHER;
       	}
        else
@@ -293,37 +293,6 @@ void		BomberMap::createMapFromSave(std::string const &filename)
 	  factory.instantiateGameObjectFromXMLFile(reader, nodeName);
 	}
     }
-}
-
-
-// TODO A ENLEVER FONCTION C
-void rotate(irr::scene::ISceneNode *node, irr::core::vector3df rot)
-{
-   irr::core::matrix4 m;
-   m.setRotationDegrees(node->getRotation());
-   irr::core::matrix4 n;
-   n.setRotationDegrees(rot);
-   m *= n;
-   node->setRotation( m.getRotationDegrees() );
-   node->updateAbsolutePosition();
-}
-
-//--- turn ship left or right ---
-void turn(irr::scene::ISceneNode *node, irr::f32 rot)
-{
-   rotate(node, irr::core::vector3df(0.0f, rot, 0.0f) );
-}
-
-//--- pitch ship up or down ---
-void pitch(irr::scene::ISceneNode *node, irr::f32 rot)
-{
-   rotate(node, irr::core::vector3df(rot, 0.0f, 0.0f) );
-}
-
-//--- roll ship left or right ---
-void roll(irr::scene::ISceneNode *node, irr::f32 rot)
-{
-   rotate(node, irr::core::vector3df(0.0f, 0.0f, rot) );
 }
 
 irr::scene::ICameraSceneNode *BomberMap::get_camera() const {

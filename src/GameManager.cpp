@@ -5,9 +5,10 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 23 16:29:31 2016 Victor Gouet
+// Last update Wed May 25 22:39:38 2016 Victor Gouet
 //
 
+#include "Intro.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
@@ -25,6 +26,7 @@ GameManager::GameManager()
     uiManager = NULL;
     uiEventReceiver = NULL;
     eventGame = new EventGame();
+    IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     m_cameras[0] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr,
                                                                              irr::core::vector3df(100, 12, -30),
@@ -85,6 +87,9 @@ GameManager::GameState    GameManager::getPrevGameState() const
 
 void    GameManager::run()
 {
+    Intro *intro = new Intro(eventGame);
+    intro->run();
+    delete intro;
     uiManager = new UIManager(IrrlichtController::getDevice(false));
     uiEventReceiver = new UIEventReceiver(*uiManager);
 
@@ -205,24 +210,39 @@ void    GameManager::onMenu()
 
 void    GameManager::onGame()
 {
-    if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
-    {
-        setGameState(PAUSE);
-        IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
-        uiEventReceiver->DisplayPauseMenu();
-	return ;
-        //GameObjectTimeContainer::SharedInstance()->timerStop();
-    }
-    if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
-      {
-	BomberMap::getMap()->save();
-      }
-    
-    GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
+  // std::vector<ACharacter *>::iterator it_2 = characters.begin();
+  // while (it_2 != characters.end())
+  //   {
+      // irr::gui::IGUIFont *fnt = IrrlichtController::getGUIEnvironment()->getFont("media/font/fonthaettenschweiler.bmp");
+      // irr::core::dimension2d<irr::u32> size = fnt->getDimension(L"azkekazokezozaojezoaeazeijozeiajzeojazeojazeiojazeoiazejoiezjozeijazeojazeio");
+      // fnt->draw(L"zakoazekoazekoazejoazejazeoijazeojazeoiazejiozaej",
+      // 		irr::core::rect<irr::s32>(0,
+      // 					  0,
+      // 					  (0 + size.Width),
+      // 					  (0 + size.Height)),
+      // 		irr::video::SColor(255,255,255,255));
+  // IrrlichtController::getGUIEnvironment()->addStaticText(L"azkezoazekoezko",
+  // 							 irr::core::rect<irr::s32>(100, 100, 100, 100), false);
+    // }
 
-    std::vector<ACharacter *>::iterator it = characters.begin();
-    while (it != characters.end())
+  if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
+      setGameState(PAUSE);
+      IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
+      uiEventReceiver->DisplayPauseMenu();
+      return ;
+    }
+  if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
+    {
+      BomberMap::getMap()->save();
+    }
+    
+  GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
+
+  std::vector<ACharacter *>::iterator it = characters.begin();
+  while (it != characters.end())
+    {
+      AGameObject *test = *it;
       if (!(*it)->isDead())
         {
 	  (*it)->compute();
@@ -246,7 +266,7 @@ void    GameManager::willStartGame()
 {
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
-    std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
+  std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
   characters.clear();
   IrrlichtController::getDevice()->setEventReceiver(eventGame);
@@ -256,7 +276,7 @@ void    GameManager::willStartGame()
   for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
         //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
-      if (i == 0/*(*it)->GetIsIA()*/)
+      if (/*i == 0*/(*it)->GetIsIA())
       	{
       	  characters.push_back(new IAPlayer((*it)->GetName(),
       					    (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
@@ -278,22 +298,32 @@ void    GameManager::willStartGame()
       ++i;
     }
 
-    if (BomberMap::getMap()->get_camera())
+  // int	scorePos = 0;
+
+  // while (scorePos < 4)
+  //   {
+  //     scoreText[scorePos] = IrrlichtController::getGUIEnvironment()->addStaticText(L"salut", irr::core::rect<irr::s32>(0, scorePos * 10, 50, 10), false);
+  //     scoreText[scorePos]->setBackgroundColor(irr::video::SColor(100, 100, 100, 100));
+  //     ++scorePos;
+  //   }
+
+  if (BomberMap::getMap()->get_camera())
     {
-        IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
-        BomberMap::getMap()->refreshCamera();
+      IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
+      BomberMap::getMap()->refreshCamera();
     }
-    else
+  else
     {
-        irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+      irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
         (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
-        camera->setTarget(irr::core::vector3df(0, 0, 0));
-        camera->setAutomaticCulling(irr::scene::EAC_OFF);
-        camera->setFarValue(1000);
-        camera->setNearValue(10);
+      camera->setTarget(irr::core::vector3df(0, 0, 0));
+      camera->setAutomaticCulling(irr::scene::EAC_OFF);
+      camera->setFarValue(1000);
+      camera->setNearValue(10);
     }
-//  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
-//									     1.0f, 1.0f, 1.0f));
+
+  //  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
+  //									     1.0f, 1.0f, 1.0f));
 
 }
 

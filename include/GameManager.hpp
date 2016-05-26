@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Sun May 22 15:53:35 2016 Victor Gouet
+// Last update Wed May 25 14:39:08 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -56,8 +56,8 @@ public:
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
     void ClearPlayers();
 
-    static std::string ToString(std::wstring const& str);
-    static std::wstring ToWstring(std::string const& str);
+  static std::string ToString(std::wstring const& str);
+  static std::wstring ToWstring(std::string const& str);
 
 public:
   static GameManager	*SharedInstance();
@@ -69,8 +69,7 @@ private:
 public:
   void	willStartGame();
   void	willStartMenu();
-  // void	onPause();
-    void SwapCharacterList();
+  void SwapCharacterList();
 
 private:
   enum	State
@@ -91,6 +90,7 @@ private:
   EventGame		*eventGame;
   std::vector<ACharacter *>     characters;
   void			(GameManager::*fptr)() = NULL;
+  irr::gui::IGUIStaticText *scoreText[4];
 
     // Cameras for the menu selection
     irr::scene::ICameraSceneNode *m_cameras[4];
