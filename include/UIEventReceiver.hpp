@@ -25,6 +25,7 @@ private:
 
 public:
     UIEventReceiver(UIManager const& manager);
+    virtual ~UIEventReceiver();
 
 public:
     virtual bool OnEvent(const irr::SEvent &event);

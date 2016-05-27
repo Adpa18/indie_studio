@@ -20,10 +20,10 @@ public:
     ~PlayerSelectionBoxContainer();
 
 public:
-    void SelectUp();
-    void SelectDown();
-    void SelectLeft();
-    void SelectRight();
+    void SelectUp(int playerID);
+    void SelectDown(int playerID);
+    void SelectLeft(int playerID);
+    void SelectRight(int playerID);
     void UpdateBoxes(irr::s32 id);
     void PlayerJoin(int playerID);
 
@@ -41,6 +41,7 @@ private:
     std::list<std::string> m_availableSkins;
     // Used to save the relative rotation of the P1
     bool m_joined[4] = {false, false, false, false};
+    PlayerSelectionBox *m_boxList[4];
 };
 
 

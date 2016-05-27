@@ -4,8 +4,8 @@
 
 #include <algorithm>
 #include <iostream>
-#include "PlayerSelectionBox.hpp"
-#include "../include/Texture.hpp"
+#include "../../include/PlayerSelectionBox.hpp"
+#include "../../include/Texture.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
                                        UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :
@@ -42,9 +42,6 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
     m_models.push_back("ziggsMad");
     m_models.push_back("ziggsSnow");
     m_models.push_back("ziggsPool");
-    //m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAEasy").texture.c_str()));
-    //m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAMedium").texture.c_str()));
-    //m_images.push_back(m_driver->getTexture(BomberManTexture::getModel("IAHard").texture.c_str()));
     m_images.push_back("IAEasy");
     m_images.push_back("IAMedium");
     m_images.push_back("IAHard");

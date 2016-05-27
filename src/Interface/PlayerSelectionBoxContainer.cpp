@@ -3,9 +3,9 @@
 //
 
 #include <algorithm>
-#include "PlayerSelectionBoxContainer.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameManager.hpp"
+#include "../../include/PlayerSelectionBoxContainer.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/GameManager.hpp"
 
 PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
             m_manager(uiManager)
@@ -35,6 +35,11 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
                                              UIElement::MAIN_MENU_BUTTON_4P, true, UIElement::PLAYERBOX_4, 4));
 
     uiManager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
+
+    for (int i = 0; i < 4; ++i)
+    {
+        m_boxList[i] = *std::next(m_boxes.begin(), i);
+    }
 }
 
 PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
@@ -46,30 +51,43 @@ PlayerSelectionBoxContainer::~PlayerSelectionBoxContainer()
     }
 }
 
-void PlayerSelectionBoxContainer::SelectUp()
+void PlayerSelectionBoxContainer::SelectUp(int playerID)
 {
-    m_boxes.front()->SelectPrev();
+    if (playerID - 1 != 0)
+    {
+        m_boxList[playerID - 1]->SelectPrev();
+    }
+    else
+    {
+        m_boxes.front()->SelectPrev();
+    }
 }
 
-void PlayerSelectionBoxContainer::SelectDown()
+void PlayerSelectionBoxContainer::SelectDown(int playerID)
 {
+    if (playerID - 1 != 0)
+    {
+        m_boxList[playerID - 1]->SelectPrev();
+    }
     m_boxes.front()->SelectNext();
 }
 
-void PlayerSelectionBoxContainer::SelectLeft()
+void PlayerSelectionBoxContainer::SelectLeft(int playerID)
 {
-    PlayerSelectionBox *box = m_boxes.back();
-    m_boxes.pop_back();
-    m_boxes.push_front(box);
-    m_manager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
+    if (playerID == 1)
+    {
+        std::rotate(m_boxes.begin(), std::prev(m_boxes.end(), 1), m_boxes.end());
+        m_manager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton *>(&m_boxes.front()->GetButton()));
+    }
 }
 
-void PlayerSelectionBoxContainer::SelectRight()
+void PlayerSelectionBoxContainer::SelectRight(int playerID)
 {
-    PlayerSelectionBox *box = m_boxes.front();
-    m_boxes.pop_front();
-    m_boxes.push_back(box);
-    m_manager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
+    if (playerID == 1)
+    {
+        std::rotate(m_boxes.begin(), std::next(m_boxes.begin(), 1), m_boxes.end());
+        m_manager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton *>(&m_boxes.front()->GetButton()));
+    }
 }
 
 void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
@@ -82,12 +100,12 @@ void PlayerSelectionBoxContainer::UpdateBoxes(irr::s32 id)
 
 void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 {
-    if (!(*std::next(m_boxes.begin(), playerID - 1))->GetIaStatus() || m_joined[playerID - 1])
+    if (!m_boxList[playerID - 1]->GetIaStatus() || m_joined[playerID - 1])
     {
         return;
     }
-    (*std::next(m_boxes.begin(), playerID - 1))->SetIaStatus(false);
-    (*std::next(m_boxes.begin(), playerID - 1))->SelectNext();
+    m_boxList[playerID - 1]->SetIaStatus(false);
+    m_boxList[playerID - 1]->SelectNext();
     m_joined[playerID - 1] = true;
 }
 

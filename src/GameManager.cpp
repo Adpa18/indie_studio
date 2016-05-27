@@ -15,7 +15,6 @@
 #include "../include/GameObjectTimeContainer.hpp"
 #include "../ia/IAPlayer.hpp"
 
-GameManager *GameManager::GM = NULL;
 
 GameManager::GameManager()
 {
@@ -41,19 +40,23 @@ GameManager::GameManager()
     m_cameras[3] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr,
                                                                              irr::core::vector3df(400, 12, -30),
                                                                              irr::core::vector3df(400, 12, 0));
-    IAPlayer::initIA();
+//    IAPlayer::initIA();
 }
 
 GameManager::~GameManager()
 {
-    delete uiManager;
+//    std::cout << "\e[31mOn suppr le gamemanager\e[0m" << std::endl;
     delete uiEventReceiver;
+    delete uiManager;
     delete eventGame;
-    IAPlayer::shutDownIA();
+    IrrlichtController::getDevice()->drop();
+    IrrlichtController::getIrrKlangDevice()->drop();
 }
 
 GameManager *GameManager::SharedInstance()
 {
+    static GameManager	*GM = NULL;
+
     if (GM == NULL)
     {
         GM = new GameManager();
@@ -127,7 +130,7 @@ void    GameManager::run()
             IrrlichtController::getDriver()->endScene();
         }
     }
-    IrrlichtController::getDevice()->drop();
+//    std::cout << "\e[32mOn part du run\e[0m" << std::endl;
 }
 
 void    GameManager::onMenu()

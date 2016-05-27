@@ -6,81 +6,27 @@
 -- To change this template use File | Settings | File Templates.
 --
 
---[[
---Function like 'pairs' function for 'for in' in reverse loop
- ]]
-function ripairs(t)
-    local max = 1
-    while t[max] ~= nil do
-        max = max + 1
-    end
-    local function ripairs_it(t, i)
-        i = i-1
-        local v = t[i]
-        if v ~= nil then
-            return i,v
-        else
-            return nil
-        end
-    end
-    return ripairs_it, t, max
+bomberMap = {};
+
+function dofile(file)
+    local lib = assert(loadfile(file));
+    return lib();
 end
 
 --[[
---Return a table of 4 directions with the key corresponding to the macro
+--Define:
+--  -   dirTab
+--  -   getDirFromCode
+--  -   isInMap
+--  -   canMoveOnPos
+--  -   getPossiblePos
  ]]
-function dirTab()
-    return {[RIGHT] = Vector2.creat(1, 0), [LEFT] = Vector2.creat(-1, 0), [UP] = Vector2.creat(0, 1), [DOWN] = Vector2.creat(0, -1)};
-end
+dofile("./ia/positionDirection.lua");
 
 --[[
---Return the direction corresponding to the code send in parameter
+--Define:
  ]]
-function getDirFromCode(code)
-    return (dirTab()[code]);
-end
-
---[[
---Check if the position is in the map
- ]]
-function isInMap(pos)
-    if (pos:getX() < 0 or pos:getX() >= MapW or
-            pos:getY() < 0 or pos:getY() >= MapH) then
-        return (false);
-    end
-    return (true);
-end
-
---[[
---Check if the player can move to pos
- ]]
-function canMoveOnPos(pos)
-    local tocheck = bomberMap:getDangerAtPos(pos:getX(), pos:getY());
-
-    if (tocheck ~= NONE  or
-            isInMap(pos) == false) then
-        return (false);
-    end
-    return true;
-end
-
---[[
---Get all possibles position that the player is allowed to go
- ]]
-function getPossiblePos(pos)
-    local tocheck = dirTab();
-    local possib = {};
-    local i = 0;
-
-    for k, dir in pairs(tocheck) do
-        local gonnasee = pos:add(dir);
-        if (canMoveOnPos(gonnasee)) then
-            i = i + 1;
-            possib[i] = k;
-        end
-    end
-    return possib, i;
-end
+dofile("./ia/astar.lua");
 
 --[[
 --Used for positions that are already saw

@@ -4,10 +4,9 @@
 
 #include <dirent.h>
 #include <algorithm>
-#include <unistd.h>
 #include "UIEventReceiver.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameManager.hpp"
+#include "Texture.hpp"
+#include "GameManager.hpp"
 #include "SoundManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
@@ -43,6 +42,24 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     SoundManager::getManager()->play("welcome.wav");
     SoundManager::getManager()->play("menu.wav", 0, true, 0.1);
     DisplaySplashScreen();
+}
+
+UIEventReceiver::~UIEventReceiver()
+{
+    if (m_boxContainer != nullptr)
+    {
+        delete m_boxContainer;
+    }
+
+    for (std::map<int, MotionController *>::iterator it = m_joysticks.begin(); it != m_joysticks.end(); ++it)
+    {
+        delete (*it).second;
+    }
+
+    for (std::vector<KeysController *>::iterator it = m_keymaps.begin(); it != m_keymaps.end(); ++it)
+    {
+        delete (*it);
+    }
 }
 
 /*
@@ -155,6 +172,7 @@ void UIEventReceiver::DisplayMapMenu()
             }
         }
     }
+    closedir(dir);
 
     // Creates default map
     if (!m_spawned)
@@ -280,7 +298,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     SelectNextButton();
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectDown();
+                        m_boxContainer->SelectDown(1);
                     }
                 }
                 break;
@@ -291,7 +309,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     SelectPrevButton();
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectUp();
+                        m_boxContainer->SelectUp(1);
                     }
                 }
                 break;
@@ -301,7 +319,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectLeft();
+                        m_boxContainer->SelectLeft(1);
                     }
                 }
                 break;
@@ -311,7 +329,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     if (m_boxContainer != nullptr)
                     {
-                        m_boxContainer->SelectRight();
+                        m_boxContainer->SelectRight(1);
                     }
                 }
                 break;
@@ -505,19 +523,19 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
                 switch (act)
                 {
                     case ACharacter::LEFT:
-                        m_boxContainer->SelectLeft();
+                        m_boxContainer->SelectLeft(playerID);
                         break;
 
                     case ACharacter::RIGHT:
-                        m_boxContainer->SelectRight();
+                        m_boxContainer->SelectRight(playerID);
                         break;
 
                     case ACharacter::UP:
-                        m_boxContainer->SelectUp();
+                        m_boxContainer->SelectUp(playerID);
                         break;
 
                     case ACharacter::DOWN:
-                        m_boxContainer->SelectDown();
+                        m_boxContainer->SelectDown(playerID);
                         break;
 
                     default:
@@ -527,3 +545,4 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
     }
 }
+
