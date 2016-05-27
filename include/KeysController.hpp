@@ -11,17 +11,28 @@
 #ifndef KEYSCONTROLLER_HPP
 # define KEYSCONTROLLER_HPP
 
+# include <map>
 # include "AController.hpp"
 # include "ACharacter.hpp"
-# include <map>
+# include "MotionController.hpp"
 
+/*
+ * \brief This class will holds all the informations about the key bindings used by the players
+ */
 class KeysController : public AController {
 private:
-    std::map<ACharacter::ACTION, irr::EKEY_CODE> const &    _keycodes;
+    std::map<ACharacter::ACTION, irr::EKEY_CODE> _keycodes;
 public:
     KeysController (std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes);
     virtual ~KeysController ();
     std::map<ACharacter::ACTION, irr::EKEY_CODE> const  &getKeycodes() const;
+    std::vector<std::string> const& ToString() const;
+
+public:
+    void BindAction(ACharacter::ACTION action, irr::EKEY_CODE key);
+
+private:
+    mutable std::vector<std::string> m_toString;
 };
 
 #endif /* !KEYSCONTROLLER_HPP */

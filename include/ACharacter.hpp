@@ -22,7 +22,8 @@
 class	ACharacter	: public AGameObject
 {
 public:
-    enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
+	static const std::vector<std::string> textAction;
+	enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
     enum MD3_ANIMATION { STAY, RUN, ATTACK };
 
 public:
@@ -89,5 +90,10 @@ protected:
   irr::f32		frameDeltaTime;
 
 };
+
+/*
+ * Non volatile and non integral types must be initialized outside the class
+ */
+const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right", "Move Up", "Move Down", "Drop Bomb", "Perform Action"};
 
 #endif

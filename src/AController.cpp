@@ -34,3 +34,8 @@ void    AController::useIt()
 {
     this->_used = true;
 }
+
+std::vector<std::string> const& AController::ToString() const
+{
+    return m_toString;
+}

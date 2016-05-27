@@ -11,17 +11,23 @@
 #ifndef ACONTROLLER_HPP
 # define ACONTROLLER_HPP
 
+#include <vector>
 # include "IrrlichtController.hpp"
 
 class AController {
 private:
     mutable bool    _used;
+
+protected:
+    std::vector<std::string> m_toString;
+
 public:
     AController ();
     virtual ~AController ();
     bool    isUsed() const;
     void    useIt();
   void		stopUseIt() const;
+    virtual std::vector<std::string> const& ToString() const;
 };
 
 #endif /* !ACONTROLLER_HPP */

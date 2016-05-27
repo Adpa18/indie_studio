@@ -64,6 +64,7 @@ void		Player::serialize(irr::io::IXMLWriter *xmlr) const
   xmlr->writeLineBreak();
 }
 
+// TODO: interpret real action with key controller
 void		Player::compute()
 {
     ACharacter::ACTION  act = ACharacter::IDLE;
@@ -83,6 +84,7 @@ void		Player::compute()
     // 	MineBomb *bomb = new MineBomb(this->getID());
     // 	*bomb << this->getMapPos();
     //   }
+      // Handles movement with joysticks
     if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::DOWN)->second)) {
       act = ACharacter::ACTION::DOWN;
     } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::UP)->second)) {
@@ -92,6 +94,8 @@ void		Player::compute()
     } else if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::RIGHT)->second)) {
       act = ACharacter::ACTION::RIGHT;
     }
+
+      // Tries to define if an action is executed
     if (_eventGame.IsKeyDown(this->_keycodes.find(ACharacter::ACTION::BOMB)->second)) {
       act = ACharacter::ACTION::BOMB;
     }

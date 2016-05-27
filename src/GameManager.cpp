@@ -8,8 +8,8 @@
 // Last update Wed May 25 22:39:38 2016 Victor Gouet
 //
 
-#include "Intro.hpp"
-#include "SoundManager.hpp"
+#include "../include/Intro.hpp"
+#include "../include/SoundManager.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
