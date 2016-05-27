@@ -31,7 +31,7 @@ void	        BonusTrackerBomb::take(ACharacter &player)
 {
   std::cout << "Bonus TRACKER BOMB ADD" << std::endl;
   BombFactory::AddBomb<TrackerBomb>(*(player.getBombContainer()), player->getID());
-  SoundManager::play("takeBonus.wav");;
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusTrackerBomb::dead()

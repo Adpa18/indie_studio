@@ -33,7 +33,7 @@ void		AItem::dead()
 {
     (*this)->setVisible(false);
     this->setPos(irr::core::vector2df(1000, 1000));
-    SoundManager::play("takeBonus.wav");;
+    SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void		AItem::serialize(irr::io::IXMLWriter *xmlr) const

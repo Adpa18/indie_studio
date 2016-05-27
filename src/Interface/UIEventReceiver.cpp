@@ -40,8 +40,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_LISTBOX_SELECTED_AGAIN] = &UIEventReceiver::OnListBox;
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
-    SoundManager::play("welcome.wav");;
-    SoundManager::play("menu.wav", true);
+    SoundManager::getManager()->play("welcome.wav");
+    SoundManager::getManager()->play("menu.wav", 0, true, 0.1);
     DisplaySplashScreen();
 }
 
@@ -94,7 +94,7 @@ void UIEventReceiver::DisplayGameHUD()
 void UIEventReceiver::DisplayMainMenu()
 {
     std::cout << "Select Your Player" << std::endl;
-    SoundManager::play("selectPlayer.wav");;
+    SoundManager::getManager()->play("selectPlayer.wav");
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
@@ -137,7 +137,7 @@ void UIEventReceiver::DisplaySplashScreen()
 void UIEventReceiver::DisplayMapMenu()
 {
     std::cout << "Select Your Map" << std::endl;
-    SoundManager::play("selectMap.wav");;
+    SoundManager::getManager()->play("selectMap.wav");
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);

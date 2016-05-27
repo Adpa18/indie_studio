@@ -32,7 +32,7 @@ void	        BonusFragBomb::take(ACharacter &player)
 {
   std::cout << "Bonus FRAG BOMB ADD" << std::endl;
   BombFactory::AddBomb<FragBomb>(*(player.getBombContainer()), player->getID());
-  SoundManager::play("takeBonus.wav");;
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusFragBomb::dead()

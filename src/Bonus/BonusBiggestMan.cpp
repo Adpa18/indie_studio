@@ -34,7 +34,7 @@ void	        BonusBiggestMan::take(ACharacter &player)
   player.setMoveSpeed(ACharacter::BASICSPEED / 2);
   player->setScale(irr::core::vector3df(2.5, 2.5, 2.5));
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
-  SoundManager::play("takeBonus.wav");;
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusBiggestMan::dead()

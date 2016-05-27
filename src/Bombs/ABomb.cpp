@@ -118,7 +118,7 @@ void                        ABomb::dead()
 {
   if (use)
     {
-        SoundManager::play("explosion.wav");;
+        SoundManager::getManager()->play("explosion.wav", (*this)->getID());
       _arrived = true;
       use = false;
       willExplose();

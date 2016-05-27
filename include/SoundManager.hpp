@@ -6,17 +6,29 @@
 # define CPP_INDIE_STUDIO_SOUNDMANAGER_HPP
 
 # include <string>
-#include <fmod.hpp>
+# include <map>
+# include <vector>
+# include <fmod.hpp>
 
 class SoundManager {
 private:
-    static FMOD::System         *engine;
-    static const std::string    soundPath;
+    std::map<std::string, FMOD::Sound *>    _sounds;
+    std::map<unsigned int, FMOD::Channel *> _channels;
+    FMOD::System         *engine;
+    const std::string    soundPath;
 
 public:
-    static FMOD::System             *getEngine();
-    static void                     play(std::string const &sound_str, bool loop = false);
-    static void                     stopAll();
+    static SoundManager             *manager;
+
+public:
+    static SoundManager             *getManager();
+
+public:
+    SoundManager();
+    virtual ~SoundManager();
+    void    play(std::string const &sound, unsigned  int id = 0, bool loop = false, float volume = 1.0);
+    void    stop(int id);
+    void    stopAll();
 };
 
 #endif //CPP_INDIE_STUDIO_SOUNDMANAGER_HPP

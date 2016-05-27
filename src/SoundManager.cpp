@@ -4,30 +4,56 @@
 
 #include <stdexcept>
 #include <fmod_errors.h>
+#include <vector>
+#include <iostream>
 #include "SoundManager.hpp"
 
-FMOD::System             *SoundManager::engine = nullptr;
-const std::string       SoundManager::soundPath = "./media/sound/";
+SoundManager            *SoundManager::manager = NULL;
 
-FMOD::System  *SoundManager::getEngine()
+SoundManager            *SoundManager::getManager()
 {
-    if (!engine)
-    {
-        FMOD::System_Create(&engine);
-        engine->init(32, FMOD_INIT_NORMAL, NULL);
-    }
-    return (engine);
+    if (!manager)
+        manager = new SoundManager();
+    return (manager);
 }
 
-void    SoundManager::play(std::string const &sound_str, bool loop)
+SoundManager::SoundManager() : soundPath("./media/sound/")
 {
-    FMOD::Sound *sound;
+    FMOD::System_Create(&engine);
+    engine->init(32, FMOD_INIT_NORMAL, NULL);
+}
 
-    getEngine()->createSound((soundPath + sound_str).c_str(), (loop) ? FMOD_LOOP_NORMAL : FMOD_DEFAULT, 0, &sound);
-    engine->playSound(sound, 0, false, NULL);
+SoundManager::~SoundManager()
+{
+    for (std::map<std::string, FMOD::Sound *>::iterator it = this->_sounds.begin(); it != this->_sounds.end(); ++it)
+    {
+        it->second->release();
+    }
+    engine->close();
+    engine->release();
+}
+
+void    SoundManager::play(std::string const &sound, unsigned int id, bool loop, float volume)
+{
+    if (this->_sounds[sound] == 0)
+    {
+        engine->createSound((soundPath + sound).c_str(), (loop) ? FMOD_LOOP_NORMAL : FMOD_DEFAULT, 0, &this->_sounds[sound]);
+    }
+    engine->playSound(this->_sounds[sound], 0, false, &this->_channels[id]);
+    this->_channels[id]->setVolume(volume);
+}
+
+void    SoundManager::stop(int id)
+{
+    if (id == -1)
+        stopAll();
+    this->_channels[id]->stop();
 }
 
 void    SoundManager::stopAll()
 {
-//    getEngine()->stopAllSounds();
+    for (std::map<unsigned int, FMOD::Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); ++it)
+    {
+        it->second->stop();
+    }
 }

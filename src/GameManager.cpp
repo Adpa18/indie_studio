@@ -269,8 +269,9 @@ void    GameManager::willStartGame()
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
 
-    SoundManager::play("startGame.wav");;
-    SoundManager::play("ambianceGame.wav", true);
+    SoundManager::getManager()->stopAll();
+    SoundManager::getManager()->play("startGame.wav");
+    SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
 
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 

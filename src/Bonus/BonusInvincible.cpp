@@ -39,7 +39,7 @@ void	        BonusInvincible::take(ACharacter &player)
 
 void	        BonusInvincible::dead()
 {
-  SoundManager::play("invincible.wav");;
+  SoundManager::getManager()->play("invincible.wav");
   (*this)->setVisible(false);
 }
 

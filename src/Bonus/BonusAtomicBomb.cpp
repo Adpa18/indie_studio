@@ -30,7 +30,7 @@ void	        BonusAtomicBomb::take(ACharacter &player)
 {
   std::cout << "Bonus ATOMIC BOMB ADD" << std::endl;
   BombFactory::AddBomb<AtomicBomb>(*(player.getBombContainer()), player->getID());
-  SoundManager::play("takeBonus.wav");;
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusAtomicBomb::dead()

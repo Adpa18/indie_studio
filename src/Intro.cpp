@@ -51,10 +51,13 @@ void	Intro::run()
     while (device->run() && i < this->files.size())
     {
         if (eventGame->IsKeyDownOneTime(irr::KEY_RETURN))
+        {
+            SoundManager::getManager()->stopAll();
             break;
+        }
 
         if (i == 24)
-            SoundManager::play("intro.wav");
+            SoundManager::getManager()->play("intro.wav");
         timerFrame = clock();
         irr::video::ITexture *tex = driver->getTexture((this->files[i]).c_str());
         img->setImage(tex);
@@ -68,5 +71,5 @@ void	Intro::run()
             usleep(1000000.0 / 23.975 - static_cast<float>(timerFrame) / CLOCKS_PER_SEC * 1000000.0);
         ++i;
     }
-    SoundManager::stopAll();
+    SoundManager::getManager()->stopAll();
 }
