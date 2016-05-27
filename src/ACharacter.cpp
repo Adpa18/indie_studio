@@ -10,6 +10,7 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <SoundManager.hpp>
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
 #include "../include/ABonus.hpp"
@@ -116,7 +117,10 @@ void                    ACharacter::dead()
       setMoveSpeed(BASICSPEED);
     }
   if (life <= 0)
+  {
     _dead = true;
+      SoundManager::getManager()->play("dead.wav");
+  }
 }
 
 BombContainer		*ACharacter::getBombContainer() const

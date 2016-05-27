@@ -50,7 +50,7 @@ GameManager::~GameManager()
     delete uiManager;
     delete eventGame;
     IrrlichtController::getDevice()->drop();
-    IrrlichtController::getIrrKlangDevice()->drop();
+    delete SoundManager::getManager();
 }
 
 GameManager *GameManager::SharedInstance()
