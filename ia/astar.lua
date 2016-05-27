@@ -52,8 +52,23 @@ function Stack.pop(list)
 end
 
 function getHeuristique(pos, focus, cost)
-    local dist = math.sqrt(math.pow(focus:getX() - pos:getX(), 2) + math.pow(focus:getY() - pos:getY(), 2));
-    return dist + cost;
+    local dist = math.sqrt(math.pow(focus:getX() - pos:getX(), 2) + math.pow(focus:getY() - pos:getY(), 2)) + cost;
+
+    if (canMoveSafelyOnPos(pos)) then
+        return dist + 1;
+    end
+    return dist;
+end
+
+saw = {}
+
+function alreadySaw(pos)
+    for _, curr in pairs(saw) do
+        if (pos:equal(curr)) then
+            return (true);
+        end
+    end
+    return (false);
 end
 
 --todo push in queue and stack depending on heuristique
@@ -63,19 +78,58 @@ function astarGetNextPos(currPos, focus)
     local popedValue;
     local possib;
     local cost = 0;
+    local lower;
+    local firstMove;
 
-    runQueue:push(currPos);
+    saw = {};
+    Queue.push(runQueue, currPos);
     repeat
-        popedValue = runQueue:pop();
-        if (popedValue == nil) then
-            popedValue = saveStack:pop();
-        end
-        if (popedValue ~= nil) then
-            cost = cost + 1;
-            possib = getPossiblePos(popedValue);
-            for k, dir in possib do
 
+        --[[
+        --pop the good value
+         ]]
+        popedValue = Queue.pop(runQueue);
+        if (popedValue == nil) then
+            popedValue = Stack.pop(saveStack);
+            cost = cost - 1;
+        else
+            cost = cost + 1;
+        end
+
+        if (popedValue ~= nil) then
+
+            --[[
+            --get possible posses around the current position
+             ]]
+            table.insert(saw, popedValue);
+            possib = getPossiblePos(popedValue);
+            lower = {euri = 10000000, pos = nil};
+            for k, dir in pairs(possib) do
+                local posToCheck = popedValue:add(getDirFromCode(dir));
+                local heur = getHeuristique(posToCheck, focus, cost);
+
+                if (alreadySaw(posToCheck) == false) then
+                    if (lower.euri > heur) then
+                        if (lower.pos ~= nil) then
+                            Stack.push(saveStack, lower.pos);
+                        end
+                        lower.euri = heur;
+                        lower.pos = posToCheck;
+                        if (cost == 1) then
+                            firstMove = dir;
+                        end
+                    elseif (lower.euri == heur) then
+                        Queue.push(runQueue, posToCheck);
+                    end
+                end
+                if (focus:equal(posToCheck)) then
+                    return (firstMove);
+                end
+            end
+            if (lower.pos ~= nil) then
+                Queue.push(runQueue, lower.pos);
             end
         end
     until (popedValue == nil)
+    return (nil);
 end
