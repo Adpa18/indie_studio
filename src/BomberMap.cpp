@@ -667,7 +667,7 @@ int BomberMap::getDangerAtPos(const irr::core::vector2df &pos) const {
 
    if (x >= 0 && x < size_side[_mapSize] && y >= 0 && y < size_side[_mapSize])
       return _danger_map[y][x];
-   return _danger_map[0][0];
+   return -1;
 }
 
 void BomberMap::setDangerAtPos(const irr::core::vector2df &pos, int value) {

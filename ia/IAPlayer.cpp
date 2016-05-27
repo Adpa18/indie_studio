@@ -26,7 +26,8 @@ void IAPlayer::initIA(int width, int height)
 {
     Lua::LuaClass<BomberMap>::LuaPrototype({
                                                    {"objsAtPos", objsAtPos},
-                                                   {"getDangerAtPos", getDangerAtPos}
+                                                   {"getDangerAtPos", getDangerAtPos},
+                                                   {"getNbOfType", getNbOfType}
                                            }).Register();
     Lua::LuaClass<irr::core::vector2df>::LuaPrototype({
                                                               {"new", Lua::LuaClass<irr::core::vector2df>::defaultConstructor},
@@ -112,10 +113,10 @@ void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
 }
 
 //todo implement methods to get the type/pos of the object at index
-IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, const std::string &mesh, const std::string &texture, int player) :
+IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, const std::string &mesh, const std::string &texture, int player, const std::string &diff) :
     ACharacter(name, pos, mesh, texture, player),
-    behaviour(IAPlayer::easyLvl),
-    focus(-1, -1)
+    behaviour(diff),
+    focus(pos.X, pos.Y)
 {
 }
 
@@ -133,6 +134,21 @@ void IAPlayer::compute()
 void IAPlayer::setDifficulty(const std::string &difficulty)
 {
     behaviour = difficulty;
+}
+
+const std::string &IAPlayer::getDifficultyFromCode(PlayerInfo::IAStrength strength)
+{
+    switch (strength)
+    {
+        case PlayerInfo::EASY:
+            return IAPlayer::easyLvl;
+        case PlayerInfo::MEDIUM:
+            return IAPlayer::mediumLvl;
+        case PlayerInfo::HARD:
+            return IAPlayer::hardLvl;
+        default:
+            return IAPlayer::easyLvl;
+    }
 }
 
 /*
@@ -200,13 +216,34 @@ int IAPlayer::objsAtPos(lua_State *)
     return 1;
 }
 
+int IAPlayer::getNbOfType(lua_State *state)
+{
+    BomberMap *thisptr = Lua::LuaClass<BomberMap>::getThis();
+    int x = Lua::LuaClass<BomberMap>::getInteger(2);
+    int y = Lua::LuaClass<BomberMap>::getInteger(3);
+    AGameObject::Type type = static_cast<AGameObject::Type >(Lua::LuaClass<BomberMap>::getInteger(4));
+    std::vector<AGameObject *>  objs = thisptr->getObjsFromVector2(irr::core::vector2df(x, y));
+    int nb = 0;
+
+    for (std::vector<AGameObject *>::iterator it = objs.begin(), end = objs.end(); it != end; ++it)
+    {
+        if ((*it)->getType() == type)
+            ++nb;
+    }
+    lua_pushinteger(state, static_cast<lua_Integer >(nb));
+    return 1;
+}
+
 int IAPlayer::getDangerAtPos(lua_State *state)
 {
     BomberMap *thisptr = Lua::LuaClass<BomberMap>::getThis();
     int x = Lua::LuaClass<BomberMap>::getInteger(2);
     int y = Lua::LuaClass<BomberMap>::getInteger(3);
+    int ret = thisptr->getDangerAtPos(irr::core::vector2df(x, y));
 
-    lua_pushinteger(state, static_cast<lua_Integer >(thisptr->getDangerAtPos(irr::core::vector2df(x, y))));
+    if (ret == -1)
+        return 0;
+    lua_pushinteger(state, static_cast<lua_Integer >(ret));
     return 1;
 }
 
