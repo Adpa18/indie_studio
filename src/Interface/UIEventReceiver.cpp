@@ -8,7 +8,6 @@
 #include "../../include/Texture.hpp"
 #include "../../include/GameManager.hpp"
 #include "../../include/SoundManager.hpp"
-#include "../../include/KeySelectionBox.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -120,8 +119,6 @@ void UIEventReceiver::DisplayMainMenu()
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
     m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
-    /*new KeySelectionBox(&m_manager, irr::core::rect<irr::s32>(50, 50, IrrlichtController::width * 0.5, IrrlichtController::height * 0.5),
-                        UIElement::MAP_SELECTION, 1);*/
 }
 
 void UIEventReceiver::DisplayGameOver() const

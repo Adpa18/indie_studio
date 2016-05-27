@@ -19,6 +19,11 @@
 #include "../include/TrackerBomb.hpp"
 #include "../include/FragBomb.hpp"
 
+/*
+ * Non volatile and non integral types must be initialized outside the class
+ */
+const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right", "Move Up", "Move Down", "Drop Bomb", "Perform Action"};
+
 struct SMD3AnimationType
 {
 	irr::s32 begin;

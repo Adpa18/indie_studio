@@ -6,6 +6,7 @@
 #include <iostream>
 #include "../../include/PlayerSelectionBox.hpp"
 #include "../../include/Texture.hpp"
+#include "../../include/KeySelectionBox.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
                                        UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :
@@ -45,6 +46,9 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
     m_images.push_back("IAEasy");
     m_images.push_back("IAMedium");
     m_images.push_back("IAHard");
+
+    // Box allowing to bind keys
+    new KeySelectionBox(m_manager, pos, UIElement::MAP_SELECTION, playerID);
 
     // Updates the selected character
     SelectNext();
