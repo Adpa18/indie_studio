@@ -56,10 +56,10 @@ void KeySelectionBox::Update()
 
 void KeySelectionBox::SetActive(bool bActive) const
 {
-    if (bActive)
+    /*if (bActive)
     {
         m_manager->GetEnv()->setFocus(m_listBox);
-    }
+    }*/
     m_listBox->setVisible(bActive);
 }
 
@@ -91,4 +91,19 @@ void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Me
 bool KeySelectionBox::IsActive() const
 {
     return m_listBox->isVisible();
+}
+
+// TODO: send pressed key, forbid any action in selection mode
+void KeySelectionBox::OnSelect()
+{
+    if (!m_isSelecting)
+    {
+        m_isSelecting = true;
+        m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 255, 0, 0));
+    }
+    else
+    {
+        m_isSelecting = false;
+        m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 0, 0, 0));
+    }
 }

@@ -281,7 +281,10 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 }
                 break;
 
-            case irr::KEY_SPACE:
+                //////////////////
+                /// Player 1
+                //////////////////
+            case irr::KEY_RSHIFT:
                 // Player 1 joined
                 if (m_boxContainer != nullptr)
                 {
@@ -290,21 +293,20 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 }
                 break;
 
-            case irr::KEY_KEY_C:
-                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
-                {
-                    m_boxContainer->KeySelection(1);
-                }
-                break;
-
             case irr::KEY_KEY_N:
                 if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
                 {
-                    m_boxContainer->KeySelection(2);
+                    m_boxContainer->KeyBind(1);
                 }
                 break;
 
-                // Player 1
+            case irr::KEY_RCONTROL:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeySelect(1);
+                }
+                break;
+
             case irr::KEY_DOWN:
                 if (event_copy.KeyInput.PressedDown)
                 {
@@ -346,8 +348,25 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     }
                 }
                 break;
-
+                ////////////////
                 // Player 2
+                ////////////////
+            case irr::KEY_SPACE:
+                // Player 2 joined
+                if (m_boxContainer != nullptr)
+                {
+                    m_boxContainer->PlayerJoin(2);
+                    return HANDELD;
+                }
+                break;
+
+            case irr::KEY_KEY_C:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeyBind(2);
+                }
+                break;
+
             case irr::KEY_KEY_S:
                 if (event_copy.KeyInput.PressedDown)
                 {

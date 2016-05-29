@@ -29,6 +29,7 @@ public:
     void Update();
     void SelectNext();
     void SelectPrev();
+    void OnSelect();
     UIElement::Menu GetId() const;
     irr::gui::IGUIButton const& GetButton() const;
     void SetFocus(bool bIsFocused) const;
@@ -39,7 +40,7 @@ public:
     std::string const& GetSkin() const;
     PlayerInfo::IAStrength GetIAStrength() const;
 
-    void BindKey() const;
+    void KeyBind() const;
 
 private:
     UIManager *m_manager;

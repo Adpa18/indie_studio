@@ -230,7 +230,16 @@ PlayerInfo::IAStrength PlayerSelectionBox::GetIAStrength() const
     return PlayerInfo::IAStrength::EASY;
 }
 
-void PlayerSelectionBox::BindKey() const
+void PlayerSelectionBox::KeyBind() const
 {
-    m_keySelection->SetActive(!m_keySelection->IsActive());
+    if (!m_bIsIaPlayer)
+        m_keySelection->SetActive(!m_keySelection->IsActive());
+}
+
+void PlayerSelectionBox::OnSelect()
+{
+    if (m_keySelection->IsActive())
+    {
+        m_keySelection->OnSelect();
+    }
 }

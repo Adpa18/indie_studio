@@ -142,7 +142,12 @@ bool PlayerSelectionBoxContainer::IsSkinAvailable(std::string const& skin) const
     return std::find(m_availableSkins.begin(), m_availableSkins.end(), skin) != m_availableSkins.end();
 }
 
-void PlayerSelectionBoxContainer::KeySelection(int playerID) const
+void PlayerSelectionBoxContainer::KeyBind(int playerID) const
 {
-    m_boxList[playerID - 1]->BindKey();
+    m_boxList[playerID - 1]->KeyBind();
+}
+
+void PlayerSelectionBoxContainer::KeySelect(int playerID) const
+{
+    m_boxList[playerID - 1]->OnSelect();
 }
