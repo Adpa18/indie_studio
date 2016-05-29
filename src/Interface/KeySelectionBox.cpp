@@ -57,10 +57,24 @@ void KeySelectionBox::SetActive(bool bActive) const
 void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Menu elemID)
 {
     m_listBox = m_manager->GetEnv()->addListBox(pos, nullptr, elemID, true);
+    bool isFirst = true;
 
-    std::vector<std::string> str = m_controller->ToString();
-    for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
+    KeysController *k = dynamic_cast<KeysController*>(m_controller);
+    if (k != nullptr)
     {
-        m_listBox->addItem(GameManager::ToWstring(*it).c_str());
+        std::vector<KeysController::KeyInfo> str = k->ToString();
+        for (std::vector<KeysController::KeyInfo>::iterator it = str.begin(); it != str.end(); ++it)
+        {
+            if (isFirst)
+            {
+                isFirst = false;
+                m_listBox->setSelected(m_listBox->addItem(GameManager::ToWstring((*it).ToString()).c_str()));
+            }
+            else
+            {
+                m_listBox->addItem(GameManager::ToWstring((*it).ToString()).c_str());
+            }
+        }
     }
+    m_listBox->addItem(L"QUIT KEY BIND MENU");
 }

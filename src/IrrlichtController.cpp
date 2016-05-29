@@ -40,6 +40,7 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
           }
           device->getSceneManager()->setShadowColor(irr::video::SColor(100, 100, 100, 1));
           device->setWindowCaption(L"ONE TRYYY");
+          device->getCursorControl()->setVisible(false);
       }
     return (device);
 }

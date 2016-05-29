@@ -8,13 +8,14 @@
 ** Last update	Fri Apr 29 10:52:18 2016 Adrien WERY
 */
 
+#include <iostream>
 #include "../include/KeysController.hpp"
 
 KeysController::KeysController(std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes) : _keycodes(keycodes)
 {
-    /*
-     * Default keys
-     */
+/*
+ * Default keys
+ */
     m_keysToString = {
             "-",
             "Left Button",
@@ -301,7 +302,7 @@ void KeysController::BindAction(ACharacter::ACTION action, irr::EKEY_CODE key)
     _keycodes[action] = key;
 }
 
-std::vector<std::string> const &KeysController::ToString() const
+const std::vector<KeysController::KeyInfo> &KeysController::ToString() const
 {
     std::map<ACharacter::ACTION, irr::EKEY_CODE>::const_iterator it;
     std::string toAdd;
@@ -311,14 +312,13 @@ std::vector<std::string> const &KeysController::ToString() const
     for (it = _keycodes.begin(); it != _keycodes.end(); ++it)
     {
         toAdd = ACharacter::textAction[i++];
-        for (unsigned long j = toAdd.size(); j < 30; j++)
+        for (unsigned long j = toAdd.size(); j < 60; j++)
         {
             toAdd += ".";
         }
         toAdd += m_keysToString[(*it).second];
-        printf("%s\n", toAdd.c_str());
-        m_toString.push_back(toAdd);
+        std::cout << toAdd.c_str() << std::endl;
+        m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
     }
-
     return m_toString;
 }

@@ -32,6 +32,7 @@ public:
     bool IsSkinAvailable(std::string const& skin) const;
 
     void SaveSelection();
+    void KeySelection(int playerID) const;
 private:
 
 private:

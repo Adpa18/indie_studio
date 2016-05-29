@@ -12,6 +12,7 @@
 #include "ISelectionBox.hpp"
 #include "PlayerSelectionBoxContainer.hpp"
 #include "PlayerInfo.hpp"
+#include "KeySelectionBox.hpp"
 
 /*
  * \brief Represents a box to select the player character.
@@ -38,6 +39,8 @@ public:
     std::string const& GetSkin() const;
     PlayerInfo::IAStrength GetIAStrength() const;
 
+    void BindKey() const;
+
 private:
     UIManager *m_manager;
     PlayerSelectionBoxContainer *m_container;
@@ -53,6 +56,7 @@ private:
     irr::gui::IGUIButton *m_button;
     UIElement::Menu m_id;
     irr::gui::IGUIEditBox *m_playerName;
+    KeySelectionBox *m_keySelection;
 };
 
 

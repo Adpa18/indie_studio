@@ -33,8 +33,7 @@ public:
     virtual ~AController ();
     bool    isUsed() const;
     void    useIt();
-  void		stopUseIt() const;
-    virtual std::vector<std::string> const& ToString() const;
+    void		stopUseIt() const;
 };
 
 #endif /* !ACONTROLLER_HPP */

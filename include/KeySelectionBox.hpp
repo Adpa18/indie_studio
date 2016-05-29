@@ -10,13 +10,10 @@
 #include "UIManager.hpp"
 #include "UIElements.hpp"
 #include "AController.hpp"
+#include "ACharacter.hpp"
 
 class KeySelectionBox : public ISelectionBox
 {
-public:
-    enum ControllerType
-    { KEYBOARD, CONTROLLER };
-
 public:
     explicit KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID, int playerID);
     explicit KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID, int playerID, irr::SJoystickInfo info);

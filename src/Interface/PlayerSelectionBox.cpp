@@ -48,7 +48,7 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
     m_images.push_back("IAHard");
 
     // Box allowing to bind keys
-    new KeySelectionBox(m_manager, pos, UIElement::MAP_SELECTION, playerID);
+    m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID);
 
     // Updates the selected character
     SelectNext();
@@ -61,6 +61,7 @@ PlayerSelectionBox::~PlayerSelectionBox()
     {
         m_modelNode->remove();
     }
+    delete m_keySelection;
 }
 
 /*
@@ -212,4 +213,9 @@ PlayerInfo::IAStrength PlayerSelectionBox::GetIAStrength() const
         return PlayerInfo::IAStrength::HARD;
     }
     return PlayerInfo::IAStrength::EASY;
+}
+
+void PlayerSelectionBox::BindKey() const
+{
+    std::cout << "binding" << std::endl;
 }

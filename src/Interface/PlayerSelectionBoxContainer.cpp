@@ -138,3 +138,8 @@ bool PlayerSelectionBoxContainer::IsSkinAvailable(std::string const& skin) const
 {
     return std::find(m_availableSkins.begin(), m_availableSkins.end(), skin) != m_availableSkins.end();
 }
+
+void PlayerSelectionBoxContainer::KeySelection(int playerID) const
+{
+    m_boxList[playerID - 1]->BindKey();
+}
