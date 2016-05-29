@@ -49,6 +49,7 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
 
     // Box allowing to bind keys
     m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID);
+    m_keySelection->SetActive(false);
 
     // Updates the selected character
     SelectNext();
@@ -79,19 +80,26 @@ void PlayerSelectionBox::SelectNext()
     }
     else
     {
-        if (m_modelNode != nullptr)
+        if (m_keySelection->IsActive())
         {
-            m_modelNode->remove();
-            m_modelNode = nullptr;
+            m_keySelection->SelectNext();
         }
-        if (m_models.size() > 0)
+        else
         {
-            m_container->UnselectSkin(m_models.front());
-            do
+            if (m_modelNode != nullptr)
             {
-                std::rotate(m_models.begin(), std::next(m_models.begin(), 1), m_models.end());
-            } while (!m_container->IsSkinAvailable(m_models.front()));
-            m_container->SelectSkin(m_models.front());
+                m_modelNode->remove();
+                m_modelNode = nullptr;
+            }
+            if (m_models.size() > 0)
+            {
+                m_container->UnselectSkin(m_models.front());
+                do
+                {
+                    std::rotate(m_models.begin(), std::next(m_models.begin(), 1), m_models.end());
+                } while (!m_container->IsSkinAvailable(m_models.front()));
+                m_container->SelectSkin(m_models.front());
+            }
         }
     }
     Update();
@@ -112,19 +120,26 @@ void PlayerSelectionBox::SelectPrev()
     }
     else
     {
-        if (m_modelNode != nullptr)
+        if (m_keySelection->IsActive())
         {
-            m_modelNode->remove();
-            m_modelNode = nullptr;
+            m_keySelection->SelectPrev();
         }
-        if (m_models.size() > 0)
+        else
         {
-            m_container->UnselectSkin(m_models.front());
-            do
+            if (m_modelNode != nullptr)
             {
-                std::rotate(m_models.begin(), std::prev(m_models.end(), 1), m_models.end());
-            } while (!m_container->IsSkinAvailable(m_models.front()));
-            m_container->SelectSkin(m_models.front());
+                m_modelNode->remove();
+                m_modelNode = nullptr;
+            }
+            if (m_models.size() > 0)
+            {
+                m_container->UnselectSkin(m_models.front());
+                do
+                {
+                    std::rotate(m_models.begin(), std::prev(m_models.end(), 1), m_models.end());
+                } while (!m_container->IsSkinAvailable(m_models.front()));
+                m_container->SelectSkin(m_models.front());
+            }
         }
     }
     Update();
@@ -217,5 +232,5 @@ PlayerInfo::IAStrength PlayerSelectionBox::GetIAStrength() const
 
 void PlayerSelectionBox::BindKey() const
 {
-    std::cout << "binding" << std::endl;
+    m_keySelection->SetActive(!m_keySelection->IsActive());
 }

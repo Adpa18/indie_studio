@@ -2,6 +2,7 @@
 // Created by veyrie_f on 5/27/16.
 //
 
+#include <algorithm>
 #include "../../include/KeySelectionBox.hpp"
 #include "../../include/EventGame.hpp"
 #include "../../include/GameManager.hpp"
@@ -32,17 +33,25 @@ KeySelectionBox::~KeySelectionBox()
 
 void KeySelectionBox::SelectNext()
 {
-
+    if (m_keys.size() > 0)
+    {
+        std::rotate(m_keys.begin(), std::next(m_keys.begin(), 1), m_keys.end());
+    }
+    Update();
 }
 
 void KeySelectionBox::SelectPrev()
 {
-
+    if (m_keys.size() > 0)
+    {
+        std::rotate(m_keys.begin(), std::prev(m_keys.end(), 1), m_keys.end());
+    }
+    Update();
 }
 
 void KeySelectionBox::Update()
 {
-
+    m_listBox->setSelected(GameManager::ToWstring(m_keys.front().ToString()).c_str());
 }
 
 void KeySelectionBox::SetActive(bool bActive) const
@@ -62,8 +71,8 @@ void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Me
     KeysController *k = dynamic_cast<KeysController*>(m_controller);
     if (k != nullptr)
     {
-        std::vector<KeysController::KeyInfo> str = k->ToString();
-        for (std::vector<KeysController::KeyInfo>::iterator it = str.begin(); it != str.end(); ++it)
+        m_keys = k->ToString();
+        for (std::vector<KeysController::KeyInfo>::iterator it = m_keys.begin(); it != m_keys.end(); ++it)
         {
             if (isFirst)
             {
@@ -77,4 +86,9 @@ void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Me
         }
     }
     m_listBox->addItem(L"QUIT KEY BIND MENU");
+}
+
+bool KeySelectionBox::IsActive() const
+{
+    return m_listBox->isVisible();
 }

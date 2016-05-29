@@ -297,6 +297,14 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 }
                 break;
 
+            case irr::KEY_KEY_N:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeySelection(2);
+                }
+                break;
+
+                // Player 1
             case irr::KEY_DOWN:
                 if (event_copy.KeyInput.PressedDown)
                 {
@@ -335,6 +343,47 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     if (m_boxContainer != nullptr)
                     {
                         m_boxContainer->SelectRight(1);
+                    }
+                }
+                break;
+
+                // Player 2
+            case irr::KEY_KEY_S:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectDown(2);
+                    }
+                }
+                break;
+
+            case irr::KEY_KEY_W:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectUp(2);
+                    }
+                }
+                break;
+
+            case irr::KEY_KEY_A:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectLeft(2);
+                    }
+                }
+                break;
+
+            case irr::KEY_KEY_D:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectRight(2);
                     }
                 }
                 break;

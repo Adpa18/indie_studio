@@ -67,9 +67,12 @@ void PlayerSelectionBoxContainer::SelectDown(int playerID)
 {
     if (playerID - 1 != 0)
     {
-        m_boxList[playerID - 1]->SelectPrev();
+        m_boxList[playerID - 1]->SelectNext();
     }
-    m_boxes.front()->SelectNext();
+    else
+    {
+        m_boxes.front()->SelectNext();
+    }
 }
 
 void PlayerSelectionBoxContainer::SelectLeft(int playerID)

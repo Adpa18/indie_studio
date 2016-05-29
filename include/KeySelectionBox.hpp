@@ -11,6 +11,7 @@
 #include "UIElements.hpp"
 #include "AController.hpp"
 #include "ACharacter.hpp"
+#include "KeysController.hpp"
 
 class KeySelectionBox : public ISelectionBox
 {
@@ -26,6 +27,7 @@ public:
 
 public:
     void SetActive(bool bActive) const;
+    bool IsActive() const;
 
 private:
     void CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Menu elemID);
@@ -35,6 +37,7 @@ private:
     int m_playerID;
     irr::gui::IGUIListBox *m_listBox;
     AController *m_controller;
+    std::vector<KeysController::KeyInfo> m_keys;
 };
 
 
