@@ -66,7 +66,7 @@ void GameOver::show() {
     int winner = -1;
     if (ranking[0].first != -1)
     {
-      if (ranking[0].second > 2)
+      if (m_winners.size() > 2)
       {
         status = true;
         for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
