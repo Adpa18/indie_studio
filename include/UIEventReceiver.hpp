@@ -39,7 +39,6 @@ private:
     void DisplayMapMenu();
     void DisplayLoadingScreen();
     void DisplayGameHUD();
-    void DisplayGameOver() const;
 
     /*
      * \brief Event handlers

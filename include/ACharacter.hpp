@@ -36,7 +36,6 @@ public:
   virtual ~ACharacter();
 
 protected:
-  void			setMD3Animation(MD3_ANIMATION anim);
   void			action(ACTION act);
   void			moveTo(irr::core::vector2df const &dir);
 
@@ -44,7 +43,8 @@ private:
   void			onInvinciblePeriode(double time);
 
 public:
-  void		        invincibleEnabledDuringPeriod(double time);
+  void		  invincibleEnabledDuringPeriod(double time);
+	void			setMD3Animation(MD3_ANIMATION anim);
 
 public:
   virtual void          dead();
@@ -62,13 +62,18 @@ public:
   void			setBombPass(bool pass);
   void			setLifeUp();
   int			getScore() const;
+	int get_player() const;
+	void 				reset();
+
 
 public:
   BombContainer		*getBombContainer() const;
 
 private:
   std::string	        _name;
-  int                   _player;
+
+private:
+	int                   _player;
   BombContainer		*_bombContainer;
   double		moveSpeed;
   int			anime;
@@ -88,7 +93,6 @@ private:
 protected:
   irr::u32		then;
   irr::f32		frameDeltaTime;
-
 };
 
 #endif

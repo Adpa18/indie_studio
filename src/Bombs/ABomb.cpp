@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <GameManager.hpp>
 #include "../../include/ABomb.hpp"
 #include "../../include/BombFactory.hpp"
 #include "../../include/BomberMap.hpp"
@@ -118,7 +119,7 @@ void                        ABomb::dead()
 {
   if (use)
     {
-        SoundManager::getManager()->play("explosion.wav", (*this)->getID());
+      SoundManager::getManager()->play("explosion.wav", (*this)->getID());
       _arrived = true;
       use = false;
       willExplose();

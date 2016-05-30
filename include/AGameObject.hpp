@@ -45,7 +45,7 @@ public:
   void					setTimeOutWithoutInContainer(double timeout);
   void					addAnimation();
   void					removeAnnimation();
-  int					getID() const;
+  int						getID() const;
   double				getTimeOutObj() const;
   bool					isObjectTimeOut() const;
   void					setType(Type);

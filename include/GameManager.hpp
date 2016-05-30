@@ -1,6 +1,6 @@
 //
 // GameManager.hpp for MANAGER in /home/gouet_v/Rendu/semester4/CPP/cpp_indie_studio
-// 
+//
 // Made by Victor Gouet
 // Login   <gouet_v@epitech.net>
 // 
@@ -11,6 +11,7 @@
 #ifndef GAMEMANAGER_HPP_
 # define GAMEMANAGER_HPP_
 
+#include <stack>
 # include "IrrlichtController.hpp"
 # include "UIManager.hpp"
 # include "UIEventReceiver.hpp"
@@ -19,6 +20,9 @@
 # include "Player.hpp"
 # include "BomberMap.hpp"
 # include "PlayerInfo.hpp"
+#include "GameOver.hpp"
+
+# define SOUND 0
 
 class	GameManager
 {
@@ -29,8 +33,8 @@ public:
         MAIN_MENU = 2,
         MENU_MAP = 3,
         PLAY = 4,
-        PAUSE,
-	CLASSMENT_SCREEN
+        PAUSE = 5,
+        RANKING_SCREEN = 6
     };
 
   typedef void	(GameManager::*initInstance)(void);
@@ -55,7 +59,7 @@ public:
     void AddPlayerFromUI(PlayerInfo *player);
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
     void ClearPlayers();
-
+  GameOver *getGameOver() const;
   static std::string ToString(std::wstring const& str);
   static std::wstring ToWstring(std::string const& str);
 
@@ -65,12 +69,14 @@ public:
 private:
   void	onMenu();
   void	onGame();
-  void  onGameOver();
+  void  displayRankingScreen();
 
 public:
   void	willStartGame();
   void	willStartMenu();
+  void willRestartGame();
   void SwapCharacterList();
+  void addDeadPlayer(ACharacter *player);
 
 private:
   enum	State
@@ -98,8 +104,15 @@ private:
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
-    std::vector<int>       m_winners;
+    std::vector<int>         m_winners;
+    std::stack<ACharacter *> tmp_ranking;
 
+private:
+  GameOver                 *m_gameOver;
+    bool                     is_gameOver;
+
+private:
+  static GameManager	*GM;
 };
 
 #endif

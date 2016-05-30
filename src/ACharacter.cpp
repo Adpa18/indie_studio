@@ -10,6 +10,7 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <GameManager.hpp>
 #include <SoundManager.hpp>
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
@@ -70,6 +71,23 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 
+void ACharacter::reset()
+{
+  t = NULL;
+  life = 1;
+  bombPass = false;
+  _dead = false;
+  this->item = NULL;
+  _arrived = true;
+  _last_act = irr::core::vector2df(0, 0);
+  anime = irr::scene::EMAT_STAND;
+  moveSpeed = BASICSPEED;
+  then = IrrlichtController::getDevice()->getTimer()->getTime();
+  if (_bombContainer)
+    delete _bombContainer;
+  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
+}
+
 ACharacter::~ACharacter()
 {
 }
@@ -107,7 +125,7 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
 void                    ACharacter::dead()
 {
   mutex.lock();
-  if (_invincible == true)
+  if (_invincible)
     {
       mutex.unlock();
       return ;
@@ -124,7 +142,9 @@ void                    ACharacter::dead()
   if (life <= 0)
   {
     _dead = true;
-      SoundManager::getManager()->play("dead.wav");
+    SoundManager::getManager()->play("dead.wav");
+    setPos(irr::core::vector2df(-2000, -2000));
+    GameManager::SharedInstance()->addDeadPlayer(this);
   }
 }
 
@@ -328,4 +348,8 @@ void			ACharacter::putBomb()
     {
       *bomb << this->getMapPos();
     }
+}
+
+int ACharacter::get_player() const {
+  return _player;
 }
