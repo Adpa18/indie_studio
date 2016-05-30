@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Mon May 23 15:03:09 2016 Victor Gouet
+// Last update Mon May 30 19:20:04 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -74,7 +74,7 @@ public:
   irr::scene::ICameraSceneNode *get_camera() const;
   void		refreshCamera();
   std::vector<AGameObject *>  getObjsFromVector2(const irr::core::vector2df &pos) const;
-  const irr::core::vector2df  get(AGameObject *obj);
+  const irr::core::vector2df  &get(AGameObject *obj) const;
   std::vector<AGameObject *> const &getCharacters() const;
   void    loadModel(struct model mod);
   int getDangerAtPos(int x, int y) const;
@@ -82,7 +82,7 @@ public:
   int getDangerAtPos(const irr::core::vector2df &pos) const;
   void setDangerAtPos(const irr::core::vector2df &pos, int value);
     void    refreshDangerMap(void);
-  void displayDangerMap();
+  void displayDangerMap() const;
     irr::core::vector2df canDropBombSafely(ABomb *todrop, const irr::core::vector2df &pos);
 
 private:
