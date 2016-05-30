@@ -195,13 +195,13 @@ void UIEventReceiver::DisplayPauseMenu()
                                                   IrrlichtController::height / 2.0 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 2.0 + 50),
-                        nullptr, UIElement::SPLASH_BUTTON_START, L"Menu", L""));
+                        nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L""));
 
     m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
                                                   IrrlichtController::height / 1.66 - 50,
                                                   IrrlichtController::width / 2.0 + 100,
                                                   IrrlichtController::height / 1.66 + 50),
-                        nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L""));
+                        nullptr, UIElement::SAVE, L"Save", L""));
 }
 
 // Screen displayed between level loading
@@ -487,6 +487,10 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent 
             GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
             GameManager::SharedInstance()->setGameState(GameManager::PLAY);
             break;
+
+    case UIElement::SAVE:
+      BomberMap::getMap()->save();
+      break;
 
         case UIElement::CONTINUE:
             fptr = &UIEventReceiver::DisplayGameHUD;
