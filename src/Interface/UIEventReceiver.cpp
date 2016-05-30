@@ -38,8 +38,11 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_LISTBOX_SELECTED_AGAIN] = &UIEventReceiver::OnListBox;
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "welcome.wav").c_str(), false);
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "menu.wav").c_str(), true);
+    if (SOUND)
+    {
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "welcome.wav").c_str(), false);
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "menu.wav").c_str(), true);
+    }
     DisplaySplashScreen();
 }
 
@@ -110,7 +113,8 @@ void UIEventReceiver::DisplayGameHUD()
 void UIEventReceiver::DisplayMainMenu()
 {
     std::cout << "Select Your Player" << std::endl;
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectPlayer.wav").c_str(), false);
+    if (SOUND)
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectPlayer.wav").c_str(), false);
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
@@ -119,11 +123,6 @@ void UIEventReceiver::DisplayMainMenu()
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
     m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
-}
-
-void UIEventReceiver::DisplayGameOver() const
-{
-
 }
 
 
@@ -153,7 +152,8 @@ void UIEventReceiver::DisplaySplashScreen()
 void UIEventReceiver::DisplayMapMenu()
 {
     std::cout << "Select Your Map" << std::endl;
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectMap.wav").c_str(), false);
+    if (SOUND)
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectMap.wav").c_str(), false);
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);
@@ -279,6 +279,17 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                     fptr = &UIEventReceiver::DisplayMainMenu;
                     return HANDELD;
+                }
+                else if (GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
+                         event_copy.KeyInput.PressedDown)
+                {
+                    BomberMap::newMap("./media/smallMap/map1.xml");
+                    BomberMap::getMap()->genMap();
+                    IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
+                    fptr = &UIEventReceiver::DisplayGameHUD;
+                    GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
+                    GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                    m_spawned = false;
                 }
                 break;
 

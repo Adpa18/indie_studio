@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <GameManager.hpp>
 #include "../../include/ABomb.hpp"
 #include "../../include/BombFactory.hpp"
 #include "../../include/BomberMap.hpp"
@@ -117,6 +118,7 @@ void                        ABomb::dead()
 {
   if (use)
     {
+      if (SOUND)
         IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "explosion.wav").c_str(), false);
       _arrived = true;
       use = false;

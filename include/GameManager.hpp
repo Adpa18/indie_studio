@@ -11,6 +11,7 @@
 #ifndef GAMEMANAGER_HPP_
 # define GAMEMANAGER_HPP_
 
+#include <stack>
 # include "IrrlichtController.hpp"
 # include "UIManager.hpp"
 # include "UIEventReceiver.hpp"
@@ -19,6 +20,8 @@
 # include "Player.hpp"
 # include "BomberMap.hpp"
 # include "PlayerInfo.hpp"
+
+# define SOUND 0
 
 class	GameManager
 {
@@ -65,12 +68,14 @@ public:
 private:
   void	onMenu();
   void	onGame();
-  void  displayRankingScreen() const;
+  void  displayRankingScreen();
 
 public:
   void	willStartGame();
   void	willStartMenu();
+  void willRestartGame();
   void SwapCharacterList();
+  void addDeadPlayer(ACharacter *player);
 
 private:
   enum	State
@@ -99,6 +104,7 @@ private:
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
     std::vector<int>       m_winners;
+    std::stack<ACharacter *> tmp_ranking;
 
 private:
   static GameManager	*GM;

@@ -8,6 +8,7 @@
 // Last update Wed May 25 22:39:38 2016 Victor Gouet
 //
 
+#include <sstream>
 #include "Intro.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
@@ -148,8 +149,8 @@ void    GameManager::onMenu()
 
         // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
-                irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
-                                          IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
+                                      IrrlichtController::width * 0.24, IrrlichtController::height * 0.85));
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         m_cameras[0]->setPosition(irr::core::vector3df(100, 12, -30));
         m_cameras[0]->setTarget(irr::core::vector3df(100, 12, 0));
@@ -157,15 +158,15 @@ void    GameManager::onMenu()
 
         // Camera 2
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
-                irr::core::rect<irr::s32>(IrrlichtController::width * 0.262, IrrlichtController::height * 0.445,
-                                          IrrlichtController::width * 0.49, IrrlichtController::height * 0.85));
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.262, IrrlichtController::height * 0.445,
+                                      IrrlichtController::width * 0.49, IrrlichtController::height * 0.85));
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[1]);
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
 
         // Camera 3
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
-                irr::core::rect<irr::s32>(IrrlichtController::width * 0.515, IrrlichtController::height * 0.445,
-                                          IrrlichtController::width * 0.743, IrrlichtController::height * 0.85));
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.515, IrrlichtController::height * 0.445,
+                                      IrrlichtController::width * 0.743, IrrlichtController::height * 0.85));
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[2]);
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
 
@@ -174,8 +175,8 @@ void    GameManager::onMenu()
         m_cameras[3]->setPosition(irr::core::vector3df(400, 12, -30));
         m_cameras[3]->setTarget(irr::core::vector3df(400, 12, 0));
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
-                irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
-                                          IrrlichtController::width * 0.99, IrrlichtController::height * 0.85));
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
+                                      IrrlichtController::width * 0.99, IrrlichtController::height * 0.85));
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[3]);
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
         // HACK: Moves the last used camera away
@@ -187,8 +188,8 @@ void    GameManager::onMenu()
         static double x = 0, y = 0;
         // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
-                irr::core::rect<irr::s32>(IrrlichtController::width * 0.01, IrrlichtController::height * 0.1,
-                                          IrrlichtController::width * 0.6, IrrlichtController::height * 0.9));
+            irr::core::rect<irr::s32>(IrrlichtController::width * 0.01, IrrlichtController::height * 0.1,
+                                      IrrlichtController::width * 0.6, IrrlichtController::height * 0.9));
 
         // Moves the main camera away
         irr::scene::ICameraSceneNode *mainCam = IrrlichtController::getSceneManager()->getActiveCamera();
@@ -213,7 +214,7 @@ void    GameManager::onMenu()
     IrrlichtController::getSceneManager()->setActiveCamera(camera);
 }
 
-void    GameManager::displayRankingScreen() const
+void    GameManager::displayRankingScreen()
 {
     int i = 0;
     static int set = 0;
@@ -231,31 +232,78 @@ void    GameManager::displayRankingScreen() const
 //        image->setScaleImage(true);
 
         int size = (int) m_winners.size();
-        while (i < size)
-        {
+        for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
             int count = 0;
-            if (m_winners[i] != -1)
+            i = 0;
+            while (i < size)
             {
-                for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-                    if ((*it)->getID() == m_winners[i])
+                if (m_winners[i] != -1)
+                {
+                    if ((*it)->get_player() == m_winners[i])
                         ++count;
                 }
-                ranking.push_back(std::make_pair(i, count));
+                ++i;
             }
-            ++i;
+            if (count)
+                ranking.push_back(std::make_pair((*it)->getID(), count));
         }
         //IrrlichtController::getDevice()->getSceneManager()->drawAll();
-        m_cameras[0]->setPosition(irr::core::vector3df(-110, 20, -110));
-        m_cameras[0]->setTarget(irr::core::vector3df(0, 20, 0));
-        std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second < p2.second; } );
-        for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-            if ((*it)->getID() == ranking[0].first)
-                (*it)->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
-            else if ((*it)->getID() == ranking[1].first)
-                (*it)->setPos(irr::core::vector2df(0, 20));
-            else if ((*it)->getID() == ranking[2].first)
-                (*it)->setPos(irr::core::vector2df(0, -20));
+        m_cameras[0]->setPosition(irr::core::vector3df(-50, 25, 0));
+        m_cameras[0]->setTarget(irr::core::vector3df(0, 25, 0));
+        std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; } );
+        int winner = -1;
+        if (ranking[0].second > 2)
+        {
+            for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
+                (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+                (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
+                if ((*it)->get_player() == ranking[0].first)
+                {
+                    (*it)->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
+                    winner = ranking[0].first;
+                }
+                else if ((*it)->get_player() == ranking[1].first)
+                    (*it)->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
+                else if ((*it)->get_player() == ranking[2].first)
+                    (*it)->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
+            }
         }
+        else
+        {
+            winner = tmp_ranking.top()->get_player();
+            tmp_ranking.top()->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
+            tmp_ranking.top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+            tmp_ranking.top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
+            tmp_ranking.pop();
+            tmp_ranking.top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
+            tmp_ranking.top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+            tmp_ranking.top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
+            tmp_ranking.pop();
+            tmp_ranking.top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
+            tmp_ranking.top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+            tmp_ranking.top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
+            tmp_ranking.pop();
+            while (!tmp_ranking.empty())
+                tmp_ranking.pop();
+        }
+        irr::gui::IGUIEnvironment* env = IrrlichtController::getDevice()->getGUIEnvironment();
+        irr::gui::IGUISkin* skin = env->getSkin();
+        irr::gui::IGUIFont* font = env->getFont("./media/font/arcade_font.xml");
+        if (font)
+            skin->setFont(font);
+        std::wstringstream ss;
+        ss << "Player " <<  winner << " win!";
+        irr::gui::IGUIStaticText *st_text = env->addStaticText(
+            ss.str().c_str(),
+            irr::core::rect<irr::s32>(0, 100,
+                                      (irr::s32) IrrlichtController::width, 200),
+            false, // border?
+            true);
+        st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
+        //text->setBackgroundColor(irr::video::SColor(255, 0, 255, 255));
+        st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER,
+                                  irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
+        env->drawAll();
     }
 }
 
@@ -292,10 +340,14 @@ void    GameManager::onGame()
 
     std::vector<ACharacter *>::iterator it = characters.begin();
     size_t nb_dead = 0;
+    ACharacter *winner;
     while (it != characters.end())
     {
         if (!(*it)->isDead())
+        {
             (*it)->compute();
+            winner = (*it);
+        }
         else
             ++nb_dead;
         ++it;
@@ -304,7 +356,10 @@ void    GameManager::onGame()
         if (nb_dead == characters.size())
             m_winners.push_back(-1);
         else
-            m_winners.push_back(characters.front()->getID());
+        {
+            tmp_ranking.push(winner);
+            m_winners.push_back(winner->get_player());
+        }
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::deleteMap();
         IrrlichtController::getIrrKlangDevice()->stopAllSounds();
@@ -313,14 +368,52 @@ void    GameManager::onGame()
     }
 }
 
+void    GameManager::addDeadPlayer(ACharacter *player)
+{
+    tmp_ranking.push(player);
+}
+
+void    GameManager::willRestartGame()
+{
+    if (SOUND)
+    {
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "startGame.wav").c_str(), false);
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "ambianceGame.wav").c_str(), true);
+    }
+
+    std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
+    IrrlichtController::getDevice()->setEventReceiver(eventGame);
+    int i = 0;
+    for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
+        (*it)->setPos(spawn[i]);
+        ++i;
+    }
+    if (BomberMap::getMap()->get_camera())
+    {
+        IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
+        BomberMap::getMap()->refreshCamera();
+    }
+    else
+    {
+        irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
+            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
+        camera->setTarget(irr::core::vector3df(0, 0, 0));
+        camera->setAutomaticCulling(irr::scene::EAC_OFF);
+        camera->setFarValue(1000);
+        camera->setNearValue(10);
+    }
+}
+
 void    GameManager::willStartGame()
 {
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
 
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "startGame.wav").c_str(), false);
-    IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "ambianceGame.wav").c_str(), true);
-
+    if (SOUND)
+    {
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "startGame.wav").c_str(), false);
+        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "ambianceGame.wav").c_str(), true);
+    }
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
     characters.clear();
@@ -331,22 +424,21 @@ void    GameManager::willStartGame()
     for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
         //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
-        if (i > 0)//(*it)->GetIsIA())
+        if ((*it)->GetIsIA())
         {
             characters.push_back(new IAPlayer((*it)->GetName(),
                                               (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
                                               (*it)->GetMesh(),
                                               (*it)->GetTexture(),
-                                              i));
+                                              i+1));
         }
         else
         {
-
             characters.push_back(new Player((*it)->GetName(),
                                             (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
                                             (*it)->GetMesh(),
                                             (*it)->GetTexture(),
-                                            i, *eventGame));
+                                            i+1, *eventGame));
         }
         delete (*it);
         it = m_playerInfo.erase(it);
@@ -361,7 +453,6 @@ void    GameManager::willStartGame()
     //     scoreText[scorePos]->setBackgroundColor(irr::video::SColor(100, 100, 100, 100));
     //     ++scorePos;
     //   }
-
     if (BomberMap::getMap()->get_camera())
     {
         IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
@@ -370,16 +461,12 @@ void    GameManager::willStartGame()
     else
     {
         irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-                (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
+            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
         camera->setTarget(irr::core::vector3df(0, 0, 0));
         camera->setAutomaticCulling(irr::scene::EAC_OFF);
         camera->setFarValue(1000);
         camera->setNearValue(10);
     }
-
-    //  IrrlichtController::getSceneManager()->setAmbientLight(irr::video::SColorf(1.0f,
-    //									     1.0f, 1.0f, 1.0f));
-
 }
 
 void    GameManager::willStartMenu()

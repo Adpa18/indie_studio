@@ -10,6 +10,7 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <GameManager.hpp>
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
 #include "../include/ABonus.hpp"
@@ -119,6 +120,7 @@ void                    ACharacter::dead()
   {
     _dead = true;
     setPos(irr::core::vector2df(-2000, -2000));
+    GameManager::SharedInstance()->addDeadPlayer(this);
   }
 }
 
@@ -322,4 +324,8 @@ void			ACharacter::putBomb()
     {
       *bomb << this->getMapPos();
     }
+}
+
+int ACharacter::get_player() const {
+  return _player;
 }
