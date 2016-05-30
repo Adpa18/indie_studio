@@ -33,6 +33,7 @@ namespace UIElement
         PLAYERBOX_4,
 
 	CONTINUE,
+	SAVE,
     };
 }
 

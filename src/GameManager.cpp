@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed May 25 22:39:38 2016 Victor Gouet
+// Last update Mon May 30 17:29:36 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -252,10 +252,10 @@ void    GameManager::onGame()
         uiEventReceiver->DisplayPauseMenu();
         return ;
     }
-    if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
-    {
-        BomberMap::getMap()->save();
-    }
+    // if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
+    // {
+    //     BomberMap::getMap()->save();
+    // }
 
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 

@@ -5,13 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Wed May 25 22:08:08 2016 Victor Gouet
+// Last update Mon May 30 17:21:06 2016 Victor Gouet
 //
 
 #include <iostream>
 #include "../include/Texture.hpp"
 
-// STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
 const std::string BomberManTexture::path = "media/commons/";
 const std::string BomberManTexture::smallMap = "media/smallMap/";
 const std::string BomberManTexture::mediumMap = "media/mediumMap/";
