@@ -55,8 +55,7 @@ void GameOver::show() {
         }
         ++i;
       }
-      if (count)
-        ranking.push_back(std::make_pair((*it)->get_player(), count));
+      ranking.push_back(std::make_pair((*it)->get_player(), count));
     }
     //IrrlichtController::getDevice()->getSceneManager()->drawAll();
     IrrlichtController::getSceneManager()->setActiveCamera(camera);
@@ -64,9 +63,9 @@ void GameOver::show() {
     camera->setTarget(irr::core::vector3df(0, 25, 0));
     std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; } );
     int winner = -1;
-    if (ranking[0].first != -1)
+    if (ranking[0].first != -1 && !tmp_ranking->empty())
     {
-      if (m_winners.size() > 2)
+      if (m_winners.size() > 2 && ranking[0].second != ranking[1].second)
       {
         status = true;
         for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
@@ -93,15 +92,11 @@ void GameOver::show() {
       }
       else
       {
-        if (!tmp_ranking->empty())
-        {
-
-          winner = tmp_ranking->top()->get_player();
-          tmp_ranking->top()->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
-          tmp_ranking->top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-          tmp_ranking->top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
-          tmp_ranking->pop();
-        }
+        winner = tmp_ranking->top()->get_player();
+        tmp_ranking->top()->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
+        tmp_ranking->top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+        tmp_ranking->top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
+        tmp_ranking->pop();
         if (!tmp_ranking->empty())
         {
           tmp_ranking->top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));

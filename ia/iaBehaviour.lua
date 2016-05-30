@@ -295,6 +295,7 @@ function getObjectif(iaPos)
 end
 
 function mediumBehaviour(iaplayer)
+--    return DROPBOMB;
   return runIa(iaplayer, function (possibMove, nbPossib)
       local acttoRet;
 
