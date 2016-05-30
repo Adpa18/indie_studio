@@ -19,6 +19,7 @@ const std::string BomberManTexture::bombs = "media/bombs/";
 const std::string BomberManTexture::bonus = "media/bonus/";
 const std::string BomberManTexture::characters = "media/characters/";
 const std::string BomberManTexture::gui = "media/gui/";
+const std::string BomberManTexture::font = "media/font/";
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
 
@@ -64,6 +65,9 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
 		{"playerButtonSelected", {"", BomberManTexture::gui + "PlayerButtonSelected.png"}},
 		{"victory", {"", BomberManTexture::gui + "victory.png"}},
+
+		// Font
+		{"font", {"", BomberManTexture::font + "arcade_font.png"}},
 
 		// Other
 		{"fire", {"", BomberManTexture::path + "fire.jpg"}},

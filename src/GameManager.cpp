@@ -275,7 +275,11 @@ void    GameManager::onGame()
     }
     if (nb_dead >= characters.size() -1) {
         if (nb_dead == characters.size())
+        {
             m_winners.push_back(-1);
+            while (!tmp_ranking.empty())
+                tmp_ranking.pop();
+        }
         else if (winner)
         {
             tmp_ranking.push(winner);
@@ -335,6 +339,7 @@ void    GameManager::willStartGame()
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
     characters.clear();
+    m_winners.clear();
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     int		i = 0;
