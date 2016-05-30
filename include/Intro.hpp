@@ -12,7 +12,6 @@
 class Intro {
 private:
     static const std::string default_path_video;
-    static const std::string default_path_sound;
 
 private:
     std::vector<std::string>    files;

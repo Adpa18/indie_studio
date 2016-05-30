@@ -69,9 +69,5 @@ void				BombContainer::upgradePowerBombs()
 
 void				BombContainer::deleteAllBomb()
 {
-  for (std::vector<ABomb *>::iterator	it = _bombs.begin(),
-	 end = _bombs.end() ; it != end ; ++it)
-    {
-      delete (*it);
-    }  
+  _bombs.clear();
 }

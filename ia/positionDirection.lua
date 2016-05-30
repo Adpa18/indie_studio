@@ -31,13 +31,23 @@ function isInMap(pos)
     return (true);
 end
 
+function canMoveSafelyOnPos(pos)
+    local tocheck = bomberMap:getDangerAtPos(pos:getX(), pos:getY());
+
+    if (tocheck ~= NONE  or
+            isInMap(pos) == false) then
+        return (false);
+    end
+    return true;
+end
+
 --[[
 --Check if the player can move to pos
  ]]
 function canMoveOnPos(pos)
     local tocheck = bomberMap:getDangerAtPos(pos:getX(), pos:getY());
 
-    if (tocheck ~= NONE  or
+    if (tocheck == BLOCK or tocheck == OTHER or
             isInMap(pos) == false) then
         return (false);
     end
@@ -55,6 +65,24 @@ function getPossiblePos(pos)
     for k, dir in pairs(tocheck) do
         local gonnasee = pos:add(dir);
         if (canMoveOnPos(gonnasee)) then
+            i = i + 1;
+            possib[i] = k;
+        end
+    end
+    return possib, i;
+end
+
+--[[
+-- Get all possibles and safe position that the player can go
+ ]]
+function getPossibleSafePos(pos)
+    local tocheck = dirTab();
+    local possib = {};
+    local i = 0;
+
+    for k, dir in pairs(tocheck) do
+        local gonnasee = pos:add(dir);
+        if (canMoveSafelyOnPos(gonnasee)) then
             i = i + 1;
             possib[i] = k;
         end

@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <GameManager.hpp>
+#include <SoundManager.hpp>
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
 #include "../include/ABonus.hpp"
@@ -18,6 +19,11 @@
 #include "../include/BomberMap.hpp"
 #include "../include/TrackerBomb.hpp"
 #include "../include/FragBomb.hpp"
+
+/*
+ * Non volatile and non integral types must be initialized outside the class
+ */
+const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right", "Move Up", "Move Down", "Drop Bomb", "Perform Action"};
 
 struct SMD3AnimationType
 {
@@ -59,10 +65,27 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   
   // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
   // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
   setMD3Animation(MD3_ANIMATION::STAY);
+}
+
+void ACharacter::reset()
+{
+  t = NULL;
+  life = 1;
+  bombPass = false;
+  _dead = false;
+  this->item = NULL;
+  _arrived = true;
+  _last_act = irr::core::vector2df(0, 0);
+  anime = irr::scene::EMAT_STAND;
+  moveSpeed = BASICSPEED;
+  then = IrrlichtController::getDevice()->getTimer()->getTime();
+  if (_bombContainer)
+    delete _bombContainer;
+  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
 }
 
 ACharacter::~ACharacter()
@@ -119,6 +142,7 @@ void                    ACharacter::dead()
   if (life <= 0)
   {
     _dead = true;
+    SoundManager::getManager()->play("dead.wav");
     setPos(irr::core::vector2df(-2000, -2000));
     GameManager::SharedInstance()->addDeadPlayer(this);
   }

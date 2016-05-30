@@ -20,6 +20,7 @@
 # include "Player.hpp"
 # include "BomberMap.hpp"
 # include "PlayerInfo.hpp"
+#include "GameOver.hpp"
 
 # define SOUND 0
 
@@ -103,8 +104,10 @@ private:
     // List of players to be spawned
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
-    std::vector<int>       m_winners;
+    std::vector<int>         m_winners;
     std::stack<ACharacter *> tmp_ranking;
+    GameOver                 *m_gameOver;
+    bool                     is_gameOver;
 
 private:
   static GameManager	*GM;

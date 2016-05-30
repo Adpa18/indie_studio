@@ -7,6 +7,22 @@
 
 
 class GameOver {
+private:
+  irr::scene::ICameraSceneNode        *camera;
+  const std::vector<int>              &m_winners;
+  const std::vector<ACharacter *>     &characters;
+  std::stack<ACharacter *>            *tmp_ranking;
+  irr::gui::IGUIEnvironment* env;
+  irr::gui::IGUISkin* skin;
+  irr::gui::IGUIFont* font;
+  irr::gui::IGUIStaticText *st_text;
+
+public:
+  GameOver(irr::scene::ICameraSceneNode *camera,
+             const std::vector<int> &m_winners,
+             const std::vector<ACharacter *> &characters,
+             std::stack<ACharacter *> *tmp_ranking);
+  void show();
 
 };
 

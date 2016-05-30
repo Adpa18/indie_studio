@@ -10,10 +10,11 @@
 
 #include "../include/BonusInvincible.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusInvincible::BonusInvincible(irr::core::vector2df const &pos)
-  : ABonus(pos, BomberManTexture::getModel("bonusInvincible").mesh,
-	   BomberManTexture::getModel("bonusInvincible").texture, "BonusInvincible", BONUS)
+        : ABonus(pos, BomberManTexture::getModel("bonusInvincible").mesh,
+                 BomberManTexture::getModel("bonusInvincible").texture, "BonusInvincible", BONUS)
 {
 
 }
@@ -38,6 +39,7 @@ void	        BonusInvincible::take(ACharacter &player)
 
 void	        BonusInvincible::dead()
 {
+  SoundManager::getManager()->play("invincible.wav");
   (*this)->setVisible(false);
 }
 

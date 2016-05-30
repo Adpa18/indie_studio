@@ -10,6 +10,7 @@
 
 #include "../include/BonusBiggestMan.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusBiggestMan::BonusBiggestMan(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusBiggestMan").mesh,
@@ -33,6 +34,7 @@ void	        BonusBiggestMan::take(ACharacter &player)
   player.setMoveSpeed(ACharacter::BASICSPEED / 2);
   player->setScale(irr::core::vector3df(2.5, 2.5, 2.5));
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusBiggestMan::dead()

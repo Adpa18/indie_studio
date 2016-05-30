@@ -22,7 +22,8 @@
 class	ACharacter	: public AGameObject
 {
 public:
-    enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
+	static const std::vector<std::string> textAction;
+	enum ACTION { IDLE = 0, LEFT, RIGHT, UP, DOWN, BOMB, ACT };
     enum MD3_ANIMATION { STAY, RUN, ATTACK };
 
 public:
@@ -62,6 +63,7 @@ public:
   void			setLifeUp();
   int			getScore() const;
 	int get_player() const;
+	void 				reset();
 
 
 public:
@@ -91,7 +93,6 @@ private:
 protected:
   irr::u32		then;
   irr::f32		frameDeltaTime;
-
 };
 
 #endif

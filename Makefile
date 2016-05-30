@@ -10,13 +10,11 @@ SRC_BONUS_DIR	=	src/Bonus/
 
 SRC_INTERFACE_DIR=	src/Interface/
 
-SRC_IA  =   ia/
+SRC_IA_DIR      =   ia/
 
-LUA_DIRECTORY   =   $(SRC_IA)lua-5.3.2/src
+LUA_DIRECTORY   =   $(SRC_IA_DIR)lua-5.3.2/src
 
-IrrKlangHome	=	IrrKlang/
-
-IrrlichtHome	=	Irrlicht/irrlicht-1.8.3
+IRRLICHT_DIR	=	Irrlicht/irrlicht-1.8.3
 
 SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)IrrlichtController.cpp		\
@@ -35,14 +33,17 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)GameObjectTimeContainer.cpp	\
 			$(SRC_DIR)Props.cpp						\
 			$(SRC_DIR)Color.cpp						\
+			$(SRC_DIR)SoundManager.cpp						\
 			$(SRC_DIR)AGameObjectFactory.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 		\
+			$(SRC_INTERFACE_DIR)KeySelectionBox.cpp 		\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 		\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp	\
 			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				    \
-			$(SRC_IA)IAPlayer.cpp   					        \
-			$(SRC_IA)LuaFunctions.cpp					        \
+			$(SRC_INTERFACE_DIR)GameOver.cpp 		    \
+			$(SRC_IA_DIR)IAPlayer.cpp   					    \
+			$(SRC_IA_DIR)LuaFunctions.cpp					    \
 			$(SRC_BOMBS_DIR)ABomb.cpp						\
 			$(SRC_BOMBS_DIR)BombContainer.cpp				\
 			$(SRC_BOMBS_DIR)AtomicBomb.cpp					\
@@ -79,13 +80,25 @@ CPPFLAGS	=	-W -Wall -Wextra -Werror -std=c++11 -pthread -g
 
 CPPFLAGS	+=	 -Wno-unused-parameter -Wno-unused-variable
 
-CPPFLAGS	+=	-I$(IrrlichtHome)/include -I./include -I ./$(SRC_INTERFACE_DIR) -I ./$(IrrKlangHome) -I$(SRC_IA)
+CPPFLAGS	+=	-I$(IRRLICHT_DIR)/include -I./include
+
+CPPFLAGS	+=	-I$(SRC_IA_DIR) #delete when ia in SRC
+
+CPPFLAGS	+=	-I./fmod/inc
 
 #-I/usr/X11R6/include
 
 CPPFLAGS	+=	-O3 -ffast-math
 
-LDFLAGS 	= -lpthread -L $(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L $(IrrKlangHome)linux -L $(LUA_DIRECTORY) -llua -ldl
+LDFLAGS 	=   -lpthread
+
+LDFLAGS 	+=  -L $(IRRLICHT_DIR)/lib/$(SYSTEM) -lIrrlicht
+
+LDFLAGS 	+=  -L $(LUA_DIRECTORY) -llua
+
+LDFLAGS 	+=  -L./fmod/lib/x86_64 -Wl,-R./fmod/lib/x86_64 -lfmod
+
+LDFLAGS 	+=  -ldl
 
 %.o : %.cpp
 	@echo -e "Compiling $<"
@@ -112,13 +125,11 @@ re		: fclean all
 ifeq ($(OS),Windows_NT)
 SYSTEM=Win32-gcc
 SUF=.exe
-CPPFLAGS += -D_IRR_STATIC_LIB_
-LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
-LDFLAGS += -lopengl32 -lm -static-libstdc++
-#LDFLAGS += $(IrrKlangHome)Windows/irrKlang.dll
+CPPFLAGS    +=  -D_IRR_STATIC_LIB_
+LDFLAGS     +=  -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
+LDFLAGS     +=  -lm -static-libstdc++
 else
 LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
-LDFLAGS += $(IrrKlangHome)linux/libIrrKlang.so
 SYSTEM=Linux
 endif
 

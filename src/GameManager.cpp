@@ -10,6 +10,8 @@
 
 #include <sstream>
 #include "Intro.hpp"
+#include "../include/Intro.hpp"
+#include "../include/SoundManager.hpp"
 #include "../include/GameManager.hpp"
 #include "../include/Texture.hpp"
 #include "../include/GameObjectTimeContainer.hpp"
@@ -41,6 +43,8 @@ GameManager::GameManager()
                                                                              irr::core::vector3df(400, 12, -30),
                                                                              irr::core::vector3df(400, 12, 0));
 //    IAPlayer::initIA();
+    m_gameOver = NULL;
+    is_gameOver = false;
 }
 
 GameManager::~GameManager()
@@ -50,7 +54,7 @@ GameManager::~GameManager()
     delete uiManager;
     delete eventGame;
     IrrlichtController::getDevice()->drop();
-    IrrlichtController::getIrrKlangDevice()->drop();
+    delete SoundManager::getManager();
 }
 
 GameManager *GameManager::SharedInstance()
@@ -207,8 +211,10 @@ void    GameManager::onMenu()
         // m_cameras[0].addAnimator(anim);
     }
     else if (GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN)
+    {
         displayRankingScreen();
-
+        is_gameOver = false;
+    }
     // Resets the viewport
     IrrlichtController::getDriver()->setViewPort(viewPort);
     IrrlichtController::getSceneManager()->setActiveCamera(camera);
@@ -216,95 +222,10 @@ void    GameManager::onMenu()
 
 void    GameManager::displayRankingScreen()
 {
-    int i = 0;
-    static int set = 0;
-
-    if (!set)
-    {
-        set = 1;
-        std::vector<std::pair<int, int>> ranking;
-//        irr::gui::IGUIImage *image = uiManager->GetEnv()->addImage(
-//            irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
-//            nullptr, UIElement::SPLASH_BACKGROUND, L"", true);
-//        image->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
-//            BomberManTexture::getModel("victory").texture.c_str()));
-//
-//        image->setScaleImage(true);
-
-        int size = (int) m_winners.size();
-        for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-            int count = 0;
-            i = 0;
-            while (i < size)
-            {
-                if (m_winners[i] != -1)
-                {
-                    if ((*it)->get_player() == m_winners[i])
-                        ++count;
-                }
-                ++i;
-            }
-            if (count)
-                ranking.push_back(std::make_pair((*it)->getID(), count));
-        }
-        //IrrlichtController::getDevice()->getSceneManager()->drawAll();
-        m_cameras[0]->setPosition(irr::core::vector3df(-50, 25, 0));
-        m_cameras[0]->setTarget(irr::core::vector3df(0, 25, 0));
-        std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; } );
-        int winner = -1;
-        if (ranking[0].second > 2)
-        {
-            for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-                (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-                (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
-                if ((*it)->get_player() == ranking[0].first)
-                {
-                    (*it)->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
-                    winner = ranking[0].first;
-                }
-                else if ((*it)->get_player() == ranking[1].first)
-                    (*it)->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
-                else if ((*it)->get_player() == ranking[2].first)
-                    (*it)->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
-            }
-        }
-        else
-        {
-            winner = tmp_ranking.top()->get_player();
-            tmp_ranking.top()->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
-            tmp_ranking.top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-            tmp_ranking.top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
-            tmp_ranking.pop();
-            tmp_ranking.top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
-            tmp_ranking.top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-            tmp_ranking.top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
-            tmp_ranking.pop();
-            tmp_ranking.top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
-            tmp_ranking.top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-            tmp_ranking.top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
-            tmp_ranking.pop();
-            while (!tmp_ranking.empty())
-                tmp_ranking.pop();
-        }
-        irr::gui::IGUIEnvironment* env = IrrlichtController::getDevice()->getGUIEnvironment();
-        irr::gui::IGUISkin* skin = env->getSkin();
-        irr::gui::IGUIFont* font = env->getFont("./media/font/arcade_font.xml");
-        if (font)
-            skin->setFont(font);
-        std::wstringstream ss;
-        ss << "Player " <<  winner << " win!";
-        irr::gui::IGUIStaticText *st_text = env->addStaticText(
-            ss.str().c_str(),
-            irr::core::rect<irr::s32>(0, 100,
-                                      (irr::s32) IrrlichtController::width, 200),
-            false, // border?
-            true);
-        st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
-        //text->setBackgroundColor(irr::video::SColor(255, 0, 255, 255));
-        st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER,
-                                  irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
-        env->drawAll();
-    }
+    if (!m_gameOver)
+        m_gameOver = new GameOver(m_cameras[0], m_winners, characters, &tmp_ranking);
+    if (is_gameOver)
+        m_gameOver->show();
 }
 
 void    GameManager::onGame()
@@ -362,7 +283,8 @@ void    GameManager::onGame()
         }
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::deleteMap();
-        IrrlichtController::getIrrKlangDevice()->stopAllSounds();
+        SoundManager::getManager()->stopAll();
+        is_gameOver = true;
         setGameState(RANKING_SCREEN);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
     }
@@ -375,16 +297,15 @@ void    GameManager::addDeadPlayer(ACharacter *player)
 
 void    GameManager::willRestartGame()
 {
-    if (SOUND)
-    {
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "startGame.wav").c_str(), false);
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "ambianceGame.wav").c_str(), true);
-    }
+    SoundManager::getManager()->stopAll();
+    SoundManager::getManager()->play("startGame.wav");
+    SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
 
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
     int i = 0;
     for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
+        (*it)->reset();
         (*it)->setPos(spawn[i]);
         ++i;
     }
@@ -408,12 +329,9 @@ void    GameManager::willStartGame()
 {
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
-
-    if (SOUND)
-    {
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "startGame.wav").c_str(), false);
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "ambianceGame.wav").c_str(), true);
-    }
+    SoundManager::getManager()->stopAll();
+    SoundManager::getManager()->play("startGame.wav");
+    SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
     characters.clear();
@@ -423,14 +341,15 @@ void    GameManager::willStartGame()
 
     for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
-        //todo comment 'i == 0' and uncomment '(*it)->GetIsIA()'
-        if ((*it)->GetIsIA())
+        if (i != 0 && (*it)->GetIsIA())
         {
             characters.push_back(new IAPlayer((*it)->GetName(),
                                               (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
                                               (*it)->GetMesh(),
                                               (*it)->GetTexture(),
-                                              i+1));
+                                              i + 1,
+                                              IAPlayer::getDifficultyFromCode((*it)->GetIAStrength())
+            ));
         }
         else
         {

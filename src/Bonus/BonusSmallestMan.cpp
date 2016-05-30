@@ -10,6 +10,7 @@
 
 #include "../include/BonusSmallestMan.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusSmallestMan::BonusSmallestMan(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusSmallestMan").mesh,
@@ -31,6 +32,7 @@ void	        BonusSmallestMan::take(ACharacter &player)
 
   player.setMoveSpeed(ACharacter::BASICSPEED * 2);
   player->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusSmallestMan::dead()

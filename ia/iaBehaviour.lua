@@ -50,27 +50,64 @@ function findFirstImpasse(pos)
     return (pos);
 end
 
+function canDropBomb(iaplayer)
+    local nextFocus;
+    local pos = iaplayer:getPos();
+    local directions = dirTab();
+
+    if (canMoveSafelyOnPos(iaplayer:getPos()) == false) then
+        return nil;
+    end
+    for _, dir in pairs(directions) do
+        local tocheck = pos:add(dir);
+        if (bomberMap:objsAtPos(tocheck:getX(), tocheck:getY()):hasType(OTHER) or bomberMap:getNbOfType(pos:getX(), pos:getY(), CHARACTER) > 1) then
+            posSeen = {};
+            nextFocus = iaplayer:bombDropSimul();
+            if (nextFocus ~= nil) then
+                return nextFocus;
+            end
+        end
+    end
+    return nil;
+end
+
 --[[
 --Choose if the IA will move, drop a bomb or idle
  ]]
-function waitBombOrMove(iaplayer)
-    local possibMove, nbPossib = getPossiblePos(iaplayer:getPos());
+function waitBombOrMove(iaplayer, lastCaseMove)
+    local possibMove, nbPossib = getPossibleSafePos(iaplayer:getPos());
+    local fimp;
+    local nextFocus;
 
     if (iaplayer:getPos():equal(iaplayer:getFocus())) then
-        if (nbPossib == 0) then
+        posSeen = {}
+        fimp = findFirstImpasse(iaplayer:getPos());
+        if (nbPossib == 0 and canMoveSafelyOnPos(iaplayer:getPos())) then
             return IDLE;
         end
-        posSeen = {};
+        --[[posSeen = {};
         local nextFocus = iaplayer:bombDropSimul();
         if (nextFocus == nil) then
             return (IDLE);
         end
+        return DROPBOMB, nextFocus;]]
+    end
+    nextFocus = canDropBomb(iaplayer);
+    if (nextFocus ~= nil) then
         return DROPBOMB, nextFocus;
     end
-    if (nbPossib > 0) then
-        return possibMove[math.random(1, nbPossib)];
+    return lastCaseMove(possibMove, nbPossib), fimp;
+end
+
+function runIa(iaplayer, lastCaseMove)
+    local fimp;
+    local action;
+
+    action, fimp = waitBombOrMove(iaplayer, lastCaseMove);
+    if (fimp ~= nil) then
+        iaplayer:setFocus(fimp);
     end
-    return (math.random(LEFT, DOWN));
+    return action;
 end
 
 --todo implement the three behaviours
@@ -78,23 +115,33 @@ end
 --Function for an IA easy behaviour
  ]]
 function easyBehaviour(iaplayer)
-    local fimp;
-    local action;
-    local focusPos = iaplayer:getFocus();
-    local iaPos = iaplayer:getPos();
+--    local fimp;
+--    local action;
+--    local focusPos = iaplayer:getFocus();
+--    local iaPos = iaplayer:getPos();
 
-    if (focusPos:getX() == -1 and focusPos:getY() == -1) then
-        posSeen = {};
-        fimp = findFirstImpasse(iaPos);
-        action = math.random(LEFT, DOWN);
-    else
-        action, fimp = waitBombOrMove(iaplayer);
-    end
+--    if (focusPos:getX() == -1 and focusPos:getY() == -1) then
+--        posSeen = {};
+--        fimp = findFirstImpasse(iaPos);
+--        action = math.random(LEFT, DOWN);
+--    else
+--        action, fimp = waitBombOrMove(iaplayer, function (possibMove, nbPossib)
+--            if (nbPossib > 0) then
+--                return possibMove[math.random(1, nbPossib)];
+--            end
+--            return math.random(LEFT, DOWN);
+--        end);
+--    end
 
-    if (fimp ~= nil) then
-        iaplayer:setFocus(fimp);
-    end
-    return (DROPBOMB);
+--    if (fimp ~= nil) then
+--        iaplayer:setFocus(fimp);
+--    end
+    return (runIa(iaplayer, function (possibMove, nbPossib)
+        if (nbPossib > 0) then
+            return possibMove[math.random(1, nbPossib)];
+        end
+        return math.random(LEFT, DOWN);
+    end));
 end
 
 function findFirstSafe(iaPos)
@@ -199,14 +246,9 @@ function getObjectif(iaPos)
 --    return findFirstSafe(iaPos);
 --=======
   tolook = bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY());
---<<<<<<< HEAD
---  if (tolook == BLOCK or tolook == BOMB) then
---    return findFirstSafe(iaPos);
--->>>>>>> cb0f730bb527cd37ce9f49244e0b40ace1011836
---=======
+
   if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     return findFirstSafe(bomberMap, iaPos);
--->>>>>>> 601129810d907b19feac186fbc834db03dacc9ad
   else
     choice = math.random(LEFT, DOWN);
   end
@@ -253,7 +295,25 @@ function getObjectif(iaPos)
 end
 
 function mediumBehaviour(iaplayer)
-  return getObjectif(iaplayer:getPos());
+    return DROPBOMB;
+--  return runIa(iaplayer, function (possibMove, nbPossib)
+--      local acttoRet;
+--
+--
+--      if (iaplayer:getPos():equal(iaplayer:getFocus()) == false) then
+--          acttoRet = astarGetNextPos(iaplayer:getPos(), iaplayer:getFocus());
+--      end
+--      if (acttoRet == nil) then
+--          if (nbPossib > 0) then
+--              return (possibMove[math.random(1, nbPossib)]);
+--          end
+--          return (math.random(LEFT, DOWN));
+--      end
+--      if (canMoveSafelyOnPos(iaplayer:getPos()) and canMoveSafelyOnPos(iaplayer:getPos():add(getDirFromCode(acttoRet))) == false) then
+--          return (IDLE);
+--      end
+--      return (acttoRet);
+--  end);
 end
 
 function hardBehaviour(iaPos, focusPos)

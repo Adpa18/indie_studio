@@ -51,7 +51,12 @@ EventGame::EventGame()
 
 EventGame::~EventGame()
 {
-
+    for (std::map<int, MotionController *>::iterator it = this->_joysticks.begin(); it != this->_joysticks.end(); ++it) {
+        delete it->second;
+    }
+    for (std::vector<KeysController *>::iterator it = this->_keymaps.begin(); it != this->_keymaps.end(); ++it) {
+        delete *it;
+    }
 }
 
 bool 	EventGame::OnEvent(const irr::SEvent &event)

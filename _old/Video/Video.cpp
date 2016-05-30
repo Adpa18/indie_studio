@@ -63,7 +63,7 @@ void	Video::Run()
             break;
 
         if (i == 24)
-            engine->play2D((default_path_sound + "intro.wav").c_str(), false);
+            engine->play2D((default_path_sound + "intro.wav");;
         timerFrame = clock();
         irr::video::ITexture *tex = driver->getTexture((this->files[i]).c_str());
         img->setImage(tex);

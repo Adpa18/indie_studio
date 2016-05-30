@@ -10,6 +10,7 @@
 
 #include "../include/BonusPower.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusPower::BonusPower(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusPower").mesh,
@@ -30,6 +31,7 @@ void		BonusPower::take(ACharacter &player)
   std::cout << "Bonus POWER UP" << std::endl;
   // player.setMoveSpeed(player.getMoveSpeed() + 0.5);
   player.increasePowerBomb();
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void	        BonusPower::dead()

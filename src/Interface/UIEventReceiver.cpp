@@ -7,6 +7,7 @@
 #include "../../include/UIEventReceiver.hpp"
 #include "../../include/Texture.hpp"
 #include "../../include/GameManager.hpp"
+#include "../../include/SoundManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
@@ -38,11 +39,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_LISTBOX_SELECTED_AGAIN] = &UIEventReceiver::OnListBox;
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
-    if (SOUND)
-    {
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "welcome.wav").c_str(), false);
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "menu.wav").c_str(), true);
-    }
+    SoundManager::getManager()->play("welcome.wav");
+    SoundManager::getManager()->play("menu.wav", 0, true, 0.1);
     DisplaySplashScreen();
 }
 
@@ -112,9 +110,7 @@ void UIEventReceiver::DisplayGameHUD()
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
-    std::cout << "Select Your Player" << std::endl;
-    if (SOUND)
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectPlayer.wav").c_str(), false);
+    SoundManager::getManager()->play("selectPlayer.wav");
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
@@ -151,9 +147,7 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
-    std::cout << "Select Your Map" << std::endl;
-    if (SOUND)
-        IrrlichtController::getIrrKlangDevice()->play2D((IrrlichtController::soundPath + "selectMap.wav").c_str(), false);
+    SoundManager::getManager()->play("selectMap.wav");
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);
@@ -285,20 +279,36 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     BomberMap::newMap("./media/smallMap/map1.xml");
                     BomberMap::getMap()->genMap();
-                    IrrlichtController::getDevice()->setEventReceiver(GameManager::SharedInstance()->getEventGame());
                     fptr = &UIEventReceiver::DisplayGameHUD;
                     GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
                     GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                    m_spawned = false;
+                    return HANDELD;
                 }
                 break;
 
-            case irr::KEY_SPACE:
+                //////////////////
+                /// Player 1
+                //////////////////
+            case irr::KEY_RSHIFT:
                 // Player 1 joined
                 if (m_boxContainer != nullptr)
                 {
                     m_boxContainer->PlayerJoin(1);
                     return HANDELD;
+                }
+                break;
+
+            case irr::KEY_KEY_N:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeyBind(1);
+                }
+                break;
+
+            case irr::KEY_RCONTROL:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeySelect(1);
                 }
                 break;
 
@@ -340,6 +350,64 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     if (m_boxContainer != nullptr)
                     {
                         m_boxContainer->SelectRight(1);
+                    }
+                }
+                break;
+                ////////////////
+                // Player 2
+                ////////////////
+            case irr::KEY_SPACE:
+                // Player 2 joined
+                if (m_boxContainer != nullptr)
+                {
+                    m_boxContainer->PlayerJoin(2);
+                    return HANDELD;
+                }
+                break;
+
+            case irr::KEY_KEY_C:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeyBind(2);
+                }
+                break;
+
+            case irr::KEY_KEY_S:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectDown(2);
+                    }
+                }
+                break;
+
+            case irr::KEY_KEY_W:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectUp(2);
+                    }
+                }
+                break;
+
+            case irr::KEY_KEY_A:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectLeft(2);
+                    }
+                }
+                break;
+
+            case irr::KEY_KEY_D:
+                if (event_copy.KeyInput.PressedDown)
+                {
+                    if (m_boxContainer != nullptr)
+                    {
+                        m_boxContainer->SelectRight(2);
                     }
                 }
                 break;

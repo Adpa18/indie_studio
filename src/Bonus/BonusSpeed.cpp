@@ -10,6 +10,7 @@
 
 #include "../include/BonusSpeed.hpp"
 #include "../include/Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusSpeed::BonusSpeed(irr::core::vector2df const &pos)
   : ABonus(pos, BomberManTexture::getModel("bonusSpeed").mesh,
@@ -29,6 +30,7 @@ void		BonusSpeed::take(ACharacter &player)
 {
   std::cout << "BONUS SPEED TAKEN !" << std::endl;
   player.setMoveSpeed(player.getMoveSpeed() + 0.5);
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void		BonusSpeed::dead()
