@@ -12,17 +12,28 @@
 #include <iostream>
 #include "GameOver.hpp"
 
-GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int>   &win, const std::vector<ACharacter *> &chara, std::stack<ACharacter *> *ranking)
+GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int>   &win, std::vector<ACharacter *> &chara, std::stack<ACharacter *> *ranking)
  : m_winners(win), characters(chara)
 {
   camera = cam;
   tmp_ranking = ranking;
   env = IrrlichtController::getDevice()->getGUIEnvironment();
   skin = env->getSkin();
+  save_font = env->getSkin()->getFont();
   font = env->getFont("./media/font/arcade_font.xml");
   if (font)
     skin->setFont(font);
   st_text = NULL;
+  status = false;
+}
+
+GameOver::~GameOver() {
+  skin->setFont(save_font);
+  for (std::vector<ACharacter *>::iterator it = characters.begin(); it !=  characters.end(); ++it) {
+    delete (*it);
+    characters.erase(it);
+    it = characters.begin();
+  }
 }
 
 void GameOver::show() {
@@ -57,6 +68,7 @@ void GameOver::show() {
     {
       if (ranking[0].second > 2)
       {
+        status = true;
         for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
           (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
           (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
@@ -127,4 +139,8 @@ void GameOver::show() {
     st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER,
                             irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
     env->drawAll();
+}
+
+bool GameOver::getStatus() const {
+  return status;
 }

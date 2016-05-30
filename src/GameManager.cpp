@@ -102,7 +102,6 @@ void    GameManager::run()
     uiEventReceiver = new UIEventReceiver(*uiManager);
 
     setFptr(&GameManager::willStartMenu);
-
     while (IrrlichtController::getDevice()->run()
            && IrrlichtController::getDriver())
     {
@@ -148,6 +147,7 @@ void    GameManager::onMenu()
 
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
+        m_gameOver = NULL;
         // Moves the main camera away
         //camera->setPosition(irr::core::vector3df(-10000, 250, -10000));
 
@@ -449,4 +449,8 @@ void GameManager::SwapCharacterList()
 {
     m_playerInfo.clear();
     m_playerInfo.merge(m_playerInfoUI);
+}
+
+GameOver *GameManager::getGameOver() const {
+    return m_gameOver;
 }

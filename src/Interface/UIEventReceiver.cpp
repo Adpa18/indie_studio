@@ -277,11 +277,22 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 else if (GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
                          event_copy.KeyInput.PressedDown)
                 {
-                    BomberMap::newMap("./media/smallMap/map1.xml");
-                    BomberMap::getMap()->genMap();
-                    fptr = &UIEventReceiver::DisplayGameHUD;
-                    GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
-                    GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                    if (!GameManager::SharedInstance()->getGameOver()->getStatus())
+                    {
+                        BomberMap::newMap("./media/smallMap/map1.xml");
+                        BomberMap::getMap()->genMap();
+                        fptr = &UIEventReceiver::DisplayGameHUD;
+                        GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
+                        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+
+                    }
+                    else
+                    {
+                        delete GameManager::SharedInstance()->getGameOver();
+                        GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
+                        fptr = &UIEventReceiver::DisplayMainMenu;
+                        return HANDELD;
+                    }
                     return HANDELD;
                 }
                 break;

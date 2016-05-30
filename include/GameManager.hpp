@@ -59,7 +59,7 @@ public:
     void AddPlayerFromUI(PlayerInfo *player);
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
     void ClearPlayers();
-
+  GameOver *getGameOver() const;
   static std::string ToString(std::wstring const& str);
   static std::wstring ToWstring(std::string const& str);
 
@@ -106,7 +106,9 @@ private:
     std::list<PlayerInfo*> m_playerInfoUI;
     std::vector<int>         m_winners;
     std::stack<ACharacter *> tmp_ranking;
-    GameOver                 *m_gameOver;
+
+private:
+  GameOver                 *m_gameOver;
     bool                     is_gameOver;
 
 private:
