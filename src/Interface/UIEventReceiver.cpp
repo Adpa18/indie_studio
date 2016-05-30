@@ -248,6 +248,12 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
 {
     if (event_copy.EventType == irr::EET_KEY_INPUT_EVENT)
     {
+        // Updates the containers
+        if (event_copy.KeyInput.PressedDown && m_boxContainer != nullptr)
+        {
+            m_boxContainer->OnKeyPressed(event_copy.KeyInput.Key);
+        }
+
         switch (event_copy.KeyInput.Key)
         {
             case irr::KEY_ESCAPE:
@@ -372,6 +378,13 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     m_boxContainer->PlayerJoin(2);
                     return HANDELD;
+                }
+                break;
+
+            case irr::KEY_KEY_E:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeySelect(2);
                 }
                 break;
 

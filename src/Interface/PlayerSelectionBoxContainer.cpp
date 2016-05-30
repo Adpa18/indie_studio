@@ -151,3 +151,9 @@ void PlayerSelectionBoxContainer::KeySelect(int playerID) const
 {
     m_boxList[playerID - 1]->OnSelect();
 }
+
+void PlayerSelectionBoxContainer::OnKeyPressed(irr::EKEY_CODE key)
+{
+    for (int i = 0; i < 4; ++i)
+        m_boxList[i]->OnKeyPressed(key);
+}

@@ -34,6 +34,7 @@ public:
     void SaveSelection();
     void KeyBind(int playerID) const;
     void KeySelect(int playerID) const;
+    void OnKeyPressed(irr::EKEY_CODE key);
 private:
 
 private:

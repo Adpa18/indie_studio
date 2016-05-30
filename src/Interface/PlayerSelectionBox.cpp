@@ -232,7 +232,7 @@ PlayerInfo::IAStrength PlayerSelectionBox::GetIAStrength() const
 
 void PlayerSelectionBox::KeyBind() const
 {
-    if (!m_bIsIaPlayer)
+    if (!m_bIsIaPlayer && !m_keySelection->IsSelecting())
         m_keySelection->SetActive(!m_keySelection->IsActive());
 }
 
@@ -242,4 +242,10 @@ void PlayerSelectionBox::OnSelect()
     {
         m_keySelection->OnSelect();
     }
+}
+
+void PlayerSelectionBox::OnKeyPressed(irr::EKEY_CODE key)
+{
+    if (!m_bIsIaPlayer)
+        m_keySelection->OnKeyPress(key);
 }
