@@ -295,24 +295,23 @@ function getObjectif(iaPos)
 end
 
 function mediumBehaviour(iaplayer)
-    return DROPBOMB;
---  return runIa(iaplayer, function (possibMove, nbPossib)
---      local acttoRet;
---
---      if (iaplayer:getPos():equal(iaplayer:getFocus()) == false) then
---          acttoRet = astarGetNextPos(iaplayer:getPos(), iaplayer:getFocus());
---      end
---      if (acttoRet == nil) then
---          if (nbPossib > 0) then
---              return (possibMove[math.random(1, nbPossib)]);
---          end
---          return (math.random(LEFT, DOWN));
---      end
---      if (canMoveSafelyOnPos(iaplayer:getPos()) and canMoveSafelyOnPos(iaplayer:getPos():add(getDirFromCode(acttoRet))) == false) then
---          return (IDLE);
---      end
---      return (acttoRet);
---  end);
+  return runIa(iaplayer, function (possibMove, nbPossib)
+      local acttoRet;
+
+      if (iaplayer:getPos():equal(iaplayer:getFocus()) == false) then
+          acttoRet = astarGetNextPos(iaplayer:getPos(), iaplayer:getFocus());
+      end
+      if (acttoRet == nil) then
+          if (nbPossib > 0) then
+              return (possibMove[math.random(1, nbPossib)]);
+          end
+          return (math.random(LEFT, DOWN));
+      end
+      if (canMoveSafelyOnPos(iaplayer:getPos()) and canMoveSafelyOnPos(iaplayer:getPos():add(getDirFromCode(acttoRet))) == false) then
+          return (IDLE);
+      end
+      return (acttoRet);
+  end);
 end
 
 function hardBehaviour(iaPos, focusPos)
