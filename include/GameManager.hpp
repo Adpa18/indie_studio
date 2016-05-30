@@ -22,8 +22,6 @@
 # include "PlayerInfo.hpp"
 #include "GameOver.hpp"
 
-# define SOUND 0
-
 class	GameManager
 {
 public:

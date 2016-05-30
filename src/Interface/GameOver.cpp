@@ -45,6 +45,7 @@ void GameOver::show() {
   ranking.push_back(std::make_pair(-1, -1));
     for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it)
     {
+      (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
       int count = 0;
       i = 0;
       while (i < size)
