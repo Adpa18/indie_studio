@@ -7,8 +7,9 @@
 #include "../../include/Texture.hpp"
 #include "../../include/GameManager.hpp"
 
-PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
-            m_manager(uiManager)
+PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager, UIEventReceiver *receiver) :
+            m_manager(uiManager),
+            m_receiver(receiver)
 {
     // Set default available skins
     m_availableSkins.push_back("ziggs");
@@ -156,4 +157,9 @@ void PlayerSelectionBoxContainer::OnKeyPressed(irr::EKEY_CODE key)
 {
     for (int i = 0; i < 4; ++i)
         m_boxList[i]->OnKeyPressed(key);
+}
+
+UIEventReceiver const *PlayerSelectionBoxContainer::GetEventReceiver() const
+{
+    return m_receiver;
 }

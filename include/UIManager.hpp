@@ -29,15 +29,6 @@ public:
     void AddStaticText(const wchar_t *text, irr::core::rect<irr::s32> transform, bool hasBorder, bool wordWrap,
                            irr::gui::IGUIElement *parent, irr::s32 id, bool fillBackground) const;
 
-    void AddScrollbar(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
-                      const wchar_t *text, const wchar_t *tip) const;
-
-    void AddListBox(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
-                      const wchar_t *text, const wchar_t *tip) const;
-
-    void AddEditBox(irr::core::rect<irr::s32> transform, irr::gui::IGUIElement *parent, irr::s32 id,
-                      const wchar_t *text, const wchar_t *tip) const;
-
     // Changes alpha value for all the objects
     void SetSkinTransparency(irr::s32 alpha, irr::gui::IGUISkin * skin) const;
 

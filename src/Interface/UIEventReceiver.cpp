@@ -24,7 +24,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
             }
         }
     }
-    for (std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>>::const_iterator it = EventGame::_keycodes.begin(); it != EventGame::_keycodes.end(); ++it)
+    for (std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>>::const_iterator it = EventGame::_keycodes.begin();
+         it != EventGame::_keycodes.end(); ++it)
     {
         m_keymaps.push_back(new KeysController(*it));
     }
@@ -118,7 +119,7 @@ void UIEventReceiver::DisplayMainMenu()
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
-    m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
+    m_boxContainer = new PlayerSelectionBoxContainer(&m_manager, this);
 }
 
 
@@ -619,6 +620,15 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
+        // Opens the key bind menu
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->KeySelect(playerID);
+            }
+        }
+
         // Navigates in menus
         if (m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
@@ -651,3 +661,11 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
     }
 }
 
+MotionController const *UIEventReceiver::GetJoystick(int id) const
+{
+    if (m_joysticks.find(id) == m_joysticks.end())
+    {
+        return nullptr;
+    }
+    return m_joysticks[id];
+}

@@ -21,6 +21,8 @@ KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32>
         m_manager(uiManager),
         m_playerID(playerID)
 {
+    // TODO: implement key infos for motion controller
+    std::cout << "Other CTOR" << std::endl;
     m_controller = new MotionController(info);
     CreateListBox(pos, elemID);
 }
