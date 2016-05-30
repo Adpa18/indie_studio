@@ -12,7 +12,7 @@
 #include "ACharacter.hpp"
 #include "KeysController.hpp"
 
-class KeySelectionBox : public ISelectionBox, public irr::IEventReceiver
+class KeySelectionBox : public ISelectionBox
 {
 public:
     explicit KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID, int playerID);
