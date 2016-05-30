@@ -261,7 +261,7 @@ void    GameManager::onGame()
 
     std::vector<ACharacter *>::iterator it = characters.begin();
     size_t nb_dead = 0;
-    ACharacter *winner;
+    ACharacter *winner = NULL;
     while (it != characters.end())
     {
         if (!(*it)->isDead())
@@ -276,7 +276,7 @@ void    GameManager::onGame()
     if (nb_dead >= characters.size() -1) {
         if (nb_dead == characters.size())
             m_winners.push_back(-1);
-        else
+        else if (winner)
         {
             tmp_ranking.push(winner);
             m_winners.push_back(winner->get_player());
@@ -341,7 +341,7 @@ void    GameManager::willStartGame()
 
     for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
-        if (i != 0 && (*it)->GetIsIA())
+        if ((*it)->GetIsIA())
         {
             characters.push_back(new IAPlayer((*it)->GetName(),
                                               (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
