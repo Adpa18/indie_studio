@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Wed May 25 11:25:07 2016 Victor Gouet
+// Last update Mon May 30 19:36:06 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -66,11 +66,11 @@ BomberMap::~BomberMap()
     else
       ++it_o;
   }
-  if (_camera)
-  {
-    _camera->remove();
-    _camera = NULL;
-  }
+  // if (_camera)
+  // {
+  //   _camera->remove();
+  //   _camera = NULL;
+  // }
   for (std::vector<irr::scene::ILightSceneNode*>::iterator it = lightVector.begin(), end = lightVector.end() ; end != it ; ++it)
   {
     (*it)->remove();
@@ -349,7 +349,9 @@ void BomberMap::deserialize()
         _camera_pos.X = reader->getAttributeValueAsFloat("px");
         _camera_pos.Y = reader->getAttributeValueAsFloat("py");
         _camera_pos.Z = reader->getAttributeValueAsFloat("pz");
-        _camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, _camera_pos);
+	_camera = IrrlichtController::getSceneManager()->getActiveCamera();
+	_camera->setPosition(_camera_pos);
+        // _camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, _camera_pos);
         _camera->setAspectRatio(19/9);
         _camera->setFOV(reader->getAttributeValueAsFloat("fov"));
         //_camera->setScale(irr::core::vector3df(1,1,1));
@@ -633,9 +635,9 @@ std::vector<AGameObject *>  BomberMap::getObjsFromVector2(const irr::core::vecto
   return (objs);
 }
 
-const irr::core::vector2df  BomberMap::get(AGameObject *obj)
+const irr::core::vector2df  &BomberMap::get(AGameObject *obj) const
 {
-  return (this->_objects[obj]);
+  return (this->_objects.find(obj)->second);
 }
 
 void    BomberMap::loadModel(struct model mod)
@@ -691,7 +693,7 @@ void BomberMap::setDangerAtPos(const irr::core::vector2df &pos, int value) {
   }
 }
 
-void BomberMap::displayDangerMap() {
+void BomberMap::displayDangerMap() const {
   std::stringstream ss;
 
   return;

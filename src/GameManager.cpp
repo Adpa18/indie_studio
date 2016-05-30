@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 30 17:29:36 2016 Victor Gouet
+// Last update Mon May 30 18:56:33 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -217,7 +217,8 @@ void    GameManager::onMenu()
     }
     // Resets the viewport
     IrrlichtController::getDriver()->setViewPort(viewPort);
-    IrrlichtController::getSceneManager()->setActiveCamera(camera);
+    if (camera)
+      IrrlichtController::getSceneManager()->setActiveCamera(camera);
 }
 
 void    GameManager::displayRankingScreen()
@@ -282,7 +283,7 @@ void    GameManager::onGame()
             m_winners.push_back(winner->get_player());
         }
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
-        BomberMap::deleteMap();
+	BomberMap::deleteMap();
         SoundManager::getManager()->stopAll();
         is_gameOver = true;
         setGameState(RANKING_SCREEN);
