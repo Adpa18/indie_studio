@@ -305,6 +305,7 @@ void    GameManager::willRestartGame()
     SoundManager::getManager()->play("startGame.wav");
     SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
 
+    eventGame->reset();
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
     int i = 0;
@@ -343,10 +344,10 @@ void    GameManager::willStartGame()
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     int		i = 0;
-
+    eventGame->reset();
     for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
     {
-        if ((*it)->GetIsIA())
+        if (i > 1 && (*it)->GetIsIA())
         {
             characters.push_back(new IAPlayer((*it)->GetName(),
                                               (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),

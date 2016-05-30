@@ -34,6 +34,7 @@ GameOver::~GameOver() {
     characters.erase(it);
     it = characters.begin();
   }
+  delete characters[0];
 }
 
 void GameOver::show() {
@@ -70,7 +71,6 @@ void GameOver::show() {
         status = true;
         for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
           (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-          (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
           if ((*it)->get_player() == ranking[0].first)
           {
             winner = ranking[0].first;
@@ -95,20 +95,17 @@ void GameOver::show() {
         winner = tmp_ranking->top()->get_player();
         tmp_ranking->top()->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
         tmp_ranking->top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-        tmp_ranking->top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
         tmp_ranking->pop();
         if (!tmp_ranking->empty())
         {
           tmp_ranking->top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
           tmp_ranking->top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-          tmp_ranking->top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
           tmp_ranking->pop();
         }
         if (!tmp_ranking->empty())
         {
           tmp_ranking->top()->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
           tmp_ranking->top()->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-          tmp_ranking->top()->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
           tmp_ranking->pop();
         }
         while (!tmp_ranking->empty())

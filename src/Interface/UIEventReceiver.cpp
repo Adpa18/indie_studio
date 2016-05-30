@@ -284,7 +284,6 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                         fptr = &UIEventReceiver::DisplayGameHUD;
                         GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
                         GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-
                     }
                     else
                     {
