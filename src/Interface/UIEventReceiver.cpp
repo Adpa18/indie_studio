@@ -116,6 +116,8 @@ void UIEventReceiver::DisplayMainMenu()
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
 
+    //todo clear player info
+    GameManager::SharedInstance()->ClearPlayers();
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
@@ -281,7 +283,8 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     fptr = &UIEventReceiver::DisplayMainMenu;
                     return HANDELD;
                 }
-                else if (GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
+                else if (GameManager::SharedInstance()->getGameOver() &&
+                        GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
                          event_copy.KeyInput.PressedDown)
                 {
                     if (!GameManager::SharedInstance()->getGameOver()->getStatus())
@@ -289,12 +292,13 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                         BomberMap::newMap("./media/smallMap/map1.xml");
                         BomberMap::getMap()->genMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
-                        GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
+                        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                         GameManager::SharedInstance()->setGameState(GameManager::PLAY);
                     }
                     else
                     {
-                        delete GameManager::SharedInstance()->getGameOver();
+//                        delete GameManager::SharedInstance()->getGameOver();
+                        GameManager::SharedInstance()->destroyGameOver();
                         GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
                         return HANDELD;

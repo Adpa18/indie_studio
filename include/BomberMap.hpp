@@ -84,6 +84,7 @@ public:
     void    refreshDangerMap(void);
   void displayDangerMap() const;
     irr::core::vector2df canDropBombSafely(ABomb *todrop, const irr::core::vector2df &pos);
+    void removeBlocks(void);
 
 private:
   std::map<AGameObject*, irr::core::vector2df> _objects;

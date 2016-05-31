@@ -57,14 +57,14 @@ BomberMap::~BomberMap()
   while (it_o != _objects.end())
   {
     AGameObject	*obj = (*it_o).first;
-    if (!dynamic_cast<ACharacter *>(obj))
-    {
+//    if (!dynamic_cast<ACharacter *>(obj))
+//    {
       GameObjectTimeContainer::SharedInstance()->remove(obj);
       delete (obj);
       it_o = _objects.begin();
-    }
-    else
-      ++it_o;
+//    }
+//    else
+//      ++it_o;
   }
   // if (_camera)
   // {
@@ -576,7 +576,6 @@ void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
     }
 }
 
-//todo regarder pourquoi la map n'est pas actualisées dans certains cas de fin d'explosion
 void BomberMap::refreshDangerMap(void)
 {
   irr::core::vector2df        pos;
@@ -755,4 +754,21 @@ irr::core::vector2df    BomberMap::canDropBombSafely(ABomb *todrop, const irr::c
   }
   move(dynamic_cast<AGameObject *>(todrop), irr::core::vector2df(-1000, -1000));
   return lastFallBack;
+}
+
+void BomberMap::removeBlocks()
+{
+  std::map<AGameObject*, irr::core::vector2df>::iterator it_o = _objects.begin();
+  while (it_o != _objects.end())
+  {
+    AGameObject	*obj = (*it_o).first;
+    if (!dynamic_cast<ACharacter *>(obj))
+    {
+      GameObjectTimeContainer::SharedInstance()->remove(obj);
+      delete (obj);
+      it_o = _objects.begin();
+    }
+    else
+      ++it_o;
+  }
 }

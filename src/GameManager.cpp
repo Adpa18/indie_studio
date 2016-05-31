@@ -293,7 +293,8 @@ void    GameManager::onGame()
             m_winners.push_back(winner->get_player());
         }
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
-	BomberMap::deleteMap();
+//	    BomberMap::deleteMap();
+        BomberMap::getMap()->removeBlocks();
         SoundManager::getManager()->stopAll();
         is_gameOver = true;
         setGameState(RANKING_SCREEN);
@@ -312,16 +313,18 @@ void    GameManager::willRestartGame()
     SoundManager::getManager()->play("startGame.wav");
     SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
 
-    eventGame->reset();
-    std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
-    IrrlichtController::getDevice()->setEventReceiver(eventGame);
-    int i = 0;
-    for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-        (*it)->reset();
-        (*it)->setPos(spawn[i]);
-        ++i;
-    }
-    if (BomberMap::getMap()->get_camera())
+//    eventGame->reset();
+//    std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
+//    IrrlichtController::getDevice()->setEventReceiver(eventGame);
+//    int i = 0;
+//    characters.clear();
+    willStartGame();
+//    for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
+//        (*it)->reset();
+//        (*it)->setPos(spawn[i]);
+//        ++i;
+//    }
+    /*if (BomberMap::getMap()->get_camera())
     {
         IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
         BomberMap::getMap()->refreshCamera();
@@ -334,7 +337,7 @@ void    GameManager::willRestartGame()
         camera->setAutomaticCulling(irr::scene::EAC_OFF);
         camera->setFarValue(1000);
         camera->setNearValue(10);
-    }
+    }*/
 }
 
 void    GameManager::willStartGame()
@@ -352,7 +355,7 @@ void    GameManager::willStartGame()
 
     int		i = 0;
     eventGame->reset();
-    for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ;)
+    for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ; ++it)
     {
         if ((*it)->GetIsIA())
         {
@@ -372,8 +375,8 @@ void    GameManager::willStartGame()
                                             (*it)->GetTexture(),
                                             i+1, *eventGame));
         }
-        delete (*it);
-        it = m_playerInfo.erase(it);
+//        delete (*it);
+//        it = m_playerInfo.erase(it);
         ++i;
     }
 
@@ -466,4 +469,10 @@ void GameManager::SwapCharacterList()
 
 GameOver *GameManager::getGameOver() const {
     return m_gameOver;
+}
+
+void GameManager::destroyGameOver()
+{
+    delete(m_gameOver);
+    m_gameOver = NULL;
 }
