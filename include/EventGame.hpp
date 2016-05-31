@@ -37,6 +37,7 @@ public:
   bool		IsKeyDownOneTime(irr::EKEY_CODE keyCode) const;
   const MotionController  *GetAvaibleJoystick() const;
   const KeysController    *GetAvaibleKeycodes() const;
+  void reset();
 };
 
 #endif /* !EVENT_HPP */

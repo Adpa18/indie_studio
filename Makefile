@@ -36,10 +36,12 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)SoundManager.cpp						\
 			$(SRC_DIR)AGameObjectFactory.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 		\
+			$(SRC_INTERFACE_DIR)KeySelectionBox.cpp 		\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 		\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp	\
 			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				    \
+			$(SRC_INTERFACE_DIR)GameOver.cpp 		    \
 			$(SRC_IA_DIR)IAPlayer.cpp   					    \
 			$(SRC_IA_DIR)LuaFunctions.cpp					    \
 			$(SRC_BOMBS_DIR)ABomb.cpp						\

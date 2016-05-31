@@ -5,11 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed May 25 22:39:51 2016 Victor Gouet
+// Last update Mon May 30 19:30:18 2016 Victor Gouet
 //
 
 #include <unistd.h>
 #include <iostream>
+#include <GameManager.hpp>
 #include <SoundManager.hpp>
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
@@ -18,6 +19,11 @@
 #include "../include/BomberMap.hpp"
 #include "../include/TrackerBomb.hpp"
 #include "../include/FragBomb.hpp"
+
+/*
+ * Non volatile and non integral types must be initialized outside the class
+ */
+const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right", "Move Up", "Move Down", "Drop Bomb", "Perform Action"};
 
 struct SMD3AnimationType
 {
@@ -65,6 +71,23 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   setMD3Animation(MD3_ANIMATION::STAY);
 }
 
+void ACharacter::reset()
+{
+  t = NULL;
+  life = 1;
+  bombPass = false;
+  _dead = false;
+  this->item = NULL;
+  _arrived = true;
+  _last_act = irr::core::vector2df(0, 0);
+  anime = irr::scene::EMAT_STAND;
+  moveSpeed = BASICSPEED;
+  then = IrrlichtController::getDevice()->getTimer()->getTime();
+  if (_bombContainer)
+    delete _bombContainer;
+  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
+}
+
 ACharacter::~ACharacter()
 {
 }
@@ -95,14 +118,16 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
       delete (t);
     }
   addAnimation();
-  t = new std::thread([time, this] { this->onInvinciblePeriode(time);
-    });
+  // TODO A REGARDER
+  // THREAD LOL
+  // t = new std::thread([time, this] { this->onInvinciblePeriode(time);
+    // });
 }
 
 void                    ACharacter::dead()
 {
   mutex.lock();
-  if (_invincible == true)
+  if (_invincible)
     {
       mutex.unlock();
       return ;
@@ -119,7 +144,9 @@ void                    ACharacter::dead()
   if (life <= 0)
   {
     _dead = true;
-      SoundManager::getManager()->play("dead.wav");
+    SoundManager::getManager()->play("dead.wav");
+    setPos(irr::core::vector2df(-2000, -2000));
+    GameManager::SharedInstance()->addDeadPlayer(this);
   }
 }
 
@@ -323,4 +350,8 @@ void			ACharacter::putBomb()
     {
       *bomb << this->getMapPos();
     }
+}
+
+int ACharacter::get_player() const {
+  return _player;
 }

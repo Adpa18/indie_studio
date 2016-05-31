@@ -7,8 +7,9 @@
 #include "../../include/Texture.hpp"
 #include "../../include/GameManager.hpp"
 
-PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager) :
-            m_manager(uiManager)
+PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager, UIEventReceiver *receiver) :
+            m_manager(uiManager),
+            m_receiver(receiver)
 {
     // Set default available skins
     m_availableSkins.push_back("ziggs");
@@ -67,9 +68,12 @@ void PlayerSelectionBoxContainer::SelectDown(int playerID)
 {
     if (playerID - 1 != 0)
     {
-        m_boxList[playerID - 1]->SelectPrev();
+        m_boxList[playerID - 1]->SelectNext();
     }
-    m_boxes.front()->SelectNext();
+    else
+    {
+        m_boxes.front()->SelectNext();
+    }
 }
 
 void PlayerSelectionBoxContainer::SelectLeft(int playerID)
@@ -109,7 +113,6 @@ void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
     m_joined[playerID - 1] = true;
 }
 
-// TODO: keyboard shortcuts + player join with controller
 // TODO: redo gui assets
 void PlayerSelectionBoxContainer::SaveSelection()
 {
@@ -138,4 +141,25 @@ void PlayerSelectionBoxContainer::UnselectSkin(std::string const &skin)
 bool PlayerSelectionBoxContainer::IsSkinAvailable(std::string const& skin) const
 {
     return std::find(m_availableSkins.begin(), m_availableSkins.end(), skin) != m_availableSkins.end();
+}
+
+void PlayerSelectionBoxContainer::KeyBind(int playerID) const
+{
+    m_boxList[playerID - 1]->KeyBind();
+}
+
+void PlayerSelectionBoxContainer::KeySelect(int playerID) const
+{
+    m_boxList[playerID - 1]->OnSelect();
+}
+
+void PlayerSelectionBoxContainer::OnKeyPressed(irr::EKEY_CODE key)
+{
+    for (int i = 0; i < 4; ++i)
+        m_boxList[i]->OnKeyPressed(key);
+}
+
+UIEventReceiver const *PlayerSelectionBoxContainer::GetEventReceiver() const
+{
+    return m_receiver;
 }

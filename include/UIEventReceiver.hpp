@@ -16,6 +16,8 @@
 #include "MotionController.hpp"
 #include "KeysController.hpp"
 
+class PlayerSelectionBoxContainer;
+
 // Event receiver for ui
 class UIEventReceiver : public irr::IEventReceiver
 {
@@ -29,6 +31,7 @@ public:
 
 public:
     virtual bool OnEvent(const irr::SEvent &event);
+    MotionController const*GetJoystick(int id) const;
 
 public:
   void DisplayPauseMenu();
@@ -39,7 +42,6 @@ private:
     void DisplayMapMenu();
     void DisplayLoadingScreen();
     void DisplayGameHUD();
-    void DisplayGameOver() const;
 
     /*
      * \brief Event handlers
@@ -70,12 +72,13 @@ private:
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
     PlayerSelectionBoxContainer *m_boxContainer = nullptr;
+    std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> m_keycode;
 
     // Avoid multiple spawn of the map
     bool m_spawned = false;
 
     // Joysticks
-    std::map<int, MotionController *> m_joysticks;
+    mutable std::map<int, MotionController *> m_joysticks;
     std::vector<KeysController *> m_keymaps;
     mutable bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
     typedef EVENT_STATE (UIEventReceiver::*event)(const irr::SEvent &);

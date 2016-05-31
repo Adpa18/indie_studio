@@ -5,9 +5,10 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:22 2016 Victor Gouet
-// Last update Fri Apr 29 11:45:23 2016 Victor Gouet
+// Last update Tue May 31 11:45:58 2016 Victor Gouet
 //
 
+#include <stdexcept>
 #include "../include/IrrlichtController.hpp"
 
 // redeclare static member for cpp linkage
@@ -38,8 +39,11 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
                                          irr::core::dimension2d<irr::u32>(width, height), 32,
                                          false, false, false, 0);
           }
+	  if (!device)
+	    throw std::runtime_error("device failed !");
           device->getSceneManager()->setShadowColor(irr::video::SColor(100, 100, 100, 1));
           device->setWindowCaption(L"ONE TRYYY");
+          device->getCursorControl()->setVisible(false);
       }
     return (device);
 }

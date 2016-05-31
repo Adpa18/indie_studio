@@ -225,14 +225,9 @@ function getObjectif(iaPos)
 --    return findFirstSafe(iaPos);
 --=======
   tolook = bomberMap:getDangerAtPos(iaPos:getX(), iaPos:getY());
---<<<<<<< HEAD
---  if (tolook == BLOCK or tolook == BOMB) then
---    return findFirstSafe(iaPos);
--->>>>>>> cb0f730bb527cd37ce9f49244e0b40ace1011836
---=======
+
   if (tolook == BLOCK or tolook == BOMB or tolook == BOOM) then
     return findFirstSafe(bomberMap, iaPos);
--->>>>>>> 601129810d907b19feac186fbc834db03dacc9ad
   else
     choice = math.random(LEFT, DOWN);
   end
@@ -279,6 +274,7 @@ function getObjectif(iaPos)
 end
 
 function mediumBehaviour(iaplayer)
+--    return DROPBOMB;
   return runIa(iaplayer, function (possibMove, nbPossib)
       local acttoRet;
 

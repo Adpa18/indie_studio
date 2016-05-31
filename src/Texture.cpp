@@ -5,13 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Wed May 25 22:08:08 2016 Victor Gouet
+// Last update Mon May 30 18:29:16 2016 Victor Gouet
 //
 
 #include <iostream>
 #include "../include/Texture.hpp"
 
-// STOP TOUCHER A SA MAIS TON PUTAIN DE BINAIRE A LA RACINE ET C'EST TOUT
 const std::string BomberManTexture::path = "media/commons/";
 const std::string BomberManTexture::smallMap = "media/smallMap/";
 const std::string BomberManTexture::mediumMap = "media/mediumMap/";
@@ -20,6 +19,7 @@ const std::string BomberManTexture::bombs = "media/bombs/";
 const std::string BomberManTexture::bonus = "media/bonus/";
 const std::string BomberManTexture::characters = "media/characters/";
 const std::string BomberManTexture::gui = "media/gui/";
+const std::string BomberManTexture::font = "media/font/";
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
 
@@ -64,6 +64,10 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"IAMedium", {"", BomberManTexture::gui + "PlayerButtonIaMedium.png"}},
 		{"IAHard", {"", BomberManTexture::gui + "PlayerButtonIaHard.png"}},
 		{"playerButtonSelected", {"", BomberManTexture::gui + "PlayerButtonSelected.png"}},
+		{"victory", {"", BomberManTexture::gui + "victory.png"}},
+
+		// Font
+		{"font", {"", BomberManTexture::font + "arcade_font.png"}},
 
 		// Other
 		{"fire", {"", BomberManTexture::path + "fire.jpg"}},
@@ -94,6 +98,8 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
 		{"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
 		{"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
+
+		{"fontTest", {"", "media/font/arcade_font.png"}},
 
 		// {"ground", {"", BomberManTexture::path + "grass.png"}},
 		// {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
