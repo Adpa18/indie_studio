@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Mon May 30 19:36:06 2016 Victor Gouet
+// Last update Tue May 31 11:02:55 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -548,24 +548,32 @@ void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
   };
 
   for (int i = 1, max = bomb->getPower(); i <= max; ++i)
-  {
-    std::vector<irr::core::vector2df>::iterator it = dir.begin();
-
-//        std::cout << "range " << i << std::endl;
-    while (it != dir.end())
     {
-      newpos = pos + *it * i;
-      int &tocheck = _danger_map[static_cast<int>(newpos.Y)][static_cast<int>(newpos.X)];
-      if (tocheck != AGameObject::BLOCK && tocheck != AGameObject::OTHER)
-      {
-//                std::cout << "add a deflag at (" << newpos.X << ", " << newpos.Y << ")" << std::endl;
-        tocheck = AGameObject::BOMB;
-        ++it;
-      }
-      else
-        it = dir.erase(it);
+      std::vector<irr::core::vector2df>::iterator it = dir.begin();
+
+      //        std::cout << "range " << i << std::endl;
+      while (it != dir.end())
+	{
+	  newpos = pos + *it * i;
+	  if (newpos.Y >= size_side[_mapSize] || newpos.Y < 0
+	      || newpos.X >= size_side[_mapSize] || newpos.X < 0)
+	    {
+	      std::cout << "\e[31mtry de segfault\e[0m" << std::endl;
+	      ++it;
+	      continue;
+	    }
+
+	  int &tocheck = _danger_map[static_cast<int>(newpos.Y)][static_cast<int>(newpos.X)];
+	  if (tocheck != AGameObject::BLOCK && tocheck != AGameObject::OTHER)
+	    {
+	      //                std::cout << "add a deflag at (" << newpos.X << ", " << newpos.Y << ")" << std::endl;
+	      tocheck = AGameObject::BOMB;
+	      ++it;
+	    }
+	  else
+	    it = dir.erase(it);
+	}
     }
-  }
 }
 
 //todo regarder pourquoi la map n'est pas actualisées dans certains cas de fin d'explosion

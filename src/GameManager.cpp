@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Mon May 30 18:56:33 2016 Victor Gouet
+// Last update Tue May 31 11:47:46 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -20,7 +20,13 @@
 
 GameManager::GameManager()
 {
+  try {
     IrrlichtController::getDevice(false);
+  } catch (std::exception &e)
+    {
+      std::cout << e.what() << std::endl;
+      exit(0);
+    }
     BomberManTexture::loadTexture();
     m_gameState = PLAY;
     setGameState(SPLASH_SCREEN);
