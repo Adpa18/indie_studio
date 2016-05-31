@@ -115,27 +115,6 @@ end
 --Function for an IA easy behaviour
  ]]
 function easyBehaviour(iaplayer)
---    local fimp;
---    local action;
---    local focusPos = iaplayer:getFocus();
---    local iaPos = iaplayer:getPos();
-
---    if (focusPos:getX() == -1 and focusPos:getY() == -1) then
---        posSeen = {};
---        fimp = findFirstImpasse(iaPos);
---        action = math.random(LEFT, DOWN);
---    else
---        action, fimp = waitBombOrMove(iaplayer, function (possibMove, nbPossib)
---            if (nbPossib > 0) then
---                return possibMove[math.random(1, nbPossib)];
---            end
---            return math.random(LEFT, DOWN);
---        end);
---    end
-
---    if (fimp ~= nil) then
---        iaplayer:setFocus(fimp);
---    end
     return (runIa(iaplayer, function (possibMove, nbPossib)
         if (nbPossib > 0) then
             return possibMove[math.random(1, nbPossib)];
