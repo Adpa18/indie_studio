@@ -269,6 +269,7 @@ void    GameManager::onGame()
     std::vector<ACharacter *>::iterator it = characters.begin();
     size_t nb_dead = 0;
     ACharacter *winner = NULL;
+
     while (it != characters.end())
     {
         if (!(*it)->isDead())
@@ -277,7 +278,9 @@ void    GameManager::onGame()
             winner = (*it);
         }
         else
+        {
             ++nb_dead;
+        }
         ++it;
     }
     if (nb_dead >= characters.size() -1) {

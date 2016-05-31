@@ -9,9 +9,12 @@
 //
 
 #include <iostream>
+#include <MineBomb.hpp>
+#include <Explosion.hpp>
+#include <TrackerBomb.hpp>
 #include "../include/GameObjectTimeContainer.hpp"
 
-GameObjectTimeContainer	*GameObjectTimeContainer::instance = NULL;
+GameObjectTimeContainer *GameObjectTimeContainer::instance = NULL;
 
 GameObjectTimeContainer::GameObjectTimeContainer()
 {
@@ -20,69 +23,74 @@ GameObjectTimeContainer::GameObjectTimeContainer()
 
 GameObjectTimeContainer::~GameObjectTimeContainer()
 {
-  
+
 }
 
 GameObjectTimeContainer *GameObjectTimeContainer::SharedInstance()
 {
-  if (instance == NULL)
+    if (instance == NULL)
     {
-      instance = new GameObjectTimeContainer();
+        instance = new GameObjectTimeContainer();
     }
-  return (instance);
+    return (instance);
 }
 
-void				GameObjectTimeContainer::add(AGameObject *obj)
+void                GameObjectTimeContainer::add(AGameObject *obj)
 {
-  container.push_back(obj);
+    container.push_back(obj);
 }
 
-void				GameObjectTimeContainer::timerStop()
+void                GameObjectTimeContainer::timerStop()
 {
-  std::list<AGameObject *>::iterator	it = container.begin();
+    std::list<AGameObject *>::iterator it = container.begin();
 
-  while (it != container.end())
+    while (it != container.end())
     {
-      (*it)->wait();
-      ++it;
-    }
-}
-
-void				GameObjectTimeContainer::remove(AGameObject *obj)
-{
-  std::list<AGameObject *>::iterator	it = container.begin();
-
-  while (it != container.end())
-    {
-      if (*it == obj)
-	{
-	  it = container.erase(it);
-	}
-      else
-	++it;
+        (*it)->wait();
+        ++it;
     }
 }
 
-void				GameObjectTimeContainer::callTimeOutObjects()
+void                GameObjectTimeContainer::remove(AGameObject *obj)
 {
-  std::list<AGameObject *>::iterator	it = container.begin();
+    std::list<AGameObject *>::iterator it = container.begin();
 
-  while (it != container.end())
+    while (it != container.end())
     {
-      if (*it)
-	(*it)->updateTimeOut();
+        if (*it == obj)
+        {
+            it = container.erase(it);
+        }
+        else
+            ++it;
+    }
+}
 
-      if (*it && (*it)->isTimeOut())
-	{
-	  (*it)->dead();
-	  if ((*it)->isDestructible())
-	    {
-	      delete (*it);
-	      *it = NULL;
-	    }
-	  it = container.erase(it);
-      	}
-      else
-	++it;
+void                GameObjectTimeContainer::callTimeOutObjects()
+{
+    std::list<AGameObject *>::iterator it = container.begin();
+
+    while (it != container.end())
+    {
+        if (*it)
+            (*it)->updateTimeOut();
+
+        if (*it && (*it)->isTimeOut())
+        {
+            (*it)->dead();
+            if ((*it)->isDestructible())
+            {
+                delete (*it);
+                *it = NULL;
+                it = container.begin();
+            }
+            else
+                it = container.erase(it);
+//            it = container.begin();
+        }
+        else
+        {
+            ++it;
+        }
     }
 }

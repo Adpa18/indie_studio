@@ -66,6 +66,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 AGameObject::~AGameObject()
 {
   BomberMap::getMap()->remove(this);
+  GameObjectTimeContainer::SharedInstance()->remove(this);
   (*this)->remove();
 
     // this->dead();

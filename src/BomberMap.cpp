@@ -547,6 +547,7 @@ void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
       {0, -1}
   };
 
+//    std::cout << "\e[32mBomb at position: " << pos.X << ", " << pos.Y << "\e[0m" << std::endl;
   for (int i = 1, max = bomb->getPower(); i <= max; ++i)
     {
       std::vector<irr::core::vector2df>::iterator it = dir.begin();
@@ -555,10 +556,12 @@ void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
       while (it != dir.end())
 	{
 	  newpos = pos + *it * i;
+
+//        std::cout << "\e[33mnewpos(" << newpos.X << ", " << newpos.Y << ") = pos(" << pos.X << ", " << pos.Y << ") + dir(" << it->X << ", " << it->Y << ") * " << i << "\e[0m" << std::endl;
 	  if (newpos.Y >= size_side[_mapSize] || newpos.Y < 0
 	      || newpos.X >= size_side[_mapSize] || newpos.X < 0)
 	    {
-	      std::cout << "\e[31mtry de segfault\e[0m" << std::endl;
+	      std::cout << "\e[31mtry de segfault pos: (" << newpos.X << ", " << newpos.Y << ")\e[0m" << std::endl;
 	      ++it;
 	      continue;
 	    }
@@ -569,9 +572,13 @@ void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
 	      //                std::cout << "add a deflag at (" << newpos.X << ", " << newpos.Y << ")" << std::endl;
 	      tocheck = AGameObject::BOMB;
 	      ++it;
+//            std::cout << "\e[32mOK\e[0m" << std::endl;
 	    }
 	  else
-	    it = dir.erase(it);
+      {
+          it = dir.erase(it);
+//          std::cout << "\e[33mSkipped\e[0m" << std::endl;
+      }
 	}
     }
 }
@@ -714,7 +721,7 @@ void BomberMap::displayDangerMap() const {
   std::cout << ss.str();
 }
 
-irr::core::vector2df    BomberMap::canDropBombSafely(ABomb *todrop, const irr::core::vector2df &pos)
+irr::core::vector2df    BomberMap::simulateBombDrop(ABomb *todrop, const irr::core::vector2df &pos)
 {
   std::queue<irr::core::vector2df>    file;
   std::vector<irr::core::vector2df>   alreadySaw;
