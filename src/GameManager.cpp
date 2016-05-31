@@ -351,6 +351,8 @@ void    GameManager::willStartGame()
 
     characters.clear();
     m_winners.clear();
+    while (!tmp_ranking.empty())
+        tmp_ranking.pop();
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     int		i = 0;
@@ -379,6 +381,8 @@ void    GameManager::willStartGame()
 //        it = m_playerInfo.erase(it);
         ++i;
     }
+    if (m_gameOver)
+        destroyGameOver();
 
     // int	scorePos = 0;
 
