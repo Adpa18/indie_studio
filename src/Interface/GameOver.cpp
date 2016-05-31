@@ -10,7 +10,7 @@
 #include <stack>
 #include <list>
 #include <iostream>
-#include "GameOver.hpp"
+#include "../../include/GameOver.hpp"
 
 GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int>   &win, std::vector<ACharacter *> &chara, std::stack<ACharacter *> *ranking)
  : m_winners(win), characters(chara)
@@ -60,7 +60,11 @@ void GameOver::show() {
       ranking.push_back(std::make_pair((*it)->get_player(), count));
     }
     //IrrlichtController::getDevice()->getSceneManager()->drawAll();
-    IrrlichtController::getSceneManager()->setActiveCamera(camera);
+    if (camera)
+      IrrlichtController::getSceneManager()->setActiveCamera(camera);
+    else
+      std::cout << "camera NULL" << std::endl;
+
     camera->setPosition(irr::core::vector3df(-50, 25, 0));
     camera->setTarget(irr::core::vector3df(0, 25, 0));
     std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; } );
@@ -71,7 +75,7 @@ void GameOver::show() {
       {
         status = true;
         for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-          (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+	  (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
           if ((*it)->get_player() == ranking[0].first)
           {
             winner = ranking[0].first;

@@ -5,6 +5,9 @@
 #ifndef CPP_INDIE_STUDIO_GAMEOVER_HPP
 #define CPP_INDIE_STUDIO_GAMEOVER_HPP
 
+#include <vector>
+#include "ACharacter.hpp"
+#include <stack>
 
 class GameOver {
 private:
