@@ -29,12 +29,12 @@ GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int>   &
 
 GameOver::~GameOver() {
   skin->setFont(save_font);
-  for (std::vector<ACharacter *>::iterator it = characters.begin(); it !=  characters.end(); ++it) {
-    delete (*it);
-    characters.erase(it);
-    it = characters.begin();
-  }
-  delete characters[0];
+//  for (std::vector<ACharacter *>::iterator it = characters.begin(); it !=  characters.end(); ++it) {
+//    delete (*it);
+//    characters.erase(it);
+//    it = characters.begin();
+//  }
+//  delete characters[0];
 }
 
 void GameOver::show() {
