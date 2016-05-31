@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Sun May 22 17:39:07 2016 Victor Gouet
+// Last update Tue May 31 20:40:39 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -61,6 +61,11 @@ void				GameObjectTimeContainer::remove(AGameObject *obj)
       else
 	++it;
     }
+}
+
+void				GameObjectTimeContainer::removeAll()
+{
+  container.clear();
 }
 
 void				GameObjectTimeContainer::callTimeOutObjects()

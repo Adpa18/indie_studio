@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Tue May 31 11:47:46 2016 Victor Gouet
+// Last update Tue May 31 20:41:40 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -344,6 +344,8 @@ void    GameManager::willStartGame()
 {
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
+  GameObjectTimeContainer::SharedInstance()->removeAll();
+
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");
     SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
