@@ -89,8 +89,8 @@ void GameOver::show()
                 }
                 ++i;
             }
-            ranking.push_back(std::make_pair((*it)->get_player(), count));
         }
+        ranking.push_back(std::make_pair((*it)->get_player(), count));
     }
 //<<<<<<< HEAD
 //

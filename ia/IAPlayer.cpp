@@ -116,7 +116,8 @@ void	        IAPlayer::serialize(irr::io::IXMLWriter *xmlr) const
 IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, const std::string &mesh, const std::string &texture, int player, const std::string &diff) :
     ACharacter(name, pos, mesh, texture, player),
     behaviour(diff),
-    focus(pos.X, pos.Y)
+    focus(pos.X, pos.Y),
+    bombRate(0)
 {
 }
 

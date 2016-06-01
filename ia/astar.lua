@@ -54,8 +54,11 @@ end
 function getHeuristique(pos, focus, cost)
     local dist = math.sqrt(math.pow(focus:getX() - pos:getX(), 2) + math.pow(focus:getY() - pos:getY(), 2)) + cost;
 
+    if (canMoveOnPos(pos) == false) then
+        return -10;
+    end
     if (canMoveSafelyOnPos(pos)) then
-        return dist + 1;
+        return dist + 2;
     end
     return dist;
 end
@@ -109,7 +112,7 @@ function astarGetNextPos(currPos, focus)
                 local heur = getHeuristique(posToCheck, focus, cost);
 
                 if (alreadySaw(posToCheck) == false) then
-                    if (lower.euri > heur) then
+                    if (lower.euri < heur) then
                         if (lower.pos ~= nil) then
                             Stack.push(saveStack, lower.pos);
                         end

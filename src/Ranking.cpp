@@ -37,14 +37,14 @@ bool Ranking::isTheEndOfTheGame(ACharacter *winner, size_t nbDeads)
 {
     if (nbDeads >= m_nbplayers - 1)
     {
-        if (winner)
-        {
-            addWinner(winner);
-        }
-        else
+        if (nbDeads == m_nbplayers)
         {
             clear();
             m_winners.push_back(-1);
+        }
+        else if (winner)
+        {
+            addWinner(winner);
         }
         return (true);
     }
@@ -94,11 +94,7 @@ void Ranking::clear(void)
         m_rankedPlayers.pop();
     }
     m_nbplayers = 0;
-    if (m_gameover)
-    {
-        delete(m_gameover);
-        m_gameover = NULL;
-    }
+    destroyGameOver();
 }
 
 void Ranking::displayRankingScreen(std::vector<ACharacter *> &chara)
