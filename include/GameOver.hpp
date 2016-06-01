@@ -9,48 +9,35 @@
 #include "ACharacter.hpp"
 #include <stack>
 
+class Ranking;
+
 class GameOver
 {
 private:
-/*<<<<<<< HEAD
-    bool                         status;
-    irr::scene::ICameraSceneNode *camera;
-    const std::vector<int>       &m_winners;
-    std::vector<ACharacter *>    &characters;
-    std::stack<ACharacter *>     *tmp_ranking;
-    irr::gui::IGUIEnvironment *env;
-    irr::gui::IGUISkin        *skin;
-    irr::gui::IGUIFont        *save_font;
-    irr::gui::IGUIFont        *font;
-    irr::gui::IGUIStaticText *st_text;
+    std::vector<ACharacter *> &m_characters;
+    Ranking                   *m_ranking;
+    bool                      m_status;
+    irr::gui::IGUIEnvironment *m_env;
+    irr::gui::IGUISkin        *m_skin;
+    irr::gui::IGUIFont        *m_save_font;
+    irr::gui::IGUIFont        *m_font;
+    irr::gui::IGUIStaticText  *m_st_text;
+    //    const std::vector<int>              &m_winners;
+    //  std::stack<ACharacter *>            *tmp_ranking;
 
 public:
-    GameOver(irr::scene::ICameraSceneNode *camera, const std::vector<int> &m_winners,
-             std::vector<ACharacter *> &characters, std::stack<ACharacter *> *tmp_ranking);
+    GameOver(Ranking *ranking, std::vector<ACharacter *> &characters);
 
     ~GameOver();
 
+public:
     void show();
 
     bool getStatus() const;
-=======*/
-  bool                                status;
-  const std::vector<int>              &m_winners;
-  std::vector<ACharacter *>     &characters;
-  std::stack<ACharacter *>            *tmp_ranking;
-  irr::gui::IGUIEnvironment* env;
-  irr::gui::IGUISkin* skin;
-  irr::gui::IGUIFont* font;
-  irr::gui::IGUIFont* save_font;
-  irr::gui::IGUIStaticText *st_text;
 
-public:
-  GameOver(const std::vector<int> &m_winners,
-             std::vector<ACharacter *> &characters,
-             std::stack<ACharacter *> *tmp_ranking);
-  ~GameOver();
-  void show();
-  bool getStatus() const;
+private:
+    int dispFinalWin(std::vector<ACharacter *> const &podium);
+    int dispCurrWin(std::vector<ACharacter *> const &podium);
 };
 
 

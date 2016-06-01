@@ -14,5 +14,6 @@ int	main()
 {
   GameManager::SharedInstance()->run();
   delete(GameManager::SharedInstance());
+  IrrlichtController::getDevice()->drop();
   return (0);
 }

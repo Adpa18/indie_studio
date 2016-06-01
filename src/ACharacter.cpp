@@ -81,6 +81,8 @@ void ACharacter::reset()
   life = 1;
   bombPass = false;
   _dead = false;
+    if (this->item)
+        delete(item);
   this->item = NULL;
   _arrived = true;
   _last_act = irr::core::vector2df(0, 0);

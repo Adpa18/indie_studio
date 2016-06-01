@@ -63,7 +63,6 @@ GameManager::~GameManager()
     delete uiEventReceiver;
     delete uiManager;
     delete eventGame;
-    IrrlichtController::getDevice()->drop();
     delete SoundManager::getManager();
 }
 
