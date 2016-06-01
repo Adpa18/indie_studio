@@ -268,8 +268,7 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
-  return (false);
-  // return (_dead);
+   return (_dead);
 }
 
 int		ACharacter::getScore() const
