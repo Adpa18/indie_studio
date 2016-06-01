@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Wed Jun  1 20:51:57 2016 Victor Gouet
+// Last update Thu Jun  2 00:08:47 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -64,7 +64,9 @@ void                        Wall::dead()
   int			i;
   int			r;
   int			nbBonus;
-  
+
+  if (_state == Invicible || _state == Edge)
+    return ;
   r = rand() % 2;
   if (r == 1)
     {

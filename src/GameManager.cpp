@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed Jun  1 20:01:32 2016 Victor Gouet
+// Last update Thu Jun  2 00:05:26 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -286,6 +286,9 @@ void    GameManager::addDeadPlayer(ACharacter *player)
     playerRanking.addPlayerToRank(player);
 }
 
+
+#include "../include/WallOfEnd.hpp"
+
 void    GameManager::willStartGame()
 {
   GameObjectTimeContainer::SharedInstance()->removeAll();
@@ -293,7 +296,7 @@ void    GameManager::willStartGame()
   if (wallOfDead)
     delete wallOfDead;
   // TODO METTRE UN TIMER EN PLEIN MILIEU DE l ECRAN
-  wallOfDead = new WallOfDead(120);
+  wallOfDead = new WallOfDead(10);
 
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");
@@ -334,6 +337,7 @@ void    GameManager::willStartGame()
     playerRanking.setNbPlayers(characters.size());
     activeCam(GameManager::GameCamera::GAME_CAMERA);
     BomberMap::getMap()->refreshCamera();
+    // new WallOfEnd(irr::core::vector2df(1, 1));
 }
 
 void    GameManager::willStartMenu()

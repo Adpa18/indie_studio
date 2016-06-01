@@ -5,11 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:15:48 2016 Victor Gouet
-// Last update Wed Jun  1 20:03:08 2016 Victor Gouet
+// Last update Wed Jun  1 23:52:32 2016 Victor Gouet
 //
 
 #include <iostream>
 #include "../include/WallOfDead.hpp"
+#include "../include/WallOfEnd.hpp"
 #include "../include/Texture.hpp"
 #include "../include/BomberMap.hpp"
 
@@ -38,6 +39,7 @@ void		WallOfDead::resetPos()
 {
   _y1 = _pos;
   _y2 = _pos;
+  // BomberMap::getMap()->getSize() - 1 - _pos
   _y3 = BomberMap::getMap()->getSize() - 1 - _pos;
   _y4 = BomberMap::getMap()->getSize() - 1 - _pos;
 }
@@ -48,34 +50,43 @@ void		WallOfDead::createWallOfDead()
 
   if (_y1 < size - _pos - 1)
     {
-      new Explosion(irr::core::vector2df(_y1, _pos),
-		    BomberManTexture::getModel("fire").texture, 100);
+      // LEFT TO RIGHT
+      new WallOfEnd(irr::core::vector2df(_y1, _pos));
+      // new Explosion(irr::core::vector2df(_y1, _pos),
+      // 		    BomberManTexture::getModel("fire").texture, 100);
       ++_y1;
     }
   else if (_y2 < size - 1 - _pos)
     {
-      new Explosion(irr::core::vector2df(size - 1 - _pos, _y2),
-		    BomberManTexture::getModel("fire").texture, 100);
+      // BOT TO TOP
+      new WallOfEnd(irr::core::vector2df(size - 1 - _pos, _y2));
+      // new Explosion(irr::core::vector2df(size - 1 - _pos, _y2),
+      // 		    BomberManTexture::getModel("fire").texture, 100);
       ++_y2;
     }
   else if (_y3 > _pos)
     {
-      new Explosion(irr::core::vector2df(_y3, size - 1 - _pos),
-		    BomberManTexture::getModel("fire").texture, 100);
+      // RIGHT TO LEFT
+      new WallOfEnd(irr::core::vector2df(_y3, size - 1 - _pos));
+      // new Explosion(irr::core::vector2df(_y3, size - 1 - _pos),
+      // 		    BomberManTexture::getModel("fire").texture, 100);
       --_y3;
     }
 
   else if (_y4 > _pos)
     {
-      new Explosion(irr::core::vector2df(_pos, _y4),
-		    BomberManTexture::getModel("fire").texture, 100);
+      // TOP TO BOT
+      new WallOfEnd(irr::core::vector2df(_pos, _y4));
+      // new Explosion(irr::core::vector2df(_pos, _y4),
+      // 		    BomberManTexture::getModel("fire").texture, 100);
       --_y4;
     }
 
   if (_y1 == size - _pos - 1 && _y2 == size - 1 - _pos && _y3 == _pos && _y4 == _pos)
     {
+       _pos = _pos + WallOfDead::timerSpawn;
       resetPos();
-      _pos = _pos + WallOfDead::timerSpawn;
+     
     }
 }
 
