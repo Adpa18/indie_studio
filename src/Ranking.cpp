@@ -54,6 +54,7 @@ bool Ranking::isTheEndOfTheGame(ACharacter *winner, size_t nbDeads)
 void Ranking::addWinner(ACharacter *winner)
 {
     addWinner(winner->getType());
+    addPlayerToRank(winner);
 }
 
 void Ranking::addWinner(int playerId)
