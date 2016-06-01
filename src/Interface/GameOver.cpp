@@ -34,7 +34,8 @@ GameOver::~GameOver() {
     characters.erase(it);
     it = characters.begin();
   }
-  delete characters[0];
+  if (characters[0])
+    delete characters[0];
 }
 
 void GameOver::show() {
@@ -45,6 +46,7 @@ void GameOver::show() {
   ranking.push_back(std::make_pair(-1, -1));
     for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it)
     {
+      (*it)->getSceneNode()->setScale(irr::core::vector3df(1, 1, 1));
       (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
       int count = 0;
       i = 0;
