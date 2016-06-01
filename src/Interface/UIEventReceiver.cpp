@@ -24,7 +24,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
             }
         }
     }
-    for (std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>>::const_iterator it = EventGame::_keycodes.begin(); it != EventGame::_keycodes.end(); ++it)
+    for (std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>>::const_iterator it = EventGame::_keycodes.begin();
+         it != EventGame::_keycodes.end(); ++it)
     {
         m_keymaps.push_back(new KeysController(*it));
     }
@@ -115,10 +116,12 @@ void UIEventReceiver::DisplayMainMenu()
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
 
+    //todo clear player info
+    GameManager::SharedInstance()->ClearPlayers();
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));
     img->setScaleImage(true);
-    m_boxContainer = new PlayerSelectionBoxContainer(&m_manager);
+    m_boxContainer = new PlayerSelectionBoxContainer(&m_manager, this);
 }
 
 
@@ -248,6 +251,12 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
 {
     if (event_copy.EventType == irr::EET_KEY_INPUT_EVENT)
     {
+        // Updates the containers
+        if (event_copy.KeyInput.PressedDown && m_boxContainer != nullptr)
+        {
+            m_boxContainer->OnKeyPressed(event_copy.KeyInput.Key);
+        }
+
         switch (event_copy.KeyInput.Key)
         {
             case irr::KEY_ESCAPE:
@@ -274,7 +283,8 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     fptr = &UIEventReceiver::DisplayMainMenu;
                     return HANDELD;
                 }
-                else if (GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
+                else if (GameManager::SharedInstance()->getGameOver() &&
+                        GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
                          event_copy.KeyInput.PressedDown)
                 {
                     if (!GameManager::SharedInstance()->getGameOver()->getStatus())
@@ -282,12 +292,13 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                         BomberMap::newMap("./media/smallMap/map1.xml");
                         BomberMap::getMap()->genMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
-                        GameManager::SharedInstance()->setFptr(&GameManager::willRestartGame);
+                        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                         GameManager::SharedInstance()->setGameState(GameManager::PLAY);
                     }
                     else
                     {
-                        delete GameManager::SharedInstance()->getGameOver();
+//                        delete GameManager::SharedInstance()->getGameOver();
+                        GameManager::SharedInstance()->destroyGameOver();
                         GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
                         return HANDELD;
@@ -372,6 +383,13 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     m_boxContainer->PlayerJoin(2);
                     return HANDELD;
+                }
+                break;
+
+            case irr::KEY_KEY_E:
+                if (m_boxContainer != nullptr && event_copy.KeyInput.PressedDown)
+                {
+                    m_boxContainer->KeySelect(2);
                 }
                 break;
 
@@ -606,6 +624,15 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
+        // Opens the key bind menu
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->KeySelect(playerID);
+            }
+        }
+
         // Navigates in menus
         if (m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
@@ -638,3 +665,11 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
     }
 }
 
+MotionController const *UIEventReceiver::GetJoystick(int id) const
+{
+    if (m_joysticks.find(id) == m_joysticks.end())
+    {
+        return nullptr;
+    }
+    return m_joysticks[id];
+}

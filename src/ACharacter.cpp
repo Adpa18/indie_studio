@@ -63,7 +63,11 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   // FragBomb
   // TrackerBomb
   
-  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
   // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());

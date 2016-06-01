@@ -24,6 +24,8 @@ public:
     void SelectPrev();
     void Update();
     void OnSelect();
+    void OnKeyPress(irr::EKEY_CODE key);
+    bool IsSelecting() const;
 
 public:
     void SetActive(bool bActive) const;
@@ -31,6 +33,7 @@ public:
 
 private:
     void CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Menu elemID);
+    void UpdateElements();
 
 private:
     UIManager *m_manager;

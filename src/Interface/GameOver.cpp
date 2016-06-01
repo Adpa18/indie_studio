@@ -10,12 +10,13 @@
 #include <stack>
 #include <list>
 #include <iostream>
-#include "GameOver.hpp"
+#include <BomberMap.hpp>
+#include <GameManager.hpp>
+#include "../../include/GameOver.hpp"
 
-GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int>   &win, std::vector<ACharacter *> &chara, std::stack<ACharacter *> *ranking)
+GameOver::GameOver(const std::vector<int>   &win, std::vector<ACharacter *> &chara, std::stack<ACharacter *> *ranking)
  : m_winners(win), characters(chara)
 {
-  camera = cam;
   tmp_ranking = ranking;
   env = IrrlichtController::getDevice()->getGUIEnvironment();
   skin = env->getSkin();
@@ -31,11 +32,7 @@ GameOver::~GameOver() {
   skin->setFont(save_font);
   for (std::vector<ACharacter *>::iterator it = characters.begin(); it !=  characters.end(); ++it) {
     delete (*it);
-    characters.erase(it);
-    it = characters.begin();
   }
-  if (characters[0])
-    delete characters[0];
 }
 
 void GameOver::show() {
@@ -61,10 +58,10 @@ void GameOver::show() {
       }
       ranking.push_back(std::make_pair((*it)->get_player(), count));
     }
-    //IrrlichtController::getDevice()->getSceneManager()->drawAll();
-    IrrlichtController::getSceneManager()->setActiveCamera(camera);
+    irr::scene::ICameraSceneNode *camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::MAIN_MENU_CAM);
     camera->setPosition(irr::core::vector3df(-50, 25, 0));
     camera->setTarget(irr::core::vector3df(0, 25, 0));
+    GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
     std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; } );
     int winner = -1;
     if (ranking[0].first != -1 && !tmp_ranking->empty())
@@ -73,7 +70,7 @@ void GameOver::show() {
       {
         status = true;
         for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-          (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
+	  (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
           if ((*it)->get_player() == ranking[0].first)
           {
             winner = ranking[0].first;

@@ -344,7 +344,7 @@ int IAPlayer::simulateBombDrop(lua_State *state)
 {
     IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
 
-    irr::core::vector2df    fallbackPos = BomberMap::getMap()->canDropBombSafely(thisptr->getBombContainer()->getBomb(), thisptr->getMapPos());
+    irr::core::vector2df    fallbackPos = BomberMap::getMap()->simulateBombDrop(thisptr->getBombContainer()->getBomb(), thisptr->getMapPos());
     if (fallbackPos == irr::core::vector2df(-1, -1))
         return (0);
     Lua::LuaClass<irr::core::vector2df> toret(fallbackPos);

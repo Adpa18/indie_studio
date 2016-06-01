@@ -5,11 +5,13 @@
 #ifndef CPP_INDIE_STUDIO_GAMEOVER_HPP
 #define CPP_INDIE_STUDIO_GAMEOVER_HPP
 
+#include <vector>
+#include "ACharacter.hpp"
+#include <stack>
 
 class GameOver {
 private:
   bool                                status;
-  irr::scene::ICameraSceneNode        *camera;
   const std::vector<int>              &m_winners;
   std::vector<ACharacter *>     &characters;
   std::stack<ACharacter *>            *tmp_ranking;
@@ -20,8 +22,7 @@ private:
   irr::gui::IGUIStaticText *st_text;
 
 public:
-  GameOver(irr::scene::ICameraSceneNode *camera,
-             const std::vector<int> &m_winners,
+  GameOver(const std::vector<int> &m_winners,
              std::vector<ACharacter *> &characters,
              std::stack<ACharacter *> *tmp_ranking);
   ~GameOver();

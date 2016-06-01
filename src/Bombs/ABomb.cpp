@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Wed May 25 22:40:28 2016 Victor Gouet
+// Last update Wed Jun  1 12:10:09 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -111,7 +111,7 @@ void			ABomb::move(double speed)
 
 void			ABomb::updateTimeOut()
 {
-  (*this)->setScale((*this)->getScale() + 0.008);
+  // (*this)->setScale((*this)->getScale() + 0.008);
   move();
 }
 
@@ -125,7 +125,7 @@ void                        ABomb::dead()
       willExplose();
       disable();
     }
-  (*this)->setScale(irr::core::vector3df(1, 1, 1));
+  // (*this)->setScale(irr::core::vector3df(1, 1, 1));
 }
 
 bool			ABomb::isDestructible() const
@@ -147,7 +147,7 @@ void		ABomb::disable()
 void			ABomb::operator<<(irr::core::vector2df
 					  const &pos)
 {
-  (*this)->setScale(irr::core::vector3df(1, 1, 1));
+  // (*this)->setScale(irr::core::vector3df(1, 1, 1));
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   (*this)->setVisible(true);
   use = true;

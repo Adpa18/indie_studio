@@ -21,6 +21,8 @@ KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32>
         m_manager(uiManager),
         m_playerID(playerID)
 {
+    // TODO: implement key infos for motion controller
+    std::cout << "Other CTOR" << std::endl;
     m_controller = new MotionController(info);
     CreateListBox(pos, elemID);
 }
@@ -66,8 +68,29 @@ void KeySelectionBox::SetActive(bool bActive) const
 void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Menu elemID)
 {
     m_listBox = m_manager->GetEnv()->addListBox(pos, nullptr, elemID, true);
+    UpdateElements();
+}
+
+bool KeySelectionBox::IsActive() const
+{
+    return m_listBox->isVisible();
+}
+
+// TODO: send pressed key, forbid any action in selection mode
+void KeySelectionBox::OnSelect()
+{
+    if (!m_isSelecting)
+    {
+        m_isSelecting = true;
+        m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 255, 0, 0));
+    }
+}
+
+void KeySelectionBox::UpdateElements()
+{
     bool isFirst = true;
 
+    m_listBox->clear();
     KeysController *k = dynamic_cast<KeysController*>(m_controller);
     if (k != nullptr)
     {
@@ -85,25 +108,25 @@ void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Me
             }
         }
     }
-    m_listBox->addItem(L"QUIT KEY BIND MENU");
 }
 
-bool KeySelectionBox::IsActive() const
+void KeySelectionBox::OnKeyPress(irr::EKEY_CODE key)
 {
-    return m_listBox->isVisible();
-}
-
-// TODO: send pressed key, forbid any action in selection mode
-void KeySelectionBox::OnSelect()
-{
-    if (!m_isSelecting)
-    {
-        m_isSelecting = true;
-        m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 255, 0, 0));
-    }
-    else
+    if (m_isSelecting)
     {
         m_isSelecting = false;
         m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 0, 0, 0));
+
+        KeysController *k;
+        if ((k = dynamic_cast<KeysController*>(m_controller)) != nullptr)
+        {
+            k->BindAction(m_keys.front().GetAction(), key);
+        }
+        UpdateElements();
     }
+}
+
+bool KeySelectionBox::IsSelecting() const
+{
+    return m_isSelecting;
 }

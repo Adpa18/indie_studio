@@ -6,7 +6,6 @@
 #include <iostream>
 #include "../../include/PlayerSelectionBox.hpp"
 #include "../../include/Texture.hpp"
-#include "../../include/KeySelectionBox.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
                                        UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :
@@ -48,7 +47,16 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
     m_images.push_back("IAHard");
 
     // Box allowing to bind keys
-    m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID);
+    // If there is at least 1 joytick
+    if (m_container->GetEventReceiver()->GetJoystick(playerID - 1) != nullptr)
+    {
+        m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID,
+                                             m_container->GetEventReceiver()->GetJoystick(playerID - 1)->getInfo());
+    }
+    else
+    {
+        m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID);
+    }
     m_keySelection->SetActive(false);
 
     // Updates the selected character
@@ -232,7 +240,7 @@ PlayerInfo::IAStrength PlayerSelectionBox::GetIAStrength() const
 
 void PlayerSelectionBox::KeyBind() const
 {
-    if (!m_bIsIaPlayer)
+    if (!m_bIsIaPlayer && !m_keySelection->IsSelecting())
         m_keySelection->SetActive(!m_keySelection->IsActive());
 }
 
@@ -242,4 +250,10 @@ void PlayerSelectionBox::OnSelect()
     {
         m_keySelection->OnSelect();
     }
+}
+
+void PlayerSelectionBox::OnKeyPressed(irr::EKEY_CODE key)
+{
+    if (!m_bIsIaPlayer)
+        m_keySelection->OnKeyPress(key);
 }

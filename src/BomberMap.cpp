@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Mon May 30 19:36:06 2016 Victor Gouet
+// Last update Tue May 31 11:02:55 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -57,14 +57,14 @@ BomberMap::~BomberMap()
   while (it_o != _objects.end())
   {
     AGameObject	*obj = (*it_o).first;
-    if (!dynamic_cast<ACharacter *>(obj))
-    {
+//    if (!dynamic_cast<ACharacter *>(obj))
+//    {
       GameObjectTimeContainer::SharedInstance()->remove(obj);
       delete (obj);
       it_o = _objects.begin();
-    }
-    else
-      ++it_o;
+//    }
+//    else
+//      ++it_o;
   }
   // if (_camera)
   // {
@@ -349,8 +349,8 @@ void BomberMap::deserialize()
         _camera_pos.X = reader->getAttributeValueAsFloat("px");
         _camera_pos.Y = reader->getAttributeValueAsFloat("py");
         _camera_pos.Z = reader->getAttributeValueAsFloat("pz");
-	_camera = IrrlichtController::getSceneManager()->getActiveCamera();
-	_camera->setPosition(_camera_pos);
+	      _camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::GAME_CAMERA);
+	      _camera->setPosition(_camera_pos);
         // _camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, _camera_pos);
         _camera->setAspectRatio(19/9);
         _camera->setFOV(reader->getAttributeValueAsFloat("fov"));
@@ -547,28 +547,42 @@ void      BomberMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
       {0, -1}
   };
 
+//    std::cout << "\e[32mBomb at position: " << pos.X << ", " << pos.Y << "\e[0m" << std::endl;
   for (int i = 1, max = bomb->getPower(); i <= max; ++i)
-  {
-    std::vector<irr::core::vector2df>::iterator it = dir.begin();
-
-//        std::cout << "range " << i << std::endl;
-    while (it != dir.end())
     {
-      newpos = pos + *it * i;
-      int &tocheck = _danger_map[static_cast<int>(newpos.Y)][static_cast<int>(newpos.X)];
-      if (tocheck != AGameObject::BLOCK && tocheck != AGameObject::OTHER)
+      std::vector<irr::core::vector2df>::iterator it = dir.begin();
+
+      //        std::cout << "range " << i << std::endl;
+      while (it != dir.end())
+	{
+	  newpos = pos + *it * i;
+
+//        std::cout << "\e[33mnewpos(" << newpos.X << ", " << newpos.Y << ") = pos(" << pos.X << ", " << pos.Y << ") + dir(" << it->X << ", " << it->Y << ") * " << i << "\e[0m" << std::endl;
+	  if (newpos.Y >= size_side[_mapSize] || newpos.Y < 0
+	      || newpos.X >= size_side[_mapSize] || newpos.X < 0)
+	    {
+	      std::cout << "\e[31mtry de segfault pos: (" << newpos.X << ", " << newpos.Y << ")\e[0m" << std::endl;
+	      ++it;
+	      continue;
+	    }
+
+	  int &tocheck = _danger_map[static_cast<int>(newpos.Y)][static_cast<int>(newpos.X)];
+	  if (tocheck != AGameObject::BLOCK && tocheck != AGameObject::OTHER)
+	    {
+	      //                std::cout << "add a deflag at (" << newpos.X << ", " << newpos.Y << ")" << std::endl;
+	      tocheck = AGameObject::BOMB;
+	      ++it;
+//            std::cout << "\e[32mOK\e[0m" << std::endl;
+	    }
+	  else
       {
-//                std::cout << "add a deflag at (" << newpos.X << ", " << newpos.Y << ")" << std::endl;
-        tocheck = AGameObject::BOMB;
-        ++it;
+          it = dir.erase(it);
+//          std::cout << "\e[33mSkipped\e[0m" << std::endl;
       }
-      else
-        it = dir.erase(it);
+	}
     }
-  }
 }
 
-//todo regarder pourquoi la map n'est pas actualisées dans certains cas de fin d'explosion
 void BomberMap::refreshDangerMap(void)
 {
   irr::core::vector2df        pos;
@@ -707,7 +721,7 @@ void BomberMap::displayDangerMap() const {
   std::cout << ss.str();
 }
 
-irr::core::vector2df    BomberMap::canDropBombSafely(ABomb *todrop, const irr::core::vector2df &pos)
+irr::core::vector2df    BomberMap::simulateBombDrop(ABomb *todrop, const irr::core::vector2df &pos)
 {
   std::queue<irr::core::vector2df>    file;
   std::vector<irr::core::vector2df>   alreadySaw;
@@ -747,4 +761,21 @@ irr::core::vector2df    BomberMap::canDropBombSafely(ABomb *todrop, const irr::c
   }
   move(dynamic_cast<AGameObject *>(todrop), irr::core::vector2df(-1000, -1000));
   return lastFallBack;
+}
+
+void BomberMap::removeBlocks()
+{
+  std::map<AGameObject*, irr::core::vector2df>::iterator it_o = _objects.begin();
+  while (it_o != _objects.end())
+  {
+    AGameObject	*obj = (*it_o).first;
+    if (!dynamic_cast<ACharacter *>(obj))
+    {
+      GameObjectTimeContainer::SharedInstance()->remove(obj);
+      delete (obj);
+      it_o = _objects.begin();
+    }
+    else
+      ++it_o;
+  }
 }

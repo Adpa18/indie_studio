@@ -9,6 +9,7 @@
 #include "UIManager.hpp"
 
 class PlayerSelectionBox;
+class UIEventReceiver;
 
 /*
  * \brief Container managing all the player boxes in the GUI
@@ -16,7 +17,7 @@ class PlayerSelectionBox;
 class PlayerSelectionBoxContainer
 {
 public:
-    PlayerSelectionBoxContainer(UIManager *uiManager);
+    PlayerSelectionBoxContainer(UIManager *uiManager, UIEventReceiver *m_receiver);
     ~PlayerSelectionBoxContainer();
 
 public:
@@ -34,17 +35,22 @@ public:
     void SaveSelection();
     void KeyBind(int playerID) const;
     void KeySelect(int playerID) const;
+    void OnKeyPressed(irr::EKEY_CODE key);
+
+    UIEventReceiver const* GetEventReceiver() const;
 private:
 
 private:
     // Knows which box is selected by P1
     std::list<PlayerSelectionBox*> m_boxes;
     UIManager *m_manager;
+    UIEventReceiver *m_receiver;
     std::list<std::string> m_availableSkins;
     // Used to save the relative rotation of the P1
     bool m_joined[4] = {false, false, false, false};
     PlayerSelectionBox *m_boxList[4];
 };
 
+#include "UIEventReceiver.hpp"
 
 #endif //CPP_INDIE_STUDIO_PLAYERSELECTIONBOXCONTAINER_HPP
