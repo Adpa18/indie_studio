@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Tue May 31 20:40:39 2016 Victor Gouet
+// Last update Wed Jun  1 12:09:32 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -73,29 +73,30 @@ void				GameObjectTimeContainer::removeAll()
 
 void				GameObjectTimeContainer::callTimeOutObjects()
 {
-    std::list<AGameObject *>::iterator it = container.begin();
+  std::list<AGameObject *>::iterator it = container.begin();
 
-    while (it != container.end())
+  while (it != container.end())
     {
-        if (*it)
-            (*it)->updateTimeOut();
+      if (*it)
+	(*it)->updateTimeOut();
 
-        if (*it && (*it)->isTimeOut())
-        {
-            (*it)->dead();
-            if ((*it)->isDestructible())
-            {
-                delete (*it);
-                *it = NULL;
-                it = container.begin();
-            }
-            else
-                it = container.erase(it);
-//            it = container.begin();
-        }
-        else
-        {
-            ++it;
-        }
+      
+      if (*it && (*it)->isTimeOut())
+	{
+	  (*it)->dead();
+	  if ((*it)->isDestructible())
+	    {
+	      delete (*it);
+	      *it = NULL;
+	      it = container.begin();
+	    }
+	  else
+	    it = container.erase(it);
+	  //            it = container.begin();
+	}
+      else
+	{
+	  ++it;
+	}
     }
 }

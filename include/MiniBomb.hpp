@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:29:00 2016 Victor Gouet
-// Last update Fri May 20 20:04:44 2016 Victor Gouet
+// Last update Wed Jun  1 12:00:20 2016 Victor Gouet
 //
 
 #ifndef MINIBOMB_HPP_
@@ -24,7 +24,7 @@ public:
 public:
   virtual void	willExplose();
   virtual bool		isDestructible() const;
-  virtual void		disable();
+  // virtual void		disable();
 
 private:
     bool        killObjects(irr::core::vector2df const &pos);

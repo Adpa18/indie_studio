@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:31:36 2016 Victor Gouet
-// Last update Sun May 22 13:18:25 2016 Victor Gouet
+// Last update Wed Jun  1 12:11:19 2016 Victor Gouet
 //
 
 #include "../include/MiniBomb.hpp"
@@ -47,13 +47,13 @@ MiniBomb::MiniBomb(ABomb const *other) : ABomb(other)
 
 #include <iostream>
 
-void		MiniBomb::disable()
-{
-}
+// void		MiniBomb::disable()
+// {
+// }
 
 bool		MiniBomb::isDestructible() const
 {
-  return (true);
+  return (false);
 }
 
 void		MiniBomb::willExplose()
@@ -102,7 +102,7 @@ bool    MiniBomb::killObjects(irr::core::vector2df const &pos)
             if (type != AGameObject::BOOM
 		&& !obj->isObjectTimeOut()
 		&& obj->isDestructible()) {
-		delete obj;
+                delete obj;
             }
         }
         if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {

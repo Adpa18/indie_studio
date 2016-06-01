@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Tue May 31 20:41:40 2016 Victor Gouet
+// Last update Wed Jun  1 12:08:42 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -259,13 +259,9 @@ void    GameManager::onGame()
         uiEventReceiver->DisplayPauseMenu();
         return ;
     }
-    // if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
-    // {
-    //     BomberMap::getMap()->save();
-    // }
-
+   
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
-
+   
     std::vector<ACharacter *>::iterator it = characters.begin();
     size_t nb_dead = 0;
     ACharacter *winner = NULL;
@@ -274,8 +270,8 @@ void    GameManager::onGame()
     {
         if (!(*it)->isDead())
         {
-            (*it)->compute();
-            winner = (*it);
+	    (*it)->compute();
+	    winner = (*it);
         }
         else
         {
@@ -361,6 +357,7 @@ void    GameManager::willStartGame()
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     int		i = 0;
+
     eventGame->reset();
     for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ; ++it)
     {
@@ -371,7 +368,8 @@ void    GameManager::willStartGame()
                                               (*it)->GetMesh(),
                                               (*it)->GetTexture(),
                                               i + 1,
-                                              IAPlayer::getDifficultyFromCode((*it)->GetIAStrength())
+                                              IAPlayer::getDifficultyFromCode((*it)->GetIAStrength()
+	    								      )
             ));
         }
         else
