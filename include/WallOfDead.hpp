@@ -5,32 +5,38 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:14:10 2016 Victor Gouet
-// Last update Wed Jun  1 17:38:57 2016 Victor Gouet
+// Last update Wed Jun  1 19:49:07 2016 Victor Gouet
 //
 
 #ifndef WALLOFDEAD_HPP_
 # define WALLOFDEAD_HPP_
 
-# include "AGameObject.hpp"
 # include "Explosion.hpp"
 
-class	WallOfDead	: public AGameObject
+class	WallOfDead
 {
 public:
-  WallOfDead(irr::core::vector2df const &, int timeout);
+  WallOfDead(double timeout);
   virtual ~WallOfDead();
 
 public:
-  static void		createWallOfDead(int size, double);
-
-public:
-  virtual void          dead();
-  virtual bool		isDestructible() const;
-  virtual void		updateTimeOut();
-  virtual void	        serialize(irr::io::IXMLWriter *) const;
+  void		createWallOfDead();
+  bool		canDropWall() const;
 
 private:
-  irr::core::vector2df	pos;
+  void		resetPos();
+
+public:
+  static const double	timerSpawn;
+
+private:
+  double	_beginTimer;
+  mutable double	_timeOut;
+  int		_pos;
+  int		_y1;
+  int		_y2;
+  int		_y3;
+  int		_y4;
 };
 
 #endif

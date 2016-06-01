@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Wed May 25 14:39:08 2016 Victor Gouet
+// Last update Wed Jun  1 19:32:23 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -20,8 +20,9 @@
 # include "Player.hpp"
 # include "BomberMap.hpp"
 # include "PlayerInfo.hpp"
-#include "GameOver.hpp"
-#include "Ranking.hpp"
+# include "GameOver.hpp"
+# include "Ranking.hpp"
+# include "WallOfDead.hpp"
 
 class	GameManager
 {
@@ -117,6 +118,7 @@ private:
     std::list<PlayerInfo*> m_playerInfoUI;
 //    std::vector<int>         m_winners;
 //    std::stack<ACharacter *> tmp_ranking;
+  WallOfDead		*wallOfDead;
 
 private:
 //  GameOver                 *m_gameOver;
