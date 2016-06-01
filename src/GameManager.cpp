@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Tue May 31 20:41:40 2016 Victor Gouet
+// Last update Wed Jun  1 16:06:30 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -258,13 +258,11 @@ void    GameManager::onGame()
         uiEventReceiver->DisplayPauseMenu();
         return ;
     }
-    // if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_S))
-    // {
-    //     BomberMap::getMap()->save();
-    // }
 
+    
+   
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
-
+   
     std::vector<ACharacter *>::iterator it = characters.begin();
     size_t nb_dead = 0;
     ACharacter *winner = NULL;
@@ -273,8 +271,8 @@ void    GameManager::onGame()
     {
         if (!(*it)->isDead())
         {
-            (*it)->compute();
-            winner = (*it);
+	    (*it)->compute();
+	    winner = (*it);
         }
         else
         {
@@ -313,12 +311,14 @@ void    GameManager::addDeadPlayer(ACharacter *player)
 //    tmp_ranking.push(player);
 }
 
+#include "../include/WallOfDead.hpp"
 void    GameManager::willStartGame()
 {
     //BomberMap::newMap(BomberMap::Size::SMALL);
     //BomberMap::getMap()->genMap();
   GameObjectTimeContainer::SharedInstance()->removeAll();
 
+  WallOfDead::createWallOfDead(BomberMap::getMap()->getSize());
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");
     SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
@@ -331,18 +331,21 @@ void    GameManager::willStartGame()
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     int		i = 0;
+    int		u = 0;
+
     eventGame->reset();
     for (std::list<PlayerInfo *>::iterator	it = m_playerInfo.begin() ;  it != m_playerInfo.end() ; ++it)
     {
         if ((*it)->GetIsIA())
         {
-            characters.push_back(new IAPlayer((*it)->GetName(),
-                                              (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
-                                              (*it)->GetMesh(),
-                                              (*it)->GetTexture(),
-                                              i + 1,
-                                              IAPlayer::getDifficultyFromCode((*it)->GetIAStrength())
-            ));
+	      characters.push_back(new IAPlayer((*it)->GetName(),
+	      					(*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+	      					(*it)->GetMesh(),
+	      					(*it)->GetTexture(),
+	      					i + 1,
+	      					IAPlayer::getDifficultyFromCode((*it)->GetIAStrength()
+	      									)
+	      					));
         }
         else
         {
@@ -351,9 +354,7 @@ void    GameManager::willStartGame()
                                             (*it)->GetMesh(),
                                             (*it)->GetTexture(),
                                             i+1, *eventGame));
-        }
-//        delete (*it);
-//        it = m_playerInfo.erase(it);
+	}
         ++i;
     }
 //    if (m_gameOver)

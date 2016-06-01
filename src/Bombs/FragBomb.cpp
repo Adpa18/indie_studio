@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:22:17 2016 Victor Gouet
-// Last update Sun May 22 13:17:42 2016 Victor Gouet
+// Last update Wed Jun  1 15:18:06 2016 Victor Gouet
 //
 
 #include "../include/FragBomb.hpp"
@@ -124,13 +124,14 @@ bool    FragBomb::killObjects(irr::core::vector2df const &pos)
             continue;
         }
         type = (*it)->getType();
-        if (type != AGameObject::BLOCK && type != AGameObject::NONE) {
+        if (type != AGameObject::BLOCK && type != AGameObject::NONE && type != AGameObject::BOOM) {
             AGameObject *obj = (*it);
-            obj->dead();
-            if (type != AGameObject::BOOM &&
+	    obj->dead();
+	    if (type != AGameObject::BOOM &&
 		!obj->isObjectTimeOut()
 		&& obj->isDestructible()) {
                 delete obj;
+                // delete obj;
             }
         }
         if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {

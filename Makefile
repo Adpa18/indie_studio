@@ -68,6 +68,7 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_BONUS_DIR)BonusInvincible.cpp				\
 			$(SRC_BONUS_DIR)ItemThrow.cpp					\
 			$(SRC_BONUS_DIR)ItemMineBomb.cpp				\
+			$(SRC_DIR)WallOfDead.cpp					\
 
 OBJ			=	$(SRC:%cpp=%o)
 
