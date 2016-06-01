@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Wed Jun  1 14:54:07 2016 Matthieu Tavernier
+// Last update Wed Jun  1 20:51:57 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -105,11 +105,11 @@ void                        Wall::dead()
 	case 9:
 	  new BonusFragBomb(this->getMapPos());
 	  break;
-	case 10:
-	  new BonusAtomicBomb(this->getMapPos());
+        case 10:
+	  new ItemMineBomb(this->getMapPos());
 	  break;
 	case 11:
-	  new ItemMineBomb(this->getMapPos());
+	  new BonusAtomicBomb(this->getMapPos());
 	  break;
 	default:
 	  break;

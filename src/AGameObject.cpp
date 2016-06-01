@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Mon May 23 14:12:18 2016 Victor Gouet
+// Last update Wed Jun  1 20:25:19 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -194,12 +194,12 @@ void			      AGameObject::updateTimeOut()
 {
 }
 
-irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->()
+irr::scene::IAnimatedMeshSceneNode *AGameObject::operator->() const
 {
   return (_node);
 }
 
-irr::scene::IAnimatedMeshSceneNode *AGameObject::getSceneNode()
+irr::scene::IAnimatedMeshSceneNode *AGameObject::getSceneNode() const
 {
   return (_node);
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:22:17 2016 Victor Gouet
-// Last update Wed Jun  1 15:18:06 2016 Victor Gouet
+// Last update Wed Jun  1 20:33:38 2016 Victor Gouet
 //
 
 #include "../include/FragBomb.hpp"
@@ -41,8 +41,6 @@ FragBomb::FragBomb(ABomb const *other) : ABomb(other)
   vec = NULL;
   *this = other;
 }
-
-#include <iostream>
 
 void		FragBomb::willExplose()
 {

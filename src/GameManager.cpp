@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed Jun  1 18:34:35 2016 Victor Gouet
+// Last update Wed Jun  1 20:01:32 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -33,6 +33,7 @@ GameManager::GameManager()
     _state = PREV_MENU;
     uiManager = NULL;
     uiEventReceiver = NULL;
+    wallOfDead = NULL;
     eventGame = new EventGame();
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
     m_cameras[MENU_CAM_1] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr,
@@ -63,6 +64,8 @@ GameManager::~GameManager()
     delete uiEventReceiver;
     delete uiManager;
     delete eventGame;
+    if (wallOfDead)
+      delete wallOfDead;
     delete SoundManager::getManager();
 }
 
@@ -241,7 +244,13 @@ void    GameManager::onGame()
         return ;
     }
 
-    
+    if (wallOfDead)
+      {
+	if (wallOfDead->canDropWall())
+	  {
+	    wallOfDead->createWallOfDead();
+	  }
+      }
    
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
    
@@ -277,12 +286,14 @@ void    GameManager::addDeadPlayer(ACharacter *player)
     playerRanking.addPlayerToRank(player);
 }
 
-#include "../include/WallOfDead.hpp"
 void    GameManager::willStartGame()
 {
   GameObjectTimeContainer::SharedInstance()->removeAll();
 
-  // WallOfDead::createWallOfDead(BomberMap::getMap()->getSize(), 10);
+  if (wallOfDead)
+    delete wallOfDead;
+  // TODO METTRE UN TIMER EN PLEIN MILIEU DE l ECRAN
+  wallOfDead = new WallOfDead(120);
 
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");

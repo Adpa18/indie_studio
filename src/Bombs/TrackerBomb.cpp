@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 13 11:04:11 2016 Victor Gouet
-// Last update Wed Jun  1 15:18:49 2016 Victor Gouet
+// Last update Wed Jun  1 20:33:03 2016 Victor Gouet
 //
 
 #include "../include/TrackerBomb.hpp"
@@ -37,8 +37,6 @@ TrackerBomb::TrackerBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
-
-#include <iostream>
 
 void	TrackerBomb::updateTimeOut()
 {

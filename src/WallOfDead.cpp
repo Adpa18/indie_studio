@@ -5,78 +5,95 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:15:48 2016 Victor Gouet
-// Last update Wed Jun  1 18:32:37 2016 Victor Gouet
+// Last update Wed Jun  1 20:03:08 2016 Victor Gouet
 //
 
 #include <iostream>
 #include "../include/WallOfDead.hpp"
 #include "../include/Texture.hpp"
+#include "../include/BomberMap.hpp"
 
-WallOfDead::WallOfDead(irr::core::vector2df const &pos, int timeout)
-  : AGameObject(irr::core::vector2df(-3000, -3000),
-		BomberManTexture::getModel("fireBomb").mesh,
-		BomberManTexture::getModel("fireBomb").texture, AGameObject::OTHER, timeout),
-    pos(pos)
+const double	WallOfDead::timerSpawn = 1;
 
+WallOfDead::WallOfDead(double timeout)
 {
+  struct tm	y2k;
+  time_t	timer;
+  
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  _beginTimer = difftime(timer, mktime(&y2k));
+  _timeOut = timeout;
+  _pos = 1;
+  resetPos();
 }
 
 WallOfDead::~WallOfDead()
 {
 }
 
-void          WallOfDead::dead()
+void		WallOfDead::resetPos()
 {
-  std::cout << "call" << std::endl;
-  new Explosion(pos, BomberManTexture::getModel("fire").texture, 100);
+  _y1 = _pos;
+  _y2 = _pos;
+  _y3 = BomberMap::getMap()->getSize() - 1 - _pos;
+  _y4 = BomberMap::getMap()->getSize() - 1 - _pos;
 }
 
-bool		WallOfDead::isDestructible() const
+void		WallOfDead::createWallOfDead()
 {
-  return (true);
-}
+  int		size = BomberMap::getMap()->getSize();
 
-void		WallOfDead::updateTimeOut()
-{
-}
-
-void	        WallOfDead::serialize(irr::io::IXMLWriter *) const
-{
-}
-
-void		WallOfDead::createWallOfDead(int size, double appearAtTime)
-{
-  double	i;
-  int		pos;
-
-  i = appearAtTime;
-  pos = 1;
-  while (pos < size / 2)
+  if (_y1 < size - _pos - 1)
     {
-      for (int y = pos; y < size - pos - 1 ; ++y)
-      	{
-      	  new WallOfDead(irr::core::vector2df(y, pos), i);
-      	  ++i;
-      	}
-
-      for (int y = pos; y < size - 1 - pos ; ++y)
-      	{
-      	  new WallOfDead(irr::core::vector2df(size - 1 - pos, y), i);
-      	  ++i;
-      	}
-
-      for (int y = size - 1 - pos; y > pos ; --y)
-      	{
-      	  new WallOfDead(irr::core::vector2df(y, size - 1 - pos), i);
-      	  ++i;
-      	}
-
-      for (int y = size - 1 - pos; y > pos ; --y)
-      	{
-      	  new WallOfDead(irr::core::vector2df(pos, y), i);
-      	  ++i;
-      	}
-
-      ++pos;
+      new Explosion(irr::core::vector2df(_y1, _pos),
+		    BomberManTexture::getModel("fire").texture, 100);
+      ++_y1;
     }
+  else if (_y2 < size - 1 - _pos)
+    {
+      new Explosion(irr::core::vector2df(size - 1 - _pos, _y2),
+		    BomberManTexture::getModel("fire").texture, 100);
+      ++_y2;
+    }
+  else if (_y3 > _pos)
+    {
+      new Explosion(irr::core::vector2df(_y3, size - 1 - _pos),
+		    BomberManTexture::getModel("fire").texture, 100);
+      --_y3;
+    }
+
+  else if (_y4 > _pos)
+    {
+      new Explosion(irr::core::vector2df(_pos, _y4),
+		    BomberManTexture::getModel("fire").texture, 100);
+      --_y4;
+    }
+
+  if (_y1 == size - _pos - 1 && _y2 == size - 1 - _pos && _y3 == _pos && _y4 == _pos)
+    {
+      resetPos();
+      _pos = _pos + WallOfDead::timerSpawn;
+    }
+}
+
+bool		WallOfDead::canDropWall() const
+{
+  time_t	timer;
+  struct tm	y2k;
+  double	seconds;
+
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  seconds = difftime(timer, mktime(&y2k));
+  if ((seconds - _beginTimer) > _timeOut)
+    {
+      _timeOut += 1;
+      return (true);
+    }
+  return (false);
 }

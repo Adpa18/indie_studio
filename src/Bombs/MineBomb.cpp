@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 21:18:14 2016 Victor Gouet
-// Last update Wed Jun  1 15:18:23 2016 Victor Gouet
+// Last update Wed Jun  1 20:35:54 2016 Victor Gouet
 //
 
 #include "../include/MineBomb.hpp"
@@ -63,8 +63,6 @@ MineBomb::MineBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
-
-#include <iostream>
 
 void		MineBomb::disable()
 {

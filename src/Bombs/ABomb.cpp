@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Wed Jun  1 12:10:09 2016 Victor Gouet
+// Last update Wed Jun  1 20:35:27 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -111,7 +111,6 @@ void			ABomb::move(double speed)
 
 void			ABomb::updateTimeOut()
 {
-  // (*this)->setScale((*this)->getScale() + 0.008);
   move();
 }
 
@@ -125,7 +124,6 @@ void                        ABomb::dead()
       willExplose();
       disable();
     }
-  // (*this)->setScale(irr::core::vector3df(1, 1, 1));
 }
 
 bool			ABomb::isDestructible() const
@@ -147,23 +145,11 @@ void		ABomb::disable()
 void			ABomb::operator<<(irr::core::vector2df
 					  const &pos)
 {
-  // (*this)->setScale(irr::core::vector3df(1, 1, 1));
   then = IrrlichtController::getDevice()->getTimer()->getTime();
   (*this)->setVisible(true);
   use = true;
   this->setTimeOut(timeout);
   this->setPos(pos);
-//   irr::core::vector2df        mpos = this->getMapPos();
-//   for (int power = 1; power <= this->_power; ++power)
-//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(-power, 0), AGameObject::Type::BOOM);
-//   for (int power = 1; power <= this->_power; ++power)
-//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(power, 0), AGameObject::Type::BOOM);
-//   for (int power = 1; power <= this->_power; ++power)
-//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, -power), AGameObject::Type::BOOM);
-//   for (int power = 1; power <= this->_power; ++power)
-//      BomberMap::getMap()->setDangerAtPos(mpos + irr::core::vector2df(0, power), AGameObject::Type::BOOM);
-//    BomberMap::getMap()->setDangerAtPos(mpos, AGameObject::Type::BOMB);
-//   BomberMap::getMap()->displayDangerMap();
 }
 
 void			ABomb::setPower(int power)
