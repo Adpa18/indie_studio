@@ -10,28 +10,52 @@
 #include <stack>
 #include <list>
 #include <iostream>
+#include <BomberMap.hpp>
+#include <GameManager.hpp>
 #include "../../include/GameOver.hpp"
 
-GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int> &win, std::vector<ACharacter *> &chara,
-                   std::stack<ACharacter *> *ranking) :
-        status(false),
-        camera(cam),
-        m_winners(win),
-        characters(chara),
-        tmp_ranking(ranking),
-        env(IrrlichtController::getDevice()->getGUIEnvironment()),
-        skin(env->getSkin()),
-        save_font(env->getSkin()->getFont()),
-        font(env->getFont("./media/font/arcade_font.xml")),
-        st_text(NULL)
+//<<<<<<< HEAD
+//GameOver::GameOver(irr::scene::ICameraSceneNode *cam, const std::vector<int> &win, std::vector<ACharacter *> &chara,
+//                   std::stack<ACharacter *> *ranking) :
+//        status(false),
+//        camera(cam),
+//        m_winners(win),
+//        characters(chara),
+//        tmp_ranking(ranking),
+//        env(IrrlichtController::getDevice()->getGUIEnvironment()),
+//        skin(env->getSkin()),
+//        save_font(env->getSkin()->getFont()),
+//        font(env->getFont("./media/font/arcade_font.xml")),
+//        st_text(NULL)
+//{
+//    if (font)
+//        skin->setFont(font);
+//}
+//
+//GameOver::~GameOver()
+//{
+//    skin->setFont(save_font);
+//=======
+GameOver::GameOver(const std::vector<int>   &win, std::vector<ACharacter *> &chara, std::stack<ACharacter *> *ranking)
+ : m_winners(win), characters(chara)
 {
-    if (font)
-        skin->setFont(font);
+  tmp_ranking = ranking;
+  env = IrrlichtController::getDevice()->getGUIEnvironment();
+  skin = env->getSkin();
+  save_font = env->getSkin()->getFont();
+  font = env->getFont("./media/font/arcade_font.xml");
+  if (font)
+    skin->setFont(font);
+  st_text = NULL;
+  status = false;
 }
 
-GameOver::~GameOver()
-{
-    skin->setFont(save_font);
+GameOver::~GameOver() {
+  skin->setFont(save_font);
+//  for (std::vector<ACharacter *>::iterator it = characters.begin(); it !=  characters.end(); ++it) {
+//    delete (*it);
+//  }
+//>>>>>>> e5d65ab1b77a837519dee89dbaa94b416253f458
 }
 
 void GameOver::show()
@@ -43,34 +67,54 @@ void GameOver::show()
     ranking.push_back(std::make_pair(-1, -1));
     for (std::vector<ACharacter *>::const_iterator it     = characters.begin(); it != characters.end(); ++it)
     {
+        //<<<<<<< HEAD
+        //        (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
+        //        int count = 0;
+        //        i = 0;
+        //        while (i < size)
+        //=======
+        (*it)->getSceneNode()->setScale(irr::core::vector3df(1, 1, 1));
         (*it)->setMD3Animation(ACharacter::MD3_ANIMATION::STAY);
         int count = 0;
         i = 0;
         while (i < size)
         {
             if (m_winners[i] != -1)
+                //>>>>>>> e5d65ab1b77a837519dee89dbaa94b416253f458
             {
-                if ((*it)->get_player() == m_winners[i])
-                    ++count;
+                if (m_winners[i] != -1)
+                {
+                    if ((*it)->get_player() == m_winners[i])
+                        ++count;
+                }
+                ++i;
             }
-            ++i;
+            ranking.push_back(std::make_pair((*it)->get_player(), count));
         }
-        ranking.push_back(std::make_pair((*it)->get_player(), count));
     }
-
-    if (camera)
-        IrrlichtController::getSceneManager()->setActiveCamera(camera);
-    else
-        std::cout << "camera NULL" << std::endl;
-
+//<<<<<<< HEAD
+//
+//    if (camera)
+//        IrrlichtController::getSceneManager()->setActiveCamera(camera);
+//    else
+//        std::cout << "camera NULL" << std::endl;
+//
+//    camera->setPosition(irr::core::vector3df(-50, 25, 0));
+//    camera->setTarget(irr::core::vector3df(0, 25, 0));
+//    std::sort(ranking.begin(), ranking.end(), [](std::pair<int, int> p1, std::pair<int, int> p2)
+//        {
+//            return p1.second > p2.second;
+//        });
+//
+//    int                                            winner = -1;
+//=======
+    irr::scene::ICameraSceneNode *camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::MAIN_MENU_CAM);
     camera->setPosition(irr::core::vector3df(-50, 25, 0));
     camera->setTarget(irr::core::vector3df(0, 25, 0));
-    std::sort(ranking.begin(), ranking.end(), [](std::pair<int, int> p1, std::pair<int, int> p2)
-        {
-            return p1.second > p2.second;
-        });
-
-    int                                            winner = -1;
+    GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
+    std::sort(ranking.begin(), ranking.end(),  [] (std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; } );
+    int winner = -1;
+//>>>>>>> e5d65ab1b77a837519dee89dbaa94b416253f458
     if (ranking[0].first != -1 && !tmp_ranking->empty())
     {
         if (m_winners.size() > 2 && ranking[0].second != ranking[1].second)

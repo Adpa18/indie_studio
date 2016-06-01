@@ -101,10 +101,10 @@ void Ranking::clear(void)
     }
 }
 
-void Ranking::displayRankingScreen(irr::scene::ICameraSceneNode *cam, std::vector<ACharacter *> &chara)
+void Ranking::displayRankingScreen(std::vector<ACharacter *> &chara)
 {
     if (!m_gameover)
-        m_gameover = new GameOver(cam, m_winners, chara, &m_rankedPlayers);
+        m_gameover = new GameOver(m_winners, chara, &m_rankedPlayers);
     m_gameover->show();
 }
 

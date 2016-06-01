@@ -349,8 +349,8 @@ void BomberMap::deserialize()
         _camera_pos.X = reader->getAttributeValueAsFloat("px");
         _camera_pos.Y = reader->getAttributeValueAsFloat("py");
         _camera_pos.Z = reader->getAttributeValueAsFloat("pz");
-	_camera = IrrlichtController::getSceneManager()->getActiveCamera();
-	_camera->setPosition(_camera_pos);
+	      _camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::GAME_CAMERA);
+	      _camera->setPosition(_camera_pos);
         // _camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, _camera_pos);
         _camera->setAspectRatio(19/9);
         _camera->setFOV(reader->getAttributeValueAsFloat("fov"));

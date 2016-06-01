@@ -19,7 +19,7 @@ public:
 
 public:
     bool isTheEndOfTheGame(ACharacter *winner, size_t nbDeads);
-    void displayRankingScreen(irr::scene::ICameraSceneNode *cam, std::vector<ACharacter *> &chara);
+    void displayRankingScreen(std::vector<ACharacter *> &chara);
 
 public:
     void addWinner(ACharacter *winner);

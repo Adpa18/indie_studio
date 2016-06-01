@@ -87,6 +87,7 @@ void ACharacter::reset()
   anime = irr::scene::EMAT_STAND;
   moveSpeed = BASICSPEED;
   then = IrrlichtController::getDevice()->getTimer()->getTime();
+  (*this)->setScale(irr::core::vector3df(1, 1, 1));
   if (_bombContainer)
     delete _bombContainer;
   _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
