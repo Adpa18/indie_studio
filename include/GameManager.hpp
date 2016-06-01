@@ -21,6 +21,7 @@
 # include "BomberMap.hpp"
 # include "PlayerInfo.hpp"
 #include "GameOver.hpp"
+#include "Ranking.hpp"
 
 class	GameManager
 {
@@ -73,7 +74,6 @@ private:
 public:
   void	willStartGame();
   void	willStartMenu();
-  void willRestartGame();
   void SwapCharacterList();
   void addDeadPlayer(ACharacter *player);
 
@@ -101,13 +101,14 @@ private:
     // Cameras for the menu selection
     irr::scene::ICameraSceneNode *m_cameras[4];
     // List of players to be spawned
+    Ranking playerRanking;
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
-    std::vector<int>         m_winners;
-    std::stack<ACharacter *> tmp_ranking;
+//    std::vector<int>         m_winners;
+//    std::stack<ACharacter *> tmp_ranking;
 
 private:
-  GameOver                 *m_gameOver;
+//  GameOver                 *m_gameOver;
     bool                     is_gameOver;
 
 private:

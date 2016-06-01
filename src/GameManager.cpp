@@ -49,7 +49,6 @@ GameManager::GameManager()
                                                                              irr::core::vector3df(400, 12, -30),
                                                                              irr::core::vector3df(400, 12, 0));
 //    IAPlayer::initIA();
-    m_gameOver = NULL;
     is_gameOver = false;
 }
 
@@ -153,7 +152,6 @@ void    GameManager::onMenu()
 
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
-        m_gameOver = NULL;
         // Moves the main camera away
         //camera->setPosition(irr::core::vector3df(-10000, 250, -10000));
 
@@ -197,9 +195,9 @@ void    GameManager::onMenu()
     {
         static double x = 0, y = 0;
         // Camera 1
-        IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
-            irr::core::rect<irr::s32>(IrrlichtController::width * 0.01, IrrlichtController::height * 0.1,
-                                      IrrlichtController::width * 0.6, IrrlichtController::height * 0.9));
+//        IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
+//            irr::core::rect<irr::s32>(IrrlichtController::width * 0.01, IrrlichtController::height * 0.1,
+//                                      IrrlichtController::width * 0.6, IrrlichtController::height * 0.9));
 
         // Moves the main camera away
         irr::scene::ICameraSceneNode *mainCam = IrrlichtController::getSceneManager()->getActiveCamera();
@@ -229,10 +227,11 @@ void    GameManager::onMenu()
 
 void    GameManager::displayRankingScreen()
 {
-    if (!m_gameOver)
-        m_gameOver = new GameOver(m_cameras[0], m_winners, characters, &tmp_ranking);
+//    if (!m_gameOver)
+//        m_gameOver = new GameOver(m_cameras[0], m_winners, characters, &tmp_ranking);
     if (is_gameOver)
-        m_gameOver->show();
+        playerRanking.displayRankingScreen(m_cameras[0], characters);
+//        m_gameOver->show();
 }
 
 void    GameManager::onGame()
@@ -283,64 +282,35 @@ void    GameManager::onGame()
         }
         ++it;
     }
-    if (nb_dead >= characters.size() -1) {
-        if (nb_dead == characters.size())
-        {
-            m_winners.push_back(-1);
-            while (!tmp_ranking.empty())
-                tmp_ranking.pop();
-        }
-        else if (winner)
-        {
-            tmp_ranking.push(winner);
-            m_winners.push_back(winner->get_player());
-        }
+    if ((is_gameOver = playerRanking.isTheEndOfTheGame(winner, nb_dead)))
+    {
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
-//	    BomberMap::deleteMap();
         BomberMap::getMap()->removeBlocks();
         SoundManager::getManager()->stopAll();
-        is_gameOver = true;
+//        is_gameOver = true;
         setGameState(RANKING_SCREEN);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
     }
+//    if (nb_dead >= characters.size() -1) {
+//        if (nb_dead == characters.size())
+//        {
+//            m_winners.push_back(-1);
+//            while (!tmp_ranking.empty())
+//                tmp_ranking.pop();
+//        }
+//        else if (winner)
+//        {
+//            tmp_ranking.push(winner);
+//            m_winners.push_back(winner->get_player());
+//        }
+//
+//    }
 }
 
 void    GameManager::addDeadPlayer(ACharacter *player)
 {
-    tmp_ranking.push(player);
-}
-
-void    GameManager::willRestartGame()
-{
-    SoundManager::getManager()->stopAll();
-    SoundManager::getManager()->play("startGame.wav");
-    SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
-
-//    eventGame->reset();
-//    std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
-//    IrrlichtController::getDevice()->setEventReceiver(eventGame);
-//    int i = 0;
-//    characters.clear();
-    willStartGame();
-//    for (std::vector<ACharacter *>::const_iterator it = characters.begin(); it !=  characters.end(); ++it) {
-//        (*it)->reset();
-//        (*it)->setPos(spawn[i]);
-//        ++i;
-//    }
-    /*if (BomberMap::getMap()->get_camera())
-    {
-        IrrlichtController::getSceneManager()->setActiveCamera(BomberMap::getMap()->get_camera());
-        BomberMap::getMap()->refreshCamera();
-    }
-    else
-    {
-        irr::scene::ICameraSceneNode *camera = IrrlichtController::getSceneManager()->addCameraSceneNode
-            (0, irr::core::vector3df(0, 250, -100), irr::core::vector3df(0, 5, 0));
-        camera->setTarget(irr::core::vector3df(0, 0, 0));
-        camera->setAutomaticCulling(irr::scene::EAC_OFF);
-        camera->setFarValue(1000);
-        camera->setNearValue(10);
-    }*/
+    playerRanking.addPlayerToRank(player);
+//    tmp_ranking.push(player);
 }
 
 void    GameManager::willStartGame()
@@ -355,9 +325,9 @@ void    GameManager::willStartGame()
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
     characters.clear();
-    m_winners.clear();
-    while (!tmp_ranking.empty())
-        tmp_ranking.pop();
+//    m_winners.clear();
+//    while (!tmp_ranking.empty())
+//        tmp_ranking.pop();
     IrrlichtController::getDevice()->setEventReceiver(eventGame);
 
     int		i = 0;
@@ -386,8 +356,10 @@ void    GameManager::willStartGame()
 //        it = m_playerInfo.erase(it);
         ++i;
     }
-    if (m_gameOver)
-        destroyGameOver();
+//    if (m_gameOver)
+//        destroyGameOver();
+    playerRanking.clear();
+    playerRanking.setNbPlayers(characters.size());
 
     // int	scorePos = 0;
 
@@ -477,11 +449,10 @@ void GameManager::SwapCharacterList()
 }
 
 GameOver *GameManager::getGameOver() const {
-    return m_gameOver;
+    return playerRanking.getGameOver();
 }
 
 void GameManager::destroyGameOver()
 {
-    delete(m_gameOver);
-    m_gameOver = NULL;
+    playerRanking.destroyGameOver();
 }

@@ -35,6 +35,7 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_DIR)Color.cpp						\
 			$(SRC_DIR)SoundManager.cpp						\
 			$(SRC_DIR)AGameObjectFactory.cpp				\
+			$(SRC_DIR)Ranking.cpp                           \
 			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 		\
 			$(SRC_INTERFACE_DIR)KeySelectionBox.cpp 		\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 		\
