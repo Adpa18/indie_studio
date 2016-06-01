@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Wed Jun  1 12:09:32 2016 Victor Gouet
+// Last update Wed Jun  1 14:59:12 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -87,7 +87,6 @@ void				GameObjectTimeContainer::callTimeOutObjects()
 	  if ((*it)->isDestructible())
 	    {
 	      delete (*it);
-	      *it = NULL;
 	      it = container.begin();
 	    }
 	  else

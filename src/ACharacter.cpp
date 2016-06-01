@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May 30 19:30:18 2016 Victor Gouet
+// Last update Wed Jun  1 14:01:02 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -126,7 +126,7 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
   // TODO A REGARDER
   // THREAD LOL
   // t = new std::thread([time, this] { this->onInvinciblePeriode(time);
-    // });
+  //   });
 }
 
 void                    ACharacter::dead()

@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:24:43 2016 Victor Gouet
-// Last update Mon May 23 18:35:31 2016 Victor Gouet
+// Last update Wed Jun  1 13:58:26 2016 Victor Gouet
 //
 
-#include "../include/BonusInvincible.hpp"
-#include "../include/Texture.hpp"
-#include "SoundManager.hpp"
+#include "../../include/BonusInvincible.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/SoundManager.hpp"
 
 BonusInvincible::BonusInvincible(irr::core::vector2df const &pos)
         : ABonus(pos, BomberManTexture::getModel("bonusInvincible").mesh,
@@ -39,6 +39,7 @@ void	        BonusInvincible::take(ACharacter &player)
 
 void	        BonusInvincible::dead()
 {
+  // SoundManager::getManager()->stop((*this)->getID());
   SoundManager::getManager()->play("invincible.wav");
   (*this)->setVisible(false);
 }
