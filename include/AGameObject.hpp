@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 20:53:17 2016 Victor Gouet
-// Last update Mon May 23 17:59:10 2016 Victor Gouet
+// Last update Wed Jun  1 20:25:16 2016 Victor Gouet
 //
 
 #ifndef AGAMEOBJECT_HPP_
@@ -35,8 +35,8 @@ public:
   virtual ~AGameObject();
 
 public:
-  irr::scene::IAnimatedMeshSceneNode    *getSceneNode();
-  irr::scene::IAnimatedMeshSceneNode    *operator->();
+  irr::scene::IAnimatedMeshSceneNode    *getSceneNode() const;
+  irr::scene::IAnimatedMeshSceneNode    *operator->() const;
   AGameObject::Type                   getType() const;
   void                                setPos(irr::core::vector2df const &pos);
   irr::core::vector2df               getMapPos() const;
