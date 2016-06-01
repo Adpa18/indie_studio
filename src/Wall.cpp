@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Wed Jun  1 13:47:34 2016 Victor Gouet
+// Last update Wed Jun  1 14:54:07 2016 Matthieu Tavernier
 //
 
 #include <fstream>
@@ -62,48 +62,58 @@ void		Wall::serialize(irr::io::IXMLWriter *xmlr) const
 void                        Wall::dead()
 {
   int			i;
-
-  i = rand() % 12;
-  switch (i)
+  int			r;
+  int			nbBonus;
+  
+  r = rand() % 2;
+  if (r == 1)
     {
-    case 0:
-      new BonusSpeed(this->getMapPos());
-      break;
-    case 1:
-      new BonusPower(this->getMapPos());
-      break;
-    case 2:
-      new BonusFireBomb(this->getMapPos());
-      break;
-    case 3:
-      new ItemThrow(this->getMapPos());
-      break;
-    case 4:
-      new BonusBombPass(this->getMapPos());
-      break;
-    case 5:
-      new BonusBiggestMan(this->getMapPos());
-      break;
-    case 6:
-      new BonusSmallestMan(this->getMapPos());
-      break;
-    case 7:
-      new BonusInvincible(this->getMapPos());
-      break;
-    case 8:
-      new BonusTrackerBomb(this->getMapPos());
-      break;
-    case 9:
-      new BonusFragBomb(this->getMapPos());
-      break;
-    case 10:
-      new BonusAtomicBomb(this->getMapPos());
-      break;
-    case 11:
-      new ItemMineBomb(this->getMapPos());
-      break;
-    default:
-      break;
+      if (BomberMap::getMap()->getSize() == SMALL_SIZE)
+	nbBonus = 11;
+      else
+	nbBonus = 12;
+      i = rand() % nbBonus;
+      switch (i)
+	{
+	case 0:
+	  new BonusSpeed(this->getMapPos());
+	  break;
+	case 1:
+	  new BonusPower(this->getMapPos());
+	  break;
+	case 2:
+	  new BonusFireBomb(this->getMapPos());
+	  break;
+	case 3:
+	  new ItemThrow(this->getMapPos());
+	  break;
+	case 4:
+	  new BonusBombPass(this->getMapPos());
+	  break;
+	case 5:
+	  new BonusBiggestMan(this->getMapPos());
+	  break;
+	case 6:
+	  new BonusSmallestMan(this->getMapPos());
+	  break;
+	case 7:
+	  new BonusInvincible(this->getMapPos());
+	  break;
+	case 8:
+	  new BonusTrackerBomb(this->getMapPos());
+	  break;
+	case 9:
+	  new BonusFragBomb(this->getMapPos());
+	  break;
+	case 10:
+	  new BonusAtomicBomb(this->getMapPos());
+	  break;
+	case 11:
+	  new ItemMineBomb(this->getMapPos());
+	  break;
+	default:
+	  break;
+	}
     }
 }
 
