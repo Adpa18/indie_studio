@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Wed Jun  1 14:01:02 2016 Victor Gouet
+// Last update Wed Jun  1 16:41:19 2016 Victor Gouet
 //
 
 #include <unistd.h>
 #include <iostream>
-#include <GameManager.hpp>
-#include <SoundManager.hpp>
+#include "../include/GameManager.hpp"
+#include "../include/SoundManager.hpp"
 #include "../include/ACharacter.hpp"
 #include "../include/BombFactory.hpp"
 #include "../include/ABonus.hpp"
@@ -267,8 +267,8 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
-  // return (false);
-  return (_dead);
+  return (false);
+  // return (_dead);
 }
 
 int		ACharacter::getScore() const

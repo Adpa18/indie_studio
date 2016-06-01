@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Wed Jun  1 16:06:30 2016 Victor Gouet
+// Last update Wed Jun  1 18:34:35 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -348,7 +348,8 @@ void    GameManager::willStartGame()
     //BomberMap::getMap()->genMap();
   GameObjectTimeContainer::SharedInstance()->removeAll();
 
-  WallOfDead::createWallOfDead(BomberMap::getMap()->getSize());
+  // WallOfDead::createWallOfDead(BomberMap::getMap()->getSize(), 10);
+
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");
     SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);

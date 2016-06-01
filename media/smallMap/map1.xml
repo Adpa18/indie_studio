@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <config>
 
-    <target px="0" py="0" pz="49" />
+    <target px="0" py="0" pz="40" />
     <!-- <camera px="0" py="345" pz="-95" fov="0.85521" /> -->
-    <camera px="0" py="363.8" pz="-59.8" fov="0.85756" />
+    <!-- <camera px="0" py="363.8" pz="-59.8" fov="0.85756" /> -->
+    <camera px="0" py="363.8" pz="-70" fov="0.85756" />
     <size size="0" />
 
     <spawn px="1" py="1" />

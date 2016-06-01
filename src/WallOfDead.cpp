@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:15:48 2016 Victor Gouet
-// Last update Wed Jun  1 15:35:10 2016 Victor Gouet
+// Last update Wed Jun  1 18:32:37 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -44,17 +44,39 @@ void	        WallOfDead::serialize(irr::io::IXMLWriter *) const
 {
 }
 
-void		WallOfDead::createWallOfDead(int size)
+void		WallOfDead::createWallOfDead(int size, double appearAtTime)
 {
   double	i;
+  int		pos;
 
-  i = 4;
-  for (int x = 0; x < size ; ++x)
+  i = appearAtTime;
+  pos = 1;
+  while (pos < size / 2)
     {
-      for (int y = 0; y < size ; ++y)
-  	{
-  	  new WallOfDead(irr::core::vector2df(x, y), i);
-  	  i = i + 1;
-  	}
+      for (int y = pos; y < size - pos - 1 ; ++y)
+      	{
+      	  new WallOfDead(irr::core::vector2df(y, pos), i);
+      	  ++i;
+      	}
+
+      for (int y = pos; y < size - 1 - pos ; ++y)
+      	{
+      	  new WallOfDead(irr::core::vector2df(size - 1 - pos, y), i);
+      	  ++i;
+      	}
+
+      for (int y = size - 1 - pos; y > pos ; --y)
+      	{
+      	  new WallOfDead(irr::core::vector2df(y, size - 1 - pos), i);
+      	  ++i;
+      	}
+
+      for (int y = size - 1 - pos; y > pos ; --y)
+      	{
+      	  new WallOfDead(irr::core::vector2df(pos, y), i);
+      	  ++i;
+      	}
+
+      ++pos;
     }
 }
