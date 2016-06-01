@@ -2,10 +2,10 @@
 // Created by wery_a on 11/05/16.
 //
 
-#include <BomberMap.hpp>
 #include <iostream>
-#include "Texture.hpp"
-#include "Explosion.hpp"
+#include "../../include/BomberMap.hpp"
+#include "../../include/Texture.hpp"
+#include "../../include/Explosion.hpp"
 
 Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture, double timeout)
         : AGameObject(pos, BomberManTexture::getModel("fireExplosion").mesh,
@@ -38,13 +38,21 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     particuleTexture = texture;
     _ps->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-   BomberMap::getMap()->add(this, this->getMapPos());
+   // BomberMap::getMap()->add(this, this->getMapPos());
 }
 
 void			Explosion::updateTimeOut()
 {
     float res;
 
+    std::vector<AGameObject *> vec = BomberMap::getMap()->getObjsFromVector2(this->getMapPos());
+    for (std::vector<AGameObject *>::iterator it = vec.begin(), end = vec.end() ; it != end ; ++it)
+      {
+	if ((*it)->getType() == AGameObject::CHARACTER)
+	  {
+	    (*it)->dead();
+	  }
+      }
     if (_x < 1)
     {
         res = (float) (-1 * (pow(_x, 2)) + 1);
@@ -64,7 +72,7 @@ Explosion::~Explosion()
 //    BomberMap::getMap()->refreshDangerMap();
 //  BomberMap::getMap()->setDangerAtPos(this->getMapPos(), AGameObject::Type::NONE);
 //  BomberMap::getMap()->displayDangerMap();
- BomberMap::getMap()->remove(this);
+ // BomberMap::getMap()->remove(this);
 }
 
 void		Explosion::serialize(irr::io::IXMLWriter *xmlr) const
