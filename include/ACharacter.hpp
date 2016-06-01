@@ -34,9 +34,9 @@ public:
              std::string const &mesh, std::string const &texture, int player,
 	     int score = 0, bool invincible = false);
   virtual ~ACharacter();
-	void			action(ACTION act);
 
 protected:
+	void			action(ACTION act);
   void			moveTo(irr::core::vector2df const &dir);
 
 private:

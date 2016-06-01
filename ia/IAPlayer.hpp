@@ -81,6 +81,7 @@ private:
 private:
     std::string          behaviour;
     irr::core::vector2df focus;
+    size_t bombRate;
 };
 
 #endif //CPP_INDIE_STUDIO_IAPLAYER_HPP

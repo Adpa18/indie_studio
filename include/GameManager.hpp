@@ -21,6 +21,7 @@
 # include "BomberMap.hpp"
 # include "PlayerInfo.hpp"
 #include "GameOver.hpp"
+#include "Ranking.hpp"
 
 class	GameManager
 {
@@ -34,6 +35,15 @@ public:
         PAUSE = 5,
         RANKING_SCREEN = 6
     };
+  enum GameCamera
+  {
+    MAIN_MENU_CAM,
+    MENU_CAM_1,
+    MENU_CAM_2,
+    MENU_CAM_3,
+    MENU_CAM_4,
+    GAME_CAMERA
+  };
 
   typedef void	(GameManager::*initInstance)(void);
 
@@ -61,6 +71,8 @@ public:
     void destroyGameOver();
   static std::string ToString(std::wstring const& str);
   static std::wstring ToWstring(std::string const& str);
+  irr::scene::ICameraSceneNode *getCam(GameCamera cam);
+  void                          activeCam(GameCamera cam);
 
 public:
   static GameManager	*SharedInstance();
@@ -73,7 +85,6 @@ private:
 public:
   void	willStartGame();
   void	willStartMenu();
-  void willRestartGame();
   void SwapCharacterList();
   void addDeadPlayer(ACharacter *player);
 
@@ -99,15 +110,16 @@ private:
   irr::gui::IGUIStaticText *scoreText[4];
 
     // Cameras for the menu selection
-    irr::scene::ICameraSceneNode *m_cameras[4];
+    irr::scene::ICameraSceneNode *m_cameras[6];
     // List of players to be spawned
+    Ranking playerRanking;
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
-    std::vector<int>         m_winners;
-    std::stack<ACharacter *> tmp_ranking;
+//    std::vector<int>         m_winners;
+//    std::stack<ACharacter *> tmp_ranking;
 
 private:
-  GameOver                 *m_gameOver;
+//  GameOver                 *m_gameOver;
     bool                     is_gameOver;
 
 private:

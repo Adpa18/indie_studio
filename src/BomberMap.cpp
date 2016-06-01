@@ -349,8 +349,8 @@ void BomberMap::deserialize()
         _camera_pos.X = reader->getAttributeValueAsFloat("px");
         _camera_pos.Y = reader->getAttributeValueAsFloat("py");
         _camera_pos.Z = reader->getAttributeValueAsFloat("pz");
-	_camera = IrrlichtController::getSceneManager()->getActiveCamera();
-	_camera->setPosition(_camera_pos);
+	      _camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::GAME_CAMERA);
+	      _camera->setPosition(_camera_pos);
         // _camera = IrrlichtController::getSceneManager()->addCameraSceneNode(0, _camera_pos);
         _camera->setAspectRatio(19/9);
         _camera->setFOV(reader->getAttributeValueAsFloat("fov"));
@@ -743,7 +743,8 @@ irr::core::vector2df    BomberMap::simulateBombDrop(ABomb *todrop, const irr::co
     for (int i = 0; i < 4; ++i)
     {
       tocheck = file.front() + dir[i];
-      if (pos.X < 0 || pos.X >= size_side[_mapSize] || pos.Y < 0  || pos.Y >= size_side[_mapSize] || std::find(alreadySaw.begin(), alreadySaw.end(), tocheck) != alreadySaw.end())
+      if (tocheck.X < 0 || tocheck.X >= size_side[_mapSize] || tocheck.Y < 0  || tocheck.Y >= size_side[_mapSize] ||
+              std::find(alreadySaw.begin(), alreadySaw.end(), tocheck) != alreadySaw.end())
         continue;
       alreadySaw.push_back(tocheck);
       switch (_danger_map[static_cast<int>(tocheck.Y)][static_cast<int>(tocheck.X)])
