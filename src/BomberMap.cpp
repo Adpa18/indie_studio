@@ -743,7 +743,8 @@ irr::core::vector2df    BomberMap::simulateBombDrop(ABomb *todrop, const irr::co
     for (int i = 0; i < 4; ++i)
     {
       tocheck = file.front() + dir[i];
-      if (pos.X < 0 || pos.X >= size_side[_mapSize] || pos.Y < 0  || pos.Y >= size_side[_mapSize] || std::find(alreadySaw.begin(), alreadySaw.end(), tocheck) != alreadySaw.end())
+      if (tocheck.X < 0 || tocheck.X >= size_side[_mapSize] || tocheck.Y < 0  || tocheck.Y >= size_side[_mapSize] ||
+              std::find(alreadySaw.begin(), alreadySaw.end(), tocheck) != alreadySaw.end())
         continue;
       alreadySaw.push_back(tocheck);
       switch (_danger_map[static_cast<int>(tocheck.Y)][static_cast<int>(tocheck.X)])
