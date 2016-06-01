@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:31:36 2016 Victor Gouet
-// Last update Wed Jun  1 15:18:32 2016 Victor Gouet
+// Last update Wed Jun  1 20:33:27 2016 Victor Gouet
 //
 
 #include "../include/MiniBomb.hpp"
@@ -44,12 +44,6 @@ MiniBomb::MiniBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
-
-#include <iostream>
-
-// void		MiniBomb::disable()
-// {
-// }
 
 bool		MiniBomb::isDestructible() const
 {

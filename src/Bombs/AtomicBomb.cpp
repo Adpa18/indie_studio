@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 10:51:39 2016 Victor Gouet
-// Last update Wed Jun  1 15:17:34 2016 Victor Gouet
+// Last update Wed Jun  1 20:34:04 2016 Victor Gouet
 //
 
 #include "../include/AtomicBomb.hpp"
@@ -38,8 +38,6 @@ AtomicBomb::AtomicBomb(ABomb const *other) : ABomb(other)
 {
   *this = other;
 }
-
-#include <iostream>
 
 void		AtomicBomb::willExplose()
 {

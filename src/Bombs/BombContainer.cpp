@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri Apr 29 14:21:28 2016 Victor Gouet
-// Last update Wed May 11 16:15:38 2016 Victor Gouet
+// Last update Wed Jun  1 20:35:34 2016 Victor Gouet
 //
 
 #include "../include/BombContainer.hpp"
@@ -53,19 +53,6 @@ void				BombContainer::upgradePowerBombs()
       (*it)->setPower((*it)->getPower() + 1);
     }
 }
-
-// void				BombContainer::bombExplose()
-// {
-//   std::vector<ABomb *>::iterator	it;
-
-//   it = _bombs.begin();
-//   while (it != _bombs.end())
-//     {
-//       if ((*it)->isActive())
-// 	(*it)->willExplose();
-//       ++it;
-//     }
-// }
 
 void				BombContainer::deleteAllBomb()
 {
