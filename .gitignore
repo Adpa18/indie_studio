@@ -3,3 +3,4 @@ bomberman
 *.o
 .clang-complete
 CMakeLists.txt
+tmpSaveMap/*
