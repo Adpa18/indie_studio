@@ -229,10 +229,7 @@ namespace Lua
             void Register()
             {
                 if (isRegistered())
-                {
-                    std::cout << "\e[31malready registered: " << className << "\e[0m" << std::endl;
                     return;
-                }
                 registered = true;
                 luaL_newmetatable(state, (luaPrefix + className).c_str());
                 lua_pushvalue(state, -1);

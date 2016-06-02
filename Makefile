@@ -43,10 +43,13 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 		\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp	\
-			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				    \
-			$(SRC_INTERFACE_DIR)GameOver.cpp 		    \
-			$(SRC_IA_DIR)IAPlayer.cpp   					    \
-			$(SRC_IA_DIR)LuaFunctions.cpp					    \
+			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				\
+			$(SRC_INTERFACE_DIR)GameOver.cpp 		        \
+			$(SRC_IA_DIR)IAPlayer.cpp   					\
+			$(SRC_IA_DIR)LuaFunctions.cpp					\
+			$(SRC_IA_DIR)LuaBomberMap.cpp                   \
+			$(SRC_IA_DIR)LuaGameObjectArray.cpp             \
+			$(SRC_IA_DIR)LuaVector2.cpp                     \
 			$(SRC_BOMBS_DIR)ABomb.cpp						\
 			$(SRC_BOMBS_DIR)BombContainer.cpp				\
 			$(SRC_BOMBS_DIR)AtomicBomb.cpp					\
