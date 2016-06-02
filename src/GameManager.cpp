@@ -329,8 +329,6 @@ void    GameManager::onGame()
     {
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::getMap()->removeBlocks();
-        SoundManager::getManager()->stopAll();
-        SoundManager::getManager()->play("gameResults.wav");
         setGameState(RANKING_SCREEN);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
     }
