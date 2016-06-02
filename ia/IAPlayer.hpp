@@ -32,6 +32,8 @@ public:
 
     const std::string &getDifficulty(void) const;
 
+    irr::core::vector2df    bombDropSimulation();
+
 public:
     static void              initIA(int width, int height);
 

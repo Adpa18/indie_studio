@@ -72,6 +72,10 @@ void IAPlayer::initIA(int width, int height)
     Lua::setGlobalValue((int)ACharacter::DOWN, "DOWN");
     Lua::setGlobalValue((int)ACharacter::BOMB, "DROPBOMB");
     Lua::setGlobalValue((int)ACharacter::ACT, "ACT");
+    Lua::setGlobalValue((int)DangerMap::ERROR, "ERSTATE");
+    Lua::setGlobalValue((int)DangerMap::DANGEROUS, "DANGEROUS");
+    Lua::setGlobalValue((int)DangerMap::BLOCKED, "BLOCKED");
+    Lua::setGlobalValue((int)DangerMap::SAFE, "SAFE");
     handler = new Lua::LuaHandler("./ia/iaBehaviour.lua");
 }
 
@@ -135,6 +139,25 @@ void IAPlayer::compute()
 void IAPlayer::setDifficulty(const std::string &difficulty)
 {
     behaviour = difficulty;
+}
+
+irr::core::vector2df IAPlayer::bombDropSimulation()
+{
+    AGameObject   *toDrop = dynamic_cast<AGameObject *>(getBombContainer()->getBomb());
+
+    if (!toDrop)
+        return irr::core::vector2df(-1, -1);
+
+    BomberMap::getMap()->move(toDrop, getMapPos());
+    irr::core::vector2df    fallBack = BomberMap::getMap()->giveDangerMap().getFirstFallBackPosition(getMapPos());
+    BomberMap::getMap()->move(toDrop, irr::core::vector2df(-1000, -1000));
+
+    return fallBack;
+}
+
+const std::string &IAPlayer::getDifficulty(void) const
+{
+    return behaviour;
 }
 
 const std::string &IAPlayer::getDifficultyFromCode(PlayerInfo::IAStrength strength)
@@ -205,16 +228,15 @@ int IAPlayer::hasType(lua_State *state)
 /*
  * Methods for the map
  */
-int IAPlayer::objsAtPos(lua_State *)
+int IAPlayer::objsAtPos(lua_State *state)
 {
-    BomberMap *thisptr = Lua::LuaClass<BomberMap>::getThis();
+    BomberMap   *thisptr = Lua::LuaClass<BomberMap>::getThis();
     int x = Lua::LuaClass<BomberMap>::getInteger(2);
     int y = Lua::LuaClass<BomberMap>::getInteger(3);
+    Lua::LuaClass<std::vector<AGameObject *>>  objs(thisptr->getObjsFromVector2(irr::core::vector2df(x, y)));
 
-    Lua::LuaClass<std::vector<AGameObject *> > toreturn(thisptr->getObjsFromVector2(irr::core::vector2df(x, y)));
-
-    toreturn.dontDelete();
-    return 1;
+    objs.dontDelete();
+    return 0;
 }
 
 int IAPlayer::getNbOfType(lua_State *state)
@@ -240,7 +262,7 @@ int IAPlayer::getDangerAtPos(lua_State *state)
     BomberMap *thisptr = Lua::LuaClass<BomberMap>::getThis();
     int x = Lua::LuaClass<BomberMap>::getInteger(2);
     int y = Lua::LuaClass<BomberMap>::getInteger(3);
-    int ret = thisptr->getDangerAtPos(irr::core::vector2df(x, y));
+    int ret = thisptr->giveDangerMap().getDangerAt(irr::core::vector2df(x, y));
 
     if (ret == -1)
         return 0;
@@ -327,10 +349,9 @@ int IAPlayer::equal(lua_State *state)
     return 1;
 }
 
-const std::string &IAPlayer::getDifficulty(void) const
-{
-    return behaviour;
-}
+/**
+ * IA Lua class methods
+ */
 
 int IAPlayer::getIAPos(lua_State *state)
 {
@@ -345,7 +366,7 @@ int IAPlayer::simulateBombDrop(lua_State *state)
 {
     IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
 
-    irr::core::vector2df    fallbackPos = BomberMap::getMap()->simulateBombDrop(thisptr->getBombContainer()->getBomb(), thisptr->getMapPos());
+    irr::core::vector2df    fallbackPos = thisptr->bombDropSimulation();
     if (fallbackPos == irr::core::vector2df(-1, -1))
         return (0);
     Lua::LuaClass<irr::core::vector2df> toret(fallbackPos);

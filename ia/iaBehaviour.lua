@@ -60,7 +60,7 @@ function canDropBomb(iaplayer)
     end
     for _, dir in pairs(directions) do
         local tocheck = pos:add(dir);
-        if (bomberMap:objsAtPos(tocheck:getX(), tocheck:getY()):hasType(OTHER) or bomberMap:getNbOfType(pos:getX(), pos:getY(), CHARACTER) > 1) then
+        if (bomberMap:getNbOfType(tocheck:getX(), tocheck:getY(), OTHER) > 0 or bomberMap:getNbOfType(pos:getX(), pos:getY(), CHARACTER) > 1) then
             posSeen = {};
             nextFocus = iaplayer:bombDropSimul();
             if (nextFocus ~= nil) then

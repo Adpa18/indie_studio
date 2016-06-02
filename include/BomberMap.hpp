@@ -17,6 +17,7 @@
 # include "Wall.hpp"
 # include "Props.hpp"
 # include "Texture.hpp"
+#include "DangerMap.hpp"
 
 # define SMALL_SIZE 9
 # define MEDIUM_SIZE 13
@@ -25,7 +26,7 @@
 class	BomberMap
 {
 public:
-  static const int	size_side[3];// = {11, 16, 20};
+  static const int	size_side[3];
   static const size_t	scale = 25;
 
 public:
@@ -62,7 +63,6 @@ private:
   bool			canPutDestructibleWall(int x, int y) const;
   void			initSpawn();
   std::string		getCurrentDate() const;
-    void      addDeflagration(ABomb *, irr::core::vector2df const &);
 
 
 public:
@@ -77,27 +77,21 @@ public:
   const irr::core::vector2df  &get(AGameObject *obj) const;
   std::vector<AGameObject *> const &getCharacters() const;
   void    loadModel(struct model mod);
-  int getDangerAtPos(int x, int y) const;
-  void setDangerAtPos(int x, int y, int value);
-  int getDangerAtPos(const irr::core::vector2df &pos) const;
-  void setDangerAtPos(const irr::core::vector2df &pos, int value);
-    void    refreshDangerMap(void);
-  void displayDangerMap() const;
-    irr::core::vector2df simulateBombDrop(ABomb *todrop, const irr::core::vector2df &pos);
     void removeBlocks(void);
+    DangerMap &giveDangerMap(void);
 
 private:
-  std::map<AGameObject*, irr::core::vector2df> _objects;
-  std::vector<Props*> _props;
-  std::vector<AGameObject *>			      _characters;
-  std::vector<irr::core::vector2df>		_spawner;
-  Size						_mapSize;
-  const std::string                 _filename;
-  irr::scene::ICameraSceneNode      *_camera;
-  irr::core::vector3df              _target;
-  irr::core::vector3df              _camera_pos;
-  std::pair<std::string , std::string> _walls[3];
-  int                                  **_danger_map;
+    std::map<AGameObject*, irr::core::vector2df> _objects;
+    std::vector<Props*> _props;
+    std::vector<AGameObject *>			      _characters;
+    std::vector<irr::core::vector2df>		_spawner;
+    Size						_mapSize;
+    const std::string                 _filename;
+    DangerMap _dangerMap;
+    irr::scene::ICameraSceneNode      *_camera;
+    irr::core::vector3df              _target;
+    irr::core::vector3df              _camera_pos;
+    std::pair<std::string , std::string> _walls[3];
 private:
   static BomberMap    *bomberMap;
   irr::scene::ISceneNode    *_ground;
