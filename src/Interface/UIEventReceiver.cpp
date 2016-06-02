@@ -3,6 +3,7 @@
 //
 
 #include <dirent.h>
+#include <sys/stat.h>
 #include <algorithm>
 #include "../../include/UIEventReceiver.hpp"
 #include "../../include/Texture.hpp"
@@ -162,7 +163,14 @@ void UIEventReceiver::DisplayMapMenu()
     {
         for (dirent *files = readdir(dir); files != NULL; files = readdir(dir))
         {
-            if (files->d_type == 8)
+            #ifdef __linux__
+             if (files->d_type == 8)
+            #elif _WIN32
+             struct stat    fileStats;
+
+             stat(files->d_name, &fileStats);
+             if (S_ISREG(fileStats.st_mode))
+            #endif
             {
                 listBox->addItem(GameManager::ToWstring(std::string(files->d_name)).c_str());
             }

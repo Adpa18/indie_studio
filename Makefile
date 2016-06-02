@@ -97,11 +97,11 @@ LDFLAGS 	=   -lpthread
 
 LDFLAGS 	+=  -L $(IRRLICHT_DIR)/lib/$(SYSTEM) -lIrrlicht
 
-LDFLAGS 	+=  -L $(LUA_DIRECTORY) -llua
+DEBUG   = no
 
-LDFLAGS 	+=  -L./fmod/lib/x86_64 -Wl,-R./fmod/lib/x86_64 -lfmod
-
-LDFLAGS 	+=  -ldl
+ifeq ($(DEBUG),yes)
+    CPPFLAGS  +=  -D DEBUG
+endif
 
 %.o : %.cpp
 	@echo -e "Compiling $<"
@@ -129,10 +129,14 @@ ifeq ($(OS),Windows_NT)
 SYSTEM=Win32-gcc
 SUF=.exe
 CPPFLAGS    +=  -D_IRR_STATIC_LIB_
-LDFLAGS     +=  -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
+LDFLAGS     +=  -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32 -ld3dx9d -lwinmm -lm
 LDFLAGS     +=  -lm -static-libstdc++
+LDFLAGS		+=	lua53.dll
 else
-LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
+LDFLAGS 	+= -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
+LDFLAGS 	+=  -L./fmod/lib/x86_64 -Wl,-R./fmod/lib/x86_64 -lfmod
+LDFLAGS 	+=  -L $(LUA_DIRECTORY) -llua
+LDFLAGS		+= -ldl
 SYSTEM=Linux
 endif
 
