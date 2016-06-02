@@ -78,10 +78,17 @@ void    SoundManager::stopAll()
     for (std::map<unsigned int, FMOD::Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); ++it) {
         it->second->stop();
     }
+    this->_channels.clear();
+    this->stopAllBack();
+#endif
+}
+
+void    SoundManager::stopAllBack()
+{
+#ifndef DEBUG
     for (std::vector<FMOD::Channel *>::iterator it = this->_channelsCOM.begin(); it != this->_channelsCOM.end(); ++it) {
         (*it)->stop();
     }
-    this->_channels.clear();
     this->_channelsCOM.clear();
 #endif
 }

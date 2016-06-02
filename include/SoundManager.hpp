@@ -30,6 +30,7 @@ public:
     void    play(std::string const &sound, unsigned  int id = 0, bool loop = false, float volume = 1.0);
     void    stop(int id);
     void    stopAll();
+    void    stopAllBack();
 };
 
 #endif //CPP_INDIE_STUDIO_SOUNDMANAGER_HPP

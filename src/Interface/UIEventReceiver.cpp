@@ -42,7 +42,7 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
     SoundManager::getManager()->play("welcome.wav");
-    SoundManager::getManager()->play("menu.wav", 0, true, 0.1);
+    SoundManager::getManager()->play("battleMenu.wav", 0, true, 1);
     DisplaySplashScreen();
 }
 
@@ -516,7 +516,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent 
             BomberMap::deleteMap();
             GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
             SoundManager::getManager()->stopAll();
-            SoundManager::getManager()->play("menu.wav", 0, true, 0.1);
+            SoundManager::getManager()->play("battleMenu.wav", 0, true, 1);
             fptr = &UIEventReceiver::DisplayMainMenu;
             break;
 
