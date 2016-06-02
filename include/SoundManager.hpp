@@ -14,6 +14,7 @@ class SoundManager {
 private:
     std::map<std::string, FMOD::Sound *>    _sounds;
     std::map<unsigned int, FMOD::Channel *> _channels;
+    std::vector<FMOD::Channel *>            _channelsCOM;
     FMOD::System         *engine;
     const std::string    soundPath;
 
@@ -29,6 +30,7 @@ public:
     void    play(std::string const &sound, unsigned  int id = 0, bool loop = false, float volume = 1.0);
     void    stop(int id);
     void    stopAll();
+    void    stopAllBack();
 };
 
 #endif //CPP_INDIE_STUDIO_SOUNDMANAGER_HPP

@@ -13,6 +13,7 @@
 #include <BomberMap.hpp>
 #include <GameManager.hpp>
 #include "../../include/GameOver.hpp"
+#include "../../include/SoundManager.hpp"
 
 GameOver::GameOver(Ranking *ranking, std::vector<ACharacter *> &characters) :
         m_characters(characters),
@@ -43,21 +44,25 @@ void GameOver::show()
     camera->setPosition(irr::core::vector3df(-50, 25, 0));
     camera->setTarget(irr::core::vector3df(0, 25, 0));
     GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
+    SoundManager::getManager()->stopAll();
     if (m_ranking->getState() == Ranking::WIN)
     {
 
         if (m_ranking->getPlayedGames() > 2 && m_ranking->getMaxScoredPlayer(m_characters) != NULL)
         {
             ss << "The winner is player " << dispFinalWin(m_ranking->getFinalPodium(m_characters)) << "!";
+            SoundManager::getManager()->play("winner.wav");
         }
         else
         {
             ss << "Player " << dispCurrWin(m_ranking->getPodium()) << " win!";
+            SoundManager::getManager()->play("gameResults.wav");
         }
     }
     else
     {
         ss << "Draw !";
+        SoundManager::getManager()->play("drawGame.wav");
     }
 
     m_st_text = m_env->addStaticText(ss.str().c_str(),

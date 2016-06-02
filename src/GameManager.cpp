@@ -283,6 +283,11 @@ void    GameManager::onGame()
 	    if (countdown > 0)
 	      {
 		countdown -= 1;
+        if (countdown == 0)
+        {
+            SoundManager::getManager()->stopAllBack();
+            SoundManager::getManager()->play("wallOfDeath.wav");
+        }
 		ss << countdown;
 		setCountDownText(ss);
 	      }
@@ -324,7 +329,6 @@ void    GameManager::onGame()
     {
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::getMap()->removeBlocks();
-        SoundManager::getManager()->stopAll();
         setGameState(RANKING_SCREEN);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
     }
@@ -373,8 +377,8 @@ void    GameManager::willStartGame()
   wallOfDead = new WallOfDead(GameManager::endOfGame);
 
     SoundManager::getManager()->stopAll();
-    SoundManager::getManager()->play("startGame.wav");
-    SoundManager::getManager()->play("ambianceGame.wav", 0, true, 0.1);
+    SoundManager::getManager()->play("battleIntro.wav");
+    SoundManager::getManager()->play("battleTheme1.wav", 0, true, 1);
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
     characters.clear();

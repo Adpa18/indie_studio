@@ -41,14 +41,21 @@ SoundManager::~SoundManager()
 void    SoundManager::play(std::string const &sound, unsigned int id, bool loop, float volume)
 {
 #ifndef DEBUG
+    FMOD::Channel   *channel;
+
     if (this->_sounds[sound] == 0)
     {
         engine->createSound((soundPath + sound).c_str(), (loop) ? FMOD_LOOP_NORMAL : FMOD_DEFAULT, 0, &this->_sounds[sound]);
     }
-    if (this->_channels[id])
+    engine->playSound(this->_sounds[sound], 0, false, &channel);
+    channel->setVolume(volume);
+    if (this->_channels[id] && id) {
         this->_channels[id]->stop();
-    engine->playSound(this->_sounds[sound], 0, false, &this->_channels[id]);
-    this->_channels[id]->setVolume(volume);
+    }
+    if (id == 0)
+        this->_channelsCOM.push_back(channel);
+    else
+        this->_channels[id] = channel;
 #endif
 }
 
@@ -58,16 +65,30 @@ void    SoundManager::stop(int id)
     if (id == -1)
         stopAll();
     if (this->_channels[id])
-      this->_channels[id]->stop();
+    {
+        this->_channels[id]->stop();
+        this->_channels.erase(id);
+    }
 #endif
 }
 
 void    SoundManager::stopAll()
 {
 #ifndef DEBUG
-    for (std::map<unsigned int, FMOD::Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); ++it)
-    {
+    for (std::map<unsigned int, FMOD::Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); ++it) {
         it->second->stop();
     }
+    this->_channels.clear();
+    this->stopAllBack();
+#endif
+}
+
+void    SoundManager::stopAllBack()
+{
+#ifndef DEBUG
+    for (std::vector<FMOD::Channel *>::iterator it = this->_channelsCOM.begin(); it != this->_channelsCOM.end(); ++it) {
+        (*it)->stop();
+    }
+    this->_channelsCOM.clear();
 #endif
 }
