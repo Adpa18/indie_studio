@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 23:02:35 2016 Victor Gouet
-// Last update Thu Jun  2 00:16:40 2016 Victor Gouet
+// Last update Thu Jun  2 10:37:24 2016 Victor Gouet
 //
 
 #include "../include/BomberMap.hpp"
@@ -34,7 +34,7 @@ void		WallOfEnd::updateTimeOut()
 
   if (pos.Y > 0)
     (*this)->setPosition(irr::core::vector3df(pos.X,
-					      pos.Y - 15,
+					      pos.Y - 30,
 					      pos.Z));
   else
     {

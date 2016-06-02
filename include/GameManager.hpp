@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Wed Jun  1 19:32:23 2016 Victor Gouet
+// Last update Thu Jun  2 11:30:33 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -49,6 +49,9 @@ public:
   typedef void	(GameManager::*initInstance)(void);
 
 public:
+  static const int	endOfGame;
+
+public:
   GameManager();
   ~GameManager();
 
@@ -63,17 +66,19 @@ public:
   UIManager	*getUIManager() const;
   EventGame	*getEventGame() const;
   void		setFptr(initInstance _fptr);
-
-  void AddPlayer(PlayerInfo *player);
-    void AddPlayerFromUI(PlayerInfo *player);
+  void		AddPlayer(PlayerInfo *player);
+  void		AddPlayerFromUI(PlayerInfo *player);
   std::list<PlayerInfo*>::const_iterator GetPlayers() const;
-    void ClearPlayers();
-  GameOver *getGameOver() const;
-    void destroyGameOver();
+  void		ClearPlayers();
+  GameOver	*getGameOver() const;
+  void		destroyGameOver();
   static std::string ToString(std::wstring const& str);
   static std::wstring ToWstring(std::string const& str);
   irr::scene::ICameraSceneNode *getCam(GameCamera cam);
   void                          activeCam(GameCamera cam);
+
+private:
+  double		getTimeSeconds() const;
 
 public:
   static GameManager	*SharedInstance();
@@ -99,6 +104,10 @@ private:
     };
   State		_state;
   bool		_pause;
+
+private:
+  double	countdown;
+  double	beginTimer;
 
 private:
   GameState m_gameState;
