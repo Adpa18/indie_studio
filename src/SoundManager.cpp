@@ -8,8 +8,6 @@
 #include <iostream>
 #include "SoundManager.hpp"
 
-# define DEBUG
-
 SoundManager            *SoundManager::manager = NULL;
 
 SoundManager            *SoundManager::getManager()
