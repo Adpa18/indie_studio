@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Tue May 24 12:46:19 2016 Victor Gouet
+// Last update Thu Jun  2 17:51:28 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -89,6 +89,7 @@ private:
   bool			_invincible;
   std::mutex		mutex;
   std::thread		*t;
+  bool			onRun;
 
 protected:
   irr::u32		then;
