@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Thu Jun  2 18:04:43 2016 Victor Gouet
+// Last update Thu Jun  2 18:50:05 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -75,7 +75,6 @@ void                        Wall::dead()
       else
 	nbBonus = 12;
       i = rand() % nbBonus;
-      i = 7;
       switch (i)
 	{
 	case 0:
