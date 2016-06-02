@@ -515,6 +515,8 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent 
         case UIElement::SPLASH_BUTTON_START:
             BomberMap::deleteMap();
             GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
+            SoundManager::getManager()->stopAll();
+            SoundManager::getManager()->play("menu.wav", 0, true, 0.1);
             fptr = &UIEventReceiver::DisplayMainMenu;
             break;
 

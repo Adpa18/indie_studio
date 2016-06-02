@@ -14,6 +14,7 @@ class SoundManager {
 private:
     std::map<std::string, FMOD::Sound *>    _sounds;
     std::map<unsigned int, FMOD::Channel *> _channels;
+    std::vector<FMOD::Channel *>            _channelsCOM;
     FMOD::System         *engine;
     const std::string    soundPath;
 
