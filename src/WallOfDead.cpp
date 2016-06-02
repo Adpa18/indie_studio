@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:15:48 2016 Victor Gouet
-// Last update Wed Jun  1 23:52:32 2016 Victor Gouet
+// Last update Thu Jun  2 10:40:20 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -103,7 +103,7 @@ bool		WallOfDead::canDropWall() const
   seconds = difftime(timer, mktime(&y2k));
   if ((seconds - _beginTimer) > _timeOut)
     {
-      _timeOut += 1;
+      _timeOut += WallOfDead::timerSpawn;
       return (true);
     }
   return (false);

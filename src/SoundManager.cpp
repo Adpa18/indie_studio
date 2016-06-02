@@ -3,12 +3,11 @@
 //
 
 #include <stdexcept>
-#include <fmod_errors.h>
 #include <vector>
 #include <iostream>
 #include "SoundManager.hpp"
 
-# define DEBUG
+//# define DEBUG
 
 SoundManager            *SoundManager::manager = NULL;
 
@@ -46,6 +45,8 @@ void    SoundManager::play(std::string const &sound, unsigned int id, bool loop,
     {
         engine->createSound((soundPath + sound).c_str(), (loop) ? FMOD_LOOP_NORMAL : FMOD_DEFAULT, 0, &this->_sounds[sound]);
     }
+    if (this->_channels[id])
+        this->_channels[id]->stop();
     engine->playSound(this->_sounds[sound], 0, false, &this->_channels[id]);
     this->_channels[id]->setVolume(volume);
 #endif

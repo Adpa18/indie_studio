@@ -140,8 +140,8 @@ void		        Wall::save(std::string const &fileName)
 Wall::DataFile::DataFile(irr::core::vector2df const &pos, State state, std::string const &mesh, std::string const &texture)
   : pos(pos), state(state)
 {
-  bzero(this->mesh, sizeof(this->mesh));
-  bzero(this->texture, sizeof(this->texture));
+  memset(this->mesh, 0, sizeof(this->mesh));
+	memset(this->texture, 0, sizeof(this->texture));
 
   memcpy(this->mesh, mesh.c_str(), mesh.size());
   memcpy(this->texture, texture.c_str(), texture.size());

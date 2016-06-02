@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu Jun  2 00:05:26 2016 Victor Gouet
+// Last update Thu Jun  2 16:20:05 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -17,6 +17,7 @@
 #include "../include/GameObjectTimeContainer.hpp"
 #include "../ia/IAPlayer.hpp"
 
+const int	GameManager::endOfGame = 10;
 
 GameManager::GameManager()
 {
@@ -27,8 +28,10 @@ GameManager::GameManager()
       std::cout << e.what() << std::endl;
       exit(0);
     }
+  m_st_text = NULL;
     BomberManTexture::loadTexture();
     m_gameState = PLAY;
+    defaultFont = NULL;
     setGameState(SPLASH_SCREEN);
     _state = PREV_MENU;
     uiManager = NULL;
@@ -232,13 +235,35 @@ void    GameManager::onMenu()
 void    GameManager::displayRankingScreen()
 {
     if (is_gameOver)
+      {
+	m_st_text->remove();
+	if (this->defaultFont)
+	  IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(this->defaultFont);
+	m_st_text = NULL;
         playerRanking.displayRankingScreen(characters);
+      }
+}
+
+void	GameManager::setCountDownText(std::wstringstream const &ss)
+{
+  if (!m_st_text)
+    {
+        IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(IrrlichtController::getDevice()->getGUIEnvironment()->getFont("./media/font/arcade_font.xml"));
+      m_st_text = IrrlichtController::getDevice()->getGUIEnvironment()->addStaticText(ss.str().c_str(), irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200), false, true);
+      m_st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
+      m_st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER, irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
+    }
+  else
+    m_st_text->setText(ss.str().c_str());
 }
 
 void    GameManager::onGame()
 {
     if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
+      // if (this->defaultFont)
+      // 	IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(this->defaultFont);
+      m_st_text = NULL;
         setGameState(PAUSE);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
         uiEventReceiver->DisplayPauseMenu();
@@ -247,6 +272,29 @@ void    GameManager::onGame()
 
     if (wallOfDead)
       {
+
+	// TIMER FOR WALLOFDEAD
+	double actualTime = getTimeSeconds();
+	double time = actualTime - beginTimer;
+	if (time >= 1)
+	  {
+	    std::wstringstream ss;
+
+	    if (countdown > 0)
+	      {
+		countdown -= 1;
+		ss << countdown;
+		setCountDownText(ss);
+	      }
+	    else
+	      {
+		ss << "Wall Of Death !";
+		setCountDownText(ss);
+		m_st_text->setOverrideColor(irr::video::SColor(255, 229, 57, 53));
+	      }
+	    // m_st_text->setText(ss.str().c_str());
+	    beginTimer = actualTime;
+	  }
 	if (wallOfDead->canDropWall())
 	  {
 	    wallOfDead->createWallOfDead();
@@ -282,13 +330,23 @@ void    GameManager::onGame()
     }
 }
 
+double	GameManager::getTimeSeconds() const
+{
+  time_t	timer;
+  struct tm	y2k;
+
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  return (difftime(timer, mktime(&y2k)));
+  
+}
+
 void    GameManager::addDeadPlayer(ACharacter *player)
 {
     playerRanking.addPlayerToRank(player);
 }
-
-
-#include "../include/WallOfEnd.hpp"
 
 void    GameManager::willStartGame()
 {
@@ -296,8 +354,23 @@ void    GameManager::willStartGame()
 
   if (wallOfDead)
     delete wallOfDead;
-  // TODO METTRE UN TIMER EN PLEIN MILIEU DE l ECRAN
-  wallOfDead = new WallOfDead(10);
+
+  countdown = GameManager::endOfGame;
+ 
+  std::wstringstream ss;
+
+  this->defaultFont = IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->getFont();
+  ss << countdown;
+  if (m_st_text)
+    m_st_text->remove();
+  setCountDownText(ss);
+  // m_st_text = IrrlichtController::getDevice()->getGUIEnvironment()->addStaticText(ss.str().c_str(), irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200), false, true);
+    //   m_st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
+    // m_st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER, irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
+
+
+  beginTimer = getTimeSeconds();
+  wallOfDead = new WallOfDead(GameManager::endOfGame);
 
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");

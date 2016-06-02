@@ -265,7 +265,11 @@ std::string		BomberMap::getCurrentDate() const
 
 void	BomberMap::save() const
 {
-  mkdir("tmpSaveMap", 0777);
+  #ifdef __linux__
+    mkdir("tmpSaveMap", 0777);
+  #elif _WIN32
+    mkdir("tmpSaveMap");
+  #endif
   if (chdir("tmpSaveMap") == -1)
     return ;
   irr::IrrlichtDevice  *device = irr::createDevice(irr::video::EDT_NULL);
