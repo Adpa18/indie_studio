@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Thu Jun  2 11:30:33 2016 Victor Gouet
+// Last update Thu Jun  2 16:12:03 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -88,6 +88,9 @@ private:
   void	onGame();
   void  displayRankingScreen();
 
+private:
+  void  setCountDownText(std::wstringstream const &ss);
+
 public:
   void	willStartGame();
   void	willStartMenu();
@@ -108,6 +111,8 @@ private:
 private:
   double	countdown;
   double	beginTimer;
+  irr::gui::IGUIStaticText *m_st_text;
+  irr::gui::IGUIFont		*defaultFont;
 
 private:
   GameState m_gameState;
