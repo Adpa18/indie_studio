@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu Jun  2 16:20:05 2016 Victor Gouet
+// Last update Thu Jun  2 18:33:15 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -17,7 +17,7 @@
 #include "../include/GameObjectTimeContainer.hpp"
 #include "../ia/IAPlayer.hpp"
 
-const int	GameManager::endOfGame = 10;
+const int	GameManager::endOfGame = 60;
 
 GameManager::GameManager()
 {

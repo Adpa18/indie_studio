@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu Jun  2 15:44:44 2016 Victor Gouet
+// Last update Thu Jun  2 18:47:13 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -45,6 +45,7 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
     _name(name), _player(player), _score(score), _invincible(invincible)
 {
+  onRun = false;
   t = NULL;
   life = 1;
   bombPass = false;
@@ -97,14 +98,37 @@ void ACharacter::reset()
 
 ACharacter::~ACharacter()
 {
+  if (t)
+    {
+      mutex.lock();
+      onRun = false;
+      mutex.unlock();
+      t->join();
+      delete (t);
+    }
 }
 
 void			ACharacter::onInvinciblePeriode(double time)
 {
+  double		i = 0;
+
   mutex.lock();
   _invincible = true;
   mutex.unlock();
-  usleep(time);
+  while (i < time)
+    {
+      if (mutex.try_lock())
+	{
+	  if (!onRun)
+	    {
+	      mutex.unlock();
+	      break;
+	    }
+	  mutex.unlock();
+	}
+      usleep(100);
+      i = i + 100;
+    }
   mutex.lock();
   _invincible = false;
   mutex.unlock();
@@ -121,14 +145,18 @@ void			ACharacter::invincibleEnabledDuringPeriod(double time)
   mutex.unlock();
   if (t)
     {
+      mutex.lock();
+      onRun = false;
+      mutex.unlock();
       t->join();
       delete (t);
     }
   addAnimation();
-  // TODO A REGARDER
-  // THREAD LOL
-  // t = new std::thread([time, this] { this->onInvinciblePeriode(time);
-  //   });
+  mutex.lock();
+  onRun = true;
+  mutex.unlock();
+  t = new std::thread([time, this] { this->onInvinciblePeriode(time);
+    });
 }
 
 void                    ACharacter::dead()
