@@ -45,15 +45,14 @@ void GameOver::show()
     GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
     if (m_ranking->getState() == Ranking::WIN)
     {
-        std::vector<ACharacter *>   podium = m_ranking->getPodium(m_characters);
 
         if (m_ranking->getPlayedGames() > 2 && m_ranking->getMaxScoredPlayer(m_characters) != NULL)
         {
-            ss << "The winner is player " << dispFinalWin(podium) << "!";
+            ss << "The winner is player " << dispFinalWin(m_ranking->getFinalPodium(m_characters)) << "!";
         }
         else
         {
-            ss << "Player " << dispCurrWin(podium) << " win!";
+            ss << "Player " << dispCurrWin(m_ranking->getPodium()) << " win!";
         }
     }
     else

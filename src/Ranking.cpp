@@ -7,7 +7,7 @@
 #include "Ranking.hpp"
 
 Ranking::Ranking(size_t nbPlayers) :
-        m_winners(), m_rankedPlayers(), m_nbplayers(nbPlayers), m_gameover(NULL), m_state(DEFAULT), m_playedGames(0)
+        m_nbplayers(nbPlayers), m_gameover(NULL), m_state(DEFAULT), m_playedGames(0)
 {
 
 }
@@ -24,7 +24,6 @@ Ranking::~Ranking()
 
 Ranking &Ranking::operator=(const Ranking &ranking)
 {
-    m_winners       = ranking.m_winners;
     m_rankedPlayers = ranking.m_rankedPlayers;
     m_nbplayers     = ranking.m_nbplayers;
     m_gameover      = ranking.m_gameover;
@@ -40,7 +39,6 @@ bool Ranking::isTheEndOfTheGame(ACharacter *winner, size_t nbDeads)
         if (nbDeads == m_nbplayers)
         {
             clear();
-            m_winners.push_back(-1);
             m_state = DRAW;
         }
         else if (winner)
@@ -57,14 +55,8 @@ bool Ranking::isTheEndOfTheGame(ACharacter *winner, size_t nbDeads)
 void Ranking::addWinner(ACharacter *winner)
 {
     addPlayerToRank(winner);
-    addWinner(winner->get_player());
-}
-
-void Ranking::addWinner(int playerId)
-{
-    m_winners.push_back(playerId);
-    if (m_players.find(playerId) == m_players.end())
-        m_players[playerId] += 1;
+    if (m_players.find(winner->get_player()) == m_players.end())
+        m_players[winner->get_player()] += 1;
 }
 
 void Ranking::addPlayerToRank(ACharacter *character)
@@ -84,11 +76,6 @@ size_t Ranking::getNbPlayers(void) const
     return m_nbplayers;
 }
 
-std::vector<int> const &Ranking::getWinners(void) const
-{
-    return m_winners;
-}
-
 std::stack<ACharacter *> const &Ranking::getRanks(void) const
 {
     return m_rankedPlayers;
@@ -96,7 +83,6 @@ std::stack<ACharacter *> const &Ranking::getRanks(void) const
 
 void Ranking::clear(void)
 {
-    m_winners.clear();
     while (!m_rankedPlayers.empty())
     {
         m_rankedPlayers.pop();
@@ -171,7 +157,35 @@ ACharacter *Ranking::getMaxScoredPlayer(std::vector<ACharacter *> const &chars) 
     return maxScored;
 }
 
-std::vector<ACharacter *> Ranking::getPodium(const std::vector<ACharacter *> &chars) const
+std::vector<ACharacter *> Ranking::getPodium()
+{
+    std::vector<ACharacter *>   podium;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        podium.push_back(m_rankedPlayers.top());
+        m_rankedPlayers.pop();
+    }
+    return podium;
+}
+
+ACharacter *Ranking::getPlayerFromId(int id, std::vector<ACharacter *> const &chars) const
+{
+    for (std::vector<ACharacter *>::const_iterator it = chars.begin(), end = chars.end(); it != end; ++it)
+    {
+        if ((*it)->get_player() == id)
+            return *it;
+    }
+    return nullptr;
+}
+
+void Ranking::reset(void)
+{
+    clear();
+    m_players.clear();
+}
+
+std::vector<ACharacter *> Ranking::getFinalPodium(std::vector<ACharacter *> const &chars) const
 {
     std::vector<std::pair<int, size_t >> rank;
     std::vector<ACharacter *>   podium;
@@ -189,14 +203,4 @@ std::vector<ACharacter *> Ranking::getPodium(const std::vector<ACharacter *> &ch
     podium.push_back(getPlayerFromId(rank[1].first, chars));
     podium.push_back(getPlayerFromId(rank[2].first, chars));
     return podium;
-}
-
-ACharacter *Ranking::getPlayerFromId(int id, std::vector<ACharacter *> const &chars) const
-{
-    for (std::vector<ACharacter *>::const_iterator it = chars.begin(), end = chars.end(); it != end; ++it)
-    {
-        if ((*it)->get_player() == id)
-            return *it;
-    }
-    return nullptr;
 }

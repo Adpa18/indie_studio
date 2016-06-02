@@ -159,6 +159,7 @@ void    GameManager::onMenu()
 
     if (GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
     {
+        playerRanking.reset();
         // Camera 1
         IrrlichtController::getDevice()->getVideoDriver()->setViewPort(
             irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,

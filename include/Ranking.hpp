@@ -30,11 +30,12 @@ public:
     bool isTheEndOfTheGame(ACharacter *winner, size_t nbDeads);
     void displayRankingScreen(std::vector<ACharacter *> &chara);
     ACharacter *getMaxScoredPlayer(std::vector<ACharacter *> const &chars) const;
-    std::vector<ACharacter *>   getPodium(std::vector<ACharacter *> const &chars) const;
+    std::vector<ACharacter *>   getPodium();
+    //todo finish
+    std::vector<ACharacter *>   getFinalPodium(std::vector<ACharacter *> const &chars) const;
 
 public:
     void addWinner(ACharacter *winner);
-    void addWinner(int playerId);
     void addPlayerToRank(ACharacter *toRank);
     void setNbPlayers(size_t nbPlayers);
     size_t getNbPlayers(void) const;
@@ -45,13 +46,12 @@ public:
     size_t getPlayedGames(void) const;
     void setPlayedGames(size_t nbGames);
     ACharacter *getPlayerFromId(int id, std::vector<ACharacter *> const &chars) const;
-    std::vector<int> const &getWinners(void) const;
     std::stack<ACharacter *> const &getRanks(void) const;
     void clear(void);
+    void reset(void);
 
 private:
     std::map<int, size_t>       m_players;
-    std::vector<int>            m_winners;
     std::stack<ACharacter *>    m_rankedPlayers;
     size_t                      m_nbplayers;
     GameOver                    *m_gameover;
