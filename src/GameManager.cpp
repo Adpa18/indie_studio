@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu Jun  2 00:05:26 2016 Victor Gouet
+// Last update Thu Jun  2 11:33:12 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -17,6 +17,7 @@
 #include "../include/GameObjectTimeContainer.hpp"
 #include "../ia/IAPlayer.hpp"
 
+const int	GameManager::endOfGame = 5;
 
 GameManager::GameManager()
 {
@@ -246,6 +247,17 @@ void    GameManager::onGame()
 
     if (wallOfDead)
       {
+
+	// TIMER FOR WALLOFDEAD
+	double actualTime = getTimeSeconds();
+	double time = actualTime - beginTimer;
+	if (time >= 1)
+	  {
+	    if (countdown > 0)
+	      countdown -= 1;
+	    std::cout << countdown << std::endl;
+	    beginTimer = actualTime;
+	  }
 	if (wallOfDead->canDropWall())
 	  {
 	    wallOfDead->createWallOfDead();
@@ -281,13 +293,23 @@ void    GameManager::onGame()
     }
 }
 
+double	GameManager::getTimeSeconds() const
+{
+  time_t	timer;
+  struct tm	y2k;
+
+  timer = time(NULL);
+  memset(&y2k, 0, sizeof(y2k));
+  y2k.tm_year = 100;
+  y2k.tm_mday = 1;
+  return (difftime(timer, mktime(&y2k)));
+  
+}
+
 void    GameManager::addDeadPlayer(ACharacter *player)
 {
     playerRanking.addPlayerToRank(player);
 }
-
-
-#include "../include/WallOfEnd.hpp"
 
 void    GameManager::willStartGame()
 {
@@ -296,7 +318,9 @@ void    GameManager::willStartGame()
   if (wallOfDead)
     delete wallOfDead;
   // TODO METTRE UN TIMER EN PLEIN MILIEU DE l ECRAN
-  wallOfDead = new WallOfDead(10);
+  countdown = GameManager::endOfGame;
+  beginTimer = getTimeSeconds();
+  wallOfDead = new WallOfDead(GameManager::endOfGame);
 
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("startGame.wav");
