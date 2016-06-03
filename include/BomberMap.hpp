@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Mon May 30 19:20:04 2016 Victor Gouet
+// Last update Fri Jun  3 15:49:06 2016 Victor Gouet
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -20,8 +20,8 @@
 #include "DangerMap.hpp"
 
 # define SMALL_SIZE 9
-# define MEDIUM_SIZE 13
-# define LARGE_SIZE 15
+# define MEDIUM_SIZE 11
+# define LARGE_SIZE 13
 
 class	BomberMap
 {

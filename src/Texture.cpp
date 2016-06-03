@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Mon May 30 18:29:16 2016 Victor Gouet
+// Last update Fri Jun  3 16:18:46 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -23,7 +23,7 @@ const std::string BomberManTexture::font = "media/font/";
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
 
-		// Map
+		// Map SMALL
 		{"carpet", {BomberManTexture::smallMap + "meshes/carpet.md3", BomberManTexture::smallMap + "textures/Carpet01_D.png"}},
 		{"carpet5", {BomberManTexture::smallMap + "meshes/carpet5.md3", BomberManTexture::smallMap + "textures/Carpet03_D.png"}},
 		{"chest3", {BomberManTexture::smallMap + "meshes/chest3.md3", BomberManTexture::smallMap + "textures/Chest03_D.BMP"}},

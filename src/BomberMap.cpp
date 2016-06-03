@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Wed Jun  1 19:43:44 2016 Victor Gouet
+// Last update Fri Jun  3 16:20:08 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -46,7 +46,7 @@ BomberMap::BomberMap(Size mapSize) :
 {
   terrain_model = NULL;
   _camera = NULL;
-  initSpawn();
+  // initSpawn();
   _dangerMap.refresh(this);
   IAPlayer::initIA(size_side[_mapSize], size_side[_mapSize]);
 }
@@ -352,10 +352,11 @@ void BomberMap::deserialize()
       else if (nodeName == "size")
       {
         _mapSize = (Size) reader->getAttributeValueAsInt("size");
+	initSpawn();
       }
       else if (nodeName == "spawn")
       {
-        _spawner.push_back(irr::core::vector2df(reader->getAttributeValueAsFloat("px"), reader->getAttributeValueAsFloat("py")));
+        // _spawner.push_back(irr::core::vector2df(reader->getAttributeValueAsFloat("px"), reader->getAttributeValueAsFloat("py")));
       }
       else if (nodeName == "ambient_light")
       {
@@ -426,20 +427,6 @@ void BomberMap::deserialize()
         _walls[2].second = texturesDir + reader->getAttributeValueSafe("texture3");
       }
     }
-    //  if (reader->getNodeType() == irr::io::EXN_ELEMENT && mapelem.equals_ignore_case(reader->getNodeName()))
-    //  {
-    //      Player  *character;
-    //
-    //      attributes = device->getFileSystem()->createEmptyAttributes();
-    //      attributes->read(reader, true);
-    //      toPush = new Player("Richard", irr::core::vector3df(0, 0, 0), "../media/pikachu.md2", "../media/pikachu.png", 42, eventGame);
-    //      (*toPush)->deserializeAttributes(attributes);
-    //      character = dynamic_cast<Player *>(toPush);
-    //      if (character != NULL)
-    //          character->setName((*toPush)->getName());
-    //      _objects.push_back(toPush);
-    //      attributes->drop();
-    //  }
   }
   delete reader;
 }
