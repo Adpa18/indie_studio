@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Thu Jun  2 18:47:13 2016 Victor Gouet
+// Last update Fri Jun  3 11:35:16 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -210,6 +210,11 @@ void ACharacter::setMD3Animation(MD3_ANIMATION anim)
 void			ACharacter::setLifeUp()
 {
   life = 2;
+}
+
+void			ACharacter::setBasicLife()
+{
+  life = 1;
 }
 
 std::string const &	ACharacter::getName() const

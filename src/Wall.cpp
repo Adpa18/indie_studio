@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Thu Jun  2 18:50:05 2016 Victor Gouet
+// Last update Fri Jun  3 11:39:57 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -67,9 +67,9 @@ void                        Wall::dead()
 
   if (_state == Invicible || _state == Edge)
     return ;
-  r = rand() % 2;
-  if (r == 1)
-    {
+  // r = rand() % 2;
+  // if (r == 1)
+  //   {
       if (BomberMap::getMap()->getSize() == SMALL_SIZE)
 	nbBonus = 11;
       else
@@ -116,7 +116,7 @@ void                        Wall::dead()
 	default:
 	  break;
 	}
-    }
+    // }
 }
 
 bool				Wall::isDestructible() const
