@@ -107,7 +107,7 @@ void                        Wall::dead()
 	case 9:
 	  new BonusFragBomb(this->getMapPos());
 	  break;
-        case 10:
+	case 10:
 	  new ItemMineBomb(this->getMapPos());
 	  break;
 	case 11:

@@ -30,7 +30,7 @@ void		BonusSpeed::take(ACharacter &player)
 {
   std::cout << "BONUS SPEED TAKEN !" << std::endl;
   player.setMoveSpeed(player.getMoveSpeed() + 0.5);
-  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
+  SoundManager::getManager()->play("BonusSpeed.wav", (*this)->getID(), false, 0.8);
 }
 
 void		BonusSpeed::dead()

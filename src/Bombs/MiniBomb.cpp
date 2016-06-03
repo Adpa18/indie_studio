@@ -8,6 +8,7 @@
 // Last update Wed Jun  1 20:33:27 2016 Victor Gouet
 //
 
+#include <iostream>
 #include "../include/MiniBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"

@@ -42,7 +42,7 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
     m_guiEvents[irr::gui::EGET_BUTTON_CLICKED] = &UIEventReceiver::OnButtonClicked;
     m_guiEvents[irr::gui::EGET_ELEMENT_FOCUSED] = &UIEventReceiver::OnElementFocused;
     SoundManager::getManager()->play("welcome.wav");
-    SoundManager::getManager()->play("battleMenu.wav", 0, true, 1);
+    SoundManager::getManager()->play("battleMenu.wav", 0, true, 0.5);
     DisplaySplashScreen();
 }
 
@@ -112,7 +112,7 @@ void UIEventReceiver::DisplayGameHUD()
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
-    SoundManager::getManager()->play("selectPlayer.wav");
+    SoundManager::getManager()->play("SelectYourPlayer.wav");
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
@@ -151,7 +151,7 @@ void UIEventReceiver::DisplaySplashScreen()
  */
 void UIEventReceiver::DisplayMapMenu()
 {
-    SoundManager::getManager()->play("selectMap.wav");
+    SoundManager::getManager()->play("SelectMap.wav");
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);
@@ -516,7 +516,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent 
             BomberMap::deleteMap();
             GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
             SoundManager::getManager()->stopAll();
-            SoundManager::getManager()->play("battleMenu.wav", 0, true, 1);
+            SoundManager::getManager()->play("battleMenu.wav", 0, true, 0.5);
             fptr = &UIEventReceiver::DisplayMainMenu;
             break;
 

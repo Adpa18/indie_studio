@@ -68,34 +68,37 @@ void                GameObjectTimeContainer::remove(AGameObject *obj)
 
 void				GameObjectTimeContainer::removeAll()
 {
-  container.clear();
+    container.clear();
 }
 
 void				GameObjectTimeContainer::callTimeOutObjects()
 {
-  std::list<AGameObject *>::iterator it = container.begin();
+    std::list<AGameObject *>::iterator it = container.begin();
 
-  while (it != container.end())
+    while (it != container.end())
     {
-      if (*it)
-	(*it)->updateTimeOut();
+        if (*it) {
+            (*it)->updateTimeOut();
+        }
 
-      
-      if (*it && (*it)->isTimeOut())
-	{
-	  (*it)->dead();
-	  if ((*it)->isDestructible())
-	    {
-	      delete (*it);
-	      it = container.begin();
-	    }
-	  else
-	    it = container.erase(it);
-	  //            it = container.begin();
-	}
-      else
-	{
-	  ++it;
-	}
+        if (*it && (*it)->isTimeOut())
+        {
+            (*it)->dead();
+            // TODO segfault : On s'est pas pk
+            if ((*it)->isDestructible())
+            {
+                delete (*it);
+                it = container.begin();
+            }
+            else
+            {
+                it = container.erase(it);
+            //            it = container.begin();
+            }
+        }
+        else
+        {
+            ++it;
+        }
     }
 }

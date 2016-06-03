@@ -33,7 +33,7 @@ void	        BonusSmallestMan::take(ACharacter &player)
   player.setMoveSpeed(ACharacter::BASICSPEED * 2);
   player.setBasicLife();
   player->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
-  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
+  SoundManager::getManager()->play("BonusSmallestMan.wav", (*this)->getID(), false, 0.8);
 }
 
 void	        BonusSmallestMan::dead()

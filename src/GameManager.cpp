@@ -269,10 +269,8 @@ void    GameManager::onGame()
         uiEventReceiver->DisplayPauseMenu();
         return ;
     }
-
     if (wallOfDead)
       {
-
 	// TIMER FOR WALLOFDEAD
 	double actualTime = getTimeSeconds();
 	double time = actualTime - beginTimer;
@@ -305,9 +303,9 @@ void    GameManager::onGame()
 	    wallOfDead->createWallOfDead();
 	  }
       }
-   
+
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
-   
+
     std::vector<ACharacter *>::iterator it = characters.begin();
     size_t nb_dead = 0;
     ACharacter *winner = NULL;
@@ -329,9 +327,11 @@ void    GameManager::onGame()
     {
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::getMap()->removeBlocks();
+        // TODO segfault : On s'est pas pk
         setGameState(RANKING_SCREEN);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
     }
+    // TODO segfault : On s'est pas pk
 }
 
 double	GameManager::getTimeSeconds() const
@@ -378,7 +378,7 @@ void    GameManager::willStartGame()
 
     SoundManager::getManager()->stopAll();
     SoundManager::getManager()->play("battleIntro.wav");
-    SoundManager::getManager()->play("battleTheme1.wav", 0, true, 1);
+    SoundManager::getManager()->play("battleTheme1.wav", 0, true, 0.5);
     std::vector<irr::core::vector2df> const &spawn = BomberMap::getMap()->getSpawn();
 
     characters.clear();
