@@ -106,6 +106,7 @@ ACharacter::~ACharacter()
       t->join();
       delete (t);
     }
+    delete(_bombContainer);
 }
 
 void			ACharacter::onInvinciblePeriode(double time)
