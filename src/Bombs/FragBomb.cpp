@@ -8,6 +8,7 @@
 // Last update Wed Jun  1 20:33:38 2016 Victor Gouet
 //
 
+#include <iostream>
 #include "../include/FragBomb.hpp"
 #include "../include/BomberMap.hpp"
 #include "../include/Texture.hpp"
@@ -106,7 +107,6 @@ void		FragBomb::willExplose()
 	delete vec;
       }
     vec = NULL;
-
 }
 
 bool    FragBomb::killObjects(irr::core::vector2df const &pos)

@@ -31,7 +31,7 @@ void	        BonusBombPass::take(ACharacter &player)
   std::cout << "Bonus BOMB PASS ADD" << std::endl;
   player.setBombPass(true);
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
-  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
+  SoundManager::getManager()->play("BonusBombPass.wav", (*this)->getID(), false, 0.8);
 }
 
 void	        BonusBombPass::dead()

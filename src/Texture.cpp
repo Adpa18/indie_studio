@@ -48,11 +48,11 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 
 		// Bombes
 		{"fireBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
-		{"fragBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
-		{"miniBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
+		{"fragBomb", {BomberManTexture::bombs + "fragBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
+		{"miniBomb", {BomberManTexture::bombs + "miniBomb.md2", BomberManTexture::bombs + "miniBomb.png"}},
 		{"atomicBomb", {BomberManTexture::bombs + "atomicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
 		{"trackerBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
-		{"mineBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+		{"mineBomb", {BomberManTexture::bombs + "mineBomb.md2", BomberManTexture::bombs + "mineBomb.png"}},
 
 		// Gui
 		{"menuScene", {"", BomberManTexture::gui + "MenuScene.png"}},

@@ -31,7 +31,7 @@ void		BonusPower::take(ACharacter &player)
   std::cout << "Bonus POWER UP" << std::endl;
   // player.setMoveSpeed(player.getMoveSpeed() + 0.5);
   player.increasePowerBomb();
-  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
+  SoundManager::getManager()->play("BonusPower.wav", (*this)->getID(), false, 0.8);
 }
 
 void	        BonusPower::dead()

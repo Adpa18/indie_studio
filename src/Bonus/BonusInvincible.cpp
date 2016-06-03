@@ -35,12 +35,12 @@ void	        BonusInvincible::take(ACharacter &player)
   // player.setMoveSpeed(ACharacter::BASICSPEED / 2);
   // player->setScale(irr::core::vector3df(2.5, 2.5, 2.5));
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
+   SoundManager::getManager()->stop(player.getID());
+  SoundManager::getManager()->play("BonusInvincible.wav", player.getID(), false, 0.8);
 }
 
 void	        BonusInvincible::dead()
 {
-  // SoundManager::getManager()->stop((*this)->getID());
-  SoundManager::getManager()->play("invincible.wav");
   (*this)->setVisible(false);
 }
 
