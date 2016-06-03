@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 14:33:06 2016 Victor Gouet
-// Last update Fri Jun  3 11:39:53 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:53 2016 Victor Gouet
 //
 
 #include "../include/BonusSmallestMan.hpp"
@@ -39,9 +39,5 @@ void	        BonusSmallestMan::take(ACharacter &player)
 void	        BonusSmallestMan::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusSmallestMan::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu Apr 28 16:19:48 2016 Victor Gouet
-// Last update Mon May 23 19:05:56 2016 Victor Gouet
+// Last update Fri Jun  3 18:29:40 2016 Victor Gouet
 //
 
 #ifndef ABOMB_HPP_

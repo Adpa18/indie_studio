@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Fri Jun  3 16:20:08 2016 Victor Gouet
+// Last update Fri Jun  3 18:42:40 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -228,7 +228,7 @@ void			BomberMap::generateMap()
       }
       else if (canPutDestructibleWall(x, y))
       {
-        new Wall(irr::core::vector2df(x, y), Wall::Destructible, BomberManTexture::getModel("cubeDestructible").mesh, BomberManTexture::getModel("cubeDestructible").texture);
+	  new Wall(irr::core::vector2df(x, y), Wall::Destructible, BomberManTexture::getModel("cubeDestructible").mesh, BomberManTexture::getModel("cubeDestructible").texture);
       }
     }
   }

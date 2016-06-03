@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:25:32 2016 Victor Gouet
-// Last update Wed May 25 22:11:25 2016 Victor Gouet
+// Last update Fri Jun  3 18:33:25 2016 Victor Gouet
 //
 
 #include "../include/ABonus.hpp"
@@ -55,4 +55,9 @@ void		ABonus::serialize(irr::io::IXMLWriter *xmlr) const
 
 ABonus::~ABonus()
 {
+}
+
+bool	        ABonus::isDestructible() const
+{
+  return (false);
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 14:34:49 2016 Victor Gouet
-// Last update Thu May 12 14:35:29 2016 Victor Gouet
+// Last update Fri Jun  3 18:30:24 2016 Victor Gouet
 //
 
 #ifndef BONUSSMALLESTMAN_HPP_
@@ -22,7 +22,6 @@ public:
 public:
   virtual void		take(ACharacter &);
   virtual void		dead();
-  virtual bool		isDestructible() const;
 };
 
 

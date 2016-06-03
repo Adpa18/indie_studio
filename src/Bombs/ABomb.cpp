@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Wed Jun  1 20:35:27 2016 Victor Gouet
+// Last update Fri Jun  3 18:43:16 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -58,7 +58,6 @@ ABomb	&ABomb::operator=(ABomb const *other)
 
 ABomb::~ABomb()
 {
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\nDEAD BOMB\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
 }
 
 double		ABomb::getTimeOut() const

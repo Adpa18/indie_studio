@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
-// Last update Mon May 23 18:34:51 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:02 2016 Victor Gouet
 //
 
 #include "../include/BonusBiggestMan.hpp"
@@ -40,9 +40,5 @@ void	        BonusBiggestMan::take(ACharacter &player)
 void	        BonusBiggestMan::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusBiggestMan::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

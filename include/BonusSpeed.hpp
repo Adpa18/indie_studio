@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 13:35:03 2016 Victor Gouet
-// Last update Mon May  9 13:55:27 2016 Victor Gouet
+// Last update Fri Jun  3 18:30:28 2016 Victor Gouet
 //
 
 #ifndef BONUSSPEED_HPP_
@@ -22,7 +22,6 @@ public:
 public:
   virtual void		take(ACharacter &);
   virtual void		dead();
-  virtual bool		isDestructible() const;
 
 };
 

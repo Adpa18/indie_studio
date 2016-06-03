@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:15:24 2016 Victor Gouet
-// Last update Mon May 23 18:35:01 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:09 2016 Victor Gouet
 //
 
 #include "../include/BonusBombPass.hpp"
@@ -37,9 +37,5 @@ void	        BonusBombPass::take(ACharacter &player)
 void	        BonusBombPass::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusBombPass::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

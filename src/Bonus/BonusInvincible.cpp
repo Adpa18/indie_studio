@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:24:43 2016 Victor Gouet
-// Last update Wed Jun  1 13:58:26 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:35 2016 Victor Gouet
 //
 
 #include "../../include/BonusInvincible.hpp"
@@ -42,9 +42,5 @@ void	        BonusInvincible::take(ACharacter &player)
 void	        BonusInvincible::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusInvincible::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

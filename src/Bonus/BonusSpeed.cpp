@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:37:03 2016 Victor Gouet
-// Last update Mon May 23 18:35:59 2016 Victor Gouet
+// Last update Fri Jun  3 18:37:00 2016 Victor Gouet
 //
 
 #include "../include/BonusSpeed.hpp"
@@ -36,9 +36,5 @@ void		BonusSpeed::take(ACharacter &player)
 void		BonusSpeed::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool		BonusSpeed::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

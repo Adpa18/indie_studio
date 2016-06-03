@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Sat May 21 12:19:25 2016 Victor Gouet
-// Last update Mon May 23 18:34:34 2016 Victor Gouet
+// Last update Fri Jun  3 18:35:47 2016 Victor Gouet
 //
 
 #include "../include/BonusAtomicBomb.hpp"
@@ -36,9 +36,5 @@ void	        BonusAtomicBomb::take(ACharacter &player)
 void	        BonusAtomicBomb::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusAtomicBomb::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:04:39 2016 Victor Gouet
-// Last update Mon May 23 18:35:21 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:27 2016 Victor Gouet
 //
 
 #include "../include/BonusFragBomb.hpp"
@@ -38,9 +38,5 @@ void	        BonusFragBomb::take(ACharacter &player)
 void	        BonusFragBomb::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusFragBomb::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

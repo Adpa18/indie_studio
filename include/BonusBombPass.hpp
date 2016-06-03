@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 12:14:42 2016 Victor Gouet
-// Last update Thu May 12 12:16:16 2016 Victor Gouet
+// Last update Fri Jun  3 18:30:03 2016 Victor Gouet
 //
 
 #ifndef BONUSBOMBPASS_HPP_
@@ -22,7 +22,6 @@ public:
 public:
   virtual void		take(ACharacter &);
   virtual void		dead();
-  virtual bool		isDestructible() const;
 };
 
 

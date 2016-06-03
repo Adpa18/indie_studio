@@ -24,7 +24,7 @@ const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> EventGame::_keyc
 	{ACharacter::LEFT, irr::KEY_KEY_Q},
 	  {ACharacter::RIGHT, irr::KEY_KEY_D},
 	    {ACharacter::UP, irr::KEY_KEY_Z},
-	      {ACharacter::DOWN, irr::KEY_KEY_W},
+	      {ACharacter::DOWN, irr::KEY_KEY_S},
 		{ACharacter::BOMB, irr::KEY_KEY_L},
 		  {ACharacter::ACT, irr::KEY_KEY_K}
       }

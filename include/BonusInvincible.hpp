@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:26:37 2016 Victor Gouet
-// Last update Thu May 12 18:27:32 2016 Victor Gouet
+// Last update Fri Jun  3 18:30:16 2016 Victor Gouet
 //
 //
 
@@ -23,7 +23,6 @@ public:
 public:
   virtual void		take(ACharacter &);
   virtual void		dead();
-  virtual bool		isDestructible() const;
 };
 
 

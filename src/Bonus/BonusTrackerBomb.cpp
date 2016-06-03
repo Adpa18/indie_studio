@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:31:11 2016 Victor Gouet
-// Last update Mon May 23 18:36:09 2016 Victor Gouet
+// Last update Fri Jun  3 18:37:11 2016 Victor Gouet
 //
 
 #include "../include/BonusTrackerBomb.hpp"
@@ -37,9 +37,5 @@ void	        BonusTrackerBomb::take(ACharacter &player)
 void	        BonusTrackerBomb::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusTrackerBomb::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

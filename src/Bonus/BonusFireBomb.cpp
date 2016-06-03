@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
-// Last update Mon May 23 18:35:12 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:18 2016 Victor Gouet
 //
 
 #include "../include/BonusFireBomb.hpp"
@@ -37,9 +37,5 @@ void	        BonusFireBomb::take(ACharacter &player)
 void	        BonusFireBomb::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusFireBomb::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

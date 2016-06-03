@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:05:25 2016 Victor Gouet
-// Last update Mon May 23 18:35:39 2016 Victor Gouet
+// Last update Fri Jun  3 18:36:43 2016 Victor Gouet
 //
 
 #include "../include/BonusPower.hpp"
@@ -37,9 +37,5 @@ void		BonusPower::take(ACharacter &player)
 void	        BonusPower::dead()
 {
   (*this)->setVisible(false);
-}
-
-bool	        BonusPower::isDestructible() const
-{
-  return (true);
+  this->setPos(irr::core::vector2df(1000, 1000));
 }

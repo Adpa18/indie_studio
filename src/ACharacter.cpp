@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri Jun  3 11:35:16 2016 Victor Gouet
+// Last update Fri Jun  3 18:43:01 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -64,12 +64,11 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
   // FragBomb
   // TrackerBomb
   
-//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());

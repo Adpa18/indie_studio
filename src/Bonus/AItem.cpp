@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:27:09 2016 Victor Gouet
-// Last update Wed May 25 22:12:30 2016 Victor Gouet
+// Last update Fri Jun  3 18:37:23 2016 Victor Gouet
 //
 
 #include "../include/AItem.hpp"
@@ -31,9 +31,9 @@ AItem::~AItem()
 
 void		AItem::dead()
 {
-    (*this)->setVisible(false);
-    this->setPos(irr::core::vector2df(1000, 1000));
-    SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
+  (*this)->setVisible(false);
+  this->setPos(irr::core::vector2df(1000, 1000));
+  SoundManager::getManager()->play("takeBonus.wav", (*this)->getID());
 }
 
 void		AItem::serialize(irr::io::IXMLWriter *xmlr) const
@@ -68,5 +68,5 @@ void		AItem::serialize(irr::io::IXMLWriter *xmlr) const
 
 bool	        AItem::isDestructible() const
 {
-    return (false);
+  return (false);
 }

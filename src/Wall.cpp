@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Fri Jun  3 11:39:57 2016 Victor Gouet
+// Last update Fri Jun  3 18:42:20 2016 Victor Gouet
 //
 
 #include <fstream>
@@ -116,12 +116,12 @@ void                        Wall::dead()
 	default:
 	  break;
 	}
-    // }
+      this->setPos(irr::core::vector2df(-2000, -2000));
 }
 
 bool				Wall::isDestructible() const
 {
-  return ((_state == Destructible));
+  return (false);
 }
 
 Wall::State			Wall::getState() const
