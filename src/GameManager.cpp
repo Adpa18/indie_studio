@@ -68,8 +68,13 @@ GameManager::~GameManager()
     delete uiManager;
     delete eventGame;
     if (wallOfDead)
-      delete wallOfDead;
+        delete wallOfDead;
     delete SoundManager::getManager();
+    ClearPlayers();
+    for (std::list<PlayerInfo *>::iterator it = m_playerInfoUI.begin(), end = m_playerInfoUI.end(); it != end; ++it)
+    {
+        delete(*it);
+    }
 }
 
 GameManager *GameManager::SharedInstance()
@@ -449,6 +454,10 @@ void GameManager::AddPlayer(PlayerInfo *player)
 
 void GameManager::ClearPlayers()
 {
+    for (std::list<PlayerInfo *>::iterator it = m_playerInfo.begin(), end = m_playerInfo.end(); it != end; ++it)
+    {
+        delete(*it);
+    }
     m_playerInfo.clear();
 }
 

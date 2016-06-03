@@ -30,7 +30,7 @@ KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32>
 
 KeySelectionBox::~KeySelectionBox()
 {
-
+    delete(m_controller);
 }
 
 void KeySelectionBox::SelectNext()
