@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Thu Jun  2 18:33:15 2016 Victor Gouet
+// Last update Fri Jun  3 17:21:49 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -274,6 +274,7 @@ void    GameManager::onGame()
         uiEventReceiver->DisplayPauseMenu();
         return ;
     }
+
     if (wallOfDead)
       {
 	// TIMER FOR WALLOFDEAD
@@ -328,8 +329,18 @@ void    GameManager::onGame()
         }
         ++it;
     }
+
     if ((is_gameOver = playerRanking.isTheEndOfTheGame(winner, nb_dead)))
     {
+      if (gameOverTimer == 0 && winner)
+	{
+	  gameOverTimer = getTimeSeconds();
+	  return ;
+	}
+      if (gameOverTimer + 1.5 > getTimeSeconds() && winner)
+	{
+	  return ;
+	}
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::getMap()->removeBlocks();
         // TODO segfault : On s'est pas pk
@@ -365,6 +376,7 @@ void    GameManager::willStartGame()
     delete wallOfDead;
 
   countdown = GameManager::endOfGame;
+  gameOverTimer = 0;
  
   std::wstringstream ss;
 

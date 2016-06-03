@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Thu Jun  2 16:12:03 2016 Victor Gouet
+// Last update Fri Jun  3 16:42:26 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -111,6 +111,7 @@ private:
 private:
   double	countdown;
   double	beginTimer;
+  double	gameOverTimer;
   irr::gui::IGUIStaticText *m_st_text;
   irr::gui::IGUIFont		*defaultFont;
 
