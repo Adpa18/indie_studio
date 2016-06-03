@@ -156,6 +156,8 @@ void UIEventReceiver::DisplayMapMenu()
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
     m_manager.GetEnv()->setFocus(listBox);
     listBox->setSelected(listBox->addItem(L"Map 1"));
+    listBox->addItem(L"Map 2");
+    listBox->addItem(L"Map 3");
 
     // Looks for saved games
     DIR *dir = opendir("tmpSaveMap");
@@ -297,11 +299,16 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     if (!GameManager::SharedInstance()->getGameOver()->getStatus())
                     {
+		      if (BomberMap::getMap()->getSize() == SMALL_SIZE)
                         BomberMap::newMap("./media/smallMap/map1.xml");
-                        BomberMap::getMap()->genMap();
-                        fptr = &UIEventReceiver::DisplayGameHUD;
-                        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-                        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+		      else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
+			BomberMap::newMap("./media/mediumMap/map1.xml");
+		      else
+			BomberMap::newMap("./media/largeMap/map1.xml");
+		      BomberMap::getMap()->genMap();
+		      fptr = &UIEventReceiver::DisplayGameHUD;
+		      GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+		      GameManager::SharedInstance()->setGameState(GameManager::PLAY);
                     }
                     else
                     {
@@ -473,10 +480,20 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
             irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             BomberMap::deleteMap();
             if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
-            {
+	      {
                 BomberMap::newMap("./media/smallMap/map1.xml");
                 BomberMap::getMap()->genMap();
-            }
+	      }
+	    else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2")
+	      {
+                BomberMap::newMap("./media/mediumMap/map1.xml");
+                BomberMap::getMap()->genMap();
+	      }
+	    if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+	      {
+                BomberMap::newMap("./media/largeMap/map1.xml");
+                BomberMap::getMap()->genMap();
+	      }
             else
             {
                 GameManager::SharedInstance()->ClearPlayers();
@@ -489,7 +506,9 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
         {
             irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             // Empties the list of players if the map is a saved one
-            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
+            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1"
+		|| GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
+		|| GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
             {
                 GameManager::SharedInstance()->SwapCharacterList();
             }
@@ -573,7 +592,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent
                 std::cout << "MEDIUM" << std::endl;
                 state = 1;
                 BomberMap::deleteMap();
-                BomberMap::newMap("./media/smallMap/map1.xml");
+                BomberMap::newMap("./media/mediumMap/map1.xml");
                 BomberMap::getMap()->genMap();
             }
             break;
@@ -584,7 +603,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent
                 std::cout << "LARGE" << std::endl;
                 state = 2;
                 BomberMap::deleteMap();
-                BomberMap::newMap("./media/smallMap/map1.xml");
+                BomberMap::newMap("./media/largeMap/map1.xml");
                 BomberMap::getMap()->genMap();
             }
             break;
