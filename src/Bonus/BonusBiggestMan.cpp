@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
-// Last update Fri Jun  3 18:36:02 2016 Victor Gouet
+// Last update Fri Jun  3 19:12:56 2016 Victor Gouet
 //
 
 #include "../include/BonusBiggestMan.hpp"
@@ -31,7 +31,7 @@ void	        BonusBiggestMan::take(ACharacter &player)
   std::cout << "Bonus BonusBiggestMan ADD" << std::endl;
   // player.setBombPass(true);
   player.setLifeUp();
-  player.setMoveSpeed(ACharacter::BASICSPEED / 2);
+  player.setMoveSpeed(ACharacter::BASICSPEED / 1.5);
   player->setScale(irr::core::vector3df(2.5, 2.5, 2.5));
   // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
   SoundManager::getManager()->play("BonusBiggestMan.wav", (*this)->getID(), false, 0.8);

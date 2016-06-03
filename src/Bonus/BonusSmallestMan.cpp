@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 14:33:06 2016 Victor Gouet
-// Last update Fri Jun  3 18:36:53 2016 Victor Gouet
+// Last update Fri Jun  3 19:12:50 2016 Victor Gouet
 //
 
 #include "../include/BonusSmallestMan.hpp"
@@ -30,7 +30,7 @@ void	        BonusSmallestMan::take(ACharacter &player)
 {
   std::cout << "Bonus BonusSmallestMan ADD" << std::endl;
 
-  player.setMoveSpeed(ACharacter::BASICSPEED * 2);
+  player.setMoveSpeed(ACharacter::BASICSPEED * 1.5);
   player.setBasicLife();
   player->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
   SoundManager::getManager()->play("BonusSmallestMan.wav", (*this)->getID(), false, 0.8);
