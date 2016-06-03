@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Thu Jun  2 17:51:28 2016 Victor Gouet
+// Last update Fri Jun  3 11:35:56 2016 Victor Gouet
 //
 
 #ifndef ACHARACTER_HPP_
@@ -62,9 +62,9 @@ public:
   void			setBombPass(bool pass);
   void			setLifeUp();
   int			getScore() const;
-	int get_player() const;
-	void 				reset();
-
+  int			get_player() const;
+  void 			reset();
+  void			setBasicLife();
 
 public:
   BombContainer		*getBombContainer() const;
