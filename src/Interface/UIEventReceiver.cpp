@@ -303,12 +303,12 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                 {
                     if (!GameManager::SharedInstance()->getGameOver()->getStatus())
                     {
-		      if (BomberMap::getMap()->getSize() == SMALL_SIZE)
-                  BomberMap::newMap("./media/smallMap/map1.xml");
-              else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
-                  BomberMap::newMap("./media/mediumMap/map1.xml");
-              else
-                  BomberMap::newMap("./media/largeMap/map1.xml");
+                          if (BomberMap::getMap()->getSize() == SMALL_SIZE)
+                              BomberMap::newMap("./media/smallMap/map1.xml");
+                          else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
+                              BomberMap::newMap("./media/mediumMap/map1.xml");
+                          else
+                              BomberMap::newMap("./media/largeMap/map1.xml");
                         BomberMap::getMap()->genMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
                         GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
@@ -323,6 +323,11 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                         return HANDELD;
                     }
                     return HANDELD;
+                }
+                else if (GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP
+                        && event_copy.KeyInput.PressedDown)
+                {
+                    StartGame();
                 }
                 break;
 
@@ -401,6 +406,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     }
                 }
                 break;
+
                 ////////////////
                 // Player 2
                 ////////////////
@@ -489,46 +495,12 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
     {
         case irr::gui::EGET_LISTBOX_CHANGED:
         {
-            irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
-            BomberMap::deleteMap();
-            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
-            {
-                BomberMap::newMap("./media/smallMap/map1.xml");
-                BomberMap::getMap()->genMap();
-            }
-            else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2")
-            {
-                BomberMap::newMap("./media/mediumMap/map1.xml");
-                BomberMap::getMap()->genMap();
-            }
-            else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
-            {
-                BomberMap::newMap("./media/largeMap/map1.xml");
-                BomberMap::getMap()->genMap();
-            }
-            else
-            {
-                GameManager::SharedInstance()->ClearPlayers();
-                BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
-            }
+            UpdateMap();
             break;
         }
         case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
         {
-            // Empties the list of players if the map is a saved one
-            if (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
-                || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
-                || GameManager::ToString(m_maps->GetSelected()) == "Map 3")
-            {
-                GameManager::SharedInstance()->SwapCharacterList();
-                delete m_maps;
-            }
-            m_maps = nullptr;
-            fptr = &UIEventReceiver::DisplayGameHUD;
-            GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-            GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-            m_spawned = false;
-            break;
+            StartGame();
         }
 
         default:
@@ -753,48 +725,58 @@ void UIEventReceiver::UpdateMapMenu(bool isSelection)
 
     if (!isSelection && !m_spawned)
     {
-        m_spawned = true;
-        BomberMap::deleteMap();
-        if (GameManager::ToString(m_maps->GetSelected()) == "Map 1")
-        {
-            BomberMap::newMap("./media/smallMap/map1.xml");
-            BomberMap::getMap()->genMap();
-        }
-        else if (GameManager::ToString(m_maps->GetSelected()) == "Map 2")
-        {
-            BomberMap::newMap("./media/mediumMap/map1.xml");
-            BomberMap::getMap()->genMap();
-        }
-        else if (GameManager::ToString(m_maps->GetSelected()) == "Map 3")
-        {
-            BomberMap::newMap("./media/largeMap/map1.xml");
-            BomberMap::getMap()->genMap();
-        }
-        else
-        {
-            GameManager::SharedInstance()->ClearPlayers();
-            BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(m_maps->GetSelected()));
-        }
+        UpdateMap();
     }
     else if (isSelection)
     {
-        // Empties the list of players if the map is a saved one
-        if (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
-            || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
-            || GameManager::ToString(m_maps->GetSelected()) == "Map 3")
-        {
-            GameManager::SharedInstance()->SwapCharacterList();
-            delete m_maps;
-        }
-        m_maps = nullptr;
-        fptr = &UIEventReceiver::DisplayGameHUD;
-        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-        m_spawned = false;
+        StartGame();
     }
 }
 
 void UIEventReceiver::SetSpawned(bool spawned)
 {
     m_spawned = spawned;
+}
+
+void UIEventReceiver::StartGame()
+{
+    // Empties the list of players if the map is a saved one
+    if (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
+        || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
+        || GameManager::ToString(m_maps->GetSelected()) == "Map 3")
+    {
+        GameManager::SharedInstance()->SwapCharacterList();
+        delete m_maps;
+    }
+    m_maps = nullptr;
+    fptr = &UIEventReceiver::DisplayGameHUD;
+    GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+    GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+    m_spawned = false;
+}
+
+void UIEventReceiver::UpdateMap()
+{
+    m_spawned = true;
+    BomberMap::deleteMap();
+    if (GameManager::ToString(m_maps->GetSelected()) == "Map 1")
+    {
+        BomberMap::newMap("./media/smallMap/map1.xml");
+        BomberMap::getMap()->genMap();
+    }
+    else if (GameManager::ToString(m_maps->GetSelected()) == "Map 2")
+    {
+        BomberMap::newMap("./media/mediumMap/map1.xml");
+        BomberMap::getMap()->genMap();
+    }
+    else if (GameManager::ToString(m_maps->GetSelected()) == "Map 3")
+    {
+        BomberMap::newMap("./media/largeMap/map1.xml");
+        BomberMap::getMap()->genMap();
+    }
+    else
+    {
+        GameManager::SharedInstance()->ClearPlayers();
+        BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(m_maps->GetSelected()));
+    }
 }

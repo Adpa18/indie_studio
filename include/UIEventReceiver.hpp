@@ -45,6 +45,8 @@ private:
     void DisplayMapMenu();
     void DisplayLoadingScreen();
     void DisplayGameHUD();
+    void UpdateMap();
+    void StartGame();
 
     /*
      * \brief Event handlers
