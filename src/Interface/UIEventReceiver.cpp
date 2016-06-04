@@ -3,7 +3,6 @@
 //
 
 #include <dirent.h>
-#include <sys/stat.h>
 #include <algorithm>
 #include "../../include/UIEventReceiver.hpp"
 #include "../../include/Texture.hpp"
@@ -25,8 +24,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
-		m_joysticks[idx] = new MotionController(joystickInfo[i]);
-		m_joysticksId[i] = idx;
+		        m_joysticks[idx] = new MotionController(joystickInfo[i]);
+		        m_joysticksId[i] = idx;
                 ++idx;
             }
         }
@@ -160,14 +159,9 @@ void UIEventReceiver::DisplaySplashScreen()
 void UIEventReceiver::DisplayMapMenu()
 {
     SoundManager::getManager()->play("SelectMap.wav");
-    irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
-                                                             IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
-
-    m_maps = listBox;
-    m_manager.GetEnv()->setFocus(listBox);
-    listBox->setSelected(listBox->addItem(L"Map 1"));
-    listBox->addItem(L"Map 2");
-    listBox->addItem(L"Map 3");
+    m_maps = new MapSelectionBox(&m_manager, irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
+                                                                       IrrlichtController::width * 0.95, IrrlichtController::height * 0.9),
+                                               UIElement::MAP_SELECTION);
 
     // Looks for saved games
     DIR *dir = opendir("tmpSaveMap");
@@ -184,7 +178,7 @@ void UIEventReceiver::DisplayMapMenu()
              if (S_ISREG(fileStats.st_mode))
             #endif
             {
-                listBox->addItem(GameManager::ToWstring(std::string(files->d_name)).c_str());
+                m_maps->AddItem(std::string(files->d_name));
             }
         }
     }
@@ -366,6 +360,10 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     {
                         m_boxContainer->SelectDown(1);
                     }
+                    else if (m_maps != nullptr)
+                    {
+                        m_maps->SelectPrev();
+                    }
                 }
                 break;
 
@@ -376,6 +374,10 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     if (m_boxContainer != nullptr)
                     {
                         m_boxContainer->SelectUp(1);
+                    }
+                    else if (m_maps != nullptr)
+                    {
+                        m_maps->SelectNext();
                     }
                 }
                 break;
@@ -515,11 +517,12 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
         case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
         {
             // Empties the list of players if the map is a saved one
-            if (GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 1"
-                || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 2"
-                || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 3")
+            if (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
+                || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
+                || GameManager::ToString(m_maps->GetSelected()) == "Map 3")
             {
                 GameManager::SharedInstance()->SwapCharacterList();
+                delete m_maps;
             }
             m_maps = nullptr;
             fptr = &UIEventReceiver::DisplayGameHUD;
@@ -679,11 +682,12 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             else if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
             {
                 // Empties the list of players if the map is a saved one
-                if (m_maps != nullptr && (GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 1"
-                        || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 2"
-                        || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 3"))
+                if (m_maps != nullptr && (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
+                        || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
+                        || GameManager::ToString(m_maps->GetSelected()) == "Map 3"))
                 {
                     GameManager::SharedInstance()->SwapCharacterList();
+                    delete m_maps;
                 }
                 m_maps = nullptr;
                 fptr = &UIEventReceiver::DisplayGameHUD;
@@ -743,6 +747,22 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 
                     case ACharacter::DOWN:
                         m_boxContainer->SelectDown(playerID);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else if (m_maps != nullptr && playerID == 1)
+            {
+                switch (act)
+                {
+                    case ACharacter::UP:
+                        m_maps->SelectNext();
+                        break;
+
+                    case ACharacter::DOWN:
+                        m_maps->SelectPrev();
                         break;
 
                     default:
