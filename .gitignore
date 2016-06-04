@@ -4,3 +4,4 @@ bomberman
 .clang-complete
 CMakeLists.txt
 tmpSaveMap/*
+*.score
