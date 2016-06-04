@@ -19,7 +19,7 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 
   BomberMap::getMap()->add(this, pos);
   irr::scene::IAnimatedMesh *meshNode;
-    
+
   anime = NULL;
   time_t	timer;
   struct tm	y2k;
@@ -29,38 +29,38 @@ AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mes
 
   timer = time(NULL);
 
-    if (timeout != -1)
-      {
-        memset(&y2k, 0, sizeof(y2k));
-        y2k.tm_year = 100;
-        y2k.tm_mday = 1;
-	_timer = difftime(timer, mktime(&y2k));
-	
-	GameObjectTimeContainer::SharedInstance()->add(this);
-      }
-    else
-      {
-	_timer = 0;
-      }
-    _mesh = mesh;
-    if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
+  if (timeout != -1)
+  {
+    memset(&y2k, 0, sizeof(y2k));
+    y2k.tm_year = 100;
+    y2k.tm_mday = 1;
+    _timer = difftime(timer, mktime(&y2k));
+
+    GameObjectTimeContainer::SharedInstance()->add(this);
+  }
+  else
+  {
+    _timer = 0;
+  }
+  _mesh = mesh;
+  if (!(meshNode = IrrlichtController::getSceneManager()->getMesh(mesh.c_str())))
+  {
+    IrrlichtController::getDevice()->drop();
+    std::cout << type << std::endl;
+    throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
+  }
+  else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
+  {
+    if (texture != "")
     {
-        IrrlichtController::getDevice()->drop();
-        std::cout << type << std::endl;
-        throw std::runtime_error("Failed to create IAnimatedMesh in AGameObject");
+      _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
+      _texture = texture;
+      _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
     }
-    else if ((_node = IrrlichtController::getSceneManager()->addAnimatedMeshSceneNode(meshNode, 0, 0)))
-    {
-        if (texture != "")
-        {
-            _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
-	    _texture = texture;
-            _node->setMaterialFlag(irr::video::EMF_LIGHTING ,true);
-        }
-        _node->setMD2Animation(irr::scene::EMAT_STAND);
-	_node->setID(id++);
-    }
-    this->setPos(pos);
+    _node->setMD2Animation(irr::scene::EMAT_STAND);
+    _node->setID(id++);
+  }
+  this->setPos(pos);
 }
 
 AGameObject::~AGameObject()
@@ -69,10 +69,10 @@ AGameObject::~AGameObject()
   GameObjectTimeContainer::SharedInstance()->remove(this);
   (*this)->remove();
 
-    // this->dead();
-    //  (*this)->remove();
-    // this->_node->removeAll();
-    // this->_node->remove();
+  // this->dead();
+  //  (*this)->remove();
+  // this->_node->removeAll();
+  // this->_node->remove();
 }
 
 
@@ -103,9 +103,11 @@ void				AGameObject::addAnimation()
 
 void				AGameObject::removeAnnimation()
 {
-  _node->removeAnimator(anime);
-  anime->drop();
-        _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(_texture.c_str()));  
+  if (anime) {
+    _node->removeAnimator(anime);
+    anime->drop();
+  }
+  _node->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(_texture.c_str()));
   anime = NULL;
 }
 
@@ -160,14 +162,14 @@ void			AGameObject::setTimeOutWithoutInContainer(double timeout)
 {
   time_t	timer;
   struct tm	y2k;
-  
+
   this->_timeout = timeout;
   _rltimeout = timeout;
   timer = time(NULL);
   memset(&y2k, 0, sizeof(y2k));
   y2k.tm_year = 100;
   y2k.tm_mday = 1;
-  _timer = difftime(timer, mktime(&y2k));	
+  _timer = difftime(timer, mktime(&y2k));
 }
 
 void			AGameObject::setTimeOut(double timeout)
@@ -206,23 +208,23 @@ irr::scene::IAnimatedMeshSceneNode *AGameObject::getSceneNode() const
 
 AGameObject::Type   AGameObject::getType() const
 {
-    return (this->_type);
+  return (this->_type);
 }
 
 void                AGameObject::setPos(irr::core::vector2df const &pos)
 {
-    BomberMap::getMap()->move(this, pos);
-    _node->setPosition(irr::core::vector3df(pos.X - BomberMap::getMap()->getSize() / 2, 0, pos.Y - BomberMap::getMap()->getSize() / 2) * BomberMap::scale);
+  BomberMap::getMap()->move(this, pos);
+  _node->setPosition(irr::core::vector3df(pos.X - BomberMap::getMap()->getSize() / 2, 0, pos.Y - BomberMap::getMap()->getSize() / 2) * BomberMap::scale);
 }
 
 irr::core::vector2df    AGameObject::getMapPos() const
 {
-    return (BomberMap::getMap()->get(const_cast<AGameObject*>(this)));
+  return (BomberMap::getMap()->get(const_cast<AGameObject*>(this)));
 }
 
 irr::core::vector2df    AGameObject::getRealPos() const
 {
-    irr::core::vector3df    pos3df = _node->getPosition() / BomberMap::scale;
+  irr::core::vector3df    pos3df = _node->getPosition() / BomberMap::scale;
 
-    return (irr::core::vector2df(pos3df.X + BomberMap::getMap()->getSize() / 2, pos3df.Z + BomberMap::getMap()->getSize() / 2));
+  return (irr::core::vector2df(pos3df.X + BomberMap::getMap()->getSize() / 2, pos3df.Z + BomberMap::getMap()->getSize() / 2));
 }
