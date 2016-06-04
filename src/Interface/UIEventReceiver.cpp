@@ -515,8 +515,8 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
             irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             // Empties the list of players if the map is a saved one
             if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1"
-		|| GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
-		|| GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+                || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
+                || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
             {
                 GameManager::SharedInstance()->SwapCharacterList();
             }
@@ -658,6 +658,29 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             {
                 GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                 fptr = &UIEventReceiver::DisplayMainMenu;
+            }
+        }
+
+        // P1 validates character selection
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::R2))
+        {
+            if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
+            {
+                GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
+                fptr = &UIEventReceiver::DisplayMapMenu;
+            }
+            else if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
+            {
+                // Empties the list of players if the map is a saved one
+                /*if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1"
+                    || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
+                    || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+                {
+                    GameManager::SharedInstance()->SwapCharacterList();
+                }*/
+                fptr = &UIEventReceiver::DisplayGameHUD;
+                GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+                GameManager::SharedInstance()->setGameState(GameManager::PLAY);
             }
         }
 
