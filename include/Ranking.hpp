@@ -50,7 +50,7 @@ public:
 
 
 private:
-    size_t                      nbAlives;
+    int                         nbAlives;
     size_t                      nbPlayedGames;
     GameOver                    *m_gameover;
     State                       m_state;
