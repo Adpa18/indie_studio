@@ -416,7 +416,10 @@ void BomberMap::deserialize()
                                    texturesDir + std::string(reader->getAttributeValueSafe("texture")),
                                    irr::core::vector2df(repeat, repeat),
                                    reader->getAttributeValueAsInt("transparent"));
-        prop->getSceneNode()->setScale(irr::core::vector3df(reader->getAttributeValueAsFloat("sx"), reader->getAttributeValueAsFloat("sy"), reader->getAttributeValueAsFloat("sz")));
+        float sx = reader->getAttributeValueAsFloat("sx");
+        float sy = reader->getAttributeValueAsFloat("sy");
+        float sz = reader->getAttributeValueAsFloat("sz");
+        prop->getSceneNode()->setScale(irr::core::vector3df((sx)?sx:1, (sy)?sy:1, (sz)?sz:1));
         _props.push_back(prop);
       }
       else if (nodeName == "walls")
