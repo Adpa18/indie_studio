@@ -17,40 +17,43 @@ LUA_DIRECTORY   =   $(SRC_IA_DIR)lua-5.3.2/src
 IRRLICHT_DIR	=	Irrlicht/irrlicht-1.8.3
 
 SRC		=	$(SRC_DIR)main.cpp						\
-			$(SRC_DIR)IrrlichtController.cpp		\
-			$(SRC_DIR)Intro.cpp		                \
-			$(SRC_DIR)AGameObject.cpp				\
-			$(SRC_DIR)Player.cpp					\
-			$(SRC_DIR)ACharacter.cpp				\
+			$(SRC_DIR)IrrlichtController.cpp				\
+			$(SRC_DIR)Intro.cpp		                		\
+			$(SRC_DIR)AGameObject.cpp					\
+			$(SRC_DIR)Player.cpp						\
+			$(SRC_DIR)ACharacter.cpp					\
 			$(SRC_DIR)Wall.cpp						\
-			$(SRC_DIR)BomberMap.cpp					\
-			$(SRC_DIR)EventGame.cpp					\
-			$(SRC_DIR)AController.cpp				\
-			$(SRC_DIR)MotionController.cpp			\
-			$(SRC_DIR)KeysController.cpp			\
-			$(SRC_DIR)GameManager.cpp				\
-			$(SRC_DIR)Texture.cpp					\
-			$(SRC_DIR)GameObjectTimeContainer.cpp	\
+			$(SRC_DIR)BomberMap.cpp						\
+			$(SRC_DIR)EventGame.cpp						\
+			$(SRC_DIR)AController.cpp					\
+			$(SRC_DIR)MotionController.cpp					\
+			$(SRC_DIR)KeysController.cpp					\
+			$(SRC_DIR)GameManager.cpp					\
+			$(SRC_DIR)Texture.cpp						\
+			$(SRC_DIR)GameObjectTimeContainer.cpp				\
 			$(SRC_DIR)Props.cpp						\
 			$(SRC_DIR)Color.cpp						\
-			$(SRC_DIR)SoundManager.cpp						\
+			$(SRC_DIR)SoundManager.cpp					\
 			$(SRC_DIR)AGameObjectFactory.cpp				\
-			$(SRC_DIR)Ranking.cpp                           \
-			$(SRC_DIR)WallOfEnd.cpp						    \
-			$(SRC_DIR)DangerMap.cpp                         \
-			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 		\
-			$(SRC_INTERFACE_DIR)KeySelectionBox.cpp 		\
-			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 		\
+			$(SRC_DIR)Ranking.cpp                           		\
+			$(SRC_DIR)WallOfEnd.cpp						\
+			$(SRC_DIR)DangerMap.cpp                         		\
+			$(SRC_DIR)WallOfDead.cpp					\
+			$(SRC_DIR)LoadHighScore.cpp					\
+			$(SRC_DIR)HighScore.cpp						\
+			$(SRC_INTERFACE_DIR)PlayerSelectionBox.cpp 			\
+			$(SRC_INTERFACE_DIR)KeySelectionBox.cpp 			\
+			$(SRC_INTERFACE_DIR)UIEventReceiver.cpp 			\
 			$(SRC_INTERFACE_DIR)UIManager.cpp				\
-			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp	\
+			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp		\
 			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				\
-			$(SRC_INTERFACE_DIR)GameOver.cpp 		        \
+			$(SRC_INTERFACE_DIR)GameOver.cpp 		        	\
 			$(SRC_IA_DIR)IAPlayer.cpp   					\
 			$(SRC_IA_DIR)LuaFunctions.cpp					\
-			$(SRC_IA_DIR)LuaBomberMap.cpp                   \
-			$(SRC_IA_DIR)LuaGameObjectArray.cpp             \
-			$(SRC_IA_DIR)LuaVector2.cpp                     \
-			$(SRC_BOMBS_DIR)ABomb.cpp						\
+			$(SRC_IA_DIR)LuaBomberMap.cpp                   		\
+			$(SRC_IA_DIR)LuaGameObjectArray.cpp             		\
+			$(SRC_IA_DIR)LuaVector2.cpp                     		\
+			$(SRC_BOMBS_DIR)ABomb.cpp					\
 			$(SRC_BOMBS_DIR)BombContainer.cpp				\
 			$(SRC_BOMBS_DIR)AtomicBomb.cpp					\
 			$(SRC_BOMBS_DIR)FragBomb.cpp					\
@@ -59,21 +62,20 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_BOMBS_DIR)TrackerBomb.cpp					\
 			$(SRC_BOMBS_DIR)FireBomb.cpp					\
 			$(SRC_BOMBS_DIR)Explosion.cpp					\
-			$(SRC_BONUS_DIR)ABonus.cpp						\
-			$(SRC_BONUS_DIR)AItem.cpp						\
+			$(SRC_BONUS_DIR)ABonus.cpp					\
+			$(SRC_BONUS_DIR)AItem.cpp					\
 			$(SRC_BONUS_DIR)BonusSpeed.cpp					\
 			$(SRC_BONUS_DIR)BonusPower.cpp					\
 			$(SRC_BONUS_DIR)BonusFragBomb.cpp				\
 			$(SRC_BONUS_DIR)BonusAtomicBomb.cpp				\
-			$(SRC_BONUS_DIR)BonusTrackerBomb.cpp			\
+			$(SRC_BONUS_DIR)BonusTrackerBomb.cpp				\
 			$(SRC_BONUS_DIR)BonusFireBomb.cpp				\
 			$(SRC_BONUS_DIR)BonusBombPass.cpp				\
 			$(SRC_BONUS_DIR)BonusBiggestMan.cpp				\
-			$(SRC_BONUS_DIR)BonusSmallestMan.cpp			\
+			$(SRC_BONUS_DIR)BonusSmallestMan.cpp				\
 			$(SRC_BONUS_DIR)BonusInvincible.cpp				\
 			$(SRC_BONUS_DIR)ItemThrow.cpp					\
 			$(SRC_BONUS_DIR)ItemMineBomb.cpp				\
-			$(SRC_DIR)WallOfDead.cpp					\
 
 OBJ			=	$(SRC:%cpp=%o)
 
