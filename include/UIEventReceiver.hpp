@@ -15,6 +15,7 @@
 #include "PlayerSelectionBoxContainer.hpp"
 #include "MotionController.hpp"
 #include "KeysController.hpp"
+#include "MapSelectionBox.hpp"
 
 class PlayerSelectionBoxContainer;
 
@@ -72,7 +73,7 @@ private:
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
     PlayerSelectionBoxContainer *m_boxContainer = nullptr;
-    irr::gui::IGUIListBox *m_maps = nullptr;
+    MapSelectionBox *m_maps = nullptr;
 
   // default font
   irr::gui::IGUIFont		*defaultFont;

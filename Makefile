@@ -48,6 +48,7 @@ SRC		=	$(SRC_DIR)main.cpp						\
 			$(SRC_INTERFACE_DIR)PlayerSelectionBoxContainer.cpp		\
 			$(SRC_INTERFACE_DIR)PlayerInfo.cpp				\
 			$(SRC_INTERFACE_DIR)GameOver.cpp 		        	\
+			$(SRC_INTERFACE_DIR)MapSelectionBox.cpp 		        	\
 			$(SRC_IA_DIR)IAPlayer.cpp   					\
 			$(SRC_IA_DIR)LuaFunctions.cpp					\
 			$(SRC_IA_DIR)LuaBomberMap.cpp                   		\
