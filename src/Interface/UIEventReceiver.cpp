@@ -669,7 +669,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // P1 validates character selection
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::R2))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::R2))
         {
             if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
             {
@@ -721,7 +721,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
-        // Navigates in menus
+        // Navigates in menu
         if (m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
             if (m_boxContainer != nullptr)

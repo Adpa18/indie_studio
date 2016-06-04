@@ -39,6 +39,7 @@ MotionController::MotionController(irr::SJoystickInfo info) : _info(info)
             { ACharacter::ACTION::BOMB, ControllerKey::SQUARE },
             { ACharacter::ACTION::ACT, ControllerKey::CIRCLE },
     };
+    _timerDelay = getTimeSeconds();
 }
 
 MotionController::~MotionController()
@@ -61,38 +62,104 @@ void                                MotionController::setData(const irr::SEvent:
     this->_data = data;
 }
 
+double  MotionController::getTimeSeconds() const
+{
+    time_t	timer;
+    struct tm	y2k;
+
+    timer = time(NULL);
+    memset(&y2k, 0, sizeof(y2k));
+    y2k.tm_year = 100;
+    y2k.tm_mday = 1;
+    return (difftime(timer, mktime(&y2k)));
+
+}
+
+ACharacter::ACTION      MotionController::getDirAxisOneTime(const Axis axis) const
+{
+    irr::f32 moveHorizontal;
+    irr::f32 moveVertical;
+
+    if (getTimeSeconds() < _timerDelay + 0.1)
+      return (ACharacter::ACTION::IDLE);
+    switch (axis) {
+    case LEFT_JOYSTICK:
+      moveHorizontal = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
+      if (moveHorizontal > 0.5f) {
+	_timerDelay = getTimeSeconds();
+	// std::cout << "ACharacter::ACTION::RIGHT" << std::endl;
+	return (ACharacter::ACTION::RIGHT);
+      } else if (moveHorizontal < -0.5f) {	
+	_timerDelay = getTimeSeconds();
+	// std::cout << "ACharacter::ACTION::LEFT" << std::endl;
+	return (ACharacter::ACTION::LEFT);
+      } else {
+	moveVertical = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
+	if (moveVertical > 0.5f) {
+	  _timerDelay = getTimeSeconds();
+	  // std::cout << "ACharacter::ACTION::UP" << std::endl;
+	  return (ACharacter::ACTION::UP);
+	} else if (moveVertical < -0.5f) {
+	  _timerDelay = getTimeSeconds();
+	  // std::cout << "ACharacter::ACTION::DOWN" << std::endl;
+	  return (ACharacter::ACTION::DOWN);
+	}
+      }
+      break;
+    case RIGHT_JOYSTICK:
+      break;
+    default:
+      break;
+    }
+    return (ACharacter::ACTION::IDLE);
+}
+
+bool    MotionController::IsButtonPressedOneTime(ControllerKey button) const
+{
+  if (button == this->_data.ButtonStates)
+    {
+      if (getTimeSeconds() < _timerDelay + 0.1)
+    	{
+    	  return (false);
+    	}
+      _timerDelay = getTimeSeconds();
+      return (true);
+    }
+  return (false);
+}
+
 ACharacter::ACTION      MotionController::getDirAxis(const Axis axis) const
 {
     irr::f32 moveHorizontal;
     irr::f32 moveVertical;
 
     switch (axis) {
-        case LEFT_JOYSTICK:
-            moveHorizontal = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
-            if (moveHorizontal > 0.5f) {
-                return (ACharacter::ACTION::RIGHT);
-            } else if (moveHorizontal < -0.5f) {
-                return (ACharacter::ACTION::LEFT);
-            } else {
-                moveVertical = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
-                if (moveVertical > 0.5f) {
-                    return (ACharacter::ACTION::UP);
-                } else if (moveVertical < -0.5f) {
-                    return (ACharacter::ACTION::DOWN);
-                }
-            }
-            break;
-        case RIGHT_JOYSTICK:
-            break;
-        default:
-            break;
+    case LEFT_JOYSTICK:
+      moveHorizontal = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
+      if (moveHorizontal > 0.5f) {
+	return (ACharacter::ACTION::RIGHT);
+      } else if (moveHorizontal < -0.5f) {	
+	return (ACharacter::ACTION::LEFT);
+      } else {
+	moveVertical = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
+	if (moveVertical > 0.5f) {
+	  return (ACharacter::ACTION::UP);
+	} else if (moveVertical < -0.5f) {
+	  return (ACharacter::ACTION::DOWN);
+	}
+      }
+      break;
+    case RIGHT_JOYSTICK:
+      break;
+    default:
+      break;
     }
     return (ACharacter::ACTION::IDLE);
 }
 
 bool    MotionController::IsButtonPressed(ControllerKey button) const
 {
-    return (button == this->_data.ButtonStates);
+  return (button == this->_data.ButtonStates);
 }
 
 void MotionController::BindAction(ACharacter::ACTION action, MotionController::ControllerKey key)
