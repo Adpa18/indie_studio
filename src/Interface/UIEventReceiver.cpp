@@ -159,7 +159,7 @@ void UIEventReceiver::DisplaySplashScreen()
 void UIEventReceiver::DisplayMapMenu()
 {
     SoundManager::getManager()->play("SelectMap.wav");
-    m_maps = new MapSelectionBox(&m_manager, irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
+    m_maps = new MapSelectionBox(&m_manager, this, irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                                        IrrlichtController::width * 0.95, IrrlichtController::height * 0.9),
                                                UIElement::MAP_SELECTION);
 
@@ -304,15 +304,15 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     if (!GameManager::SharedInstance()->getGameOver()->getStatus())
                     {
 		      if (BomberMap::getMap()->getSize() == SMALL_SIZE)
-                        BomberMap::newMap("./media/smallMap/map1.xml");
-		      else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
-			BomberMap::newMap("./media/mediumMap/map1.xml");
-		      else
-			BomberMap::newMap("./media/largeMap/map1.xml");
-		      BomberMap::getMap()->genMap();
-		      fptr = &UIEventReceiver::DisplayGameHUD;
-		      GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-		      GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                  BomberMap::newMap("./media/smallMap/map1.xml");
+              else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
+                  BomberMap::newMap("./media/mediumMap/map1.xml");
+              else
+                  BomberMap::newMap("./media/largeMap/map1.xml");
+                        BomberMap::getMap()->genMap();
+                        fptr = &UIEventReceiver::DisplayGameHUD;
+                        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+                        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
                     }
                     else
                     {
@@ -509,8 +509,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
             else
             {
                 GameManager::SharedInstance()->ClearPlayers();
-                BomberMap::createMapFromSave(
-                        "./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
+                BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(listBox->getListItem(listBox->getSelected())));
             }
             break;
         }
@@ -582,46 +581,11 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent 
 
 UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent &event_copy)
 {
-    //Permet de ne la load qu'au changement de state
-    static int state = -1;
     irr::s32 id = event_copy.GUIEvent.Caller->getID();
 
     switch (id)
     {
-        case UIElement::MAP_SELECTION1:
-            if (state != 0)
-            {
-                std::cout << "SMALL" << std::endl;
-                state = 0;
-                BomberMap::deleteMap();
-                BomberMap::newMap("./media/smallMap/map1.xml");
-                BomberMap::getMap()->genMap();
-            }
-            break;
-
-        case UIElement::MAP_SELECTION2:
-            if (state != 1)
-            {
-                std::cout << "MEDIUM" << std::endl;
-                state = 1;
-                BomberMap::deleteMap();
-                BomberMap::newMap("./media/mediumMap/map1.xml");
-                BomberMap::getMap()->genMap();
-            }
-            break;
-
-        case UIElement::MAP_SELECTION3:
-            if (state != 2)
-            {
-                std::cout << "LARGE" << std::endl;
-                state = 2;
-                BomberMap::deleteMap();
-                BomberMap::newMap("./media/largeMap/map1.xml");
-                BomberMap::getMap()->genMap();
-            }
-            break;
-
-            // For the player selection menu
+        // For the player selection menu
         case UIElement::MAIN_MENU_BUTTON_1P:
         case UIElement::MAIN_MENU_BUTTON_2P:
         case UIElement::MAIN_MENU_BUTTON_3P:
@@ -780,4 +744,57 @@ MotionController const *UIEventReceiver::GetJoystick(int id) const
         return nullptr;
     }
     return m_joysticks[id];
+}
+
+void UIEventReceiver::UpdateMapMenu(bool isSelection)
+{
+    if (m_maps == nullptr)
+        return;
+
+    if (!isSelection && !m_spawned)
+    {
+        m_spawned = true;
+        BomberMap::deleteMap();
+        if (GameManager::ToString(m_maps->GetSelected()) == "Map 1")
+        {
+            BomberMap::newMap("./media/smallMap/map1.xml");
+            BomberMap::getMap()->genMap();
+        }
+        else if (GameManager::ToString(m_maps->GetSelected()) == "Map 2")
+        {
+            BomberMap::newMap("./media/mediumMap/map1.xml");
+            BomberMap::getMap()->genMap();
+        }
+        else if (GameManager::ToString(m_maps->GetSelected()) == "Map 3")
+        {
+            BomberMap::newMap("./media/largeMap/map1.xml");
+            BomberMap::getMap()->genMap();
+        }
+        else
+        {
+            GameManager::SharedInstance()->ClearPlayers();
+            BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(m_maps->GetSelected()));
+        }
+    }
+    else if (isSelection)
+    {
+        // Empties the list of players if the map is a saved one
+        if (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
+            || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
+            || GameManager::ToString(m_maps->GetSelected()) == "Map 3")
+        {
+            GameManager::SharedInstance()->SwapCharacterList();
+            delete m_maps;
+        }
+        m_maps = nullptr;
+        fptr = &UIEventReceiver::DisplayGameHUD;
+        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+        m_spawned = false;
+    }
+}
+
+void UIEventReceiver::SetSpawned(bool spawned)
+{
+    m_spawned = spawned;
 }

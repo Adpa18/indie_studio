@@ -6,13 +6,12 @@
 #include "../../include/MapSelectionBox.hpp"
 #include "../../include/GameManager.hpp"
 
-MapSelectionBox::MapSelectionBox(UIManager *uiManager, irr::core::rect <irr::s32> pos,
+MapSelectionBox::MapSelectionBox(UIManager *uiManager, UIEventReceiver *eventReceiver, irr::core::rect <irr::s32> pos,
                                  UIElement::Menu elemName) :
-        m_manager(uiManager)
+        m_manager(uiManager),
+        m_receiver(eventReceiver)
 {
     m_list = m_manager->GetEnv()->addListBox(pos, nullptr, elemName, true);
-
-    //m_manager->GetEnv()->setFocus(m_list);
 
     m_names.push_back("Map 1");
     m_names.push_back("Map 2");
@@ -35,6 +34,7 @@ void MapSelectionBox::Update()
     {
         m_list->setSelected(GameManager::ToWstring(m_names.front()).c_str());
     }
+    m_receiver->UpdateMapMenu();
 }
 
 void MapSelectionBox::SelectNext()
@@ -43,6 +43,7 @@ void MapSelectionBox::SelectNext()
     {
         std::rotate(m_names.begin(), std::prev(m_names.end(), 1), m_names.end());
     }
+    m_receiver->SetSpawned(false);
     Update();
 }
 
@@ -52,6 +53,7 @@ void MapSelectionBox::SelectPrev()
     {
         std::rotate(m_names.begin(), std::next(m_names.begin(), 1), m_names.end());
     }
+    m_receiver->SetSpawned(false);
     Update();
 }
 

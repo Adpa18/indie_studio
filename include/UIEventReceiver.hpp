@@ -35,7 +35,9 @@ public:
     MotionController const*GetJoystick(int id) const;
 
 public:
-  void DisplayPauseMenu();
+    void DisplayPauseMenu();
+    void UpdateMapMenu(bool isSelection = false);
+    void SetSpawned(bool spawned);
 
 private:
     void DisplayMainMenu();

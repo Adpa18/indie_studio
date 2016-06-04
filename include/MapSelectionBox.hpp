@@ -10,10 +10,13 @@
 #include "UIManager.hpp"
 #include "UIElements.hpp"
 
+class UIEventReceiver;
+
 class MapSelectionBox : ISelectionBox
 {
 public:
-    MapSelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemName);
+    MapSelectionBox(UIManager *uiManager, UIEventReceiver *eventReceiver,
+                    irr::core::rect<irr::s32> pos, UIElement::Menu elemName);
     virtual ~MapSelectionBox();
 
 public:
@@ -27,9 +30,11 @@ public:
 
 private:
     UIManager *m_manager;
+    UIEventReceiver *m_receiver;
     irr::gui::IGUIListBox *m_list;
     std::list<std::string> m_names;
 };
 
+#include "UIEventReceiver.hpp"
 
 #endif //CPP_INDIE_STUDIO_MAPSELECTIONBOX_HPP
