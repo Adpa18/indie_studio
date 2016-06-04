@@ -25,7 +25,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
-                m_joysticks[idx] = new MotionController(joystickInfo[idx]);
+                std::cout << "Adding idx " << idx << " from joystick " << i << std::endl;
+                m_joysticks[idx] = new MotionController(joystickInfo[i]);
                 ++idx;
             }
         }
