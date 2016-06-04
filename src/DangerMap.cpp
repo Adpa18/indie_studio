@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <ostream>
 #include <BomberMap.hpp>
+#include <iostream>
 #include "DangerMap.hpp"
 
 DangerMap::DangerMap(size_t mapSize) :
@@ -57,24 +58,16 @@ void      DangerMap::addDeflagration(ABomb *bomb, irr::core::vector2df const &po
     {
         for (std::vector<irr::core::vector2df>::iterator it = dir.begin(); it != dir.end(); )
         {
-            newpos = pos + *it * i;
-            int x = static_cast<int>(newpos.X);
-            int y = static_cast<int>(newpos.Y);
-
-            if (!isPosValid(x, y))
+            newpos = pos + (*it * i);
+            if (isPosValid(newpos) && getDangerAt(newpos) != DangerMap::BLOCKED)
             {
-                ++it;
-                continue;
-            }
-
-            if (dangers[y][x] != DangerMap::BLOCKED)
-            {
-                dangers[y][x] = DangerMap::DANGEROUS;
+                at(newpos) = DangerMap::DANGEROUS;
                 ++it;
             }
             else
             {
-                it = dir.erase(it);
+                dir.erase(it);
+                it = dir.begin();
             }
         }
     }
@@ -85,30 +78,29 @@ void DangerMap::resolveDangerAt(int x, int y, BomberMap *map, std::map<irr::core
     std::vector<AGameObject *>  tocheck;
 
     tocheck = map->getObjsFromVector2(irr::core::vector2df(x, y));
-    dangers[y][x] = DangerMap::SAFE;
+    at(x, y) = DangerMap::SAFE;
     for (std::vector<AGameObject *>::iterator it = tocheck.begin(), end = tocheck.end(); it != end; ++it)
     {
-        if ((*it)->getType() == AGameObject::BOMB)
-            mapBombs[irr::core::vector2df(x, y)] = dynamic_cast<ABomb *>(*it);
         switch ((*it)->getType())
         {
             case AGameObject::BLOCK:
-                dangers[y][x] = DangerMap::BLOCKED;
+                at(x, y) = DangerMap::BLOCKED;
                 break;
             case AGameObject::BOMB:
-                dangers[y][x] = DangerMap::BLOCKED;
+                mapBombs[irr::core::vector2df(x, y)] = dynamic_cast<ABomb *>(*it);
+                at(x, y) = DangerMap::BLOCKED;
                 break;
             case AGameObject::BOOM:
-                dangers[y][x] = DangerMap::BLOCKED;
+                at(x, y) = DangerMap::BLOCKED;
                 break;
             case AGameObject::OTHER:
-                dangers[y][x] = DangerMap::BLOCKED;
+                at(x, y) = DangerMap::BLOCKED;
                 break;
             case AGameObject::BONUS:
-                dangers[y][x] = DangerMap::BONUSED;
+                at(x, y) = DangerMap::BONUSED;
                 break;
             case AGameObject::ITEM:
-                dangers[y][x] = DangerMap::BONUSED;
+                at(x, y) = DangerMap::BONUSED;
                 break;
             default:
                 break;
@@ -196,10 +188,10 @@ irr::core::vector2df DangerMap::getFirstFallBackPosition(irr::core::vector2df co
     std::vector<irr::core::vector2df>   alreadySaw;
     irr::core::vector2df                tocheck;
     irr::core::vector2df                dir[4] = {
-            {1, 0},
-            {-1, 0},
-            {0, 1},
-            {0, -1}
+            irr::core::vector2df(1, 0),
+            irr::core::vector2df(-1, 0),
+            irr::core::vector2df(0, 1),
+            irr::core::vector2df(0, -1)
     };
     irr::core::vector2df                lastFallBack(-1, -1);
 
@@ -212,16 +204,10 @@ irr::core::vector2df DangerMap::getFirstFallBackPosition(irr::core::vector2df co
             if (!isPosValid(tocheck) || std::find(alreadySaw.begin(), alreadySaw.end(), tocheck) != alreadySaw.end())
                 continue;
             alreadySaw.push_back(tocheck);
-            switch (getDangerAt(tocheck))
-            {
-                case DangerMap::SAFE:
-                    lastFallBack = tocheck;
-                case DangerMap::DANGEROUS:
-                    file.push(tocheck);
-                    break;
-                default:
-                    break;
-            }
+            if (getDangerAt(tocheck) == DangerMap::SAFE)
+                lastFallBack = tocheck;
+            else if (getDangerAt(tocheck) == DangerMap::DANGEROUS)
+                file.push(tocheck);
         }
         file.pop();
     }

@@ -15,6 +15,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
 {
     irr::core::array<irr::SJoystickInfo>    joystickInfo;
 
+    this->defaultFont = IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->getFont();
+
     if (IrrlichtController::getDevice()->activateJoysticks(joystickInfo))
     {
         // We start at index 1 to ignore accelerometer
@@ -114,6 +116,8 @@ void UIEventReceiver::DisplayGameHUD()
 // Show the game main menu
 void UIEventReceiver::DisplayMainMenu()
 {
+  IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(defaultFont);
+  
     SoundManager::getManager()->play("SelectYourPlayer.wav");
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),

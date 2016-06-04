@@ -16,6 +16,10 @@ const std::string     IAPlayer::mediumLvl = "mediumBehaviour";
 const std::string     IAPlayer::hardLvl = "hardBehaviour";
 Lua::LuaHandler       *IAPlayer::handler;
 
+const double IAPlayer::easyRate = 10;
+const double IAPlayer::mediumRate = 5;
+const double IAPlayer::hardRate = 2;
+
 /**
  * @desc Will initialise the lua state for an IA usage, will initialise prototypes, classes and globals in the code
  *
@@ -53,7 +57,8 @@ void IAPlayer::initIA(int width, int height)
                                                   {"getPos", getIAPos},
                                                   {"bombDropSimul", simulateBombDrop},
                                                   {"getFocus", getIAFocusPos},
-                                                  {"setFocus", setIAFocusPos}
+                                                  {"setFocus", setIAFocusPos},
+                                                  {"canDropBomb", canIADropBomb}
                                           }).Register();
     Lua::setGlobalValue(width, "MapW");
     Lua::setGlobalValue(height, "MapH");
@@ -139,8 +144,16 @@ IAPlayer::IAPlayer(std::string const &name, irr::core::vector2df const &pos, con
     ACharacter(name, pos, mesh, texture, player),
     behaviour(diff),
     focus(pos.X, pos.Y),
-    bombRate(0)
+    bombRate(0),
+    nextBomb(0)
 {
+    if (behaviour == IAPlayer::mediumLvl)
+        bombRate = IAPlayer::mediumRate;
+    else if (behaviour == IAPlayer::hardLvl)
+        bombRate = IAPlayer::hardRate;
+    else
+        bombRate = IAPlayer::easyRate;
+    nextBomb = std::clock() / 1000000 + bombRate;
 }
 
 /**
@@ -156,8 +169,26 @@ IAPlayer::~IAPlayer()
  */
 void IAPlayer::compute()
 {
-    Lua::setGlobalValue(BomberMap::getMap(), "bomberMap");
-    this->action(static_cast<ACharacter::ACTION>((*IAPlayer::handler)[behaviour](this)));
+    ACharacter::ACTION todo;
+
+    try
+    {
+        if (!isArrived())
+            todo = static_cast<ACharacter::ACTION >(-1);
+        else
+        {
+            Lua::setGlobalValue(BomberMap::getMap(), "bomberMap");
+            todo = static_cast<ACharacter::ACTION>((*IAPlayer::handler)[behaviour](this));
+            if (todo == ACharacter::BOMB)
+                nextBomb = std::clock() / 1000000 + bombRate;
+        }
+    }
+    catch (std::exception &exception)
+    {
+        std::cerr << "IA Computation: " << exception.what() << std::endl;
+        todo = static_cast<ACharacter::ACTION >(random() % (ACharacter::ACT + 1));
+    }
+    this->action(todo);
 }
 
 /**
@@ -177,7 +208,7 @@ void IAPlayer::setDifficulty(const std::string &difficulty)
  */
 irr::core::vector2df IAPlayer::bombDropSimulation() const
 {
-    AGameObject   *toDrop = dynamic_cast<AGameObject *>(getBombContainer()->getBomb());
+    ABomb   *toDrop = getBombContainer()->getBomb();
 
     if (!toDrop)
         return irr::core::vector2df(-1, -1);
@@ -197,6 +228,18 @@ irr::core::vector2df IAPlayer::bombDropSimulation() const
 const std::string &IAPlayer::getDifficulty(void) const
 {
     return behaviour;
+}
+
+/**
+ * @desc Tells if an IA can drop a bomb
+ *
+ * @return true if she can, false either
+ */
+bool IAPlayer::canDropBomb() const
+{
+    if (std::clock() / 1000000 > nextBomb)
+        return true;
+    return false;
 }
 
 /**
@@ -245,7 +288,9 @@ int IAPlayer::simulateBombDrop(lua_State *state)
 
     irr::core::vector2df    fallbackPos = thisptr->bombDropSimulation();
     if (fallbackPos == irr::core::vector2df(-1, -1))
+    {
         return (0);
+    }
     Lua::LuaClass<irr::core::vector2df> toret(fallbackPos);
 
     toret.dontDelete();
@@ -278,4 +323,17 @@ int IAPlayer::setIAFocusPos(lua_State *state)
 
     thisptr->focus = *toset;
     return 0;
+}
+
+/**
+ * @desc Static function for LuaClass<IAPlayer>::LuaPrototype that tells if an ia can drop a bomb
+ *
+ * @return The index of the boolean returned in the lua stack
+ */
+int IAPlayer::canIADropBomb(lua_State *state)
+{
+    IAPlayer    *thisptr = Lua::LuaClass<IAPlayer>::getThis();
+
+    lua_pushboolean(state, thisptr->canDropBomb());
+    return 1;
 }
