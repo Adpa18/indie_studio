@@ -39,6 +39,20 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"wall_right", {BomberManTexture::smallMap + "meshes/wall_right.md3", BomberManTexture::smallMap + "textures/wall_right.png"}},
 		{"weapon", {BomberManTexture::smallMap + "meshes/weapon.md3", BomberManTexture::smallMap + "textures/weapon_d.png"}},
 
+		// Map MEDIUM
+		{"floor", {BomberManTexture::mediumMap + "meshes/floor.md3", BomberManTexture::mediumMap + "textures/floor.BMP"}},
+		{"pillar_map2", {BomberManTexture::mediumMap + "meshes/pillar.md3", BomberManTexture::mediumMap + "textures/pillar.TGA"}},
+		{"pillar_map2_2", {BomberManTexture::mediumMap + "meshes/pillar2.md3", BomberManTexture::mediumMap + "textures/pillar2.TGA"}},
+		{"pillar_map2_3", {BomberManTexture::mediumMap + "meshes/pillar3.md3", BomberManTexture::mediumMap + "textures/pillar3.TGA"}},
+		{"rock", {BomberManTexture::mediumMap + "meshes/rock.md3", BomberManTexture::mediumMap + "textures/rock.TGA"}},
+		{"wall", {BomberManTexture::mediumMap + "meshes/wall.md3", BomberManTexture::mediumMap + "textures/wall.TGA"}},
+		{"floor_trim", {BomberManTexture::mediumMap + "meshes/floor_trim.md3", BomberManTexture::mediumMap + "textures/floor_trim.BMP"}},
+		{"fern", {BomberManTexture::mediumMap + "meshes/fern.md3", BomberManTexture::mediumMap + "textures/fern.TGA"}},
+		{"tree", {BomberManTexture::mediumMap + "meshes/tree.md3", BomberManTexture::mediumMap + "textures/tree.TGA"}},
+		{"statue_map2", {BomberManTexture::mediumMap + "meshes/statue.md3", BomberManTexture::mediumMap + "textures/statue.TGA"}},
+		{"statue1", {BomberManTexture::mediumMap + "meshes/statue1.md3", BomberManTexture::mediumMap + "textures/statue1.TGA"}},
+		{"pine", {BomberManTexture::mediumMap + "meshes/pine.md3", BomberManTexture::mediumMap + "textures/pine.TGA"}},
+
 		// Characters
 		{"ziggs", {BomberManTexture::characters + "ziggs.md3", BomberManTexture::characters + "ziggs.png"}},
 		{"ziggsPool", {BomberManTexture::characters + "ziggs_pool.md3", BomberManTexture::characters + "ziggs_pool.png"}},
