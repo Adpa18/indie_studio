@@ -124,8 +124,6 @@ function astarGetNextPos(currPos, focus)
                         if (cost == 1) then
                             firstMove = dir;
                         end
---                    elseif (lower.euri == heur) then
---                        Queue.push(runQueue, posToCheck);
                     else
                         Stack.push(saveStack, posToCheck)
                     end
