@@ -80,7 +80,7 @@ ACharacter::ACTION      MotionController::getDirAxisOneTime(const Axis axis) con
     irr::f32 moveHorizontal;
     irr::f32 moveVertical;
 
-    if (getTimeSeconds() < _timerDelay + 0.1)
+    if (getTimeSeconds() < _timerDelay + 0.001)
       return (ACharacter::ACTION::IDLE);
     switch (axis) {
     case LEFT_JOYSTICK:
@@ -118,7 +118,7 @@ bool    MotionController::IsButtonPressedOneTime(ControllerKey button) const
 {
   if (button == this->_data.ButtonStates)
     {
-      if (getTimeSeconds() < _timerDelay + 0.1)
+      if (getTimeSeconds() < _timerDelay + 0.05)
     	{
     	  return (false);
     	}

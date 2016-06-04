@@ -639,10 +639,10 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent
 
 void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 {
-  if (m_joysticksId.find(event_copy.JoystickEvent.Joystick) == m_joysticksId.end())
-    return ;
+      if (m_joysticksId.find(event_copy.JoystickEvent.Joystick) == m_joysticksId.end())
+          return;
 
-  irr::u8	idxJoystick = m_joysticksId[event_copy.JoystickEvent.Joystick];
+    irr::u8 idxJoystick = m_joysticksId[event_copy.JoystickEvent.Joystick];
 
     if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[idxJoystick])
     {
@@ -659,7 +659,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Validates on splash screen
-        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::CROSS))
         {
             if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN)
             {
@@ -669,7 +669,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // P1 validates character selection
-        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::R2))
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::R2))
         {
             if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
             {
@@ -695,7 +695,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Joins the party
-        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CIRCLE))
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::CIRCLE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -704,7 +704,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Opens the key bind menu
-        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::TRIANGLE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -713,7 +713,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Binds a key
-        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::SQUARE))
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::SQUARE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -722,11 +722,11 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Navigates in menus
-        if (m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
+        ACharacter::ACTION act = m_joysticks[idxJoystick]->getDirAxisOneTime(MotionController::LEFT_JOYSTICK);
+        if (act != ACharacter::IDLE)
         {
             if (m_boxContainer != nullptr)
             {
-                ACharacter::ACTION act = m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK);
                 switch (act)
                 {
                     case ACharacter::LEFT:
