@@ -42,16 +42,26 @@ namespace Lua
     {
     public:
         /**
+         * \brief The constructor of the handler with a state
+         * \param state The lua state to use
+         * \param script The script name to use
+         * \param methodName The Method to call
+         */
+        LuaHandler(lua_State *state, std::string const &script = "", std::string const &methodName = "") :
+                state(state),
+                script(),
+                toCall(methodName)
+        {
+            setScript(script);
+        }
+        /**
          * \brief The constructor of the handler
          * \param script The script to execute, if you enter a script it will be executed in this constructor. Use set script if you dont want this happen
          * \param methodName The function to call in the script
          */
         LuaHandler(std::string const &script = "", std::string const &methodName = "") :
-                state(acquireState()),
-                script(script),
-                toCall(methodName)
+                LuaHandler(acquireState(), script, methodName)
         {
-            setScript(script);
         }
         /**
          * \brief Copy constructor

@@ -39,13 +39,15 @@ private:
 
 public:
     size_t getSize(void) const;
+    void setSize(size_t mapSize);
+    void destroyMap(void);
     DangerMap::State getDangerAt(int x, int y) const;
     DangerMap::State getDangerAt(irr::core::vector2df const &pos) const;
     bool isPosValid(int x, int y) const;
     bool isPosValid(irr::core::vector2df const &pos) const;
 
 private:
-    const size_t  mapSize;
+    size_t  mapSize;
     State   **dangers;
 };
 

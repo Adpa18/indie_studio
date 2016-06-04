@@ -16,9 +16,9 @@ const std::string     IAPlayer::mediumLvl = "mediumBehaviour";
 const std::string     IAPlayer::hardLvl = "hardBehaviour";
 Lua::LuaHandler       *IAPlayer::handler;
 
-const double IAPlayer::easyRate = 5;
-const double IAPlayer::mediumRate = 2;
-const double IAPlayer::hardRate = 1;
+const double IAPlayer::easyRate = 10;
+const double IAPlayer::mediumRate = 5;
+const double IAPlayer::hardRate = 2;
 
 /**
  * @desc Will initialise the lua state for an IA usage, will initialise prototypes, classes and globals in the code
@@ -178,6 +178,8 @@ void IAPlayer::compute()
         else
         {
             Lua::setGlobalValue(BomberMap::getMap(), "bomberMap");
+            Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapW");
+            Lua::setGlobalValue(BomberMap::getMap()->getSize(), "MapH");
             todo = static_cast<ACharacter::ACTION>((*IAPlayer::handler)[behaviour](this));
             if (todo == ACharacter::BOMB)
                 nextBomb = std::clock() / 1000000 + bombRate;
