@@ -24,7 +24,6 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
-                std::cout << "Adding joytick index " << i << std::endl;
                 m_joysticks[i] = new MotionController(joystickInfo[i]);
             }
         }
@@ -720,7 +719,6 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 
 MotionController const *UIEventReceiver::GetJoystick(int id) const
 {
-    std::cout << "Request for joystick num " << id << std::endl;
     if (m_joysticks.find(id) == m_joysticks.end())
     {
         return nullptr;
