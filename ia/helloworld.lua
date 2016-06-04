@@ -1,8 +1,8 @@
-function testuserdata(tutu, titi)
-    tutu:toto();
+function testuserdata(tutu)
+    tutu:meth();
 --    local i = Jelly.new();
 --    i:jellow();
-    titi:jellow();
+--    titi:jellow();
     --    titi:jellow();
     --    print(u);
     --    local d = Test.new();

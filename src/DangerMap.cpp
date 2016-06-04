@@ -10,14 +10,10 @@
 #include "DangerMap.hpp"
 
 DangerMap::DangerMap(size_t mapSize) :
-    mapSize(mapSize)
+    mapSize(mapSize),
+    dangers(NULL)
 {
-    dangers = new State*[mapSize];
-    for (size_t i = 0; i < mapSize; ++i)
-    {
-        dangers[i] = new State[mapSize];
-        memset(dangers[i], 0, mapSize);
-    }
+    setSize(mapSize);
 }
 
 DangerMap::DangerMap(DangerMap const &ref) :
@@ -28,11 +24,7 @@ DangerMap::DangerMap(DangerMap const &ref) :
 
 DangerMap::~DangerMap()
 {
-    for (size_t i = 0; i < mapSize; ++i)
-    {
-        delete [] dangers[i];
-    }
-    delete[] dangers;
+    destroyMap();
 }
 
 DangerMap &DangerMap::operator=(DangerMap const &ref)
@@ -125,6 +117,29 @@ void DangerMap::refresh(BomberMap *map)
 size_t DangerMap::getSize(void) const
 {
     return mapSize;
+}
+
+void DangerMap::setSize(size_t size)
+{
+    destroyMap();
+    mapSize = size;
+    dangers = new State*[mapSize];
+    for (size_t i = 0; i < mapSize; ++i)
+    {
+        dangers[i] = new State[mapSize];
+        memset(dangers[i], 0, mapSize);
+    }
+}
+
+void DangerMap::destroyMap(void)
+{
+    if (dangers == NULL)
+        return;
+    for (size_t i = 0; i < mapSize; ++i)
+    {
+        delete [] dangers[i];
+    }
+    delete[] dangers;
 }
 
 std::ostream    &operator<<(std::ostream &output, DangerMap const &ref)
