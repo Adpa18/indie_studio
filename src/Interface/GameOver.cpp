@@ -15,6 +15,8 @@
 #include "../../include/GameOver.hpp"
 #include "../../include/SoundManager.hpp"
 
+const int	GameOver::winScore[4] = {8, 4, 2, 1};
+
 GameOver::GameOver(Ranking *ranking, std::vector<ACharacter *> &characters) :
         m_characters(characters),
         m_ranking(ranking),
@@ -27,12 +29,33 @@ GameOver::GameOver(Ranking *ranking, std::vector<ACharacter *> &characters) :
 {
     if (m_font)
         m_skin->setFont(m_font);
+    highScore = new LoadHighScore("bomberman.score");
 }
 
 GameOver::~GameOver()
 {
     if (m_skin)
         m_skin->setFont(m_save_font);
+    if (highScore)
+      {
+	highScore->flush();
+	std::cout << *highScore << std::endl;
+	delete highScore;
+      }
+}
+
+void	GameOver::saveHighScore()
+{
+  std::vector<ACharacter *>	        pod = m_ranking->getPodium();
+  std::vector<ACharacter *>::iterator	it = pod.begin();
+  int					i = 0;
+
+  while (it != pod.end())
+    {
+      highScore->setHighScore(new t_highScore(GameOver::winScore[i], (*it)->getName()));
+      ++it;
+      ++i;
+    }
 }
 
 void GameOver::show()
@@ -52,11 +75,13 @@ void GameOver::show()
         {
             ss << "The winner is player " << dispFinalWin(m_ranking->getFinalPodium(m_characters)) << "!";
             SoundManager::getManager()->play("winner.wav");
+	    saveHighScore();
         }
         else
         {
             ss << "Player " << dispCurrWin(m_ranking->getPodium()) << " win!";
             SoundManager::getManager()->play("gameResults.wav");
+	    saveHighScore();
         }
     }
     else
@@ -89,6 +114,7 @@ int GameOver::dispFinalWin(std::vector<ACharacter *> const &podium)
         if (*it == podium[0])
         {
             winner = podium[0]->get_player();
+	    // highScore->setHighScore(new t_highScore(1, (*it)->getName()));
             (*it)->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
         }
         else if (*it == podium[1])

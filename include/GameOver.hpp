@@ -6,8 +6,9 @@
 #define CPP_INDIE_STUDIO_GAMEOVER_HPP
 
 #include <vector>
-#include "ACharacter.hpp"
 #include <stack>
+#include "ACharacter.hpp"
+#include "LoadHighScore.hpp"
 
 class Ranking;
 
@@ -22,12 +23,14 @@ private:
     irr::gui::IGUIFont        *m_save_font;
     irr::gui::IGUIFont        *m_font;
     irr::gui::IGUIStaticText  *m_st_text;
+  LoadHighScore			*highScore;
+  static const int		winScore[4];
+
     //    const std::vector<int>              &m_winners;
     //  std::stack<ACharacter *>            *tmp_ranking;
 
 public:
     GameOver(Ranking *ranking, std::vector<ACharacter *> &characters);
-
     ~GameOver();
 
 public:
@@ -38,6 +41,7 @@ public:
 private:
     int dispFinalWin(std::vector<ACharacter *> const &podium);
     int dispCurrWin(std::vector<ACharacter *> const &podium);
+  void	saveHighScore();
 };
 
 

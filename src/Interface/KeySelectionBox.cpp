@@ -37,6 +37,10 @@ void KeySelectionBox::SelectNext()
     {
         std::rotate(m_keys.begin(), std::next(m_keys.begin(), 1), m_keys.end());
     }
+    else if (m_motions.size() > 0)
+    {
+        std::rotate(m_motions.begin(), std::next(m_motions.begin(), 1), m_motions.end());
+    }
     Update();
 }
 
@@ -46,20 +50,23 @@ void KeySelectionBox::SelectPrev()
     {
         std::rotate(m_keys.begin(), std::prev(m_keys.end(), 1), m_keys.end());
     }
+    else if (m_motions.size() > 0)
+    {
+        std::rotate(m_motions.begin(), std::prev(m_motions.end(), 1), m_motions.end());
+    }
     Update();
 }
 
 void KeySelectionBox::Update()
 {
-    m_listBox->setSelected(GameManager::ToWstring(m_keys.front().ToString()).c_str());
+    if (m_keys.size() > 0)
+        m_listBox->setSelected(GameManager::ToWstring(m_keys.front().ToString()).c_str());
+    else if (m_motions.size() > 0)
+        m_listBox->setSelected(GameManager::ToWstring(m_motions.front().ToString()).c_str());
 }
 
 void KeySelectionBox::SetActive(bool bActive) const
 {
-    /*if (bActive)
-    {
-        m_manager->GetEnv()->setFocus(m_listBox);
-    }*/
     m_listBox->setVisible(bActive);
 }
 
@@ -141,7 +148,24 @@ void KeySelectionBox::OnKeyPress(irr::EKEY_CODE key)
     }
 }
 
+void KeySelectionBox::OnKeyPress(irr::u32 key)
+{
+    if (m_isSelecting && key != 0)
+    {
+        m_isSelecting = false;
+        m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 0, 0, 0));
+
+        MotionController *m;
+        if ((m = dynamic_cast<MotionController*>(m_controller)) != nullptr)
+        {
+            m->BindAction(m_motions.front().GetAction(), static_cast<MotionController::ControllerKey>(key));
+        }
+        UpdateElements();
+    }
+}
+
 bool KeySelectionBox::IsSelecting() const
 {
     return m_isSelecting;
 }
+
