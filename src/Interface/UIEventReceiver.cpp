@@ -14,7 +14,7 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
 {
     irr::core::array<irr::SJoystickInfo>    joystickInfo;
-    int idx = 0;
+    int idx = 1;
 
     this->defaultFont = IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->getFont();
 
