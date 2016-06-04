@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 23:02:35 2016 Victor Gouet
-// Last update Thu Jun  2 10:37:24 2016 Victor Gouet
+// Last update Sat Jun  4 12:25:06 2016 Victor Gouet
 //
 
 #include "../include/BomberMap.hpp"
@@ -57,7 +57,6 @@ void		WallOfEnd::updateTimeOut()
 
 void          WallOfEnd::dead()
 {
-
 }
 
 bool		WallOfEnd::isDestructible() const
