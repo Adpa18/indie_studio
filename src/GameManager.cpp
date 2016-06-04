@@ -217,7 +217,7 @@ void    GameManager::displayRankingScreen()
     if (this->defaultFont)
         IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(this->defaultFont);
     m_st_text = NULL;
-    playerRanking.displayRankingScreen(characters);
+    playerRanking.displayRankingScreen();
 }
 
 void	GameManager::setCountDownText(std::wstringstream const &ss)
@@ -284,7 +284,6 @@ void    GameManager::onGame()
     GameObjectTimeContainer::SharedInstance()->callTimeOutObjects();
 
     std::vector<ACharacter *>::iterator it = characters.begin();
-    size_t nb_dead = 0;
     ACharacter *winner = NULL;
 
     while (it != characters.end())
@@ -294,14 +293,10 @@ void    GameManager::onGame()
             (*it)->compute();
             winner = (*it);
         }
-        else
-        {
-            ++nb_dead;
-        }
         ++it;
     }
 
-    if ((is_gameOver = playerRanking.isTheEndOfTheGame(winner, nb_dead)))
+    if ((is_gameOver = playerRanking.isTheEndOfTheGame(winner)))
     {
         if (gameOverTimer == 0 && winner)
         {
@@ -390,7 +385,7 @@ void    GameManager::willStartGame()
         ++i;
     }
     playerRanking.clear();
-    playerRanking.setNbPlayers(characters.size());
+    playerRanking.setPlayers(characters);
     activeCam(GameManager::GameCamera::GAME_CAMERA);
     BomberMap::getMap()->refreshCamera();
     BomberMap::getMap()->giveDangerMap().setSize(static_cast<size_t >(BomberMap::getMap()->getSize()));

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Fri Jun  3 16:18:46 2016 Victor Gouet
+// Last update Sat Jun  4 19:59:11 2016 Matthieu Tavernier
 //
 
 #include <iostream>
@@ -61,11 +61,11 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"ziggsMad", {BomberManTexture::characters + "ziggs_mad.md3", BomberManTexture::characters + "ziggs_mad.png"}},
 
 		// Bombes
-		{"fireBomb", {BomberManTexture::bombs + "fireBomb.md2", BomberManTexture::bombs + "fireBomb.png"}},
-		{"fragBomb", {BomberManTexture::bombs + "fragBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
-		{"miniBomb", {BomberManTexture::bombs + "miniBomb.md2", BomberManTexture::bombs + "miniBomb.png"}},
-		{"atomicBomb", {BomberManTexture::bombs + "atomicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
-		{"trackerBomb", {BomberManTexture::bombs + "trackerBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+		{"fireBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "classicBomb.png"}},
+		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "fragBomb.png"}},
+		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "fragBomb.png"}},
+		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "atomicBomb.png"}},
+		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "trackerBomb.png"}},
 		{"mineBomb", {BomberManTexture::bombs + "mineBomb.md2", BomberManTexture::bombs + "mineBomb.png"}},
 
 		// Gui

@@ -27,214 +27,215 @@ const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right"
 
 struct SMD3AnimationType
 {
-	irr::s32 begin;
-	irr::s32 end;
-	irr::s32 fps;
+    irr::s32 begin;
+    irr::s32 end;
+    irr::s32 fps;
 };
 
 static const SMD3AnimationType MD3AnimationTypeList[3] =
-{
-	{  0,  96,  25}, // IDLE
-	{ 97,  216, 20}, // RUN
-	{ 217,  247,  25}, // ATTACK
-};
+        {
+                {  0,  96,  25}, // IDLE
+                { 97,  216, 20}, // RUN
+                { 217,  247,  25}, // ATTACK
+        };
 
 ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
-		       std::string const &mesh, std::string const &texture, int player,
-		       int score, bool invincible)
-  : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
-    _name(name), _player(player), _score(score), _invincible(invincible)
+                       std::string const &mesh, std::string const &texture, int player,
+                       int score, bool invincible)
+        : AGameObject(pos, mesh, texture, AGameObject::CHARACTER),
+          _name(name), _player(player), _score(score), _invincible(invincible)
 {
-  onRun = false;
-  t = NULL;
-  life = 1;
-  bombPass = false;
-  _dead = false;
-  this->item = NULL;
+    onRun = false;
+    t = NULL;
+    life = 1;
+    bombPass = false;
+    _dead = false;
+    this->item = NULL;
     _arrived = true;
     _last_act = irr::core::vector2df(0, 0);
     anime = irr::scene::EMAT_STAND;
-  moveSpeed = BASICSPEED;
-  then = IrrlichtController::getDevice()->getTimer()->getTime();
-  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
+    moveSpeed = BASICSPEED;
+    then = IrrlichtController::getDevice()->getTimer()->getTime();
+    _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
 
-  // BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
-  
-  // Atomic Bomb
-  // FragBomb
-  // TrackerBomb
-  
-  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-  // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+    // BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
+
+    // Atomic Bomb
+    // FragBomb
+    // TrackerBomb
+
+    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
+    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
 //   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
-  setMD3Animation(MD3_ANIMATION::STAY);
+    setMD3Animation(MD3_ANIMATION::STAY);
 }
 
 void ACharacter::reset()
 {
-  t = NULL;
-  life = 1;
-  bombPass = false;
-  _dead = false;
+    t = NULL;
+    life = 1;
+    bombPass = false;
+    _dead = false;
     if (this->item)
         delete(item);
-  this->item = NULL;
-  _arrived = true;
-  _last_act = irr::core::vector2df(0, 0);
-  anime = irr::scene::EMAT_STAND;
-  moveSpeed = BASICSPEED;
-  then = IrrlichtController::getDevice()->getTimer()->getTime();
-  (*this)->setScale(irr::core::vector3df(1, 1, 1));
-  if (_bombContainer)
-    delete _bombContainer;
-  _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
+    this->item = NULL;
+    _arrived = true;
+    _last_act = irr::core::vector2df(0, 0);
+    anime = irr::scene::EMAT_STAND;
+    moveSpeed = BASICSPEED;
+    then = IrrlichtController::getDevice()->getTimer()->getTime();
+    (*this)->setScale(irr::core::vector3df(1, 1, 1));
+    if (_bombContainer)
+        delete _bombContainer;
+    _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
 }
 
 ACharacter::~ACharacter()
 {
-  if (t)
+    if (t)
     {
-      mutex.lock();
-      onRun = false;
-      mutex.unlock();
-      t->join();
-      delete (t);
+        mutex.lock();
+        onRun = false;
+        mutex.unlock();
+        t->join();
+        delete (t);
     }
     delete(_bombContainer);
 }
 
 void			ACharacter::onInvinciblePeriode(double time)
 {
-  double		i = 0;
+    double		i = 0;
 
-  mutex.lock();
-  _invincible = true;
-  mutex.unlock();
-  while (i < time)
+    mutex.lock();
+    _invincible = true;
+    mutex.unlock();
+    while (i < time)
     {
-      if (mutex.try_lock())
-	{
-	  if (!onRun)
-	    {
-	      mutex.unlock();
-	      break;
-	    }
-	  mutex.unlock();
-	}
-      usleep(100);
-      i = i + 100;
+        if (mutex.try_lock())
+        {
+            if (!onRun)
+            {
+                mutex.unlock();
+                break;
+            }
+            mutex.unlock();
+        }
+        usleep(100);
+        i = i + 100;
     }
-  mutex.lock();
-  _invincible = false;
-  mutex.unlock();
+    mutex.lock();
+    _invincible = false;
+    mutex.unlock();
 }
 
 void			ACharacter::invincibleEnabledDuringPeriod(double time)
 {
-  mutex.lock();
-  if (_invincible)
+    mutex.lock();
+    if (_invincible)
     {
-      mutex.unlock();
-      return ;
+        mutex.unlock();
+        return ;
     }
-  mutex.unlock();
-  if (t)
+    mutex.unlock();
+    if (t)
     {
-      mutex.lock();
-      onRun = false;
-      mutex.unlock();
-      t->join();
-      delete (t);
+        mutex.lock();
+        onRun = false;
+        mutex.unlock();
+        t->join();
+        delete (t);
     }
-  addAnimation();
-  mutex.lock();
-  onRun = true;
-  mutex.unlock();
-  t = new std::thread([time, this] { this->onInvinciblePeriode(time);
+    addAnimation();
+    mutex.lock();
+    onRun = true;
+    mutex.unlock();
+    t = new std::thread([time, this] { this->onInvinciblePeriode(time);
     });
 }
 
 void                    ACharacter::dead()
 {
-  mutex.lock();
-  if (_invincible)
+    mutex.lock();
+    if (_invincible)
     {
-      mutex.unlock();
-      return ;
+        mutex.unlock();
+        return ;
     }
-  mutex.unlock();
+    mutex.unlock();
 
-  --life;
-  if (life == 1)
+    --life;
+    if (life == 1)
     {
-      invincibleEnabledDuringPeriod(1000000);
-      (*this)->setScale(irr::core::vector3df(1, 1, 1));
-      setMoveSpeed(BASICSPEED);
+        invincibleEnabledDuringPeriod(1000000);
+        (*this)->setScale(irr::core::vector3df(1, 1, 1));
+        setMoveSpeed(BASICSPEED);
     }
-  if (life <= 0)
-  {
-    _dead = true;
-    SoundManager::getManager()->play("dead.wav");
-    setPos(irr::core::vector2df(-2000, -2000));
-    GameManager::SharedInstance()->addDeadPlayer(this);
-  }
+    if (life <= 0)
+    {
+        _dead = true;
+        SoundManager::getManager()->play("dead.wav");
+        setPos(irr::core::vector2df(-2000, -2000));
+        GameManager::SharedInstance()->addDeadPlayer(this);
+        this->removeAnnimation();
+    }
 }
 
 BombContainer		*ACharacter::getBombContainer() const
 {
-  return (_bombContainer);
+    return (_bombContainer);
 }
 
 bool			ACharacter::isDestructible() const
 {
-  return (false);
+    return (false);
 }
 
 void			ACharacter::setMoveSpeed(double speed)
 {
-  this->moveSpeed = speed;
+    this->moveSpeed = speed;
 }
 
 void ACharacter::setMD3Animation(MD3_ANIMATION anim)
 {
-  (*this)->setFrameLoop(MD3AnimationTypeList[anim].begin, MD3AnimationTypeList[anim].end);
-  (*this)->setAnimationSpeed(MD3AnimationTypeList[anim].fps);
+    (*this)->setFrameLoop(MD3AnimationTypeList[anim].begin, MD3AnimationTypeList[anim].end);
+    (*this)->setAnimationSpeed(MD3AnimationTypeList[anim].fps);
 }
 
 void			ACharacter::setLifeUp()
 {
-  life = 2;
+    life = 2;
 }
 
 void			ACharacter::setBasicLife()
 {
-  life = 1;
+    life = 1;
 }
 
 std::string const &	ACharacter::getName() const
 {
-  return (_name);
+    return (_name);
 }
 
 double		ACharacter::getMoveSpeed() const
 {
-  return (moveSpeed);
+    return (moveSpeed);
 }
 
 void			ACharacter::setName(const std::string &string)
 {
-  _name = string;
-  (*this)->setName(string.c_str());
+    _name = string;
+    (*this)->setName(string.c_str());
 }
 
 void		        ACharacter::increasePowerBomb()
 {
-  _bombContainer->upgradePowerBombs();
+    _bombContainer->upgradePowerBombs();
 }
 
 void            ACharacter::action(ACTION act)
@@ -244,7 +245,7 @@ void            ACharacter::action(ACTION act)
     this->frameDeltaTime = (irr::f32)(now - this->then) / 1000.f;
 
     if (!_invincible && getAnimator())
-      removeAnnimation();
+        removeAnnimation();
     if (_arrived || act == BOMB)
     {
         switch (act) {
@@ -275,12 +276,12 @@ void            ACharacter::action(ACTION act)
             case BOMB:
                 this->putBomb();
                 break;
-	        case ACT:
-	            if (this->item)
+            case ACT:
+                if (this->item)
                 {
-		  this->item->use(this->getMapPos(), _last_act);
-	            }
-	            break;
+                    this->item->use(this->getMapPos(), _last_act);
+                }
+                break;
             default:
                 _arrived = true;
                 break;
@@ -303,12 +304,12 @@ void            ACharacter::action(ACTION act)
 
 bool		ACharacter::isDead() const
 {
-   return (_dead);
+    return (_dead);
 }
 
 int		ACharacter::getScore() const
 {
-  return (_score);
+    return (_score);
 }
 
 void            ACharacter::moveTo(irr::core::vector2df const &dir)
@@ -318,41 +319,41 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 
     for (std::vector<AGameObject*>::iterator it = objs.begin(); it != objs.end(); ++it) {
         type = (*it)->getType();
-	if (type == AGameObject::BONUS)
-	  {
-	    ABonus	*bonus;
+        if (type == AGameObject::BONUS)
+        {
+            ABonus	*bonus;
 
-	    if (((bonus = dynamic_cast<ABonus *>(*it))) != NULL)
-	      {
-		bonus->take(*this);
-		_score += 5;
-		delete bonus;
-	      }
-	  }
-	else if (type == AGameObject::ITEM)
-	  {
-	    AItem	*item;
+            if (((bonus = dynamic_cast<ABonus *>(*it))) != NULL)
+            {
+                bonus->take(*this);
+                _score += 5;
+                delete bonus;
+            }
+        }
+        else if (type == AGameObject::ITEM)
+        {
+            AItem	*item;
 
-	    if (((item = dynamic_cast<AItem *>(*it))) != NULL)
-	      {
-		if (this->item)
-		  delete (this->item);
-		_score += 5;
-		this->item = item;
-		this->item->dead();
-	      }
-	  }
-	else if (type == AGameObject::BOMB)
-	  {
-	    if (!bombPass)
-	      {
-		_arrived = true;
-		return;
-	      }
-	  }
+            if (((item = dynamic_cast<AItem *>(*it))) != NULL)
+            {
+                if (this->item)
+                    delete (this->item);
+                _score += 5;
+                this->item = item;
+                this->item->dead();
+            }
+        }
+        else if (type == AGameObject::BOMB)
+        {
+            if (!bombPass)
+            {
+                _arrived = true;
+                return;
+            }
+        }
         else if (type != AGameObject::CHARACTER
-		 && type != AGameObject::BOOM
-		 && type != AGameObject::NONE) {
+                 && type != AGameObject::BOOM
+                 && type != AGameObject::NONE) {
             _arrived = true;
             return;
         }
@@ -369,7 +370,7 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 
 void			ACharacter::setBombPass(bool pass)
 {
-  bombPass = pass;
+    bombPass = pass;
 }
 
 void			ACharacter::putBomb()
@@ -381,14 +382,14 @@ void			ACharacter::putBomb()
             return;
         }
     }
-  if ((bomb = _bombContainer->getBomb()))
+    if ((bomb = _bombContainer->getBomb()))
     {
-      *bomb << this->getMapPos();
+        *bomb << this->getMapPos();
     }
 }
 
 int ACharacter::get_player() const {
-  return _player;
+    return _player;
 }
 
 bool ACharacter::isArrived(void) const

@@ -11,6 +11,7 @@
 #ifndef MOTIONCONTROLLER_HPP
 # define MOTIONCONTROLLER_HPP
 
+#include <sys/time.h>
 # include "AController.hpp"
 # include "ACharacter.hpp"
 
@@ -86,11 +87,15 @@ private:
 public:
     void BindAction(ACharacter::ACTION action, ControllerKey key);
     std::vector<KeyInfo> const& ToString();
+  long long		getTimeSeconds() const;
 
 private:
     irr::SJoystickInfo          _info;
     irr::SEvent::SJoystickEvent _data;
     mutable std::vector<KeyInfo> m_toString;
+
+private:
+  mutable long long	_timerDelay;
 
 public:
     MotionController (irr::SJoystickInfo info);
@@ -100,6 +105,9 @@ public:
     void                                setData(irr::SEvent::SJoystickEvent data);
     ACharacter::ACTION                  getDirAxis(const Axis axis) const;
     bool                                IsButtonPressed(ControllerKey button) const;
+  ACharacter::ACTION                  getDirAxisOneTime(const Axis axis) const;
+  bool                                IsButtonPressedOneTime(ControllerKey button) const;
+
 };
 
 #endif /* !MOTIONCONTROLLER_HPP */
