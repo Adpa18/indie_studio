@@ -62,16 +62,20 @@ void                                MotionController::setData(const irr::SEvent:
     this->_data = data;
 }
 
-double  MotionController::getTimeSeconds() const
+long long  MotionController::getTimeSeconds() const
 {
-    time_t	timer;
-    struct tm	y2k;
+  struct timeval tp;
+  gettimeofday(&tp, NULL);
+  long long mslong = (long long) tp.tv_sec * 1000L + tp.tv_usec / 1000; //get current timestamp in milliseconds
+  return (mslong);
+    // time_t	timer;
+    // struct tm	y2k;
 
-    timer = time(NULL);
-    memset(&y2k, 0, sizeof(y2k));
-    y2k.tm_year = 100;
-    y2k.tm_mday = 1;
-    return (difftime(timer, mktime(&y2k)));
+    // timer = time(NULL);
+    // memset(&y2k, 0, sizeof(y2k));
+    // y2k.tm_year = 100;
+    // y2k.tm_mday = 1;
+    // return (difftime(timer, mktime(&y2k)));
 
 }
 
@@ -80,7 +84,7 @@ ACharacter::ACTION      MotionController::getDirAxisOneTime(const Axis axis) con
     irr::f32 moveHorizontal;
     irr::f32 moveVertical;
 
-    if (getTimeSeconds() < _timerDelay + 0.001)
+    if (getTimeSeconds() < _timerDelay + 200)
       return (ACharacter::ACTION::IDLE);
     switch (axis) {
     case LEFT_JOYSTICK:
@@ -118,7 +122,7 @@ bool    MotionController::IsButtonPressedOneTime(ControllerKey button) const
 {
   if (button == this->_data.ButtonStates)
     {
-      if (getTimeSeconds() < _timerDelay + 0.05)
+      if (getTimeSeconds() < _timerDelay + 200)
     	{
     	  return (false);
     	}
