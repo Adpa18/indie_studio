@@ -20,10 +20,6 @@ private:
 
 protected:
     /*
-     * All the input correspondences to string
-     */
-    std::vector<std::string> m_toString;
-    /*
      * All the keys to string
      */
     std::vector<std::string> m_keysToString;

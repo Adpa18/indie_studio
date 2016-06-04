@@ -41,6 +41,7 @@ private:
     irr::gui::IGUIListBox *m_listBox;
     AController *m_controller;
     std::vector<KeysController::KeyInfo> m_keys;
+    std::vector<MotionController::KeyInfo> m_motions;
     bool m_isSelecting = false;
 };
 
