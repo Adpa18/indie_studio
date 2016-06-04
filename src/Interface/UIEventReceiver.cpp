@@ -316,7 +316,6 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     }
                     else
                     {
-//                        delete GameManager::SharedInstance()->getGameOver();
                         GameManager::SharedInstance()->destroyGameOver();
                         GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                         fptr = &UIEventReceiver::DisplayMainMenu;
@@ -534,19 +533,19 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnButtonClicked(const irr::SEvent 
             GameManager::SharedInstance()->setGameState(GameManager::PLAY);
             break;
 
-    case UIElement::SAVE:
-      BomberMap::getMap()->save();
-      break;
+        case UIElement::SAVE:
+            BomberMap::getMap()->save();
+                break;
 
-        case UIElement::CONTINUE:
-            fptr = &UIEventReceiver::DisplayGameHUD;
-            IrrlichtController::getDevice()->setEventReceiver(
-                    GameManager::SharedInstance()->getEventGame());
-            GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-            break;
+            case UIElement::CONTINUE:
+                fptr = &UIEventReceiver::DisplayGameHUD;
+                IrrlichtController::getDevice()->setEventReceiver(
+                        GameManager::SharedInstance()->getEventGame());
+                GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                break;
 
-        default:
-            break;
+            default:
+                break;
     }
     return IGNORED;
 }
@@ -617,20 +616,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
             else if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
             {
-                // Empties the list of players if the map is a saved one
-                if (m_maps != nullptr && (GameManager::ToString(m_maps->GetSelected()) == "Map 1"
-                        || GameManager::ToString(m_maps->GetSelected()) == "Map 2"
-                        || GameManager::ToString(m_maps->GetSelected()) == "Map 3"))
-                {
-                    GameManager::SharedInstance()->SwapCharacterList();
-                    delete m_maps;
-                }
-                m_maps = nullptr;
-                fptr = &UIEventReceiver::DisplayGameHUD;
-                GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-                GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                m_spawned = false;
-                return ;
+                StartGame();
             }
         }
 

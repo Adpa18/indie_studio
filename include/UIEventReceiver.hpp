@@ -71,9 +71,6 @@ private:
     UIManager m_manager;
     irr::IrrlichtDevice *m_device;
 
-    // Use to know current game state and previous one
-    // GameState m_gameState;
-    // GameState m_gameSatePrev;
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
     PlayerSelectionBoxContainer *m_boxContainer = nullptr;

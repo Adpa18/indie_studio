@@ -191,12 +191,16 @@ void    GameManager::onMenu()
     }
     else if (GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
     {
-        static double x = 0, y = 0;
         activeCam(MAIN_MENU_CAM);
-        m_cameras[MAIN_MENU_CAM]->setPosition(irr::core::vector3df(-300 * cos(x += 0.01), 250, -300 * sin(y += 0.01)));
-        m_cameras[MAIN_MENU_CAM]->setTarget(irr::core::vector3df(0, 0, 0));
+        static irr::scene::ISceneNodeAnimator *anim = nullptr;
+        if (anim == nullptr)
+        {
+            anim = IrrlichtController::getDevice()->getSceneManager()->createFlyCircleAnimator(
+                    irr::core::vector3df(0, 300, 0), 360.0f, 0.0004f);
+            m_cameras[MAIN_MENU_CAM]->setPosition(irr::core::vector3df(300, 250, 300));
+            m_cameras[MAIN_MENU_CAM]->addAnimator(anim);
+        }
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
-        // TODO: try with animator
     }
     else if (GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN)
     {
