@@ -14,6 +14,7 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
 {
     irr::core::array<irr::SJoystickInfo>    joystickInfo;
+    int idx = 1;
 
     this->defaultFont = IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->getFont();
 
@@ -24,8 +25,9 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
-                std::cout << "Adding joytick index " << i << std::endl;
-                m_joysticks[i] = new MotionController(joystickInfo[i]);
+		m_joysticks[idx] = new MotionController(joystickInfo[i]);
+		m_joysticksId[i] = idx;
+                ++idx;
             }
         }
     }
@@ -635,23 +637,31 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent
 
 void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 {
-    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[event_copy.JoystickEvent.Joystick])
+  if (m_joysticksId.find(event_copy.JoystickEvent.Joystick) == m_joysticksId.end())
+    return ;
+
+  irr::u8	idxJoystick = m_joysticksId[event_copy.JoystickEvent.Joystick];
+
+    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[idxJoystick])
     {
-        m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
-        long playerID = std::distance(m_joysticks.begin(), m_joysticks.find(event_copy.JoystickEvent.Joystick));
+        m_joysticks[idxJoystick]->setData(event_copy.JoystickEvent);
+        long playerID = idxJoystick;//std::distance(m_joysticks.begin(), m_joysticks.find(idxJoystick));
+	// std::cout << "playerID:" << playerID << std::endl;
 
         // Notifies key pressed
-        if (m_joysticks[event_copy.JoystickEvent.Joystick])
+        if (m_joysticks[idxJoystick])
         {
             if (m_boxContainer != nullptr)
             {
-                m_boxContainer->OnKeyPressed(m_joysticks[event_copy.JoystickEvent.Joystick]->getData().ButtonStates);
+                m_boxContainer->OnKeyPressed(m_joysticks[idxJoystick]->getData().ButtonStates);
             }
         }
 
         // Validates on splash screen
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
+	// std::cout << "Croos:" << m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CROSS) << std::endl;
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
         {
+	  // std::cout << "CROSS BUTTON" << std::endl;
             if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN)
             {
                 GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
@@ -660,7 +670,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Joins the party
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CIRCLE))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CIRCLE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -669,7 +679,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Opens the key bind menu
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -678,7 +688,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Binds a key
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::SQUARE))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::SQUARE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -687,11 +697,11 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Navigates in menus
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
+        if (m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
             if (m_boxContainer != nullptr)
             {
-                ACharacter::ACTION act = m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK);
+                ACharacter::ACTION act = m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK);
                 switch (act)
                 {
                     case ACharacter::LEFT:
@@ -720,7 +730,6 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 
 MotionController const *UIEventReceiver::GetJoystick(int id) const
 {
-    std::cout << "Request for joystick num " << id << std::endl;
     if (m_joysticks.find(id) == m_joysticks.end())
     {
         return nullptr;
