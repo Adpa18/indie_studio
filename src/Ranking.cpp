@@ -6,8 +6,10 @@
 #include <GameManager.hpp>
 #include "Ranking.hpp"
 
-Ranking::Ranking(size_t nbPlayers) :
-        m_nbplayers(nbPlayers), m_gameover(NULL), m_state(DEFAULT), m_playedGames(0)
+const int	Ranking::winScore[4] = {8, 4, 2, 1};
+
+Ranking::Ranking(size_t nbPlayers) : nbAlives(nbPlayers), nbPlayedGames(0),
+                                     m_gameover(NULL), m_state(DEFAULT), endGame(false)
 {
 
 }
@@ -24,77 +26,57 @@ Ranking::~Ranking()
 
 Ranking &Ranking::operator=(const Ranking &ranking)
 {
-    m_rankedPlayers = ranking.m_rankedPlayers;
-    m_nbplayers     = ranking.m_nbplayers;
     m_gameover      = ranking.m_gameover;
     m_state         = ranking.m_state;
-    m_playedGames   = ranking.m_playedGames;
+    playersScores   = ranking.playersScores;
+    nbAlives        = ranking.nbAlives;
+    nbPlayedGames   = ranking.nbPlayedGames;
     return *this;
 }
 
-bool Ranking::isTheEndOfTheGame(ACharacter *winner, size_t nbDeads)
+bool Ranking::isTheEndOfTheGame(ACharacter *winner)
 {
-    if (nbDeads >= m_nbplayers - 1)
-    {
-        if (nbDeads == m_nbplayers)
-        {
-            clear();
-            m_state = DRAW;
-        }
-        else if (winner)
-        {
-            addWinner(winner);
-            m_state = WIN;
-        }
-        m_playedGames++;
+    if (endGame)
         return (true);
+    if (nbAlives > 1)
+        return (false);
+    if (nbAlives == 0) {
+        clear();
+        m_state = DRAW;
+    } else if (winner) {
+        addPlayerToRank(winner);
+        m_state = (++nbPlayedGames >= 3) ? END_GAME : WIN;
     }
-    return (false);
-}
-
-void Ranking::addWinner(ACharacter *winner)
-{
-    addPlayerToRank(winner);
-    if (m_players.find(winner->get_player()) == m_players.end())
-        m_players[winner->get_player()] += 1;
+    endGame = true;
+    return (true);
 }
 
 void Ranking::addPlayerToRank(ACharacter *character)
 {
-    if (m_players.find(character->get_player()) == m_players.end())
-        m_players[character->get_player()] = 0;
-    m_rankedPlayers.push(character);
+    --nbAlives;
+    playersScores[character->get_player()] += Ranking::winScore[nbAlives];
+    podium.push_back(character);
 }
 
-void Ranking::setNbPlayers(size_t nbPlayers)
+void    Ranking::setPlayers(std::vector<ACharacter *> &characters)
 {
-    m_nbplayers = nbPlayers;
-}
-
-size_t Ranking::getNbPlayers(void) const
-{
-    return m_nbplayers;
-}
-
-std::stack<ACharacter *> const &Ranking::getRanks(void) const
-{
-    return m_rankedPlayers;
+    this->players = characters;
+    this->nbAlives = characters.size();
 }
 
 void Ranking::clear(void)
 {
-    while (!m_rankedPlayers.empty())
-    {
-        m_rankedPlayers.pop();
-    }
-    m_nbplayers = 0;
+    endGame = false;
+    players.clear();
+    podium.clear();
+    nbAlives = 0;
     destroyGameOver();
 }
 
-void Ranking::displayRankingScreen(std::vector<ACharacter *> &chara)
+void Ranking::displayRankingScreen()
 {
     if (!m_gameover)
-        m_gameover = new GameOver(this, chara);
+        m_gameover = new GameOver(this);
     m_gameover->show();
 }
 
@@ -117,90 +99,44 @@ Ranking::State Ranking::getState(void) const
     return m_state;
 }
 
-void Ranking::setState(Ranking::State state)
-{
-    m_state = state;
-}
-
-size_t Ranking::getPlayedGames(void) const
-{
-    return m_playedGames;
-}
-
-void Ranking::setPlayedGames(size_t nbGames)
-{
-    m_playedGames = nbGames;
-}
-
-ACharacter *Ranking::getMaxScoredPlayer(std::vector<ACharacter *> const &chars) const
-{
-    ACharacter                            *maxScored    = NULL;
-    ACharacter                            *secondScored = NULL;
-    std::map<int, size_t>::const_iterator player;
-    size_t                                score         = 0;
-
-    for (std::vector<ACharacter *>::const_iterator it = chars.begin(), end = chars.end(); it != end; ++it)
-    {
-        player = m_players.find((*it)->get_player());
-        if (maxScored == NULL || (player != m_players.end() && score <= player->second))
-        {
-            if (maxScored != NULL && score == player->second)
-                secondScored = *it;
-            else
-                secondScored = NULL;
-            maxScored        = *it;
-            score            = player->second;
-        }
-    }
-    if (secondScored != NULL)
-        return (NULL);
-    return maxScored;
-}
-
 std::vector<ACharacter *> Ranking::getPodium()
 {
-    std::vector<ACharacter *>   podium;
-
-    for (int i = 0; i < 3; ++i)
-    {
-        podium.push_back(m_rankedPlayers.top());
-        m_rankedPlayers.pop();
-    }
-    return podium;
+    std::reverse(podium.begin(), podium.end());
+    return (podium);
 }
 
-ACharacter *Ranking::getPlayerFromId(int id, std::vector<ACharacter *> const &chars) const
+std::vector<ACharacter *> Ranking::getFinalPodium()
 {
-    for (std::vector<ACharacter *>::const_iterator it = chars.begin(), end = chars.end(); it != end; ++it)
-    {
+    std::vector<ACharacter *>   finalPodium;
+    std::vector<std::pair<int, size_t >> rank;
+
+    for (std::map<int, size_t>::const_iterator it = playersScores.begin(), end = playersScores.end(); it != end; ++it) {
+        rank.push_back(std::make_pair(it->first, it->second));
+    }
+    std::sort(rank.begin(), rank.end(), [](std::pair<int, int> p1, std::pair<int, int> p2) { return p1.second > p2.second; });
+    for (size_t i = 0; i < rank.size(); ++i) {
+        finalPodium.push_back(getPlayerByID(rank[i].first));
+    }
+    return (finalPodium);
+}
+
+ACharacter         *Ranking::getPlayerByID(int id) const
+{
+    for (std::vector<ACharacter *>::const_iterator it = players.begin(), end = players.end(); it != end; ++it) {
         if ((*it)->get_player() == id)
             return *it;
     }
     return nullptr;
 }
 
+size_t     Ranking::getPlayerScore(int id) const
+{
+    return (this->playersScores.find(id - 1)->second);
+}
+
 void Ranking::reset(void)
 {
     clear();
-    m_players.clear();
-}
-
-std::vector<ACharacter *> Ranking::getFinalPodium(std::vector<ACharacter *> const &chars) const
-{
-    std::vector<std::pair<int, size_t >> rank;
-    std::vector<ACharacter *>   podium;
-
-    for (std::map<int, size_t>::const_iterator it = m_players.begin(), end = m_players.end(); it != end; ++it)
-    {
-        rank.push_back(std::make_pair(it->first, it->second));
-    }
-    std::sort(rank.begin(), rank.end(),
-              [](std::pair<int, int> p1, std::pair<int, int> p2)
-                  {
-                      return p1.second > p2.second;
-                  });
-    podium.push_back(getPlayerFromId(rank[0].first, chars));
-    podium.push_back(getPlayerFromId(rank[1].first, chars));
-    podium.push_back(getPlayerFromId(rank[2].first, chars));
-    return podium;
+    nbPlayedGames = 0;
+    playersScores.clear();
 }

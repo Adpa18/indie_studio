@@ -15,10 +15,7 @@
 #include "../../include/GameOver.hpp"
 #include "../../include/SoundManager.hpp"
 
-const int	GameOver::winScore[4] = {8, 4, 2, 1};
-
-GameOver::GameOver(Ranking *ranking, std::vector<ACharacter *> &characters) :
-        m_characters(characters),
+GameOver::GameOver(Ranking *ranking) :
         m_ranking(ranking),
         m_status(false),
         m_env(IrrlichtController::getDevice()->getGUIEnvironment()),
@@ -44,15 +41,14 @@ GameOver::~GameOver()
       }
 }
 
-void	GameOver::saveHighScore()
+void	GameOver::saveHighScore(std::vector<ACharacter *> const &podium)
 {
-  std::vector<ACharacter *>	        pod = m_ranking->getPodium();
-  std::vector<ACharacter *>::iterator	it = pod.begin();
+  std::vector<ACharacter *>::const_iterator	it = podium.begin();
   int					i = 0;
 
-  while (it != pod.end())
+  while (it != podium.end())
     {
-      highScore->setHighScore(new t_highScore(GameOver::winScore[i], (*it)->getName()));
+      highScore->setHighScore(new t_highScore(this->m_ranking->getPlayerScore((*it)->get_player()), (*it)->getName()));
       ++it;
       ++i;
     }
@@ -68,28 +64,25 @@ void GameOver::show()
     camera->setTarget(irr::core::vector3df(0, 25, 0));
     GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
     SoundManager::getManager()->stopAll();
-    if (m_ranking->getState() == Ranking::WIN)
+    switch (m_ranking->getState())
     {
-
-        if (m_ranking->getPlayedGames() > 2 && m_ranking->getMaxScoredPlayer(m_characters) != NULL)
-        {
-            ss << "The winner is player " << dispFinalWin(m_ranking->getFinalPodium(m_characters)) << "!";
+        case Ranking::END_GAME:
+            ss << "The winner is player " << displayPodium(m_ranking->getFinalPodium()) << " win!";
+            saveHighScore(m_ranking->getFinalPodium());
             SoundManager::getManager()->play("winner.wav");
-	    saveHighScore();
-        }
-        else
-        {
-            ss << "Player " << dispCurrWin(m_ranking->getPodium()) << " win!";
+            m_status = true;
+            break;
+        case Ranking::WIN:
+            ss << "Player " << displayPodium(m_ranking->getPodium()) << " win!";
             SoundManager::getManager()->play("gameResults.wav");
-	    saveHighScore();
-        }
+            break;
+        case Ranking::DRAW:
+            ss << "Draw !";
+            SoundManager::getManager()->play("drawGame.wav");
+            break;
+        default:
+            break;
     }
-    else
-    {
-        ss << "Draw !";
-        SoundManager::getManager()->play("drawGame.wav");
-    }
-
     m_st_text = m_env->addStaticText(ss.str().c_str(),
                                      irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200),
                                      false, true);
@@ -98,49 +91,28 @@ void GameOver::show()
     m_env->drawAll();
 }
 
+int     GameOver::displayPodium(std::vector<ACharacter *> const &podium) const
+{
+    if (podium[0]) {
+        podium[0]->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
+        podium[0]->getSceneNode()->setRotation(irr::core::vector3df(0, 90, 0));
+        podium[0]->getSceneNode()->setScale(irr::core::vector3df(1, 1, 1));
+    }
+    if (podium[1]) {
+        podium[1]->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
+        podium[1]->getSceneNode()->setRotation(irr::core::vector3df(0, 90, 0));
+        podium[1]->getSceneNode()->setScale(irr::core::vector3df(1, 1, 1));
+
+    }
+    if (podium[2]) {
+        podium[2]->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
+        podium[2]->getSceneNode()->setRotation(irr::core::vector3df(0, 90, 0));
+        podium[2]->getSceneNode()->setScale(irr::core::vector3df(1, 1, 1));
+    }
+    return (podium[0]->get_player());
+}
+
 bool GameOver::getStatus() const
 {
     return m_status;
-}
-
-int GameOver::dispFinalWin(std::vector<ACharacter *> const &podium)
-{
-    int winner = 0;
-
-    m_status = true;
-    for (std::vector<ACharacter *>::const_iterator it = m_characters.begin(); it != m_characters.end(); ++it)
-    {
-        (*it)->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-        if (*it == podium[0])
-        {
-            winner = podium[0]->get_player();
-	    // highScore->setHighScore(new t_highScore(1, (*it)->getName()));
-            (*it)->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
-        }
-        else if (*it == podium[1])
-        {
-            (*it)->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
-        }
-        else if (*it == podium[2])
-        {
-            (*it)->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
-        }
-    }
-    return winner;
-}
-
-int GameOver::dispCurrWin(std::vector<ACharacter *> const &podium)
-{
-    int winner;
-
-    winner = podium[0]->get_player();
-    podium[0]->getSceneNode()->setPosition(irr::core::vector3df(0, 0, 0));
-    podium[0]->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-
-    podium[1]->getSceneNode()->setPosition(irr::core::vector3df(50, 0, 50));
-    podium[1]->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-
-    podium[2]->getSceneNode()->setPosition(irr::core::vector3df(50, 0, -50));
-    podium[2]->getSceneNode()->setRotation(irr::core::vector3df(0, 45, 0));
-    return winner;
 }
