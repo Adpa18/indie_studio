@@ -37,6 +37,10 @@ void KeySelectionBox::SelectNext()
     {
         std::rotate(m_keys.begin(), std::next(m_keys.begin(), 1), m_keys.end());
     }
+    else if (m_motions.size() > 0)
+    {
+        std::rotate(m_motions.begin(), std::next(m_motions.begin(), 1), m_motions.end());
+    }
     Update();
 }
 
@@ -46,12 +50,19 @@ void KeySelectionBox::SelectPrev()
     {
         std::rotate(m_keys.begin(), std::prev(m_keys.end(), 1), m_keys.end());
     }
+    else if (m_motions.size() > 0)
+    {
+        std::rotate(m_motions.begin(), std::prev(m_motions.end(), 1), m_motions.end());
+    }
     Update();
 }
 
 void KeySelectionBox::Update()
 {
-    m_listBox->setSelected(GameManager::ToWstring(m_keys.front().ToString()).c_str());
+    if (m_keys.size() > 0)
+        m_listBox->setSelected(GameManager::ToWstring(m_keys.front().ToString()).c_str());
+    else if (m_motions.size() > 0)
+        m_listBox->setSelected(GameManager::ToWstring(m_motions.front().ToString()).c_str());
 }
 
 void KeySelectionBox::SetActive(bool bActive) const
@@ -137,6 +148,12 @@ void KeySelectionBox::OnKeyPress(irr::EKEY_CODE key)
         {
             k->BindAction(m_keys.front().GetAction(), key);
         }
+        // TODO: fix me steve
+        /*MotionController *m;
+        if ((m = dynamic_cast<MotionController*>(m_controller)) != nullptr)
+        {
+            m->BindAction(m_keys.front().GetAction(), key);
+        }*/
         UpdateElements();
     }
 }

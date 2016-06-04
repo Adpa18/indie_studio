@@ -117,6 +117,7 @@ const std::vector<MotionController::KeyInfo> &MotionController::ToString()
 {
     std::map<ACharacter::ACTION, ControllerKey>::const_iterator it;
     std::string toAdd;
+    int keyIdx = 0;
 
     m_toString.clear();
     int i = 0;
@@ -130,7 +131,12 @@ const std::vector<MotionController::KeyInfo> &MotionController::ToString()
             {
                 toAdd += ".";
             }
-            toAdd += m_keysToString[(*it).second];
+            while ((1 << keyIdx) != (*it).second)
+            {
+                ++keyIdx;
+            }
+            //toAdd += m_keysToString[(*it).second];
+            toAdd += m_keysToString[keyIdx];
             std::cout << toAdd.c_str() << std::endl;
             m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
         }
