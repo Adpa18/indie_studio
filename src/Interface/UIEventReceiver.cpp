@@ -640,6 +640,15 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
         long playerID = std::distance(m_joysticks.begin(), m_joysticks.find(event_copy.JoystickEvent.Joystick));
 
+        // Notifies key pressed
+        if (m_joysticks[event_copy.JoystickEvent.Joystick])
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->OnKeyPressed(m_joysticks[event_copy.JoystickEvent.Joystick]->getData().ButtonStates);
+            }
+        }
+
         // Validates on splash screen
         if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
         {

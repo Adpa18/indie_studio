@@ -7,6 +7,7 @@
 
 #include <list>
 #include "UIManager.hpp"
+#include "MotionController.hpp"
 
 class PlayerSelectionBox;
 class UIEventReceiver;
@@ -36,6 +37,7 @@ public:
     void KeyBind(int playerID) const;
     void KeySelect(int playerID) const;
     void OnKeyPressed(irr::EKEY_CODE key);
+    void OnKeyPressed(irr::u32 key);
 
     UIEventReceiver const* GetEventReceiver() const;
 private:

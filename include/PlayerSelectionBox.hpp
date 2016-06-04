@@ -31,6 +31,7 @@ public:
     void SelectPrev();
     void OnSelect();
     void OnKeyPressed(irr::EKEY_CODE key);
+    void OnKeyPressed(irr::u32 key);
     UIElement::Menu GetId() const;
     irr::gui::IGUIButton const& GetButton() const;
     void SetFocus(bool bIsFocused) const;

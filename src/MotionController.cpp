@@ -32,10 +32,10 @@ MotionController::MotionController(irr::SJoystickInfo info) : _info(info)
     };
 
     _keycodes = {
-            { ACharacter::ACTION::LEFT, ControllerKey::SQUARE },
-            { ACharacter::ACTION::RIGHT, ControllerKey::CIRCLE },
-            { ACharacter::ACTION::UP, ControllerKey::CIRCLE },
-            { ACharacter::ACTION::DOWN, ControllerKey::CIRCLE },
+            { ACharacter::ACTION::LEFT, ControllerKey::CROSS },
+            { ACharacter::ACTION::RIGHT, ControllerKey::CROSS },
+            { ACharacter::ACTION::UP, ControllerKey::CROSS },
+            { ACharacter::ACTION::DOWN, ControllerKey::CROSS },
             { ACharacter::ACTION::BOMB, ControllerKey::SQUARE },
             { ACharacter::ACTION::ACT, ControllerKey::CIRCLE },
     };
@@ -131,15 +131,18 @@ const std::vector<MotionController::KeyInfo> &MotionController::ToString()
             {
                 toAdd += ".";
             }
-            while ((1 << keyIdx) != (*it).second)
+            while (keyIdx <= 12 && ((1 << keyIdx) & (*it).second) == 0)
             {
                 ++keyIdx;
             }
-            //toAdd += m_keysToString[(*it).second];
-            toAdd += m_keysToString[keyIdx];
-            std::cout << toAdd.c_str() << std::endl;
-            m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
+            if (keyIdx <= 12)
+            {
+                toAdd += m_keysToString[keyIdx];
+                std::cout << toAdd.c_str() << std::endl;
+                m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
+            }
         }
+        keyIdx = 0;
         ++i;
     }
     return m_toString;

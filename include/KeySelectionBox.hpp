@@ -25,6 +25,7 @@ public:
     void Update();
     void OnSelect();
     void OnKeyPress(irr::EKEY_CODE key);
+    void OnKeyPress(irr::u32 key);
     bool IsSelecting() const;
 
 public:

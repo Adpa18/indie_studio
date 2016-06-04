@@ -159,6 +159,12 @@ void PlayerSelectionBoxContainer::OnKeyPressed(irr::EKEY_CODE key)
         m_boxList[i]->OnKeyPressed(key);
 }
 
+void PlayerSelectionBoxContainer::OnKeyPressed(irr::u32 key)
+{
+    for (int i = 0; i < 4; ++i)
+        m_boxList[i]->OnKeyPressed(key);
+}
+
 UIEventReceiver const *PlayerSelectionBoxContainer::GetEventReceiver() const
 {
     return m_receiver;
