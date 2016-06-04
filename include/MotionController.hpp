@@ -11,6 +11,7 @@
 #ifndef MOTIONCONTROLLER_HPP
 # define MOTIONCONTROLLER_HPP
 
+#include <sys/time.h>
 # include "AController.hpp"
 # include "ACharacter.hpp"
 
@@ -86,7 +87,7 @@ private:
 public:
     void BindAction(ACharacter::ACTION action, ControllerKey key);
     std::vector<KeyInfo> const& ToString();
-  double		getTimeSeconds() const;
+  long long		getTimeSeconds() const;
 
 private:
     irr::SJoystickInfo          _info;
@@ -94,7 +95,7 @@ private:
     mutable std::vector<KeyInfo> m_toString;
 
 private:
-  mutable double		_timerDelay;
+  mutable long long	_timerDelay;
 
 public:
     MotionController (irr::SJoystickInfo info);

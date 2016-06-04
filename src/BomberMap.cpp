@@ -412,10 +412,12 @@ void BomberMap::deserialize()
       else if (initAsset == 2 && nodeName == "props")
       {
         float repeat = reader->getAttributeValueAsFloat("repeat");
-        _props.push_back(new Props(meshesDir + std::string(reader->getAttributeValueSafe("mesh")),
+        Props *prop = new Props(meshesDir + std::string(reader->getAttributeValueSafe("mesh")),
                                    texturesDir + std::string(reader->getAttributeValueSafe("texture")),
                                    irr::core::vector2df(repeat, repeat),
-                                   reader->getAttributeValueAsInt("transparent")));
+                                   reader->getAttributeValueAsInt("transparent"));
+        prop->getSceneNode()->setScale(irr::core::vector3df(reader->getAttributeValueAsFloat("sx"), reader->getAttributeValueAsFloat("sy"), reader->getAttributeValueAsFloat("sz")));
+        _props.push_back(prop);
       }
       else if (nodeName == "walls")
       {
