@@ -388,6 +388,7 @@ void    GameManager::willStartGame()
     playerRanking.setPlayers(characters);
     activeCam(GameManager::GameCamera::GAME_CAMERA);
     BomberMap::getMap()->refreshCamera();
+    BomberMap::getMap()->giveDangerMap().setSize(static_cast<size_t >(BomberMap::getMap()->getSize()));
 
     std::wstringstream ss;
 

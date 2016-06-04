@@ -25,8 +25,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
-                std::cout << "Adding idx " << idx << " from joystick " << i << std::endl;
-                m_joysticks[idx] = new MotionController(joystickInfo[i]);
+		m_joysticks[idx] = new MotionController(joystickInfo[i]);
+		m_joysticksId[i] = idx;
                 ++idx;
             }
         }
@@ -162,6 +162,8 @@ void UIEventReceiver::DisplayMapMenu()
     SoundManager::getManager()->play("SelectMap.wav");
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
+
+    m_maps = listBox;
     m_manager.GetEnv()->setFocus(listBox);
     listBox->setSelected(listBox->addItem(L"Map 1"));
     listBox->addItem(L"Map 2");
@@ -488,20 +490,20 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
             irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             BomberMap::deleteMap();
             if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
-	      {
+            {
                 BomberMap::newMap("./media/smallMap/map1.xml");
                 BomberMap::getMap()->genMap();
-	      }
-	    else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2")
-	      {
+            }
+            else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2")
+            {
                 BomberMap::newMap("./media/mediumMap/map1.xml");
                 BomberMap::getMap()->genMap();
-	      }
-	    if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
-	      {
+            }
+            else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+            {
                 BomberMap::newMap("./media/largeMap/map1.xml");
                 BomberMap::getMap()->genMap();
-	      }
+            }
             else
             {
                 GameManager::SharedInstance()->ClearPlayers();
@@ -512,14 +514,14 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
         }
         case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
         {
-            irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             // Empties the list of players if the map is a saved one
-            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1"
-		|| GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
-		|| GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+            if (GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 1"
+                || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 2"
+                || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 3")
             {
                 GameManager::SharedInstance()->SwapCharacterList();
             }
+            m_maps = nullptr;
             fptr = &UIEventReceiver::DisplayGameHUD;
             GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
             GameManager::SharedInstance()->setGameState(GameManager::PLAY);
@@ -637,22 +639,27 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnElementFocused(const irr::SEvent
 
 void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 {
-    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[event_copy.JoystickEvent.Joystick])
+  if (m_joysticksId.find(event_copy.JoystickEvent.Joystick) == m_joysticksId.end())
+    return ;
+
+  irr::u8	idxJoystick = m_joysticksId[event_copy.JoystickEvent.Joystick];
+
+    if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[idxJoystick])
     {
-        m_joysticks[event_copy.JoystickEvent.Joystick]->setData(event_copy.JoystickEvent);
-        long playerID = std::distance(m_joysticks.begin(), m_joysticks.find(event_copy.JoystickEvent.Joystick));
+        m_joysticks[idxJoystick]->setData(event_copy.JoystickEvent);
+        long playerID = idxJoystick;
 
         // Notifies key pressed
-        if (m_joysticks[event_copy.JoystickEvent.Joystick])
+        if (m_joysticks[idxJoystick])
         {
             if (m_boxContainer != nullptr)
             {
-                m_boxContainer->OnKeyPressed(m_joysticks[event_copy.JoystickEvent.Joystick]->getData().ButtonStates);
+                m_boxContainer->OnKeyPressed(m_joysticks[idxJoystick]->getData().ButtonStates);
             }
         }
 
         // Validates on splash screen
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
         {
             if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN)
             {
@@ -661,8 +668,34 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
+        // P1 validates character selection
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::R2))
+        {
+            if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MAIN_MENU)
+            {
+                GameManager::SharedInstance()->setGameState(GameManager::MENU_MAP);
+                fptr = &UIEventReceiver::DisplayMapMenu;
+            }
+            else if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
+            {
+                // Empties the list of players if the map is a saved one
+                if (m_maps != nullptr && (GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 1"
+                        || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 2"
+                        || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 3"))
+                {
+                    GameManager::SharedInstance()->SwapCharacterList();
+                }
+                m_maps = nullptr;
+                fptr = &UIEventReceiver::DisplayGameHUD;
+                GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+                GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                m_spawned = false;
+                return ;
+            }
+        }
+
         // Joins the party
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::CIRCLE))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CIRCLE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -671,7 +704,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Opens the key bind menu
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::TRIANGLE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -680,7 +713,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Binds a key
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::SQUARE))
+        if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::SQUARE))
         {
             if (m_boxContainer != nullptr)
             {
@@ -689,11 +722,11 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Navigates in menus
-        if (m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
+        if (m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
             if (m_boxContainer != nullptr)
             {
-                ACharacter::ACTION act = m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK);
+                ACharacter::ACTION act = m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK);
                 switch (act)
                 {
                     case ACharacter::LEFT:

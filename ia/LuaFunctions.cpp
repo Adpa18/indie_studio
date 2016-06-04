@@ -2,7 +2,6 @@
 // Created by gaspar_q on 5/21/16.
 //
 
-#include <iostream>
 #include "LuaClass.hpp"
 
 /**
