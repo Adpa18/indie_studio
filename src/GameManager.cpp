@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sat Jun  4 11:18:55 2016 Victor Gouet
+// Last update Sat Jun  4 11:49:22 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -409,14 +409,14 @@ void    GameManager::willStartGame()
     {
         if ((*it)->GetIsIA())
         {
-	      // characters.push_back(new IAPlayer((*it)->GetName(),
-	      // 					(*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
-	      // 					(*it)->GetMesh(),
-	      // 					(*it)->GetTexture(),
-	      // 					i + 1,
-	      // 					IAPlayer::getDifficultyFromCode((*it)->GetIAStrength()
-	      // 									)
-	      // 					));
+	      characters.push_back(new IAPlayer((*it)->GetName(),
+	      					(*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
+	      					(*it)->GetMesh(),
+	      					(*it)->GetTexture(),
+	      					i + 1,
+	      					IAPlayer::getDifficultyFromCode((*it)->GetIAStrength()
+	      									)
+	      					));
         }
         else
         {
