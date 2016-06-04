@@ -17,6 +17,11 @@ public:
     static const std::string hardLvl;
     static Lua::LuaHandler   *handler;
 
+private:
+    static const double easyRate;
+    static const double mediumRate;
+    static const double hardRate;
+
 public:
     explicit IAPlayer(std::string const &,
                       irr::core::vector2df const &,
@@ -38,6 +43,8 @@ public:
 
     irr::core::vector2df    bombDropSimulation() const;
 
+    bool canDropBomb() const;
+
 public:
     static void              initIA(int width, int height);
 
@@ -46,7 +53,7 @@ public:
     static const std::string &getDifficultyFromCode(PlayerInfo::IAStrength);
 
 private:
-
+    static int canIADropBomb(lua_State *state);
 
     static int getIAPos(lua_State *state);
 
@@ -59,7 +66,8 @@ private:
 private:
     std::string          behaviour;
     irr::core::vector2df focus;
-    size_t bombRate;
+    double bombRate;
+    double nextBomb;
 };
 
 #endif //CPP_INDIE_STUDIO_IAPLAYER_HPP

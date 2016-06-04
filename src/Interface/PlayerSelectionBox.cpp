@@ -257,3 +257,10 @@ void PlayerSelectionBox::OnKeyPressed(irr::EKEY_CODE key)
     if (!m_bIsIaPlayer)
         m_keySelection->OnKeyPress(key);
 }
+
+void PlayerSelectionBox::OnKeyPressed(irr::u32 key)
+{
+    if (!m_bIsIaPlayer)
+        m_keySelection->OnKeyPress(key);
+
+}

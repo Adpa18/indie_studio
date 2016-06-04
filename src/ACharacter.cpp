@@ -390,3 +390,8 @@ void			ACharacter::putBomb()
 int ACharacter::get_player() const {
   return _player;
 }
+
+bool ACharacter::isArrived(void) const
+{
+    return _arrived;
+}

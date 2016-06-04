@@ -52,12 +52,18 @@ function Stack.pop(list)
 end
 
 function getHeuristique(pos, focus, cost)
-    local dist = math.sqrt(math.pow(focus:getX() - pos:getX(), 2) + math.pow(focus:getY() - pos:getY(), 2)) + cost;
+    local diffX = focus:getX() - pos:getX();
+    local diffY = focus:getY() - pos:getY();
+    local dist = math.sqrt(diffX * diffX + diffY * diffY);
+    local heur = dist + cost;
 
     if (canMoveSafelyOnPos(pos) == false) then
-        return dist + 2;
+        heur = heur + 3;
     end
-    return dist;
+    if (bomberMap:getDangerAtPos(pos:getX(), pos:getY()) == BONUSED) then
+        heur = heur - 1;
+    end
+    return heur;
 end
 
 saw = {}
@@ -118,8 +124,10 @@ function astarGetNextPos(currPos, focus)
                         if (cost == 1) then
                             firstMove = dir;
                         end
-                    elseif (lower.euri == heur) then
-                        Queue.push(runQueue, posToCheck);
+--                    elseif (lower.euri == heur) then
+--                        Queue.push(runQueue, posToCheck);
+                    else
+                        Stack.push(saveStack, posToCheck)
                     end
                 end
                 if (focus:equal(posToCheck)) then

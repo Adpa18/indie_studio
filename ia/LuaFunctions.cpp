@@ -16,19 +16,14 @@ lua_State *Lua::acquireState(lua_State *toset, bool set)
 
     if (!set && state == NULL)
     {
-//        std::cout << "\e[32mcreating state\e[0m" << std::endl;
         state = luaL_newstate();
         luaL_openlibs(state);
     }
     else if (set)
     {
         if (toset == NULL)
-        {
             lua_close(state);
-//            std::cout << "closing lua" << std::endl;
-        }
         state = toset;
-//        std::cout << "reset lua state" << std::endl;
     }
     return (state);
 }
