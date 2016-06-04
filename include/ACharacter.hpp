@@ -65,6 +65,7 @@ public:
   int			get_player() const;
   void 			reset();
   void			setBasicLife();
+	bool 	isArrived(void) const;
 
 public:
   BombContainer		*getBombContainer() const;

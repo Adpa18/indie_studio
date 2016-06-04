@@ -50,7 +50,7 @@ namespace Lua
         LuaClass(classType *thisptr) :
                 userData(NULL),
                 thisptr(thisptr),
-                todelete(true),
+                todelete(false),
                 state(acquireState())
         {
             userData = static_cast<classType **>(lua_newuserdata(state, sizeof(*userData)));
