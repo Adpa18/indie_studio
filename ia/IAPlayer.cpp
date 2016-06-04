@@ -16,9 +16,9 @@ const std::string     IAPlayer::mediumLvl = "mediumBehaviour";
 const std::string     IAPlayer::hardLvl = "hardBehaviour";
 Lua::LuaHandler       *IAPlayer::handler;
 
-const double IAPlayer::easyRate = 10;
-const double IAPlayer::mediumRate = 5;
-const double IAPlayer::hardRate = 2;
+const double IAPlayer::easyRate = 5;
+const double IAPlayer::mediumRate = 2;
+const double IAPlayer::hardRate = 1;
 
 /**
  * @desc Will initialise the lua state for an IA usage, will initialise prototypes, classes and globals in the code
