@@ -188,7 +188,7 @@ void IAPlayer::compute()
     catch (std::exception &exception)
     {
         std::cerr << "IA Computation: " << exception.what() << std::endl;
-        todo = static_cast<ACharacter::ACTION >(random() % (ACharacter::ACT + 1));
+        todo = static_cast<ACharacter::ACTION >(rand() % (ACharacter::ACT + 1));
     }
     this->action(todo);
 }
