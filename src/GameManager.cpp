@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Fri Jun  3 18:51:00 2016 Victor Gouet
+// Last update Sat Jun  4 12:20:46 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -253,6 +253,7 @@ void	GameManager::setCountDownText(std::wstringstream const &ss)
 {
   if (!m_st_text)
     {
+      std::cout << "ENTER setCountDownText" << std::endl;
         IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(IrrlichtController::getDevice()->getGUIEnvironment()->getFont("./media/font/arcade_font.xml"));
       m_st_text = IrrlichtController::getDevice()->getGUIEnvironment()->addStaticText(ss.str().c_str(), irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200), false, true);
       m_st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
@@ -343,11 +344,9 @@ void    GameManager::onGame()
 	}
         IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[0]);
         BomberMap::getMap()->removeBlocks();
-        // TODO segfault : On s'est pas pk
         setGameState(RANKING_SCREEN);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
     }
-    // TODO segfault : On s'est pas pk
 }
 
 double	GameManager::getTimeSeconds() const
@@ -375,21 +374,20 @@ void    GameManager::willStartGame()
   if (wallOfDead)
     delete wallOfDead;
 
-  countdown = GameManager::endOfGame;
-  gameOverTimer = 0;
- 
-  std::wstringstream ss;
-
   this->defaultFont = IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->getFont();
-  ss << countdown;
+
   if (m_st_text)
     m_st_text->remove();
-  setCountDownText(ss);
+
+  // setCountDownText(ss);
+  // std::cout << "Done." << std::endl;
   // m_st_text = IrrlichtController::getDevice()->getGUIEnvironment()->addStaticText(ss.str().c_str(), irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200), false, true);
     //   m_st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
     // m_st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER, irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
 
-
+  // TIMER DOUNTDOWN
+  countdown = GameManager::endOfGame;
+  gameOverTimer = 0;
   beginTimer = getTimeSeconds();
   wallOfDead = new WallOfDead(GameManager::endOfGame);
 
@@ -432,7 +430,11 @@ void    GameManager::willStartGame()
     playerRanking.setNbPlayers(characters.size());
     activeCam(GameManager::GameCamera::GAME_CAMERA);
     BomberMap::getMap()->refreshCamera();
-    // new WallOfEnd(irr::core::vector2df(1, 1));
+    
+    std::wstringstream ss;
+
+    ss << countdown;
+    setCountDownText(ss);
 }
 
 void    GameManager::willStartMenu()

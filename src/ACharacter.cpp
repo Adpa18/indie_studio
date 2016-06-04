@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Fri Jun  3 18:43:01 2016 Victor Gouet
+// Last update Sat Jun  4 11:46:37 2016 Victor Gouet
 //
 
 #include <unistd.h>
@@ -341,10 +341,6 @@ void            ACharacter::moveTo(irr::core::vector2df const &dir)
 		this->item = item;
 		this->item->dead();
 	      }
-	  }
-	else if (type == AGameObject::BOOM)
-	  {
-	    this->dead();
 	  }
 	else if (type == AGameObject::BOMB)
 	  {

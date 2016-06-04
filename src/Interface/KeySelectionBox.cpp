@@ -21,8 +21,6 @@ KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32>
         m_manager(uiManager),
         m_playerID(playerID)
 {
-    // TODO: implement key infos for motion controller
-    std::cout << "Other CTOR" << std::endl;
     m_controller = new MotionController(info);
     CreateListBox(pos, elemID);
 }
@@ -96,6 +94,23 @@ void KeySelectionBox::UpdateElements()
     {
         m_keys = k->ToString();
         for (std::vector<KeysController::KeyInfo>::iterator it = m_keys.begin(); it != m_keys.end(); ++it)
+        {
+            if (isFirst)
+            {
+                isFirst = false;
+                m_listBox->setSelected(m_listBox->addItem(GameManager::ToWstring((*it).ToString()).c_str()));
+            }
+            else
+            {
+                m_listBox->addItem(GameManager::ToWstring((*it).ToString()).c_str());
+            }
+        }
+    }
+    MotionController *m = dynamic_cast<MotionController*>(m_controller);
+    if (m != nullptr)
+    {
+        m_motions = m->ToString();
+        for (std::vector<MotionController::KeyInfo>::iterator it = m_motions.begin(); it != m_motions.end(); ++it)
         {
             if (isFirst)
             {

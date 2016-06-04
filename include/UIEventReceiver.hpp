@@ -74,6 +74,9 @@ private:
     PlayerSelectionBoxContainer *m_boxContainer = nullptr;
     std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> m_keycode;
 
+  // default font
+  irr::gui::IGUIFont		*defaultFont;
+
     // Avoid multiple spawn of the map
     bool m_spawned = false;
 

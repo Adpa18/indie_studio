@@ -48,10 +48,10 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
 
     // Box allowing to bind keys
     // If there is at least 1 joytick
-    if (m_container->GetEventReceiver()->GetJoystick(playerID - 1) != nullptr)
+    if (m_container->GetEventReceiver()->GetJoystick(playerID) != nullptr)
     {
         m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID,
-                                             m_container->GetEventReceiver()->GetJoystick(playerID - 1)->getInfo());
+                                             m_container->GetEventReceiver()->GetJoystick(playerID)->getInfo());
     }
     else
     {

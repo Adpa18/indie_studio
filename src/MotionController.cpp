@@ -8,11 +8,37 @@
 ** Last update	Fri Apr 29 10:07:53 2016 Adrien WERY
 */
 
+#include <iostream>
 #include "../include/MotionController.hpp"
 
 MotionController::MotionController(irr::SJoystickInfo info) : _info(info)
 {
+    m_keysToString = {
+            "Square",
+            "Cross",
+            "Circle",
+            "Triangle",
+            "L1",
+            "R1",
+            "L2",
+            "R2",
+            "L2",
+            "First Option",
+            "Second Option",
+            "L3",
+            "R3",
+            "Home",
+            "Other"
+    };
 
+    _keycodes = {
+            { ACharacter::ACTION::LEFT, ControllerKey::SQUARE },
+            { ACharacter::ACTION::RIGHT, ControllerKey::CIRCLE },
+            { ACharacter::ACTION::UP, ControllerKey::CIRCLE },
+            { ACharacter::ACTION::DOWN, ControllerKey::CIRCLE },
+            { ACharacter::ACTION::BOMB, ControllerKey::SQUARE },
+            { ACharacter::ACTION::ACT, ControllerKey::CIRCLE },
+    };
 }
 
 MotionController::~MotionController()
@@ -67,4 +93,48 @@ ACharacter::ACTION      MotionController::getDirAxis(const Axis axis) const
 bool    MotionController::IsButtonPressed(ControllerKey button) const
 {
     return (button == this->_data.ButtonStates);
+}
+
+void MotionController::BindAction(ACharacter::ACTION action, MotionController::ControllerKey key)
+{
+    std::map<ACharacter::ACTION, MotionController::ControllerKey>::iterator it;
+
+    // if key is already bind, assign old bind to it
+    for (it = _keycodes.begin(); it != _keycodes.end(); ++it)
+    {
+        if ((*it).second == key)
+        {
+            (*it).second = _keycodes[action];
+            break;
+        }
+    }
+
+    // Assigns new key
+    _keycodes[action] = key;
+}
+
+const std::vector<MotionController::KeyInfo> &MotionController::ToString()
+{
+    std::map<ACharacter::ACTION, ControllerKey>::const_iterator it;
+    std::string toAdd;
+
+    m_toString.clear();
+    int i = 0;
+    for (it = _keycodes.begin(); it != _keycodes.end(); ++it)
+    {
+        // The 4 first keys are for directions, thus cannot be mapped
+        if (i > 3)
+        {
+            toAdd = ACharacter::textAction[i];
+            for (unsigned long j = toAdd.size(); j < 60; j++)
+            {
+                toAdd += ".";
+            }
+            toAdd += m_keysToString[(*it).second];
+            std::cout << toAdd.c_str() << std::endl;
+            m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
+        }
+        ++i;
+    }
+    return m_toString;
 }
