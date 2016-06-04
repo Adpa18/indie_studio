@@ -40,7 +40,7 @@ bool Ranking::isTheEndOfTheGame(ACharacter *winner)
         return (true);
     if (nbAlives > 1)
         return (false);
-    if (nbAlives == 0) {
+    if (nbAlives <= 0) {
         clear();
         m_state = DRAW;
     } else if (winner) {
