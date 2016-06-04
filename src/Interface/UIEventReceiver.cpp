@@ -14,6 +14,7 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())
 {
     irr::core::array<irr::SJoystickInfo>    joystickInfo;
+    int idx = 0;
 
     this->defaultFont = IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->getFont();
 
@@ -24,7 +25,8 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
-                m_joysticks[i] = new MotionController(joystickInfo[i]);
+                m_joysticks[idx] = new MotionController(joystickInfo[idx]);
+                ++idx;
             }
         }
     }
