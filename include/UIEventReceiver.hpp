@@ -86,6 +86,7 @@ private:
     mutable bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
     typedef EVENT_STATE (UIEventReceiver::*event)(const irr::SEvent &);
     std::map<irr::gui::EGUI_EVENT_TYPE, event> m_guiEvents;
+  std::map<irr::u8, irr::u8>	m_joysticksId;
 };
 
 
