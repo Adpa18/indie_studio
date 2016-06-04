@@ -17,10 +17,12 @@ UIEventReceiver::UIEventReceiver(UIManager const &manager) :
 
     if (IrrlichtController::getDevice()->activateJoysticks(joystickInfo))
     {
+        // We start at index 1 to ignore accelerometer
         for (size_t i = 0; i < joystickInfo.size(); i++)
         {
             if (joystickInfo[i].Axes > 0 && joystickInfo[i].Buttons > 0)
             {
+                std::cout << "Adding joytick index " << i << std::endl;
                 m_joysticks[i] = new MotionController(joystickInfo[i]);
             }
         }
@@ -662,6 +664,15 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
+        // Binds a key
+        if (m_joysticks[event_copy.JoystickEvent.Joystick]->IsButtonPressed(MotionController::ControllerKey::SQUARE))
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->KeyBind(playerID);
+            }
+        }
+
         // Navigates in menus
         if (m_joysticks[event_copy.JoystickEvent.Joystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
@@ -696,6 +707,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
 
 MotionController const *UIEventReceiver::GetJoystick(int id) const
 {
+    std::cout << "Request for joystick num " << id << std::endl;
     if (m_joysticks.find(id) == m_joysticks.end())
     {
         return nullptr;

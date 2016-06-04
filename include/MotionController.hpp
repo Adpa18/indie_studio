@@ -15,6 +15,7 @@
 # include "ACharacter.hpp"
 
 class MotionController : public AController {
+
 public:
     enum Axis {
         LEFT_JOYSTICK,
@@ -37,9 +38,60 @@ public:
         HOME = 1 << 11,
         OTHER = 1 << 12
     };
+
+public:
+    /*
+     * Storage class for key infos
+     */
+    class KeyInfo
+    {
+    public:
+        KeyInfo(ACharacter::ACTION action, ControllerKey keycode, std::string const& toString) :
+                m_action(action),
+                m_keycode(keycode),
+                m_toString(toString)
+        {
+
+        }
+
+        ~KeyInfo()
+        {
+
+        }
+
+        std::string const& ToString()
+        {
+            return m_toString;
+        }
+
+        ACharacter::ACTION GetAction() const
+        {
+            return m_action;
+        }
+
+        ControllerKey GetKeycode() const
+        {
+            return m_keycode;
+        }
+
+    private:
+        ACharacter::ACTION m_action;
+        ControllerKey m_keycode;
+        std::string m_toString;
+    };
+
+private:
+    std::map<ACharacter::ACTION, ControllerKey> _keycodes;
+
+public:
+    void BindAction(ACharacter::ACTION action, ControllerKey key);
+    std::vector<KeyInfo> const& ToString();
+
 private:
     irr::SJoystickInfo          _info;
     irr::SEvent::SJoystickEvent _data;
+    mutable std::vector<KeyInfo> m_toString;
+
 public:
     MotionController (irr::SJoystickInfo info);
     virtual ~MotionController ();
