@@ -72,7 +72,7 @@ private:
     void (UIEventReceiver::*fptr)() = nullptr;
     std::list<irr::gui::IGUIButton*> m_buttons;
     PlayerSelectionBoxContainer *m_boxContainer = nullptr;
-    std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> m_keycode;
+    irr::gui::IGUIListBox *m_maps = nullptr;
 
   // default font
   irr::gui::IGUIFont		*defaultFont;
@@ -86,7 +86,7 @@ private:
     mutable bool    KeyIsDown[irr::KEY_KEY_CODES_COUNT];
     typedef EVENT_STATE (UIEventReceiver::*event)(const irr::SEvent &);
     std::map<irr::gui::EGUI_EVENT_TYPE, event> m_guiEvents;
-  std::map<irr::u8, irr::u8>	m_joysticksId;
+    std::map<irr::u8, irr::u8>	m_joysticksId;
 };
 
 

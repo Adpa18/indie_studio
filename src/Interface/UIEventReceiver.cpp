@@ -162,6 +162,8 @@ void UIEventReceiver::DisplayMapMenu()
     SoundManager::getManager()->play("SelectMap.wav");
     irr::gui::IGUIListBox *listBox = m_manager.GetEnv()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width * 0.7, IrrlichtController::height * 0.1,
                                                              IrrlichtController::width * 0.95, IrrlichtController::height * 0.9), nullptr, UIElement::MAP_SELECTION, true);
+
+    m_maps = listBox;
     m_manager.GetEnv()->setFocus(listBox);
     listBox->setSelected(listBox->addItem(L"Map 1"));
     listBox->addItem(L"Map 2");
@@ -488,20 +490,20 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
             irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             BomberMap::deleteMap();
             if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1")
-	      {
+            {
                 BomberMap::newMap("./media/smallMap/map1.xml");
                 BomberMap::getMap()->genMap();
-	      }
-	    else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2")
-	      {
+            }
+            else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2")
+            {
                 BomberMap::newMap("./media/mediumMap/map1.xml");
                 BomberMap::getMap()->genMap();
-	      }
-	    if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
-	      {
+            }
+            else if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+            {
                 BomberMap::newMap("./media/largeMap/map1.xml");
                 BomberMap::getMap()->genMap();
-	      }
+            }
             else
             {
                 GameManager::SharedInstance()->ClearPlayers();
@@ -512,14 +514,14 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnListBox(const irr::SEvent &event
         }
         case irr::gui::EGET_LISTBOX_SELECTED_AGAIN:
         {
-            irr::gui::IGUIListBox *listBox = (irr::gui::IGUIListBox *) event_copy.GUIEvent.Caller;
             // Empties the list of players if the map is a saved one
-            if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1"
-                || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
-                || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+            if (GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 1"
+                || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 2"
+                || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 3")
             {
                 GameManager::SharedInstance()->SwapCharacterList();
             }
+            m_maps = nullptr;
             fptr = &UIEventReceiver::DisplayGameHUD;
             GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
             GameManager::SharedInstance()->setGameState(GameManager::PLAY);
@@ -645,8 +647,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
     if (event_copy.EventType == irr::EET_JOYSTICK_INPUT_EVENT && m_joysticks[idxJoystick])
     {
         m_joysticks[idxJoystick]->setData(event_copy.JoystickEvent);
-        long playerID = idxJoystick;//std::distance(m_joysticks.begin(), m_joysticks.find(idxJoystick));
-	// std::cout << "playerID:" << playerID << std::endl;
+        long playerID = idxJoystick;
 
         // Notifies key pressed
         if (m_joysticks[idxJoystick])
@@ -658,10 +659,8 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         }
 
         // Validates on splash screen
-	// std::cout << "Croos:" << m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CROSS) << std::endl;
         if (m_joysticks[idxJoystick]->IsButtonPressed(MotionController::ControllerKey::CROSS))
         {
-	  // std::cout << "CROSS BUTTON" << std::endl;
             if (GameManager::SharedInstance()->getGameState() == GameManager::SPLASH_SCREEN)
             {
                 GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
@@ -680,15 +679,18 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             else if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
             {
                 // Empties the list of players if the map is a saved one
-                /*if (GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 1"
-                    || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 2"
-                    || GameManager::ToString(listBox->getListItem(listBox->getSelected())) == "Map 3")
+                if (m_maps != nullptr && (GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 1"
+                        || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 2"
+                        || GameManager::ToString(m_maps->getListItem(m_maps->getSelected())) == "Map 3"))
                 {
                     GameManager::SharedInstance()->SwapCharacterList();
-                }*/
+                }
+                m_maps = nullptr;
                 fptr = &UIEventReceiver::DisplayGameHUD;
                 GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
                 GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+                m_spawned = false;
+                return ;
             }
         }
 
