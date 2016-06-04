@@ -721,7 +721,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
-        // Navigates in menus
+        // Navigates in menus.
         if (m_joysticks[idxJoystick]->getDirAxis(MotionController::LEFT_JOYSTICK) != ACharacter::IDLE)
         {
             if (m_boxContainer != nullptr)
