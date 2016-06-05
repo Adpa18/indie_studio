@@ -76,6 +76,10 @@ void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Me
     m_background = m_manager->GetEnv()->addImage(pos);
     m_background->setImage(IrrlichtController::getDriver()->getTexture(BomberManTexture::getModel("KeyBindBg").texture.c_str()));
     m_background->setScaleImage(true);
+    pos.UpperLeftCorner.Y += (pos.LowerRightCorner.Y - pos.UpperLeftCorner.Y) * 0.5f;
+    pos.UpperLeftCorner.X += 30;
+    pos.LowerRightCorner.X -= 30;
+    pos.LowerRightCorner.Y -= 30;
     m_listBox = m_manager->GetEnv()->addListBox(pos, nullptr, elemID, true);
     m_listBox->setDrawBackground(false);
     UpdateElements();
