@@ -28,6 +28,7 @@ public:
 public:
     void Update();
     void SelectNext();
+    void SelectNextIA();
     void SelectPrev();
     void OnSelect();
     void OnKeyPressed(irr::EKEY_CODE key);

@@ -262,3 +262,13 @@ void PlayerSelectionBox::OnKeyPressed(irr::u32 key)
         m_keySelection->OnKeyPress(key);
 
 }
+
+void PlayerSelectionBox::SelectNextIA()
+{
+    m_container->UnselectSkin(m_models.front());
+    do
+    {
+        std::rotate(m_models.begin(), std::next(m_models.begin(), 1), m_models.end());
+    } while (!m_container->IsSkinAvailable(m_models.front()));
+    m_container->SelectSkin(m_models.front());
+}

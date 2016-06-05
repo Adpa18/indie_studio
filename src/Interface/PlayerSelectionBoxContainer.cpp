@@ -18,22 +18,30 @@ PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager, U
     m_availableSkins.push_back("ziggsPool");
     m_availableSkins.push_back("ziggsMad");
 
-    m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButtonSelected").texture.c_str(),
-                                             irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
-                                                                       IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
-                                             UIElement::MAIN_MENU_BUTTON_1P, true, UIElement::PLAYERBOX_1, 1));
-    m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
-                                             irr::core::rect<irr::s32>(IrrlichtController::width * 0.262, IrrlichtController::height * 0.445,
-                                                                       IrrlichtController::width * 0.49, IrrlichtController::height * 0.85),
-                                             UIElement::MAIN_MENU_BUTTON_2P, true, UIElement::PLAYERBOX_2, 2));
-    m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
-                                             irr::core::rect<irr::s32>(IrrlichtController::width * 0.515, IrrlichtController::height * 0.445,
-                                                                       IrrlichtController::width * 0.743, IrrlichtController::height * 0.85),
-                                             UIElement::MAIN_MENU_BUTTON_3P, true, UIElement::PLAYERBOX_3, 3));
-    m_boxes.push_back(new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
-                                             irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
-                                                                       IrrlichtController::width * 0.99, IrrlichtController::height * 0.85),
-                                             UIElement::MAIN_MENU_BUTTON_4P, true, UIElement::PLAYERBOX_4, 4));
+    PlayerSelectionBox *p = new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButtonSelected").texture.c_str(),
+                                                   irr::core::rect<irr::s32>(IrrlichtController::width * 0.014, IrrlichtController::height * 0.445,
+                                                                             IrrlichtController::width * 0.24, IrrlichtController::height * 0.85),
+                                                   UIElement::MAIN_MENU_BUTTON_1P, true, UIElement::PLAYERBOX_1, 1);
+    p->SelectNextIA();
+    m_boxes.push_back(p);
+    p = new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
+                               irr::core::rect<irr::s32>(IrrlichtController::width * 0.262, IrrlichtController::height * 0.445,
+                                                         IrrlichtController::width * 0.49, IrrlichtController::height * 0.85),
+                               UIElement::MAIN_MENU_BUTTON_2P, true, UIElement::PLAYERBOX_2, 2);
+    p->SelectNextIA();
+    m_boxes.push_back(p);
+    p = new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
+                               irr::core::rect<irr::s32>(IrrlichtController::width * 0.515, IrrlichtController::height * 0.445,
+                                                         IrrlichtController::width * 0.743, IrrlichtController::height * 0.85),
+                               UIElement::MAIN_MENU_BUTTON_3P, true, UIElement::PLAYERBOX_3, 3);
+    p->SelectNextIA();
+    m_boxes.push_back(p);
+    p = new PlayerSelectionBox(uiManager, this, BomberManTexture::getModel("playerButton").texture.c_str(),
+                               irr::core::rect<irr::s32>(IrrlichtController::width * 0.762, IrrlichtController::height * 0.445,
+                                                         IrrlichtController::width * 0.99, IrrlichtController::height * 0.85),
+                               UIElement::MAIN_MENU_BUTTON_4P, true, UIElement::PLAYERBOX_4, 4);
+    p->SelectNextIA();
+    m_boxes.push_back(p);
 
     uiManager->GetEnv()->setFocus(const_cast<irr::gui::IGUIButton*>(&m_boxes.front()->GetButton()));
 
