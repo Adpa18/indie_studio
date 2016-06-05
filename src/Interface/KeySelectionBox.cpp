@@ -3,9 +3,9 @@
 //
 
 #include <algorithm>
-#include "../../include/KeySelectionBox.hpp"
-#include "../../include/EventGame.hpp"
-#include "../../include/GameManager.hpp"
+#include "KeySelectionBox.hpp"
+#include "EventGame.hpp"
+#include "GameManager.hpp"
 
 KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID,
                                  int playerID) :
@@ -77,9 +77,9 @@ void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Me
     m_background->setImage(IrrlichtController::getDriver()->getTexture(BomberManTexture::getModel("KeyBindBg").texture.c_str()));
     m_background->setScaleImage(true);
     pos.UpperLeftCorner.Y += (pos.LowerRightCorner.Y - pos.UpperLeftCorner.Y) * 0.5f;
-    pos.UpperLeftCorner.X += 30;
-    pos.LowerRightCorner.X -= 30;
-    pos.LowerRightCorner.Y -= 30;
+    pos.UpperLeftCorner.X += 50;
+    pos.LowerRightCorner.X -= 50;
+    pos.LowerRightCorner.Y -= 90;
     m_listBox = m_manager->GetEnv()->addListBox(pos, nullptr, elemID, true);
     m_listBox->setDrawBackground(false);
     UpdateElements();
@@ -108,7 +108,7 @@ void KeySelectionBox::UpdateElements()
     if (k != nullptr)
     {
         m_keys = k->ToString();
-        for (std::vector<KeysController::KeyInfo>::iterator it = m_keys.begin(); it != m_keys.end(); ++it)
+        for (std::vector<KeyInfo<irr::EKEY_CODE> >::iterator it = m_keys.begin(); it != m_keys.end(); ++it)
         {
             if (isFirst)
             {

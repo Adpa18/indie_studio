@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:24:43 2016 Victor Gouet
-// Last update Sun Jun  5 12:29:24 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:50:17 2016 Matthieu Tavernier
 //
 
-#include "../../include/BonusInvincible.hpp"
-#include "../../include/Texture.hpp"
-#include "../../include/SoundManager.hpp"
+#include "BonusInvincible.hpp"
+#include "Texture.hpp"
+#include "SoundManager.hpp"
 
 BonusInvincible::BonusInvincible(irr::core::vector2df const &pos)
         : ABonus(pos, BomberManTexture::getModel("bonusInvincible").mesh,

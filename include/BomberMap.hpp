@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:09:53 2016 Victor Gouet
-// Last update Fri Jun  3 15:49:06 2016 Victor Gouet
+// Last update Sun Jun  5 17:06:10 2016 Matthieu Tavernier
 //
 
 #ifndef BOMBERMAP_HPP_
@@ -17,7 +17,7 @@
 # include "Wall.hpp"
 # include "Props.hpp"
 # include "Texture.hpp"
-#include "DangerMap.hpp"
+# include "DangerMap.hpp"
 
 # define SMALL_SIZE 9
 # define MEDIUM_SIZE 11

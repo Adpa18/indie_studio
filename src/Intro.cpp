@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <unistd.h>
 #include <iostream>
-#include <Texture.hpp>
+#include "Texture.hpp"
 #include "IrrlichtController.hpp"
 #include "SoundManager.hpp"
 #include "Intro.hpp"

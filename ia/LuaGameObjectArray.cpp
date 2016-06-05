@@ -3,7 +3,7 @@
 //
 
 #include <stddef.h>
-#include <BomberMap.hpp>
+#include "BomberMap.hpp"
 #include "LuaGameObjectArray.hpp"
 
 template <>

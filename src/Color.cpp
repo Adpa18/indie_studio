@@ -2,7 +2,7 @@
 // Created by consta_n on 19/05/16.
 //
 
-#include "../include/Color.hpp"
+#include "Color.hpp"
 
 Color::Color(const std::string &str) {
 

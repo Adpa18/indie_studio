@@ -5,10 +5,10 @@
 #include <dirent.h>
 #include <algorithm>
 #include <sys/stat.h>
-#include "../../include/UIEventReceiver.hpp"
-#include "../../include/Texture.hpp"
-#include "../../include/GameManager.hpp"
-#include "../../include/SoundManager.hpp"
+#include "UIEventReceiver.hpp"
+#include "Texture.hpp"
+#include "GameManager.hpp"
+#include "SoundManager.hpp"
 
 UIEventReceiver::UIEventReceiver(UIManager const &manager) :
         m_manager(manager), m_device(manager.GetDevice())

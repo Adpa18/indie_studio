@@ -5,15 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:31:36 2016 Victor Gouet
-// Last update Wed Jun  1 20:33:27 2016 Victor Gouet
+// Last update Sun Jun  5 16:46:10 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include "../include/MiniBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Explosion.hpp"
-#include "../include/GameObjectTimeContainer.hpp"
+#include "MiniBomb.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
+#include "GameObjectTimeContainer.hpp"
 
 MiniBomb::MiniBomb(int id)
   : ABomb(BomberManTexture::getModel("miniBomb").mesh,

@@ -8,8 +8,8 @@
 ** Last update	Sat Apr 30 01:04:43 2016 Adrien WERY
 */
 
-#include "../include/EventGame.hpp"
 #include <iostream>
+#include "EventGame.hpp"
 
 const std::vector<std::map<ACharacter::ACTION, irr::EKEY_CODE>> EventGame::_keycodes({
     {

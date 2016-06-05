@@ -2,8 +2,8 @@
 // Created by veyrie_f on 5/22/16.
 //
 
-#include "../../include/Texture.hpp"
-#include "../../include/PlayerInfo.hpp"
+#include "Texture.hpp"
+#include "PlayerInfo.hpp"
 
 PlayerInfo::PlayerInfo(std::string const &name,
                        std::string const &skin,

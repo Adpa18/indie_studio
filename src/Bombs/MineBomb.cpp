@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 21:18:14 2016 Victor Gouet
-// Last update Wed Jun  1 20:35:54 2016 Victor Gouet
+// Last update Sun Jun  5 16:45:59 2016 Matthieu Tavernier
 //
 
-#include "../include/MineBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Explosion.hpp"
-#include "../include/GameObjectTimeContainer.hpp"
+#include "MineBomb.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
+#include "GameObjectTimeContainer.hpp"
 
 MineBomb::MineBomb(int id)
   : ABomb(BomberManTexture::getModel("mineBomb").mesh,

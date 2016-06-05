@@ -4,8 +4,8 @@
 
 #include <algorithm>
 #include <iostream>
-#include "../../include/PlayerSelectionBox.hpp"
-#include "../../include/Texture.hpp"
+#include "PlayerSelectionBox.hpp"
+#include "Texture.hpp"
 
 PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxContainer *container, irr::io::path const &sprite, irr::core::rect<irr::s32> pos,
                                        UIElement::Menu elemName, bool bIsIaPlayer, UIElement::Menu id, int playerID) :

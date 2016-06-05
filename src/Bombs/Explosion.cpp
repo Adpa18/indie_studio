@@ -3,9 +3,9 @@
 //
 
 #include <iostream>
-#include "../../include/BomberMap.hpp"
-#include "../../include/Texture.hpp"
-#include "../../include/Explosion.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
 
 Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture, double timeout)
         : AGameObject(pos, BomberManTexture::getModel("fireExplosion").mesh,

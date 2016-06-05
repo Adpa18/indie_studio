@@ -11,13 +11,13 @@
 #ifndef EVENT_HPP
 # define EVENT_HPP
 
+# include <vector>
+# include <utility>
+# include <map>
 # include "IrrlichtController.hpp"
 # include "MotionController.hpp"
 # include "KeysController.hpp"
 # include "ACharacter.hpp"
-# include <vector>
-# include <utility>
-# include <map>
 
 class EventGame : public irr::IEventReceiver {
 

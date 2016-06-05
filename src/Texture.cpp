@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Sat Jun  4 21:05:34 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:16:08 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include "../include/Texture.hpp"
+#include "Texture.hpp"
 
 const std::string BomberManTexture::path = BINDIR"media/commons/";
 const std::string BomberManTexture::smallMap = BINDIR"media/smallMap/";
@@ -62,10 +62,10 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 
 		// Bombes
 		{"fireBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "classicBomb.png"}},
-		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
-		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
-		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
-		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
+		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
+		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
+		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
 		{"mineBomb", {BomberManTexture::bombs + "mineBomb.md2", BomberManTexture::bombs + "mineBomb.png"}},
 
 		// Gui
@@ -110,7 +110,6 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 
 		// BomberMap
 		{"ground", {"", BomberManTexture::path + "grass.png"}},
-		{"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
 		{"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
 		{"edge", {BomberManTexture::smallMap + "meshes/edge.md2", BomberManTexture::smallMap + "textures/pillar.png"}},
 
@@ -121,10 +120,12 @@ void BomberManTexture::loadTexture()
 {
 	for (std::map<std::string, struct model>::const_iterator it = _models.begin(); it != _models.end(); ++it) {
 		if ((*it).second.mesh != "") {
-			IrrlichtController::getSceneManager()->getMesh((*it).second.mesh.c_str());
+		  if (IrrlichtController::getSceneManager()->getMesh((*it).second.mesh.c_str()) == NULL)
+		    throw std::runtime_error("Failed to load Model : " + (*it).second.mesh);
 		}
 		if ((*it).second.texture != "") {
-			IrrlichtController::getDriver()->getTexture((*it).second.texture.c_str());
+		  if (IrrlichtController::getDriver()->getTexture((*it).second.texture.c_str()) == NULL)
+		    throw std::runtime_error("Failed to load Model : " + (*it).second.mesh);
 		}
 	}
 }

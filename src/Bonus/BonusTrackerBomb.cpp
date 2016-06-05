@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:31:11 2016 Victor Gouet
-// Last update Fri Jun  3 18:37:11 2016 Victor Gouet
+// Last update Sun Jun  5 16:51:24 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusTrackerBomb.hpp"
-#include "../include/TrackerBomb.hpp"
-#include "../include/BombFactory.hpp"
-#include "../include/Texture.hpp"
+#include "BonusTrackerBomb.hpp"
+#include "TrackerBomb.hpp"
+#include "BombFactory.hpp"
+#include "Texture.hpp"
 #include "SoundManager.hpp"
 
 BonusTrackerBomb::BonusTrackerBomb(irr::core::vector2df const &pos)

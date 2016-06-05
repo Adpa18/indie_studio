@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 23:02:35 2016 Victor Gouet
-// Last update Sat Jun  4 12:25:06 2016 Victor Gouet
+// Last update Sun Jun  5 17:04:47 2016 Matthieu Tavernier
 //
 
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/WallOfEnd.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "WallOfEnd.hpp"
 
 WallOfEnd::WallOfEnd(irr::core::vector2df const &pos)
   : AGameObject(pos, BomberManTexture::getModel("edge").mesh,

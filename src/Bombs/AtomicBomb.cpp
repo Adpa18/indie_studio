@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 10:51:39 2016 Victor Gouet
-// Last update Sun Jun  5 12:16:47 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:44:46 2016 Matthieu Tavernier
 //
 
-#include "../include/AtomicBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Explosion.hpp"
+#include "AtomicBomb.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
 
 AtomicBomb::AtomicBomb(int id)
   : ABomb(BomberManTexture::getModel("atomicBomb").mesh,

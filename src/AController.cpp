@@ -8,7 +8,7 @@
 ** Last update	Fri Apr 29 10:04:15 2016 Adrien WERY
 */
 
-#include "../include/AController.hpp"
+#include "AController.hpp"
 
 AController::AController() : _used(false)
 {

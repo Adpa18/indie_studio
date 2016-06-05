@@ -5,10 +5,10 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:31:44 2016 Victor Gouet
-// Last update Mon May  9 11:59:54 2016 Victor Gouet
+// Last update Sun Jun  5 17:04:56 2016 Matthieu Tavernier
 //
 
-#include "../include/GameManager.hpp"
+#include "GameManager.hpp"
 
 int	main()
 {

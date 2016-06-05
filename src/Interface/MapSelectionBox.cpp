@@ -2,9 +2,9 @@
 // Created by veyrie_f on 6/4/16.
 //
 
-#include "../../Irrlicht/irrlicht-1.8.3/include/rect.h"
-#include "../../include/MapSelectionBox.hpp"
-#include "../../include/GameManager.hpp"
+#include "rect.h"
+#include "MapSelectionBox.hpp"
+#include "GameManager.hpp"
 
 MapSelectionBox::MapSelectionBox(UIManager *uiManager, UIEventReceiver *eventReceiver, irr::core::rect <irr::s32> pos,
                                  UIElement::Menu elemName) :
