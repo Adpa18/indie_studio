@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:15:48 2016 Victor Gouet
-// Last update Thu Jun  2 10:40:20 2016 Victor Gouet
+// Last update Sun Jun  5 12:43:55 2016 Matthieu Tavernier
 //
 
 #include <iostream>
@@ -39,7 +39,6 @@ void		WallOfDead::resetPos()
 {
   _y1 = _pos;
   _y2 = _pos;
-  // BomberMap::getMap()->getSize() - 1 - _pos
   _y3 = BomberMap::getMap()->getSize() - 1 - _pos;
   _y4 = BomberMap::getMap()->getSize() - 1 - _pos;
 }
@@ -52,24 +51,18 @@ void		WallOfDead::createWallOfDead()
     {
       // LEFT TO RIGHT
       new WallOfEnd(irr::core::vector2df(_y1, _pos));
-      // new Explosion(irr::core::vector2df(_y1, _pos),
-      // 		    BomberManTexture::getModel("fire").texture, 100);
       ++_y1;
     }
   else if (_y2 < size - 1 - _pos)
     {
       // BOT TO TOP
       new WallOfEnd(irr::core::vector2df(size - 1 - _pos, _y2));
-      // new Explosion(irr::core::vector2df(size - 1 - _pos, _y2),
-      // 		    BomberManTexture::getModel("fire").texture, 100);
       ++_y2;
     }
   else if (_y3 > _pos)
     {
       // RIGHT TO LEFT
       new WallOfEnd(irr::core::vector2df(_y3, size - 1 - _pos));
-      // new Explosion(irr::core::vector2df(_y3, size - 1 - _pos),
-      // 		    BomberManTexture::getModel("fire").texture, 100);
       --_y3;
     }
 
@@ -77,8 +70,6 @@ void		WallOfDead::createWallOfDead()
     {
       // TOP TO BOT
       new WallOfEnd(irr::core::vector2df(_pos, _y4));
-      // new Explosion(irr::core::vector2df(_pos, _y4),
-      // 		    BomberManTexture::getModel("fire").texture, 100);
       --_y4;
     }
 

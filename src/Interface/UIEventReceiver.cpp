@@ -123,8 +123,6 @@ void UIEventReceiver::DisplayMainMenu()
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
-
-    //todo clear player info
     GameManager::SharedInstance()->ClearPlayers();
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));
@@ -586,14 +584,6 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         m_joysticks[idxJoystick]->setData(event_copy.JoystickEvent);
         long playerID = idxJoystick;
 
-        // Notifies key pressed
-        if (m_joysticks[idxJoystick])
-        {
-            if (m_boxContainer != nullptr)
-            {
-                m_boxContainer->OnKeyPressed(m_joysticks[idxJoystick]->getData().ButtonStates);
-            }
-        }
 
         // Validates on splash screen
         if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::CROSS))
@@ -602,6 +592,15 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             {
                 GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                 fptr = &UIEventReceiver::DisplayMainMenu;
+            }
+        }
+
+        // Notifies key pressed
+        if (m_joysticks[idxJoystick])
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->OnKeyPressed(m_joysticks[idxJoystick]->getData().ButtonStates);
             }
         }
 
@@ -628,8 +627,8 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
-        // Opens the key bind menu
-        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::TRIANGLE))
+        // Binds a key
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::L2))
         {
             if (m_boxContainer != nullptr)
             {
@@ -637,7 +636,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
-        // Binds a key
+        // Opens the key bind menu
         if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::SQUARE))
         {
             if (m_boxContainer != nullptr)
@@ -764,4 +763,14 @@ void UIEventReceiver::UpdateMap()
         GameManager::SharedInstance()->ClearPlayers();
         BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(m_maps->GetSelected()));
     }
+}
+
+std::map<int, MotionController *> const &UIEventReceiver::GetJoysticks() const
+{
+    return m_joysticks;
+}
+
+std::vector<KeysController *> const &UIEventReceiver::GetKeyboards() const
+{
+    return m_keymaps;
 }

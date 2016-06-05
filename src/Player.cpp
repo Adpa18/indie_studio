@@ -5,27 +5,33 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Mon May 23 18:17:15 2016 Victor Gouet
+// Last update Sun Jun  5 12:41:04 2016 Matthieu Tavernier
 //
 
 #include <iostream>
 #include "../include/ACharacter.hpp"
 #include "../include/Player.hpp"
-#include "../include/MineBomb.hpp"
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
                std::string const &mesh, std::string const &texture, int player,
-               EventGame const &eventGame)
+               EventGame const &eventGame, AController const *controller)
         : ACharacter(name, pos, mesh, texture, player), _eventGame(eventGame)
 {
     (*this)->setName(name.c_str());
-    this->_joystick = NULL;
+
+    /*this->_joystick = NULL;
     this->keyController = NULL;
     if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
         this->keyController = _eventGame.GetAvaibleKeycodes();
         if (keyController) {
             this->_keycodes = this->keyController->getKeycodes();
         }
+    }*/
+    _joystick = dynamic_cast<MotionController*>(const_cast<AController*>(controller));
+    keyController = dynamic_cast<KeysController*>(const_cast<AController*>(controller));
+    if (keyController != nullptr)
+    {
+        _keycodes = keyController->getKeycodes();
     }
 }
 
@@ -65,7 +71,6 @@ void		Player::serialize(irr::io::IXMLWriter *xmlr) const
     xmlr->writeLineBreak();
 }
 
-// TODO: interpret real action with key controller
 void		Player::compute()
 {
     ACharacter::ACTION  act = ACharacter::IDLE;

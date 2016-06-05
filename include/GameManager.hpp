@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Fri Jun  3 16:42:26 2016 Victor Gouet
+// Last update Sun Jun  5 12:55:26 2016 Matthieu Tavernier
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -131,12 +131,10 @@ private:
     Ranking playerRanking;
     std::list<PlayerInfo*> m_playerInfo;
     std::list<PlayerInfo*> m_playerInfoUI;
-//    std::vector<int>         m_winners;
-//    std::stack<ACharacter *> tmp_ranking;
   WallOfDead		*wallOfDead;
+    irr::scene::ISceneNodeAnimator *anim = nullptr;
 
 private:
-//  GameOver                 *m_gameOver;
     bool                     is_gameOver;
 
 private:

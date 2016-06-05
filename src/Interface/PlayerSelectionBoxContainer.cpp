@@ -116,12 +116,37 @@ void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
 // TODO: redo gui assets
 void PlayerSelectionBoxContainer::SaveSelection()
 {
+    unsigned int idx = 1;
+    std::map<int, MotionController *> joysticks = m_receiver->GetJoysticks();
+    std::vector<KeysController *> keyboards = m_receiver->GetKeyboards();
+    AController *toAdd = nullptr;
+
     for (std::list<PlayerSelectionBox*>::const_iterator it = m_boxes.begin(); it != m_boxes.end(); ++it)
     {
-        GameManager::SharedInstance()->AddPlayerFromUI(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
-                                                                (*it)->GetSkin(),
-                                                                (*it)->GetIaStatus(),
-                                                                (*it)->GetIAStrength()));
+        if ((*it)->GetIaStatus())
+        {
+            GameManager::SharedInstance()->AddPlayerFromUI(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
+                                                                          (*it)->GetSkin(),
+                                                                          (*it)->GetIaStatus(),
+                                                                          (*it)->GetIAStrength()));
+        }
+        else
+        {
+            if (joysticks.find(idx) != joysticks.end())
+            {
+                toAdd = joysticks[idx];
+            }
+            else if (keyboards.size() > (idx - 1))
+            {
+                toAdd = keyboards[idx - 1];
+            }
+            GameManager::SharedInstance()->AddPlayerFromUI(new PlayerInfo(GameManager::ToString((*it)->GetPlayerName()),
+                                                                          (*it)->GetSkin(),
+                                                                          (*it)->GetIaStatus(),
+                                                                          (*it)->GetIAStrength(), toAdd));
+            ++idx;
+        }
+        toAdd = nullptr;
     }
 }
 

@@ -27,6 +27,7 @@ GameOver::GameOver(Ranking *ranking) :
     if (m_font)
         m_skin->setFont(m_font);
     highScore = new LoadHighScore("bomberman.score");
+    rankingList = NULL;
 }
 
 GameOver::~GameOver()
@@ -36,7 +37,6 @@ GameOver::~GameOver()
     if (highScore)
       {
 	highScore->flush();
-	std::cout << *highScore << std::endl;
 	delete highScore;
       }
 }
@@ -56,7 +56,19 @@ void	GameOver::saveHighScore(std::vector<ACharacter *> const &podium)
 
 void		GameOver::displayRanking()
 {
+  std::vector<t_highScore *>    vec = highScore->getAllHighScore();
+  size_t				rankingListSizeWidth = 800;
+  size_t				rankingListSizeHeight = 700;
 
+  rankingList = IrrlichtController::getSceneManager()->getGUIEnvironment()->addListBox(irr::core::rect<irr::s32>(IrrlichtController::width / 2 - rankingListSizeWidth / 2, IrrlichtController::height / 2 - rankingListSizeHeight / 2, IrrlichtController::width / 2 + rankingListSizeWidth / 2, IrrlichtController::height / 2 + rankingListSizeHeight / 2));
+
+  int	i = 0;
+  for (std::vector<t_highScore *>::iterator it = vec.begin(), end = vec.end() ; it != end ; ++it)
+    {
+      std::wstring wstring = GameManager::ToWstring((*it)->getName() + "    " + std::to_string((*it)->getScore()));
+      rankingList->addItem(wstring.c_str());
+      rankingList->setItemOverrideColor(i++, irr::video::SColor(255, 255, 255, 255));
+    }
 }
 
 void GameOver::show()
@@ -76,8 +88,10 @@ void GameOver::show()
         case Ranking::END_GAME:
             winner = m_ranking->getPlayerByID(displayPodium(m_ranking->getFinalPodium()));
             ss << "The winner is " << winner->getName().c_str() << " !";
+	    
             saveHighScore(m_ranking->getFinalPodium());
             SoundManager::getManager()->play("winner.wav");
+	    displayRanking();
             m_status = true;
             break;
         case Ranking::WIN:
@@ -92,7 +106,6 @@ void GameOver::show()
         default:
             break;
     }
-displayRanking();
     m_st_text = m_env->addStaticText(ss.str().c_str(),
                                      irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200),
                                      false, true);

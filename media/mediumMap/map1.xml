@@ -31,11 +31,11 @@
     <props mesh="pine.md3" texture="pine.TGA" />
 
     <walls
-            mesh1="wall1.md3"
-            texture1="wall1.TGA"
-            mesh2="wall1.md3"
-            texture2="wall1.TGA"
-            mesh3="wall1.md3"
-            texture3="wall1.TGA"
+            mesh1="edge.md2"
+            texture1="pillar.png"
+            mesh2="edge.md2"
+            texture2="pillar.png"
+            mesh3="edge.md2"
+            texture3="pillar.png"
     />
 </config>

@@ -81,7 +81,6 @@ bool KeySelectionBox::IsActive() const
     return m_listBox->isVisible();
 }
 
-// TODO: send pressed key, forbid any action in selection mode
 void KeySelectionBox::OnSelect()
 {
     if (!m_isSelecting)
@@ -150,7 +149,7 @@ void KeySelectionBox::OnKeyPress(irr::EKEY_CODE key)
 
 void KeySelectionBox::OnKeyPress(irr::u32 key)
 {
-    if (m_isSelecting && key != 0)
+    if (m_isSelecting && key != 0 && key != MotionController::ControllerKey::L2)
     {
         m_isSelecting = false;
         m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 0, 0, 0));
@@ -168,4 +167,3 @@ bool KeySelectionBox::IsSelecting() const
 {
     return m_isSelecting;
 }
-

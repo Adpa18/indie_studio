@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 10:51:39 2016 Victor Gouet
-// Last update Wed Jun  1 20:34:04 2016 Victor Gouet
+// Last update Sun Jun  5 12:16:47 2016 Matthieu Tavernier
 //
 
 #include "../include/AtomicBomb.hpp"
@@ -44,7 +44,6 @@ void		AtomicBomb::willExplose()
     irr::core::vector2df        pos = this->getMapPos();
 
     this->killObjects(pos);
-    // std::cout << _power << std::endl;
     for (int y = -2 ; y <= 2 ; ++y)
       {
 	for (int x = -2 ; x <= 2 ; ++x)
@@ -78,8 +77,6 @@ bool    AtomicBomb::killObjects(irr::core::vector2df const &pos)
             if (type != AGameObject::BOOM
 		&& !obj->isObjectTimeOut()
 		&& obj->isDestructible()) {
-                // delete obj;
-	      
                 delete obj;
             }
         }
