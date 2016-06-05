@@ -111,7 +111,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"ground", {"", BomberManTexture::path + "grass.png"}},
 		{"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
 		{"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
-		{"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall_texture.tga"}},
+		{"edge", {BomberManTexture::smallMap + "meshes/edge.md2", BomberManTexture::smallMap + "textures/pillar.png"}},
 
 		{"fontTest", {"", "media/font/arcade_font.png"}},
 };
