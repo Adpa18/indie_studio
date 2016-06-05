@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Sun Jun  5 12:11:29 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:38:42 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include "../include/AGameObject.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/GameObjectTimeContainer.hpp"
+#include "AGameObject.hpp"
+#include "BomberMap.hpp"
+#include "GameObjectTimeContainer.hpp"
 
 AGameObject::AGameObject(irr::core::vector2df const &pos, std::string const &mesh, std::string const &texture, Type type, double timeout) : _type(type)
 {

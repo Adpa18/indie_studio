@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
-// Last update Fri Jun  3 18:36:18 2016 Victor Gouet
+// Last update Sun Jun  5 16:49:00 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusFireBomb.hpp"
-#include "../include/FragBomb.hpp"
-#include "../include/BombFactory.hpp"
-#include "../include/Texture.hpp"
+#include "BonusFireBomb.hpp"
+#include "FragBomb.hpp"
+#include "BombFactory.hpp"
+#include "Texture.hpp"
 #include "SoundManager.hpp"
 
 BonusFireBomb::BonusFireBomb(irr::core::vector2df const &pos)

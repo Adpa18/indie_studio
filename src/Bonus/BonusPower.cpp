@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:05:25 2016 Victor Gouet
-// Last update Sun Jun  5 12:29:55 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:50:30 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusPower.hpp"
-#include "../include/Texture.hpp"
+#include "BonusPower.hpp"
+#include "Texture.hpp"
 #include "SoundManager.hpp"
 
 BonusPower::BonusPower(irr::core::vector2df const &pos)

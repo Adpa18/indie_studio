@@ -5,9 +5,8 @@
 #ifndef CPP_INDIE_STUDIO_LUASCRIPT_HPP
 # define CPP_INDIE_STUDIO_LUASCRIPT_HPP
 
-//# include "LuaClass.hpp"
 # include "LuaScriptClass.hpp"
-#include "LuaHandler.hpp"
+# include "LuaHandler.hpp"
 
 namespace Lua
 {

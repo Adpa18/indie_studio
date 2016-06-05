@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
-// Last update Sun Jun  5 12:28:42 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:48:31 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusBiggestMan.hpp"
-#include "../include/Texture.hpp"
+#include "BonusBiggestMan.hpp"
+#include "Texture.hpp"
 #include "SoundManager.hpp"
 
 BonusBiggestMan::BonusBiggestMan(irr::core::vector2df const &pos)

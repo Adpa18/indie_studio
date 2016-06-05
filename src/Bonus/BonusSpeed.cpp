@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:37:03 2016 Victor Gouet
-// Last update Fri Jun  3 18:37:00 2016 Victor Gouet
+// Last update Sun Jun  5 16:51:05 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusSpeed.hpp"
-#include "../include/Texture.hpp"
+#include "BonusSpeed.hpp"
+#include "Texture.hpp"
 #include "SoundManager.hpp"
 
 BonusSpeed::BonusSpeed(irr::core::vector2df const &pos)

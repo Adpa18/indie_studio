@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "../include/Props.hpp"
-#include "../include/BomberMap.hpp"
+#include "Props.hpp"
+#include "BomberMap.hpp"
 
 Props::Props(const std::string &mesh,
       const std::string &texture, irr::core::vector2df const &scale, int transparent)

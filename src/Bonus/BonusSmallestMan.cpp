@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 14:33:06 2016 Victor Gouet
-// Last update Fri Jun  3 19:12:50 2016 Victor Gouet
+// Last update Sun Jun  5 16:50:54 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusSmallestMan.hpp"
-#include "../include/Texture.hpp"
+#include "BonusSmallestMan.hpp"
+#include "Texture.hpp"
 #include "SoundManager.hpp"
 
 BonusSmallestMan::BonusSmallestMan(irr::core::vector2df const &pos)

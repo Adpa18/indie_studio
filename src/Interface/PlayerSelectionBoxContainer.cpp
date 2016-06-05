@@ -3,9 +3,9 @@
 //
 
 #include <algorithm>
-#include "../../include/PlayerSelectionBoxContainer.hpp"
-#include "../../include/Texture.hpp"
-#include "../../include/GameManager.hpp"
+#include "PlayerSelectionBoxContainer.hpp"
+#include "Texture.hpp"
+#include "GameManager.hpp"
 
 PlayerSelectionBoxContainer::PlayerSelectionBoxContainer(UIManager *uiManager, UIEventReceiver *receiver) :
             m_manager(uiManager),

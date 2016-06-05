@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:27:09 2016 Victor Gouet
-// Last update Sun Jun  5 12:28:16 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:47:14 2016 Matthieu Tavernier
 //
 
-#include "../include/AItem.hpp"
-#include "../../include/BomberMap.hpp"
+#include "AItem.hpp"
+#include "BomberMap.hpp"
 #include "SoundManager.hpp"
 
 AItem::AItem(irr::core::vector2df const &pos, std::string const &mesh,

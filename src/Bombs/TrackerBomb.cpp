@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 13 11:04:11 2016 Victor Gouet
-// Last update Sun Jun  5 12:18:17 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:46:24 2016 Matthieu Tavernier
 //
 
-#include "../include/TrackerBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Explosion.hpp"
+#include "TrackerBomb.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
 
 TrackerBomb::TrackerBomb(int id)
   : ABomb(BomberManTexture::getModel("trackerBomb").mesh,

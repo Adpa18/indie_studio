@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:25:32 2016 Victor Gouet
-// Last update Sun Jun  5 12:28:00 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:47:33 2016 Matthieu Tavernier
 //
 
-#include "../include/ABonus.hpp"
-#include "../include/BomberMap.hpp"
+#include "ABonus.hpp"
+#include "BomberMap.hpp"
 
 ABonus::ABonus(irr::core::vector2df const &pos, std::string const &mesh,
 	       std::string const &texture, std::string const &nameType, Type type)

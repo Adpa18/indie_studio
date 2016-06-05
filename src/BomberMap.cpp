@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:14:09 2016 Victor Gouet
-// Last update Sun Jun  5 12:15:33 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:41:16 2016 Matthieu Tavernier
 //
 
 #include <unistd.h>
@@ -17,14 +17,14 @@
 #include <sstream>
 #include <queue>
 #include "irrXML.h"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Color.hpp"
-#include "../include/Player.hpp"
-#include "../ia/IAPlayer.hpp"
-#include "../include/GameObjectTimeContainer.hpp"
-#include "../include/GameManager.hpp"
-#include "../include/AGameObjectFactory.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Color.hpp"
+#include "Player.hpp"
+#include "IAPlayer.hpp"
+#include "GameObjectTimeContainer.hpp"
+#include "GameManager.hpp"
+#include "AGameObjectFactory.hpp"
 
 BomberMap *BomberMap::bomberMap = NULL;
 

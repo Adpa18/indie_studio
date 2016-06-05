@@ -9,7 +9,7 @@
 */
 
 #include <iostream>
-#include "../include/MotionController.hpp"
+#include "MotionController.hpp"
 
 MotionController::MotionController(irr::SJoystickInfo info) : _info(info)
 {
