@@ -4,14 +4,14 @@
 
 #include <utility>
 #include <vector>
-#include <ACharacter.hpp>
 #include <algorithm>
 #include <sstream>
 #include <stack>
 #include <list>
 #include <iostream>
-#include <BomberMap.hpp>
-#include <GameManager.hpp>
+#include "../../include/BomberMap.hpp"
+#include "../../include/ACharacter.hpp"
+#include "../../include/GameManager.hpp"
 #include "../../include/GameOver.hpp"
 #include "../../include/SoundManager.hpp"
 
@@ -54,6 +54,11 @@ void	GameOver::saveHighScore(std::vector<ACharacter *> const &podium)
     }
 }
 
+void		GameOver::displayRanking()
+{
+
+}
+
 void GameOver::show()
 {
     irr::scene::ICameraSceneNode    *camera;
@@ -84,6 +89,7 @@ void GameOver::show()
         default:
             break;
     }
+displayRanking();
     m_st_text = m_env->addStaticText(ss.str().c_str(),
                                      irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200),
                                      false, true);

@@ -132,7 +132,6 @@ void UIEventReceiver::DisplayMainMenu()
     m_boxContainer = new PlayerSelectionBoxContainer(&m_manager, this);
 }
 
-
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
 {
