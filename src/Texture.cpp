@@ -61,11 +61,11 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"ziggsMad", {BomberManTexture::characters + "ziggs_mad.md3", BomberManTexture::characters + "ziggs_mad.png"}},
 
 		// Bombes
-		{"fireBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "classicBomb.png"}},
-		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "fragBomb.png"}},
-		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "fragBomb.png"}},
-		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "atomicBomb.png"}},
-		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "trackerBomb.png"}},
+		{"fireBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "classicBomb.png"}},
+		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
+		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
+		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
+		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
 		{"mineBomb", {BomberManTexture::bombs + "mineBomb.md2", BomberManTexture::bombs + "mineBomb.png"}},
 
 		// Gui
@@ -111,30 +111,9 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"ground", {"", BomberManTexture::path + "grass.png"}},
 		{"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
 		{"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
-		{"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
+		{"edge", {BomberManTexture::smallMap + "meshes/edge.md2", BomberManTexture::smallMap + "textures/pillar.png"}},
 
 		{"fontTest", {"", "media/font/arcade_font.png"}},
-
-		// {"ground", {"", BomberManTexture::path + "grass.png"}},
-		// {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
-		// {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
-		// {"edge", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
-		// {"ground", {"", BomberManTexture::path + "grass.png"}},
-		// {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
-		// {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
-		// {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
-		// {"ground", {"", BomberManTexture::path + "grass.png"}},
-		// {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
-		// {"cubeDestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeIndestructible3.png"}},
-		// {"edge", {BomberManTexture::path + "cylinder_bottom.md2", BomberManTexture::path + "edge.png"}},
-		// {"ground", {"", BomberManTexture::path + "grass.png"}},
-		// {"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
-		// {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
-		// {"edge", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
-		// {"ground", {"", BomberManTexture::path + "grass.png"}},
-		// {"cubeIndestructible", {BomberManTexture::path + "column.md3", BomberManTexture::path + "column.png"}},
-		// {"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
-		// {"edge", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "wall.png"}},
 };
 
 void BomberManTexture::loadTexture()

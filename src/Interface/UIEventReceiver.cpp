@@ -586,14 +586,6 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
         m_joysticks[idxJoystick]->setData(event_copy.JoystickEvent);
         long playerID = idxJoystick;
 
-        // Notifies key pressed
-        if (m_joysticks[idxJoystick])
-        {
-            if (m_boxContainer != nullptr)
-            {
-                m_boxContainer->OnKeyPressed(m_joysticks[idxJoystick]->getData().ButtonStates);
-            }
-        }
 
         // Validates on splash screen
         if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::CROSS))
@@ -602,6 +594,15 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             {
                 GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
                 fptr = &UIEventReceiver::DisplayMainMenu;
+            }
+        }
+
+        // Notifies key pressed
+        if (m_joysticks[idxJoystick])
+        {
+            if (m_boxContainer != nullptr)
+            {
+                m_boxContainer->OnKeyPressed(m_joysticks[idxJoystick]->getData().ButtonStates);
             }
         }
 

@@ -27,28 +27,6 @@ public:
     ~Ranking();
     Ranking &operator=(Ranking const &ref);
 
-public:
-//    bool isTheEndOfTheGame(ACharacter *winner);
-//    void displayRankingScreen(std::vector<ACharacter *> &chara);
-//    ACharacter *getMaxScoredPlayer(std::vector<ACharacter *> const &chars) const;
-//    std::vector<ACharacter *>   getPodium();
-//    //todo finish
-//    std::vector<ACharacter *>   getFinalPodium(std::vector<ACharacter *> const &chars) const;
-
-//public:
-//    void addPlayerToRank(ACharacter *toRank);
-//    void setNbPlayers(size_t nbPlayers);
-//    size_t getNbPlayers(void) const;
-//    GameOver *getGameOver(void) const;
-//    State getState(void) const;
-//    void setState(State state);
-//    void destroyGameOver(void);
-//    size_t getPlayedGames(void) const;
-//    void setPlayedGames(size_t nbGames);
-//    ACharacter *getPlayerFromId(int id, std::vector<ACharacter *> const &chars) const;
-//    std::stack<ACharacter *> const &getRanks(void) const;
-
-
 private:
     int                         nbAlives;
     size_t                      nbPlayedGames;
