@@ -153,6 +153,13 @@ bool    MotionController::IsButtonPressed(ControllerKey button) const
   return (button == this->_data.ButtonStates);
 }
 
+bool MotionController::IsButtonPressed(ACharacter::ACTION act) const
+{
+    if (_keycodes.find(act) == _keycodes.end())
+        return false;
+    return IsButtonPressed(_keycodes[act]);
+}
+
 void MotionController::BindAction(ACharacter::ACTION action, MotionController::ControllerKey key)
 {
     std::map<ACharacter::ACTION, MotionController::ControllerKey>::iterator it;

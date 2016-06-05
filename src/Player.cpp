@@ -66,10 +66,10 @@ void		Player::compute()
     // Joystick
     if (this->_joystick) {
         act = this->_joystick->getDirAxis(MotionController::LEFT_JOYSTICK);
-        if (this->_joystick->IsButtonPressed(MotionController::CROSS)) {
+        if (this->_joystick->IsButtonPressed(ACharacter::ACTION::BOMB)) {
             act = ACharacter::ACTION::BOMB;
         }
-        if (this->_joystick->IsButtonPressed(MotionController::SQUARE)) {
+        if (this->_joystick->IsButtonPressed(ACharacter::ACTION::ACT)) {
             act = ACharacter::ACTION::ACT;
         }
     } else {

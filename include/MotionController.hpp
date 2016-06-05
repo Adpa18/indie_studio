@@ -42,7 +42,7 @@ public:
     };
 
 private:
-    std::map<ACharacter::ACTION, ControllerKey> _keycodes;
+    mutable std::map<ACharacter::ACTION, ControllerKey> _keycodes;
 
 public:
     void BindAction(ACharacter::ACTION action, ControllerKey key);
@@ -65,6 +65,7 @@ public:
     void                                setData(irr::SEvent::SJoystickEvent data);
     ACharacter::ACTION                  getDirAxis(const Axis axis) const;
     bool                                IsButtonPressed(ControllerKey button) const;
+    bool                                IsButtonPressed(ACharacter::ACTION act) const;
   ACharacter::ACTION                  getDirAxisOneTime(const Axis axis) const;
   bool                                IsButtonPressedOneTime(ControllerKey button) const;
 
