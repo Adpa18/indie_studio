@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue May 10 14:22:36 2016 Victor Gouet
-// Last update Sat Jun  4 21:05:34 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:57:46 2016 Victor Gouet
 //
 
 #include <iostream>
@@ -110,7 +110,6 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 
 		// BomberMap
 		{"ground", {"", BomberManTexture::path + "grass.png"}},
-		{"cubeIndestructible", {BomberManTexture::path + "cube_bottom.md2", BomberManTexture::path + "cubeDestrutible3.png"}},
 		{"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
 		{"edge", {BomberManTexture::smallMap + "meshes/edge.md2", BomberManTexture::smallMap + "textures/pillar.png"}},
 
@@ -121,10 +120,12 @@ void BomberManTexture::loadTexture()
 {
 	for (std::map<std::string, struct model>::const_iterator it = _models.begin(); it != _models.end(); ++it) {
 		if ((*it).second.mesh != "") {
-			IrrlichtController::getSceneManager()->getMesh((*it).second.mesh.c_str());
+		  if (IrrlichtController::getSceneManager()->getMesh((*it).second.mesh.c_str()) == NULL)
+		    throw std::runtime_error("Failed to load Model : " + (*it).second.mesh);
 		}
 		if ((*it).second.texture != "") {
-			IrrlichtController::getDriver()->getTexture((*it).second.texture.c_str());
+		  if (IrrlichtController::getDriver()->getTexture((*it).second.texture.c_str()) == NULL)
+		    throw std::runtime_error("Failed to load Model : " + (*it).second.mesh);
 		}
 	}
 }
