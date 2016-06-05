@@ -14,10 +14,16 @@ Props::Props(const std::string &mesh,
       (*this)->getMaterial(0).getTextureMatrix(0).setTextureScale(scale.X,scale.Y);
    if (transparent)
       (*this)->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+   irr::core::vector3df	pos = (*this)->getPosition();
    if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
-     (*this)->setScale((*this)->getScale() * 1.3);
+     {
+       pos.Z += 30;
+     }
    else if (BomberMap::getMap()->getSize() == LARGE_SIZE)
-     (*this)->setScale((*this)->getScale() * 1.6);
+     {
+       pos.Z += 50;
+     }
+   (*this)->setPosition(pos);
 }
 
 void Props::dead() {
