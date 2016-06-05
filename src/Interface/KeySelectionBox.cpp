@@ -149,7 +149,7 @@ void KeySelectionBox::OnKeyPress(irr::EKEY_CODE key)
 
 void KeySelectionBox::OnKeyPress(irr::u32 key)
 {
-    if (m_isSelecting && key != 0)
+    if (m_isSelecting && key != 0 && key != MotionController::ControllerKey::L2)
     {
         m_isSelecting = false;
         m_listBox->setItemOverrideColor(m_listBox->getSelected(), irr::video::SColor(255, 0, 0, 0));

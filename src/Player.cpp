@@ -11,7 +11,6 @@
 #include <iostream>
 #include "../include/ACharacter.hpp"
 #include "../include/Player.hpp"
-#include "../include/MineBomb.hpp"
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
                std::string const &mesh, std::string const &texture, int player,

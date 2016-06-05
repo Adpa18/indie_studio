@@ -27,6 +27,7 @@ public:
     /*
      * Storage class for key infos
      */
+    // TODO: new class for this templated
     class KeyInfo
     {
     public:
