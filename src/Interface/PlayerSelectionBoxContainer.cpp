@@ -121,7 +121,6 @@ void PlayerSelectionBoxContainer::PlayerJoin(int playerID)
     m_joined[playerID - 1] = true;
 }
 
-// TODO: redo gui assets
 void PlayerSelectionBoxContainer::SaveSelection()
 {
     unsigned int idx = 1;

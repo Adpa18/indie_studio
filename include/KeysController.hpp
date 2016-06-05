@@ -15,6 +15,7 @@
 # include "AController.hpp"
 # include "ACharacter.hpp"
 # include "MotionController.hpp"
+#include "KeyInfo.hpp"
 
 /*
  * \brief This class will holds all the informations about the key bindings used by the players
@@ -27,8 +28,7 @@ public:
     /*
      * Storage class for key infos
      */
-    // TODO: new class for this templated
-    class KeyInfo
+    /*class KeyInfo
     {
     public:
         KeyInfo(ACharacter::ACTION action, irr::EKEY_CODE keycode, std::string const& toString) :
@@ -63,19 +63,19 @@ public:
         ACharacter::ACTION m_action;
         irr::EKEY_CODE m_keycode;
         std::string m_toString;
-    };
+    };*/
 
 public:
     KeysController (std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes);
     virtual ~KeysController ();
     std::map<ACharacter::ACTION, irr::EKEY_CODE> const  &getKeycodes() const;
-    std::vector<KeyInfo> const& ToString() const;
+    std::vector<KeyInfo<irr::EKEY_CODE> > const& ToString() const;
 
 public:
     void BindAction(ACharacter::ACTION action, irr::EKEY_CODE key);
 
 private:
-    mutable std::vector<KeyInfo> m_toString;
+    mutable std::vector<KeyInfo<irr::EKEY_CODE>> m_toString;
 };
 
 #endif /* !KEYSCONTROLLER_HPP */
