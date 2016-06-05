@@ -6,11 +6,12 @@
 #include <algorithm>
 #include <unistd.h>
 #include <iostream>
+#include <Texture.hpp>
 #include "IrrlichtController.hpp"
 #include "SoundManager.hpp"
 #include "Intro.hpp"
 
-const std::string     Intro::default_path_video = "./media/intro/video/";
+const std::string     Intro::default_path_video = MEDIAPATH"intro/video/";
 
 Intro::Intro(EventGame *eventGame) : eventGame(eventGame)
 {

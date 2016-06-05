@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include <iostream>
+#include <Texture.hpp>
 #include "SoundManager.hpp"
 
 // # define DEBUG
@@ -18,7 +19,7 @@ SoundManager            *SoundManager::getManager()
     return (manager);
 }
 
-SoundManager::SoundManager() : soundPath("./media/sound/")
+SoundManager::SoundManager() : soundPath(MEDIAPATH"sound/")
 {
 #ifndef DEBUG
     FMOD::System_Create(&engine);

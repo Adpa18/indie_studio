@@ -66,7 +66,10 @@ function findBonusedFocus(pos)
     for _, dir in pairs(directions) do
         local togo = pos:add(dir);
 
-        if (posSeen[togo:getX() + MapW * togo:getY()] == nil and bomberMap:getDangerAtPos(togo:getX(), togo:getY()) == BONUSED) then
+        if (bomberMap:getDangerAtPos(togo:getX(), togo:getY()) == BONUSED) then
+            return togo;
+        end
+        if (posSeen[togo:getX() + MapW * togo:getY()] == nil and canMoveOnPos(togo)) then
             return (findBonusedFocus(togo));
         end
     end

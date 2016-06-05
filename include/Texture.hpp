@@ -14,6 +14,10 @@
 # include <string>
 # include "IrrlichtController.hpp"
 
+#ifndef MEDIAPATH
+# define MEDIAPATH "media/"
+#endif
+
 struct model {
     std::string   mesh;
     std::string   texture;

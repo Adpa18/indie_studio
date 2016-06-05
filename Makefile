@@ -106,8 +106,14 @@ LDFLAGS 	+=  -L $(IRRLICHT_DIR)/lib/$(SYSTEM) -lIrrlicht
 
 DEBUG   = no
 
+INSTALL = no
+
 ifeq ($(DEBUG),yes)
     CPPFLAGS  +=  -D DEBUG
+endif
+
+ifneq ($(INSTALL),no)
+    CPPFLAGS  +=  -DMEDIAPATH='"$(INSTALL)"'
 endif
 
 %.o : %.cpp

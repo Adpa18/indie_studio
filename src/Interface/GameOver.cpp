@@ -21,7 +21,7 @@ GameOver::GameOver(Ranking *ranking) :
         m_env(IrrlichtController::getDevice()->getGUIEnvironment()),
         m_skin(m_env->getSkin()),
         m_save_font(m_skin->getFont()),
-        m_font(m_env->getFont("./media/font/arcade_font.xml")),
+        m_font(m_env->getFont(MEDIAPATH"font/arcade_font.xml")),
         m_st_text(NULL)
 {
     if (m_font)

@@ -229,7 +229,7 @@ void	GameManager::setCountDownText(std::wstringstream const &ss)
 {
     if (!m_st_text)
     {
-        IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(IrrlichtController::getDevice()->getGUIEnvironment()->getFont("./media/font/arcade_font.xml"));
+        IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(IrrlichtController::getDevice()->getGUIEnvironment()->getFont(MEDIAPATH"font/arcade_font.xml"));
         m_st_text = IrrlichtController::getDevice()->getGUIEnvironment()->addStaticText(ss.str().c_str(), irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200), false, true);
         m_st_text->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
         m_st_text->setTextAlignment(irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER, irr::gui::EGUI_ALIGNMENT::EGUIA_CENTER);
