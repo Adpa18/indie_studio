@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sat Jun  4 12:20:46 2016 Victor Gouet
+// Last update Sun Jun  5 12:58:43 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -192,7 +192,6 @@ void    GameManager::onMenu()
     else if (GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
     {
         activeCam(MAIN_MENU_CAM);
-        static irr::scene::ISceneNodeAnimator *anim = nullptr;
         if (anim == nullptr || m_cameras[MAIN_MENU_CAM]->getAnimators().empty())
         {
             anim = IrrlichtController::getDevice()->getSceneManager()->createFlyCircleAnimator(
@@ -349,7 +348,7 @@ void    GameManager::willStartGame()
     if (m_st_text)
         m_st_text->remove();
 
-    // TIMER DOUNTDOWN
+    // TIMER COUNTDOWN
     countdown = GameManager::endOfGame;
     gameOverTimer = 0;
     beginTimer = getTimeSeconds();
