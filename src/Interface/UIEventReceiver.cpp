@@ -4,6 +4,7 @@
 
 #include <dirent.h>
 #include <algorithm>
+#include <sys/stat.h>
 #include "UIEventReceiver.hpp"
 #include "Texture.hpp"
 #include "GameManager.hpp"

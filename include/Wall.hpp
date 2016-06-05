@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Sun Jun  5 13:00:21 2016 Matthieu Tavernier
+// Last update Sun Jun  5 21:12:57 2016 Victor Gouet
 //
 
 #ifndef WALL_HPP_
@@ -14,7 +14,6 @@
 # include <map>
 # include <string>
 # include "AGameObject.hpp"
-
 # include "BomberMap.hpp"
 # include "BonusSpeed.hpp"
 # include "BonusPower.hpp"
