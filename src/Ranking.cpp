@@ -131,7 +131,7 @@ ACharacter         *Ranking::getPlayerByID(int id) const
 
 size_t     Ranking::getPlayerScore(int id) const
 {
-    return (this->playersScores.find(id - 1)->second);
+    return (this->playersScores.find(id)->second);
 }
 
 void Ranking::reset(void)

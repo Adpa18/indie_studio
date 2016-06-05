@@ -70,16 +70,19 @@ void GameOver::show()
     camera->removeAnimators();
     GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
     SoundManager::getManager()->stopAll();
+    ACharacter *winner;
     switch (m_ranking->getState())
     {
         case Ranking::END_GAME:
-            ss << "The winner is player " << displayPodium(m_ranking->getFinalPodium()) << " win!";
+            winner = m_ranking->getPlayerByID(displayPodium(m_ranking->getFinalPodium()));
+            ss << "The winner is " << winner->getName().c_str() << " !";
             saveHighScore(m_ranking->getFinalPodium());
             SoundManager::getManager()->play("winner.wav");
             m_status = true;
             break;
         case Ranking::WIN:
-            ss << "Player " << displayPodium(m_ranking->getPodium()) << " win!";
+            winner = m_ranking->getPlayerByID(displayPodium(m_ranking->getPodium()));
+            ss << winner->getName().c_str() << " win!";
             SoundManager::getManager()->play("gameResults.wav");
             break;
         case Ranking::DRAW:
