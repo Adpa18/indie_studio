@@ -148,6 +148,7 @@ CPPFLAGS    +=  -D_IRR_STATIC_LIB_
 LDFLAGS     +=  -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32 -ld3dx9d -lwinmm -lm
 LDFLAGS     +=  -lm -static-libstdc++
 LDFLAGS		+=	lua53.dll
+LDFLAGS     +=  -L./ -lfmod -lfmodL
 else
 LDFLAGS 	+= -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
 LDFLAGS 	+=  -L./fmod/lib/x86_64 -Wl,-R./fmod/lib/x86_64 -lfmod
