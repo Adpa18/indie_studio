@@ -43,7 +43,7 @@ private:
     irr::gui::IGUIImage *m_background;
     AController *m_controller;
     std::vector<KeyInfo<irr::EKEY_CODE> > m_keys;
-    std::vector<MotionController::KeyInfo> m_motions;
+    std::vector<KeyInfo<MotionController::ControllerKey > > m_motions;
     bool m_isSelecting = false;
 };
 

@@ -317,7 +317,6 @@ const std::vector<KeyInfo<irr::EKEY_CODE >> &KeysController::ToString() const
             toAdd += ".";
         }
         toAdd += m_keysToString[(*it).second];
-        std::cout << toAdd.c_str() << std::endl;
         m_toString.push_back(KeyInfo<irr::EKEY_CODE >((*it).first, (*it).second, toAdd));
     }
     return m_toString;

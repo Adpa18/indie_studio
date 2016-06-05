@@ -14,6 +14,7 @@
 #include <sys/time.h>
 # include "AController.hpp"
 # include "ACharacter.hpp"
+#include "KeyInfo.hpp"
 
 class MotionController : public AController {
 
@@ -40,59 +41,18 @@ public:
         OTHER = 1 << 12
     };
 
-public:
-    /*
-     * Storage class for key infos
-     */
-    class KeyInfo
-    {
-    public:
-        KeyInfo(ACharacter::ACTION action, ControllerKey keycode, std::string const& toString) :
-                m_action(action),
-                m_keycode(keycode),
-                m_toString(toString)
-        {
-
-        }
-
-        ~KeyInfo()
-        {
-
-        }
-
-        std::string const& ToString()
-        {
-            return m_toString;
-        }
-
-        ACharacter::ACTION GetAction() const
-        {
-            return m_action;
-        }
-
-        ControllerKey GetKeycode() const
-        {
-            return m_keycode;
-        }
-
-    private:
-        ACharacter::ACTION m_action;
-        ControllerKey m_keycode;
-        std::string m_toString;
-    };
-
 private:
     std::map<ACharacter::ACTION, ControllerKey> _keycodes;
 
 public:
     void BindAction(ACharacter::ACTION action, ControllerKey key);
-    std::vector<KeyInfo> const& ToString();
+    std::vector<KeyInfo<ControllerKey> > const& ToString();
   long long		getTimeSeconds() const;
 
 private:
     irr::SJoystickInfo          _info;
     irr::SEvent::SJoystickEvent _data;
-    mutable std::vector<KeyInfo> m_toString;
+    mutable std::vector<KeyInfo<ControllerKey> > m_toString;
 
 private:
   mutable long long	_timerDelay;
