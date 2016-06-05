@@ -383,6 +383,7 @@ void    GameManager::willStartGame()
     activeCam(GameManager::GameCamera::GAME_CAMERA);
     BomberMap::getMap()->refreshCamera();
     BomberMap::getMap()->giveDangerMap().setSize(static_cast<size_t >(BomberMap::getMap()->getSize()));
+    BomberMap::getMap()->giveDangerMap().refresh(BomberMap::getMap());
 
     std::wstringstream ss;
 
