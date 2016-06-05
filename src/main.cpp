@@ -12,8 +12,16 @@
 
 int	main()
 {
-  GameManager::SharedInstance()->run();
-  delete(GameManager::SharedInstance());
-  IrrlichtController::getDevice()->drop();
+  try
+  {
+    GameManager::SharedInstance()->run();
+    delete(GameManager::SharedInstance());
+    IrrlichtController::getDevice()->drop();
+  }
+  catch (std::exception &exp)
+  {
+    std::cerr << exp.what() << std::endl;
+    return (1);
+  }
   return (0);
 }

@@ -5,6 +5,7 @@ libdir="$bombermandir/lib/"
 iadir="$bombermandir/ia/"
 mediadir="$bombermandir/media/"
 confrc="$HOME/.`echo $SHELL | cut -d '/' -f 3`rc"
+dir=$(echo $bombermandir | sed "s/\//\\\\\//g")
 
 green="\e[32m"
 reset="\e[0m"
@@ -37,6 +38,12 @@ cp -f "./ia/iaBehaviour.lua" "$iadir"
 cp -f "./ia/positionDirection.lua" "$iadir"
 cp -f "./ia/astar.lua" "$iadir"
 echo -e "$done" "Bomberman file copied"
+
+tochange=$(find $mediadir -name "*.xml")
+
+for f in $tochange; do
+    sed "s/\.\//$dir/g" $tochange > $tochange
+done
 
 if [ -f $confrc ]; then
     echo "$pending" "Setting path $confrc pathes"
