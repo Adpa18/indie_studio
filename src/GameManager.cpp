@@ -192,7 +192,6 @@ void    GameManager::onMenu()
     else if (GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP)
     {
         activeCam(MAIN_MENU_CAM);
-        static irr::scene::ISceneNodeAnimator *anim = nullptr;
         if (anim == nullptr)
         {
             anim = IrrlichtController::getDevice()->getSceneManager()->createFlyCircleAnimator(
@@ -348,7 +347,7 @@ void    GameManager::willStartGame()
     if (m_st_text)
         m_st_text->remove();
 
-    // TIMER DOUNTDOWN
+    // TIMER COUNTDOWN
     countdown = GameManager::endOfGame;
     gameOverTimer = 0;
     beginTimer = getTimeSeconds();

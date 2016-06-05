@@ -134,6 +134,7 @@ private:
 //    std::vector<int>         m_winners;
 //    std::stack<ACharacter *> tmp_ranking;
   WallOfDead		*wallOfDead;
+    irr::scene::ISceneNodeAnimator *anim = nullptr;
 
 private:
 //  GameOver                 *m_gameOver;
