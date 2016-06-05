@@ -627,8 +627,8 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
-        // Opens the key bind menu
-        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::TRIANGLE))
+        // Binds a key
+        if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::L2))
         {
             if (m_boxContainer != nullptr)
             {
@@ -636,7 +636,7 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             }
         }
 
-        // Binds a key
+        // Opens the key bind menu
         if (m_joysticks[idxJoystick]->IsButtonPressedOneTime(MotionController::ControllerKey::SQUARE))
         {
             if (m_boxContainer != nullptr)
