@@ -193,12 +193,13 @@ void    GameManager::onMenu()
     {
         activeCam(MAIN_MENU_CAM);
         static irr::scene::ISceneNodeAnimator *anim = nullptr;
-        if (anim == nullptr)
+        if (anim == nullptr || m_cameras[MAIN_MENU_CAM]->getAnimators().empty())
         {
             anim = IrrlichtController::getDevice()->getSceneManager()->createFlyCircleAnimator(
                     irr::core::vector3df(0, 300, 0), 360.0f, 0.0004f);
             m_cameras[MAIN_MENU_CAM]->setPosition(irr::core::vector3df(300, 250, 300));
             m_cameras[MAIN_MENU_CAM]->addAnimator(anim);
+            anim->drop();
         }
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
     }

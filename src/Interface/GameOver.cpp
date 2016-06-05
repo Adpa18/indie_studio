@@ -62,6 +62,7 @@ void GameOver::show()
     camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::MAIN_MENU_CAM);
     camera->setPosition(irr::core::vector3df(-50, 25, 0));
     camera->setTarget(irr::core::vector3df(0, 25, 0));
+    camera->removeAnimators();
     GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
     SoundManager::getManager()->stopAll();
     switch (m_ranking->getState())
