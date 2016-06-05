@@ -33,6 +33,7 @@ public:
 public:
     virtual bool OnEvent(const irr::SEvent &event);
     MotionController const*GetJoystick(int id) const;
+    KeysController const*GetKeyboard(unsigned int id) const;
 
 public:
     void DisplayPauseMenu();

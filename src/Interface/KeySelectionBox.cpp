@@ -25,10 +25,18 @@ KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32>
     CreateListBox(pos, elemID);
 }
 
+KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID,
+                                 int playerID, AController const*controller) :
+        m_manager(uiManager),
+        m_playerID(playerID),
+        m_controller(const_cast<AController*>(controller))
+{
+    CreateListBox(pos, elemID);
+}
 
 KeySelectionBox::~KeySelectionBox()
 {
-    delete(m_controller);
+    //delete(m_controller);
 }
 
 void KeySelectionBox::SelectNext()

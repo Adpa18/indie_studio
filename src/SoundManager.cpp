@@ -8,7 +8,7 @@
 #include "Texture.hpp"
 #include "SoundManager.hpp"
 
-// # define DEBUG
+//# define DEBUG
 
 SoundManager            *SoundManager::manager = NULL;
 

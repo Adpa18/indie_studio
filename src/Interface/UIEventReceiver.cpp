@@ -702,6 +702,15 @@ MotionController const *UIEventReceiver::GetJoystick(int id) const
     return m_joysticks[id];
 }
 
+KeysController const *UIEventReceiver::GetKeyboard(unsigned int id) const
+{
+    if (id == 0 || id > m_keymaps.size())
+    {
+        return nullptr;
+    }
+    return m_keymaps[id - 1];
+}
+
 void UIEventReceiver::UpdateMapMenu(bool isSelection)
 {
     if (m_maps == nullptr)

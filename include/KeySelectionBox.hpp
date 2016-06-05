@@ -16,6 +16,7 @@ class KeySelectionBox : public ISelectionBox
 {
 public:
     explicit KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID, int playerID);
+    explicit KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID, int playerID, AController const*controller);
     explicit KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID, int playerID, irr::SJoystickInfo info);
     virtual ~KeySelectionBox();
 

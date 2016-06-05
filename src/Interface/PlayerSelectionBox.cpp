@@ -51,7 +51,12 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
     if (m_container->GetEventReceiver()->GetJoystick(playerID) != nullptr)
     {
         m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID,
-                                             m_container->GetEventReceiver()->GetJoystick(playerID)->getInfo());
+                                             m_container->GetEventReceiver()->GetJoystick(playerID));
+    }
+    else if (m_container->GetEventReceiver()->GetKeyboard(playerID) != nullptr)
+    {
+        m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID,
+                                             m_container->GetEventReceiver()->GetKeyboard(playerID));
     }
     else
     {

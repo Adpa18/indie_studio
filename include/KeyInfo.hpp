@@ -28,7 +28,7 @@ public:
 
     }
 
-    std::string const& ToString()
+    std::string const& ToString() const
     {
         return m_toString;
     }
