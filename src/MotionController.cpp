@@ -171,7 +171,7 @@ void MotionController::BindAction(ACharacter::ACTION action, MotionController::C
     _keycodes[action] = key;
 }
 
-const std::vector<MotionController::KeyInfo> &MotionController::ToString()
+const std::vector<KeyInfo<MotionController::ControllerKey> > &MotionController::ToString()
 {
     std::map<ACharacter::ACTION, ControllerKey>::const_iterator it;
     std::string toAdd;
@@ -196,8 +196,7 @@ const std::vector<MotionController::KeyInfo> &MotionController::ToString()
             if (keyIdx <= 12)
             {
                 toAdd += m_keysToString[keyIdx];
-                std::cout << toAdd.c_str() << std::endl;
-                m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
+                m_toString.push_back(KeyInfo<MotionController::ControllerKey >((*it).first, (*it).second, toAdd));
             }
         }
         keyIdx = 0;
