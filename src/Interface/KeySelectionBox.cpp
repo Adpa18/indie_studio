@@ -125,7 +125,7 @@ void KeySelectionBox::UpdateElements()
     if (m != nullptr)
     {
         m_motions = m->ToString();
-        for (std::vector<MotionController::KeyInfo>::iterator it = m_motions.begin(); it != m_motions.end(); ++it)
+        for (std::vector<KeyInfo<MotionController::ControllerKey> >::iterator it = m_motions.begin(); it != m_motions.end(); ++it)
         {
             if (isFirst)
             {

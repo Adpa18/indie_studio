@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:54:55 2016 Victor Gouet
-// Last update Sun Jun  5 16:49:00 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:39 2016 Victor Gouet
 //
 
 #include "BonusFireBomb.hpp"
@@ -25,11 +25,8 @@ BonusFireBomb::~BonusFireBomb()
   dead();
 }
 
-#include <iostream>
-
 void	        BonusFireBomb::take(ACharacter &player)
 {
-  std::cout << "Bonus FIRE BOMB ADD" << std::endl;
   BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()), player->getID());
   SoundManager::getManager()->play("BonusFireBomb.wav", (*this)->getID(), false, 0.8);
 }

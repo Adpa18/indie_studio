@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 17:42:59 2016 Victor Gouet
-// Last update Sun Jun  5 16:51:50 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:33:55 2016 Victor Gouet
 //
 
 #include "ItemThrow.hpp"
@@ -23,8 +23,6 @@ ItemThrow::~ItemThrow()
 {
 
 }
-
-#include <iostream>
 
 void		ItemThrow::use(irr::core::vector2df const &playerPos,
 			       irr::core::vector2df const &dir)

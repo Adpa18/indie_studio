@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sun May 22 12:58:37 2016 Victor Gouet
-// Last update Sun Jun  5 16:51:43 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:35:05 2016 Victor Gouet
 //
 
 #include "ItemMineBomb.hpp"
@@ -22,8 +22,6 @@ ItemMineBomb::~ItemMineBomb()
 {
 
 }
-
-#include <iostream>
 
 void		ItemMineBomb::use(irr::core::vector2df const &playerPos,
 			       irr::core::vector2df const &dir)

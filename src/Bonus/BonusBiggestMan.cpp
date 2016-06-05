@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:55:40 2016 Victor Gouet
-// Last update Sun Jun  5 16:48:31 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:33 2016 Victor Gouet
 //
 
 #include "BonusBiggestMan.hpp"
@@ -24,11 +24,8 @@ BonusBiggestMan::~BonusBiggestMan()
   dead();
 }
 
-#include <iostream>
-
 void	        BonusBiggestMan::take(ACharacter &player)
 {
-  std::cout << "Bonus BonusBiggestMan ADD" << std::endl;
   player.setLifeUp();
   player.setMoveSpeed(ACharacter::BASICSPEED / 1.5);
   player->setScale(irr::core::vector3df(2.5, 2.5, 2.5));

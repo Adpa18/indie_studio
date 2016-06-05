@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Sat May 21 12:19:25 2016 Victor Gouet
-// Last update Sun Jun  5 16:47:48 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:23 2016 Victor Gouet
 //
 
 #include "BonusAtomicBomb.hpp"
@@ -28,7 +28,6 @@ BonusAtomicBomb::~BonusAtomicBomb()
 
 void	        BonusAtomicBomb::take(ACharacter &player)
 {
-  std::cout << "Bonus ATOMIC BOMB ADD" << std::endl;
   BombFactory::AddBomb<AtomicBomb>(*(player.getBombContainer()), player->getID());
   SoundManager::getManager()->play("BonusAtomicBomb.wav", (*this)->getID(), false, 0.8);
 }

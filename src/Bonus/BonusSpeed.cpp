@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 13:37:03 2016 Victor Gouet
-// Last update Sun Jun  5 16:51:05 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:03 2016 Victor Gouet
 //
 
 #include "BonusSpeed.hpp"
@@ -24,11 +24,8 @@ BonusSpeed::~BonusSpeed()
   dead();
 }
 
-#include <iostream>
-
 void		BonusSpeed::take(ACharacter &player)
 {
-  std::cout << "BONUS SPEED TAKEN !" << std::endl;
   player.setMoveSpeed(player.getMoveSpeed() + 0.5);
   SoundManager::getManager()->play("BonusSpeed.wav", (*this)->getID(), false, 0.8);
 }
