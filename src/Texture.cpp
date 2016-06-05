@@ -61,11 +61,11 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"ziggsMad", {BomberManTexture::characters + "ziggs_mad.md3", BomberManTexture::characters + "ziggs_mad.png"}},
 
 		// Bombes
-		{"fireBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "classicBomb.png"}},
-		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "fragBomb.png"}},
-		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "fragBomb.png"}},
-		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "atomicBomb.png"}},
-		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md3", BomberManTexture::bombs + "trackerBomb.png"}},
+		{"fireBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "classicBomb.png"}},
+		{"fragBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
+		{"miniBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "fragBomb.png"}},
+		{"atomicBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "atomicBomb.png"}},
+		{"trackerBomb", {BomberManTexture::bombs + "classicBomb.md2", BomberManTexture::bombs + "trackerBomb.png"}},
 		{"mineBomb", {BomberManTexture::bombs + "mineBomb.md2", BomberManTexture::bombs + "mineBomb.png"}},
 
 		// Gui
