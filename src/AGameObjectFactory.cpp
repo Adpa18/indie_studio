@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May 23 21:46:02 2016 Victor Gouet
-// Last update Mon May 23 23:34:18 2016 Victor Gouet
+// Last update Sun Jun  5 11:00:27 2016 Victor Gouet
 //
 
 #include "../include/GameManager.hpp"
@@ -18,7 +18,6 @@ AGameObjectFactory::AGameObjectFactory()
   fptr["Wall"] = &AGameObjectFactory::createWall;
   fptr["Player"] = &AGameObjectFactory::createPlayer;
   fptr["IAPlayer"] = &AGameObjectFactory::createIA;
-  fptr["Explosion"] = &AGameObjectFactory::createExplosion;
   fptr["BonusAtomicBomb"] = &AGameObjectFactory::createBonusAtomicBomb;
   fptr["BonusBiggestMan"] = &AGameObjectFactory::createBonusBiggestMan;
   fptr["BonusBombPass"] = &AGameObjectFactory::createBonusBombPass;
@@ -66,7 +65,7 @@ void		AGameObjectFactory::createIA(irr::io::IrrXMLReader *reader,
 void		AGameObjectFactory::createExplosion(irr::io::IrrXMLReader *, 
 						    AGameObjectData::Data *data)
 {
-  new Explosion(data->getPos(), data->texture);
+  new Explosion(data->getPos(), data->texture, 1);
 }
 
 void		AGameObjectFactory::createBonusAtomicBomb(irr::io::IrrXMLReader *,

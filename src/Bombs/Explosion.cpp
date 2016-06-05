@@ -38,7 +38,6 @@ Explosion::Explosion(irr::core::vector2df const &pos, std::string const &texture
     particuleTexture = texture;
     _ps->setMaterialTexture(0, IrrlichtController::getDriver()->getTexture(texture.c_str()));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-   // BomberMap::getMap()->add(this, this->getMapPos());
 }
 
 void			Explosion::updateTimeOut()

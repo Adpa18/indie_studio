@@ -23,6 +23,7 @@ private:
     irr::gui::IGUIFont        *m_font;
     irr::gui::IGUIStaticText  *m_st_text;
   LoadHighScore			*highScore;
+  irr::gui::IGUIListBox		*rankingList;
 
     //    const std::vector<int>              &m_winners;
     //  std::stack<ACharacter *>            *tmp_ranking;
@@ -39,6 +40,7 @@ public:
 private:
     int     displayPodium(std::vector<ACharacter *> const &podium) const;
     void	saveHighScore(std::vector<ACharacter *> const &podium);
+  void		displayRanking();
 };
 
 
