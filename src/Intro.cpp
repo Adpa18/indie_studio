@@ -11,7 +11,7 @@
 #include "SoundManager.hpp"
 #include "Intro.hpp"
 
-const std::string     Intro::default_path_video = MEDIAPATH"intro/video/";
+const std::string     Intro::default_path_video = BINDIR"media/intro/video/";
 
 Intro::Intro(EventGame *eventGame) : eventGame(eventGame)
 {

@@ -14,8 +14,8 @@
 # include <string>
 # include "IrrlichtController.hpp"
 
-#ifndef MEDIAPATH
-# define MEDIAPATH "media/"
+#ifndef BINDIR
+# define BINDIR "./"
 #endif
 
 struct model {

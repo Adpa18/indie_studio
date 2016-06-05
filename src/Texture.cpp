@@ -11,15 +11,15 @@
 #include <iostream>
 #include "../include/Texture.hpp"
 
-const std::string BomberManTexture::path = MEDIAPATH"commons/";
-const std::string BomberManTexture::smallMap = MEDIAPATH"smallMap/";
-const std::string BomberManTexture::mediumMap = MEDIAPATH"mediumMap/";
-const std::string BomberManTexture::largeMap = MEDIAPATH"largeMap/";
-const std::string BomberManTexture::bombs = MEDIAPATH"bombs/";
-const std::string BomberManTexture::bonus = MEDIAPATH"bonus/";
-const std::string BomberManTexture::characters = MEDIAPATH"characters/";
-const std::string BomberManTexture::gui = MEDIAPATH"gui/";
-const std::string BomberManTexture::font = MEDIAPATH"font/";
+const std::string BomberManTexture::path = BINDIR"media/commons/";
+const std::string BomberManTexture::smallMap = BINDIR"media/smallMap/";
+const std::string BomberManTexture::mediumMap = BINDIR"media/mediumMap/";
+const std::string BomberManTexture::largeMap = BINDIR"media/largeMap/";
+const std::string BomberManTexture::bombs = BINDIR"media/bombs/";
+const std::string BomberManTexture::bonus = BINDIR"media/bonus/";
+const std::string BomberManTexture::characters = BINDIR"media/characters/";
+const std::string BomberManTexture::gui = BINDIR"media/gui/";
+const std::string BomberManTexture::font = BINDIR"media/font/";
 
 const std::map<std::string, struct model>  BomberManTexture::_models = {
 
@@ -114,7 +114,7 @@ const std::map<std::string, struct model>  BomberManTexture::_models = {
 		{"cubeDestructible", {BomberManTexture::path + "barrel.md2", BomberManTexture::path + "barrel.png"}},
 		{"edge", {BomberManTexture::smallMap + "meshes/edge.md2", BomberManTexture::smallMap + "textures/pillar.png"}},
 
-		{"fontTest", {"", MEDIAPATH"font/arcade_font.png"}},
+		{"fontTest", {"", BINDIR"media/font/arcade_font.png"}},
 };
 
 void BomberManTexture::loadTexture()
