@@ -68,15 +68,6 @@ long long  MotionController::getTimeSeconds() const
   gettimeofday(&tp, NULL);
   long long mslong = (long long) tp.tv_sec * 1000L + tp.tv_usec / 1000; //get current timestamp in milliseconds
   return (mslong);
-    // time_t	timer;
-    // struct tm	y2k;
-
-    // timer = time(NULL);
-    // memset(&y2k, 0, sizeof(y2k));
-    // y2k.tm_year = 100;
-    // y2k.tm_mday = 1;
-    // return (difftime(timer, mktime(&y2k)));
-
 }
 
 ACharacter::ACTION      MotionController::getDirAxisOneTime(const Axis axis) const
@@ -91,21 +82,17 @@ ACharacter::ACTION      MotionController::getDirAxisOneTime(const Axis axis) con
       moveHorizontal = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / 32767.f;
       if (moveHorizontal > 0.5f) {
 	_timerDelay = getTimeSeconds();
-	// std::cout << "ACharacter::ACTION::RIGHT" << std::endl;
 	return (ACharacter::ACTION::RIGHT);
       } else if (moveHorizontal < -0.5f) {	
 	_timerDelay = getTimeSeconds();
-	// std::cout << "ACharacter::ACTION::LEFT" << std::endl;
 	return (ACharacter::ACTION::LEFT);
       } else {
 	moveVertical = (irr::f32)this->_data.Axis[irr::SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 	if (moveVertical > 0.5f) {
 	  _timerDelay = getTimeSeconds();
-	  // std::cout << "ACharacter::ACTION::UP" << std::endl;
 	  return (ACharacter::ACTION::UP);
 	} else if (moveVertical < -0.5f) {
 	  _timerDelay = getTimeSeconds();
-	  // std::cout << "ACharacter::ACTION::DOWN" << std::endl;
 	  return (ACharacter::ACTION::DOWN);
 	}
       }

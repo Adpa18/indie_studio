@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:22:17 2016 Victor Gouet
-// Last update Wed Jun  1 20:33:38 2016 Victor Gouet
+// Last update Sun Jun  5 12:17:35 2016 Matthieu Tavernier
 //
 
 #include <iostream>
@@ -129,7 +129,6 @@ bool    FragBomb::killObjects(irr::core::vector2df const &pos)
 		!obj->isObjectTimeOut()
 		&& obj->isDestructible()) {
                 delete obj;
-                // delete obj;
             }
         }
         if (type == AGameObject::BLOCK || type == AGameObject::OTHER) {

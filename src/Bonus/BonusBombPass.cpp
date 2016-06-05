@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 12:15:24 2016 Victor Gouet
-// Last update Fri Jun  3 18:36:09 2016 Victor Gouet
+// Last update Sun Jun  5 12:28:55 2016 Matthieu Tavernier
 //
 
 #include "../include/BonusBombPass.hpp"
@@ -30,7 +30,6 @@ void	        BonusBombPass::take(ACharacter &player)
 {
   std::cout << "Bonus BOMB PASS ADD" << std::endl;
   player.setBombPass(true);
-  // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
   SoundManager::getManager()->play("BonusBombPass.wav", (*this)->getID(), false, 0.8);
 }
 

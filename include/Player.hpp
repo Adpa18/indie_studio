@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:36:14 2016 Victor Gouet
-// Last update Mon May 23 18:07:47 2016 Victor Gouet
+// Last update Sun Jun  5 12:58:20 2016 Matthieu Tavernier
 //
 
 #ifndef PLAYER_HPP_
@@ -32,7 +32,6 @@ public:
 public:
   virtual void		compute();
   virtual void		serialize(irr::io::IXMLWriter *) const;
-  // void            setMD3Animation(MD3_ANIMATION anim);
 };
 
 #endif

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 18:19:48 2016 Victor Gouet
-// Last update Fri Jun  3 18:42:20 2016 Victor Gouet
+// Last update Sun Jun  5 12:43:15 2016 Matthieu Tavernier
 //
 
 #include <fstream>
@@ -61,56 +61,53 @@ void                        Wall::dead()
 
   if (_state == Invicible || _state == Edge)
     return ;
-  // r = rand() % 2;
-  // if (r == 1)
-  //   {
-      if (BomberMap::getMap()->getSize() == SMALL_SIZE)
-	nbBonus = 11;
-      else
-	nbBonus = 12;
-      i = rand() % nbBonus;
-      switch (i)
-	{
-	case 0:
-	  new BonusSpeed(this->getMapPos());
-	  break;
-	case 1:
-	  new BonusPower(this->getMapPos());
-	  break;
-	case 2:
-	  new BonusFireBomb(this->getMapPos());
-	  break;
-	case 3:
-	  new ItemThrow(this->getMapPos());
-	  break;
-	case 4:
-	  new BonusBombPass(this->getMapPos());
-	  break;
-	case 5:
-	  new BonusBiggestMan(this->getMapPos());
-	  break;
-	case 6:
-	  new BonusSmallestMan(this->getMapPos());
-	  break;
-	case 7:
-	  new BonusInvincible(this->getMapPos());
-	  break;
-	case 8:
-	  new BonusTrackerBomb(this->getMapPos());
-	  break;
-	case 9:
-	  new BonusFragBomb(this->getMapPos());
-	  break;
-	case 10:
-	  new ItemMineBomb(this->getMapPos());
-	  break;
-	case 11:
-	  new BonusAtomicBomb(this->getMapPos());
-	  break;
-	default:
-	  break;
-	}
-      this->setPos(irr::core::vector2df(-2000, -2000));
+  if (BomberMap::getMap()->getSize() == SMALL_SIZE)
+    nbBonus = 11;
+  else
+    nbBonus = 12;
+  i = rand() % nbBonus;
+  switch (i)
+    {
+    case 0:
+      new BonusSpeed(this->getMapPos());
+      break;
+    case 1:
+      new BonusPower(this->getMapPos());
+      break;
+    case 2:
+      new BonusFireBomb(this->getMapPos());
+      break;
+    case 3:
+      new ItemThrow(this->getMapPos());
+      break;
+    case 4:
+      new BonusBombPass(this->getMapPos());
+      break;
+    case 5:
+      new BonusBiggestMan(this->getMapPos());
+      break;
+    case 6:
+      new BonusSmallestMan(this->getMapPos());
+      break;
+    case 7:
+      new BonusInvincible(this->getMapPos());
+      break;
+    case 8:
+      new BonusTrackerBomb(this->getMapPos());
+      break;
+    case 9:
+      new BonusFragBomb(this->getMapPos());
+      break;
+    case 10:
+      new ItemMineBomb(this->getMapPos());
+      break;
+    case 11:
+      new BonusAtomicBomb(this->getMapPos());
+      break;
+    default:
+      break;
+    }
+  this->setPos(irr::core::vector2df(-2000, -2000));
 }
 
 bool				Wall::isDestructible() const

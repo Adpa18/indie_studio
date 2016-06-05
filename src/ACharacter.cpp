@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sat Jun  4 11:46:37 2016 Victor Gouet
+// Last update Sun Jun  5 12:10:52 2016 Matthieu Tavernier
 //
 
 #include <unistd.h>
@@ -20,9 +20,6 @@
 #include "../include/TrackerBomb.hpp"
 #include "../include/FragBomb.hpp"
 
-/*
- * Non volatile and non integral types must be initialized outside the class
- */
 const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right", "Move Up", "Move Down", "Drop Bomb", "Perform Action"};
 
 struct SMD3AnimationType
@@ -57,21 +54,6 @@ ACharacter::ACharacter(std::string const &name, irr::core::vector2df const &pos,
     moveSpeed = BASICSPEED;
     then = IrrlichtController::getDevice()->getTimer()->getTime();
     _bombContainer = BombFactory::CreateBombContainer<FireBomb>((*this)->getID());
-
-    // BombFactory::AddBomb<FireBomb>(*_bombContainer, (*this)->getID());
-
-    // Atomic Bomb
-    // FragBomb
-    // TrackerBomb
-
-    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-    // BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<FragBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<TrackerBomb>(*_bombContainer, (*this)->getID());
-//   BombFactory::AddBomb<AtomicBomb>(*_bombContainer, (*this)->getID());
     setMD3Animation(MD3_ANIMATION::STAY);
 }
 

@@ -81,7 +81,6 @@ bool KeySelectionBox::IsActive() const
     return m_listBox->isVisible();
 }
 
-// TODO: send pressed key, forbid any action in selection mode
 void KeySelectionBox::OnSelect()
 {
     if (!m_isSelecting)
@@ -168,4 +167,3 @@ bool KeySelectionBox::IsSelecting() const
 {
     return m_isSelecting;
 }
-

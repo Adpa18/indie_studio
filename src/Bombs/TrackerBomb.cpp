@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 13 11:04:11 2016 Victor Gouet
-// Last update Wed Jun  1 20:33:03 2016 Victor Gouet
+// Last update Sun Jun  5 12:18:17 2016 Matthieu Tavernier
 //
 
 #include "../include/TrackerBomb.hpp"
@@ -119,11 +119,8 @@ bool    TrackerBomb::killObjects(irr::core::vector2df const &pos)
             stop = true;
         }
     }
-    // if (!stop) {
-    // new Explosion(pos, 1);
     if (type != AGameObject::BLOCK) {
         new Explosion(pos, BomberManTexture::getModel("fireTracker").texture, 1);
     }
-    // }
     return (stop);
 }

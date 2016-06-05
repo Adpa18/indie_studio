@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sat Jun  4 12:20:46 2016 Victor Gouet
+// Last update Sun Jun  5 13:02:12 2016 Matthieu Tavernier
 //
 
 #include <sstream>
@@ -57,13 +57,11 @@ GameManager::GameManager()
     m_cameras[MAIN_MENU_CAM] = IrrlichtController::getSceneManager()->addCameraSceneNode(nullptr,
                                                                                          irr::core::vector3df(0, 0, 0),
                                                                                          irr::core::vector3df(0, 0, 0));
-//    IAPlayer::initIA();
     is_gameOver = false;
 }
 
 GameManager::~GameManager()
 {
-//    std::cout << "\e[31mOn suppr le gamemanager\e[0m" << std::endl;
     delete uiEventReceiver;
     delete uiManager;
     delete eventGame;
@@ -92,10 +90,6 @@ void        GameManager::setGameState(GameState state)
 {
     m_gameSatePrev = m_gameState;
     m_gameState = state;
-    // if (state == PLAY)
-    //   fptr = &GameManager::willStartGame;
-    // if (state >= SPLASH_SCREEN && state <= MENU_MAP)
-    //   fptr = &GameManager::willStartMenu;
 }
 
 GameManager::GameState    GameManager::getGameState() const
@@ -154,7 +148,6 @@ void    GameManager::onMenu()
     if (GameManager::SharedInstance()->getGameState() == GameManager::PAUSE)
         return;
 
-    // Copies viewport state
     irr::core::rect<irr::s32> viewPort = IrrlichtController::getDriver()->getViewPort();
     irr::scene::ICameraSceneNode *camera = m_cameras[MAIN_MENU_CAM];
 
@@ -241,8 +234,6 @@ void    GameManager::onGame()
 {
     if (eventGame->IsKeyDownOneTime(irr::EKEY_CODE::KEY_KEY_P))
     {
-        // if (this->defaultFont)
-        // 	IrrlichtController::getDevice()->getGUIEnvironment()->getSkin()->setFont(this->defaultFont);
         m_st_text = NULL;
         setGameState(PAUSE);
         IrrlichtController::getDevice()->setEventReceiver(uiEventReceiver);
@@ -276,7 +267,6 @@ void    GameManager::onGame()
                 setCountDownText(ss);
                 m_st_text->setOverrideColor(irr::video::SColor(255, 229, 57, 53));
             }
-            // m_st_text->setText(ss.str().c_str());
             beginTimer = actualTime;
         }
         if (wallOfDead->canDropWall())
@@ -483,7 +473,3 @@ irr::scene::ICameraSceneNode *GameManager::getCam(GameCamera cam) {
 void GameManager::activeCam(GameCamera cam) {
     IrrlichtController::getSceneManager()->setActiveCamera(m_cameras[cam]);
 }
-
-
-
-
