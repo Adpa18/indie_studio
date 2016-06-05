@@ -199,7 +199,6 @@ void    GameManager::onMenu()
             m_cameras[MAIN_MENU_CAM]->setPosition(irr::core::vector3df(300, 250, 300));
             m_cameras[MAIN_MENU_CAM]->addAnimator(anim);
             anim->drop();
-            std::cout << ">>>>>>>> Ici" << std::endl;
         }
         IrrlichtController::getDevice()->getSceneManager()->drawAll();
     }
