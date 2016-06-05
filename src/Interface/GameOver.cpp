@@ -4,14 +4,14 @@
 
 #include <utility>
 #include <vector>
-#include <ACharacter.hpp>
 #include <algorithm>
 #include <sstream>
 #include <stack>
 #include <list>
 #include <iostream>
-#include <BomberMap.hpp>
-#include <GameManager.hpp>
+#include "../../include/BomberMap.hpp"
+#include "../../include/ACharacter.hpp"
+#include "../../include/GameManager.hpp"
 #include "../../include/GameOver.hpp"
 #include "../../include/SoundManager.hpp"
 
@@ -54,6 +54,11 @@ void	GameOver::saveHighScore(std::vector<ACharacter *> const &podium)
     }
 }
 
+void		GameOver::displayRanking()
+{
+
+}
+
 void GameOver::show()
 {
     irr::scene::ICameraSceneNode    *camera;
@@ -62,18 +67,22 @@ void GameOver::show()
     camera = GameManager::SharedInstance()->getCam(GameManager::GameCamera::MAIN_MENU_CAM);
     camera->setPosition(irr::core::vector3df(-50, 25, 0));
     camera->setTarget(irr::core::vector3df(0, 25, 0));
+    camera->removeAnimators();
     GameManager::SharedInstance()->activeCam(GameManager::GameCamera::MAIN_MENU_CAM);
     SoundManager::getManager()->stopAll();
+    ACharacter *winner;
     switch (m_ranking->getState())
     {
         case Ranking::END_GAME:
-            ss << "The winner is player " << displayPodium(m_ranking->getFinalPodium()) << " win!";
+            winner = m_ranking->getPlayerByID(displayPodium(m_ranking->getFinalPodium()));
+            ss << "The winner is " << winner->getName().c_str() << " !";
             saveHighScore(m_ranking->getFinalPodium());
             SoundManager::getManager()->play("winner.wav");
             m_status = true;
             break;
         case Ranking::WIN:
-            ss << "Player " << displayPodium(m_ranking->getPodium()) << " win!";
+            winner = m_ranking->getPlayerByID(displayPodium(m_ranking->getPodium()));
+            ss << winner->getName().c_str() << " win!";
             SoundManager::getManager()->play("gameResults.wav");
             break;
         case Ranking::DRAW:
@@ -83,6 +92,7 @@ void GameOver::show()
         default:
             break;
     }
+displayRanking();
     m_st_text = m_env->addStaticText(ss.str().c_str(),
                                      irr::core::rect<irr::s32>(0, 100, (irr::s32) IrrlichtController::width, 200),
                                      false, true);

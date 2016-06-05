@@ -22,10 +22,8 @@ private:
     irr::gui::IGUIFont        *m_save_font;
     irr::gui::IGUIFont        *m_font;
     irr::gui::IGUIStaticText  *m_st_text;
-  LoadHighScore			*highScore;
-
-    //    const std::vector<int>              &m_winners;
-    //  std::stack<ACharacter *>            *tmp_ranking;
+    LoadHighScore			*highScore;
+    irr::gui::IGUIListBox		*rankingList;
 
 public:
     GameOver(Ranking *ranking);
@@ -33,12 +31,12 @@ public:
 
 public:
     void show();
-
     bool getStatus() const;
 
 private:
     int     displayPodium(std::vector<ACharacter *> const &podium) const;
     void	saveHighScore(std::vector<ACharacter *> const &podium);
+    void    displayRanking();
 };
 
 

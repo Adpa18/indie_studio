@@ -132,7 +132,6 @@ void UIEventReceiver::DisplayMainMenu()
     m_boxContainer = new PlayerSelectionBoxContainer(&m_manager, this);
 }
 
-
 // Splash screen waiting for player to press some button
 void UIEventReceiver::DisplaySplashScreen()
 {
@@ -197,21 +196,21 @@ void UIEventReceiver::DisplayMapMenu()
 // Pause menu from pause button
 void UIEventReceiver::DisplayPauseMenu()
 {
-    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 300,
                                                   IrrlichtController::height / 2.5 - 50,
-                                                  IrrlichtController::width / 2.0 + 100,
+                                                  IrrlichtController::width / 2.0 + 300,
                                                   IrrlichtController::height / 2.5 + 50),
                         nullptr, UIElement::CONTINUE, L"Continue", L""));
 
-    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 300,
                                                   IrrlichtController::height / 2.0 - 50,
-                                                  IrrlichtController::width / 2.0 + 100,
+                                                  IrrlichtController::width / 2.0 + 300,
                                                   IrrlichtController::height / 2.0 + 50),
                         nullptr, UIElement::SPLASH_BUTTON_START, L"Quitter", L""));
 
-    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 100,
+    m_buttons.push_back(m_manager.GetEnv()->addButton(irr::core::rect<irr::s32>(IrrlichtController::width / 2.0 - 300,
                                                   IrrlichtController::height / 1.66 - 50,
-                                                  IrrlichtController::width / 2.0 + 100,
+                                                  IrrlichtController::width / 2.0 + 300,
                                                   IrrlichtController::height / 1.66 + 50),
                         nullptr, UIElement::SAVE, L"Save", L""));
 }

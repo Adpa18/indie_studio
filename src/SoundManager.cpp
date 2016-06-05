@@ -7,7 +7,7 @@
 #include <iostream>
 #include "SoundManager.hpp"
 
-# define DEBUG
+// # define DEBUG
 
 SoundManager            *SoundManager::manager = NULL;
 

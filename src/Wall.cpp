@@ -13,12 +13,6 @@
 #include "../include/Wall.hpp"
 #include "../include/Texture.hpp"
 
-const std::map<Wall::State, std::string>  Wall::_types = {
-        {Invicible, "cubeIndestructible"},
-        {Destructible, "cubeDestructible"},
-        {Edge, "edge"},
-};
-
 Wall::Wall(irr::core::vector2df const &pos, State state,
 	   std::string const &mesh, std::string const &texture)
   : AGameObject(pos, mesh, texture, (state == Destructible) ? OTHER : BLOCK), _state(state)

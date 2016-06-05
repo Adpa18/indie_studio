@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon Mar 14 18:04:40 2016 Victor Gouet
-// Last update Sat Jun  4 15:24:58 2016 Victor Gouet
+// Last update Sun Jun  5 11:31:07 2016 Victor Gouet
 //
 
 #include "../include/LoadHighScore.hpp"
@@ -71,7 +71,7 @@ void					LoadHighScore::setHighScore(t_highScore *newScore)
     {
       if ((*it)->getName() == newScore->getName())
 	{
-	  (*it)->setScore((*it)->getScore() + newScore->getScore());
+	  (*it)->setScore(newScore->getScore());
 	  check = false;
 	}
       ++it;
