@@ -186,7 +186,7 @@ void UIEventReceiver::DisplayMapMenu()
     {
         m_spawned = true;
         BomberMap::deleteMap();
-        BomberMap::newMap(MEDIAPATH"smallMap/map1.xml");
+        BomberMap::newMap(BINDIR"media/smallMap/map1.xml");
         BomberMap::getMap()->genMap();
     }
 }
@@ -301,11 +301,11 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                     if (!GameManager::SharedInstance()->getGameOver()->getStatus())
                     {
                           if (BomberMap::getMap()->getSize() == SMALL_SIZE)
-                              BomberMap::newMap(MEDIAPATH"smallMap/map1.xml");
+                              BomberMap::newMap(BINDIR"media/smallMap/map1.xml");
                           else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
-                              BomberMap::newMap(MEDIAPATH"mediumMap/map1.xml");
+                              BomberMap::newMap(BINDIR"media/mediumMap/map1.xml");
                           else
-                              BomberMap::newMap(MEDIAPATH"largeMap/map1.xml");
+                              BomberMap::newMap(BINDIR"media/largeMap/map1.xml");
                         BomberMap::getMap()->genMap();
                         fptr = &UIEventReceiver::DisplayGameHUD;
                         GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
@@ -745,17 +745,17 @@ void UIEventReceiver::UpdateMap()
     BomberMap::deleteMap();
     if (GameManager::ToString(m_maps->GetSelected()) == "Map 1")
     {
-        BomberMap::newMap(MEDIAPATH"smallMap/map1.xml");
+        BomberMap::newMap(BINDIR"media/smallMap/map1.xml");
         BomberMap::getMap()->genMap();
     }
     else if (GameManager::ToString(m_maps->GetSelected()) == "Map 2")
     {
-        BomberMap::newMap(MEDIAPATH"mediumMap/map1.xml");
+        BomberMap::newMap(BINDIR"media/mediumMap/map1.xml");
         BomberMap::getMap()->genMap();
     }
     else if (GameManager::ToString(m_maps->GetSelected()) == "Map 3")
     {
-        BomberMap::newMap(MEDIAPATH"largeMap/map1.xml");
+        BomberMap::newMap(BINDIR"media/largeMap/map1.xml");
         BomberMap::getMap()->genMap();
     }
     else

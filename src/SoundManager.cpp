@@ -19,7 +19,7 @@ SoundManager            *SoundManager::getManager()
     return (manager);
 }
 
-SoundManager::SoundManager() : soundPath(MEDIAPATH"sound/")
+SoundManager::SoundManager() : soundPath(BINDIR"media/sound/")
 {
 #ifndef DEBUG
     FMOD::System_Create(&engine);

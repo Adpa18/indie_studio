@@ -113,7 +113,7 @@ ifeq ($(DEBUG),yes)
 endif
 
 ifneq ($(INSTALL),no)
-    CPPFLAGS  +=  -DMEDIAPATH='"$(INSTALL)"'
+    CPPFLAGS  +=  -DBINDIR='"$(INSTALL)"'
 endif
 
 %.o : %.cpp
@@ -123,6 +123,9 @@ endif
 $(NAME)	:	$(OBJ)
 	@$(CC) $(OBJ) $(LDFLAGS) -o $(DESTPATH)
 	@echo -e "\033[0;33m${NAME} Compiled\033[0;00m"
+
+install:
+	./install.sh
 
 all	:	$(NAME)
 
@@ -136,7 +139,7 @@ fclean	:	clean
 
 re		: fclean all
 
-.PHONY	: all clean fclean re
+.PHONY	: all clean fclean re install
 
 ifeq ($(OS),Windows_NT)
 SYSTEM=Win32-gcc

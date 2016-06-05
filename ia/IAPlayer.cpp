@@ -81,7 +81,8 @@ void IAPlayer::initIA(int width, int height)
     Lua::setGlobalValue((int)DangerMap::DANGEROUS, "DANGEROUS");
     Lua::setGlobalValue((int)DangerMap::BLOCKED, "BLOCKED");
     Lua::setGlobalValue((int)DangerMap::SAFE, "SAFE");
-    handler = new Lua::LuaHandler("./ia/iaBehaviour.lua");
+    Lua::setGlobalValue(BINDIR, "BINARY");
+    handler = new Lua::LuaHandler(BINDIR"ia/iaBehaviour.lua");
 }
 
 

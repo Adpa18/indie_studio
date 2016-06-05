@@ -17,7 +17,7 @@ done="`echo -ne "[$green" "OK" "$reset]"`"
 error="`echo -ne "[$red" "Error" "$reset]"`"
 
 echo -e "$pending" "Making bomberman"
-make fclean; make -j4 INSTALL=$mediadir
+make -j4 INSTALL=$bombermandir
 echo -e "$done" "Bomberman made"
 
 echo -e "$pending" "Creating Bomberman directories"
@@ -42,7 +42,8 @@ echo -e "$done" "Bomberman file copied"
 tochange=$(find $mediadir -name "*.xml")
 
 for f in $tochange; do
-    sed "s/\.\//$dir/g" $tochange > $tochange
+    echo "Setting path of " $f
+    sed -i "s/\.\//$dir/g" $f
 done
 
 if [ -f $confrc ]; then

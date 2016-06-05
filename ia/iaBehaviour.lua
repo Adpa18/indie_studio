@@ -27,12 +27,12 @@ end
 --  -   canMoveOnPos
 --  -   getPossiblePos
  ]]
-dofile("./ia/positionDirection.lua");
+dofile(BINARY.."ia/positionDirection.lua");
 
 --[[
 --Define:
  ]]
-dofile("./ia/astar.lua");
+dofile(BINARY.."ia/astar.lua");
 
 --[[
 --Used for positions that are already saw
