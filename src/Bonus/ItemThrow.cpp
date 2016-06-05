@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 17:42:59 2016 Victor Gouet
-// Last update Mon May 23 19:09:34 2016 Victor Gouet
+// Last update Sun Jun  5 16:51:50 2016 Matthieu Tavernier
 //
 
-#include "../include/ItemThrow.hpp"
-#include "../include/Texture.hpp"
-#include "../include/BomberMap.hpp"
+#include "ItemThrow.hpp"
+#include "Texture.hpp"
+#include "BomberMap.hpp"
 
 ItemThrow::ItemThrow(irr::core::vector2df const &pos)
   : AItem(pos, BomberManTexture::getModel("itemThrow").mesh,

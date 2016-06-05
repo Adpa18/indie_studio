@@ -2,8 +2,8 @@
 // Created by gaspar_q on 6/2/16.
 //
 
-#include <AGameObject.hpp>
-#include <BomberMap.hpp>
+#include "AGameObject.hpp"
+#include "BomberMap.hpp"
 #include "LuaBomberMap.hpp"
 
 template <>

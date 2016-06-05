@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Fri Apr 29 13:38:52 2016 Victor Gouet
-// Last update Sun Jun  5 12:17:21 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:45:31 2016 Matthieu Tavernier
 //
 
-#include "../include/FireBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Explosion.hpp"
+#include "FireBomb.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
 
 FireBomb::FireBomb(int id)
   : ABomb(BomberManTexture::getModel("fireBomb").mesh,

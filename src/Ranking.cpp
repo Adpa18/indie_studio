@@ -3,7 +3,7 @@
 //
 
 #include <algorithm>
-#include <GameManager.hpp>
+#include "GameManager.hpp"
 #include "Ranking.hpp"
 
 const int	Ranking::winScore[4] = {8, 4, 2, 1};

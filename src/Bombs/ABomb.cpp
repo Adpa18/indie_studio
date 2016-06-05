@@ -5,16 +5,16 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Sun Jun  5 12:16:22 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:44:12 2016 Matthieu Tavernier
 //
 
 #include <iostream>
 #include <unistd.h>
 #include <GameManager.hpp>
-#include "../../include/ABomb.hpp"
-#include "../../include/BombFactory.hpp"
-#include "../../include/BomberMap.hpp"
-#include "../../include/GameObjectTimeContainer.hpp"
+#include "ABomb.hpp"
+#include "BombFactory.hpp"
+#include "BomberMap.hpp"
+#include "GameObjectTimeContainer.hpp"
 #include "SoundManager.hpp"
 
 ABomb::ABomb(std::string const &mesh, std::string const &texture, double timeout, int id) :

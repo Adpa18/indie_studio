@@ -9,7 +9,7 @@
 */
 
 #include <iostream>
-#include "../include/KeysController.hpp"
+#include "KeysController.hpp"
 
 KeysController::KeysController(std::map<ACharacter::ACTION, irr::EKEY_CODE> const &keycodes) : _keycodes(keycodes)
 {

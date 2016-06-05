@@ -5,13 +5,13 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Sat May 21 12:19:25 2016 Victor Gouet
-// Last update Fri Jun  3 18:35:47 2016 Victor Gouet
+// Last update Sun Jun  5 16:47:48 2016 Matthieu Tavernier
 //
 
-#include "../include/BonusAtomicBomb.hpp"
-#include "../include/BombFactory.hpp"
-#include "../include/Texture.hpp"
-#include "../include/AtomicBomb.hpp"
+#include "BonusAtomicBomb.hpp"
+#include "BombFactory.hpp"
+#include "Texture.hpp"
+#include "AtomicBomb.hpp"
 #include "SoundManager.hpp"
 
 BonusAtomicBomb::BonusAtomicBomb(irr::core::vector2df const &pos)

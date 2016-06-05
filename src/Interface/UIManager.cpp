@@ -2,7 +2,7 @@
 // Created by veyrie_f on 4/27/16.
 //
 
-#include "../../include/UIManager.hpp"
+#include "UIManager.hpp"
 
 UIManager::UIManager(irr::IrrlichtDevice *device) :
         m_device(device)

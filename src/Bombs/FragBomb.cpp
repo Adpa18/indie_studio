@@ -5,15 +5,15 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Fri May 20 16:22:17 2016 Victor Gouet
-// Last update Sun Jun  5 12:17:35 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:45:44 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include "../include/FragBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Explosion.hpp"
-#include "../include/MiniBomb.hpp"
+#include "FragBomb.hpp"
+#include "BomberMap.hpp"
+#include "Texture.hpp"
+#include "Explosion.hpp"
+#include "MiniBomb.hpp"
 
 FragBomb::FragBomb(int id)
   : ABomb(BomberManTexture::getModel("fragBomb").mesh,

@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Jun  1 14:15:48 2016 Victor Gouet
-// Last update Sun Jun  5 12:43:55 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:04:37 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include "../include/WallOfDead.hpp"
-#include "../include/WallOfEnd.hpp"
-#include "../include/Texture.hpp"
-#include "../include/BomberMap.hpp"
+#include "WallOfDead.hpp"
+#include "WallOfEnd.hpp"
+#include "Texture.hpp"
+#include "BomberMap.hpp"
 
 const double	WallOfDead::timerSpawn = 1;
 

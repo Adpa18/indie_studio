@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sun Jun  5 12:41:04 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:02:53 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include "../include/ACharacter.hpp"
-#include "../include/Player.hpp"
+#include "ACharacter.hpp"
+#include "Player.hpp"
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
                std::string const &mesh, std::string const &texture, int player,

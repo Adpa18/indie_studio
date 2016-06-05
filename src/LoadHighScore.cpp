@@ -5,10 +5,10 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon Mar 14 18:04:40 2016 Victor Gouet
-// Last update Sun Jun  5 11:49:49 2016 Victor Gouet
+// Last update Sun Jun  5 17:02:02 2016 Matthieu Tavernier
 //
 
-#include "../include/LoadHighScore.hpp"
+#include "LoadHighScore.hpp"
 
 LoadHighScore::LoadHighScore(std::string const &fileName) : fileName(fileName)
 {

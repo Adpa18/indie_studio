@@ -5,14 +5,14 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Sun Jun  5 12:32:43 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:53:22 2016 Matthieu Tavernier
 //
 
 #include <iostream>
-#include <MineBomb.hpp>
-#include <Explosion.hpp>
-#include <TrackerBomb.hpp>
-#include "../include/GameObjectTimeContainer.hpp"
+#include "MineBomb.hpp"
+#include "Explosion.hpp"
+#include "TrackerBomb.hpp"
+#include "GameObjectTimeContainer.hpp"
 
 GameObjectTimeContainer *GameObjectTimeContainer::instance = NULL;
 

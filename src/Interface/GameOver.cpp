@@ -9,11 +9,11 @@
 #include <stack>
 #include <list>
 #include <iostream>
-#include "../../include/BomberMap.hpp"
-#include "../../include/ACharacter.hpp"
-#include "../../include/GameManager.hpp"
-#include "../../include/GameOver.hpp"
-#include "../../include/SoundManager.hpp"
+#include "BomberMap.hpp"
+#include "ACharacter.hpp"
+#include "GameManager.hpp"
+#include "GameOver.hpp"
+#include "SoundManager.hpp"
 
 GameOver::GameOver(Ranking *ranking) :
         m_ranking(ranking),

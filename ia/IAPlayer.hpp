@@ -5,8 +5,8 @@
 #ifndef CPP_INDIE_STUDIO_IAPLAYER_HPP
 #define CPP_INDIE_STUDIO_IAPLAYER_HPP
 
-#include <ACharacter.hpp>
-#include <PlayerInfo.hpp>
+#include "ACharacter.hpp"
+#include "PlayerInfo.hpp"
 #include "LuaHandler.hpp"
 
 class IAPlayer : public ACharacter

@@ -5,10 +5,10 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat Jun  4 14:14:04 2016 Victor Gouet
-// Last update Sat Jun  4 14:28:34 2016 Victor Gouet
+// Last update Sun Jun  5 16:53:48 2016 Matthieu Tavernier
 //
 
-#include "../include/HighScore.hpp"
+#include "HighScore.hpp"
 
 s_header::s_header(int headerSize, int fileSize, int nbrHighScore)
   : magicNbr(MAGICNBR), headerSize(headerSize), fileSize(fileSize), nbrHighScore(nbrHighScore)

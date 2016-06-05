@@ -6,9 +6,9 @@
 #define CPP_INDIE_STUDIO_LUAHANDLER_HPP
 
 # include <string>
-#include <stdexcept>
-#include <iostream>
-#include "LuaClass.hpp"
+# include <stdexcept>
+# include <iostream>
+# include "LuaClass.hpp"
 
 extern "C"
 {

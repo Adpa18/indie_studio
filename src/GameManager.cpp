@@ -5,17 +5,17 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun Jun  5 13:02:12 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:52:51 2016 Matthieu Tavernier
 //
 
 #include <sstream>
 #include "Intro.hpp"
-#include "../include/Intro.hpp"
-#include "../include/SoundManager.hpp"
-#include "../include/GameManager.hpp"
-#include "../include/Texture.hpp"
-#include "../include/GameObjectTimeContainer.hpp"
-#include "../ia/IAPlayer.hpp"
+#include "Intro.hpp"
+#include "SoundManager.hpp"
+#include "GameManager.hpp"
+#include "Texture.hpp"
+#include "GameObjectTimeContainer.hpp"
+#include "IAPlayer.hpp"
 
 const int	GameManager::endOfGame = 60;
 

@@ -5,12 +5,12 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May 23 21:46:02 2016 Victor Gouet
-// Last update Sun Jun  5 11:00:27 2016 Victor Gouet
+// Last update Sun Jun  5 16:38:59 2016 Matthieu Tavernier
 //
 
-#include "../include/GameManager.hpp"
-#include "../include/AGameObjectFactory.hpp"
-#include "../include/Explosion.hpp"
+#include "GameManager.hpp"
+#include "AGameObjectFactory.hpp"
+#include "Explosion.hpp"
 
 
 AGameObjectFactory::AGameObjectFactory()

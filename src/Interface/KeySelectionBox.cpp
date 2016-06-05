@@ -3,9 +3,9 @@
 //
 
 #include <algorithm>
-#include "../../include/KeySelectionBox.hpp"
-#include "../../include/EventGame.hpp"
-#include "../../include/GameManager.hpp"
+#include "KeySelectionBox.hpp"
+#include "EventGame.hpp"
+#include "GameManager.hpp"
 
 KeySelectionBox::KeySelectionBox(UIManager *uiManager, irr::core::rect<irr::s32> pos, UIElement::Menu elemID,
                                  int playerID) :

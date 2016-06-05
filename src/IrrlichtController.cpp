@@ -5,11 +5,11 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:22 2016 Victor Gouet
-// Last update Sun Jun  5 12:39:00 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:01:01 2016 Matthieu Tavernier
 //
 
 #include <stdexcept>
-#include "../include/IrrlichtController.hpp"
+#include "IrrlichtController.hpp"
 
 // redeclare static member for cpp linkage
 irr::IrrlichtDevice     *IrrlichtController::device = NULL;

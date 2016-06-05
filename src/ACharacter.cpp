@@ -5,20 +5,20 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Wed Apr 27 09:43:11 2016 Victor Gouet
-// Last update Sun Jun  5 12:10:52 2016 Matthieu Tavernier
+// Last update Sun Jun  5 16:38:06 2016 Matthieu Tavernier
 //
 
 #include <unistd.h>
 #include <iostream>
-#include "../include/GameManager.hpp"
-#include "../include/SoundManager.hpp"
-#include "../include/ACharacter.hpp"
-#include "../include/BombFactory.hpp"
-#include "../include/ABonus.hpp"
-#include "../include/AtomicBomb.hpp"
-#include "../include/BomberMap.hpp"
-#include "../include/TrackerBomb.hpp"
-#include "../include/FragBomb.hpp"
+#include "GameManager.hpp"
+#include "SoundManager.hpp"
+#include "ACharacter.hpp"
+#include "BombFactory.hpp"
+#include "ABonus.hpp"
+#include "AtomicBomb.hpp"
+#include "BomberMap.hpp"
+#include "TrackerBomb.hpp"
+#include "FragBomb.hpp"
 
 const std::vector<std::string> ACharacter::textAction {"Move Left", "Move Right", "Move Up", "Move Down", "Drop Bomb", "Perform Action"};
 
