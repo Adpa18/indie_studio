@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:31:11 2016 Victor Gouet
-// Last update Sun Jun  5 16:51:24 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:53 2016 Victor Gouet
 //
 
 #include "BonusTrackerBomb.hpp"
@@ -25,11 +25,8 @@ BonusTrackerBomb::~BonusTrackerBomb()
   dead();
 }
 
-#include <iostream>
-
 void	        BonusTrackerBomb::take(ACharacter &player)
 {
-  std::cout << "Bonus TRACKER BOMB ADD" << std::endl;
   BombFactory::AddBomb<TrackerBomb>(*(player.getBombContainer()), player->getID());
   SoundManager::getManager()->play("BonusTrackerBomb.wav", (*this)->getID(), false, 0.8);
 }

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu May 12 14:33:06 2016 Victor Gouet
-// Last update Sun Jun  5 16:50:54 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:48 2016 Victor Gouet
 //
 
 #include "BonusSmallestMan.hpp"
@@ -24,12 +24,8 @@ BonusSmallestMan::~BonusSmallestMan()
   dead();
 }
 
-#include <iostream>
-
 void	        BonusSmallestMan::take(ACharacter &player)
 {
-  std::cout << "Bonus BonusSmallestMan ADD" << std::endl;
-
   player.setMoveSpeed(ACharacter::BASICSPEED * 1.5);
   player.setBasicLife();
   player->setScale(irr::core::vector3df(0.5, 0.5, 0.5));

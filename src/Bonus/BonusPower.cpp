@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 15:05:25 2016 Victor Gouet
-// Last update Sun Jun  5 16:50:30 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:35:08 2016 Victor Gouet
 //
 
 #include "BonusPower.hpp"
@@ -24,11 +24,8 @@ BonusPower::~BonusPower()
   dead();
 }
 
-#include <iostream>
-
 void		BonusPower::take(ACharacter &player)
 {
-  std::cout << "Bonus POWER UP" << std::endl;
   player.increasePowerBomb();
   SoundManager::getManager()->play("BonusPower.wav", (*this)->getID(), false, 0.8);
 }

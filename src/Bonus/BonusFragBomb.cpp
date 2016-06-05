@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Sat May 21 12:04:39 2016 Victor Gouet
-// Last update Sun Jun  5 16:49:11 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:15 2016 Victor Gouet
 //
 
 #include "BonusFragBomb.hpp"
@@ -26,11 +26,8 @@ BonusFragBomb::~BonusFragBomb()
   dead();
 }
 
-#include <iostream>
-
 void	        BonusFragBomb::take(ACharacter &player)
 {
-  std::cout << "Bonus FRAG BOMB ADD" << std::endl;
   BombFactory::AddBomb<FragBomb>(*(player.getBombContainer()), player->getID());
   SoundManager::getManager()->play("BonusFragBomb.wav", (*this)->getID(), false, 0.8);
 }

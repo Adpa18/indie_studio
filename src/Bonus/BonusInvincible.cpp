@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:24:43 2016 Victor Gouet
-// Last update Sun Jun  5 16:50:17 2016 Matthieu Tavernier
+// Last update Sun Jun  5 17:34:43 2016 Victor Gouet
 //
 
 #include "BonusInvincible.hpp"
@@ -24,11 +24,8 @@ BonusInvincible::~BonusInvincible()
   dead();
 }
 
-#include <iostream>
-
 void	        BonusInvincible::take(ACharacter &player)
 {
-  std::cout << "Bonus BonusInvincible ADD" << std::endl;
   player.invincibleEnabledDuringPeriod(5000000);
   SoundManager::getManager()->stop(player.getID());
   SoundManager::getManager()->play("BonusInvincible.wav", player.getID(), false, 0.8);
