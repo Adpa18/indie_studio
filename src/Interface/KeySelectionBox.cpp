@@ -68,11 +68,16 @@ void KeySelectionBox::Update()
 void KeySelectionBox::SetActive(bool bActive) const
 {
     m_listBox->setVisible(bActive);
+    m_background->setVisible(bActive);
 }
 
 void KeySelectionBox::CreateListBox(irr::core::rect<irr::s32> pos, UIElement::Menu elemID)
 {
+    m_background = m_manager->GetEnv()->addImage(pos);
+    m_background->setImage(IrrlichtController::getDriver()->getTexture(BomberManTexture::getModel("KeyBindBg").texture.c_str()));
+    m_background->setScaleImage(true);
     m_listBox = m_manager->GetEnv()->addListBox(pos, nullptr, elemID, true);
+    m_listBox->setDrawBackground(false);
     UpdateElements();
 }
 

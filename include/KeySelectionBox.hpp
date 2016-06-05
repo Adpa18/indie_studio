@@ -40,6 +40,7 @@ private:
     UIManager *m_manager;
     int m_playerID;
     irr::gui::IGUIListBox *m_listBox;
+    irr::gui::IGUIImage *m_background;
     AController *m_controller;
     std::vector<KeysController::KeyInfo> m_keys;
     std::vector<MotionController::KeyInfo> m_motions;
