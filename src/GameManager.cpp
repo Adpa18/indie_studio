@@ -374,8 +374,7 @@ void    GameManager::willStartGame()
                                               (*it)->GetMesh(),
                                               (*it)->GetTexture(),
                                               i + 1,
-                                              IAPlayer::getDifficultyFromCode((*it)->GetIAStrength()
-                                              )
+                                              IAPlayer::getDifficultyFromCode((*it)->GetIAStrength())
             ));
         }
         else
@@ -384,7 +383,8 @@ void    GameManager::willStartGame()
                                             (*it)->GetPos() == NULL ? spawn[i] : *((*it)->GetPos()),
                                             (*it)->GetMesh(),
                                             (*it)->GetTexture(),
-                                            i+1, *eventGame));
+                                            i+1, *eventGame,
+                                            (*it)->GetController()));
         }
         ++i;
     }

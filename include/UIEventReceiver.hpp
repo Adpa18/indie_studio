@@ -38,6 +38,8 @@ public:
     void DisplayPauseMenu();
     void UpdateMapMenu(bool isSelection = false);
     void SetSpawned(bool spawned);
+    std::map<int, MotionController *> const&GetJoysticks() const;
+    std::vector<KeysController *> const& GetKeyboards() const;
 
 private:
     void DisplayMainMenu();

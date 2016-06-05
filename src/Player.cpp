@@ -15,17 +15,24 @@
 
 Player::Player(std::string const &name, irr::core::vector2df const &pos,
                std::string const &mesh, std::string const &texture, int player,
-               EventGame const &eventGame)
+               EventGame const &eventGame, AController const *controller)
         : ACharacter(name, pos, mesh, texture, player), _eventGame(eventGame)
 {
     (*this)->setName(name.c_str());
-    this->_joystick = NULL;
+
+    /*this->_joystick = NULL;
     this->keyController = NULL;
     if ((this->_joystick = _eventGame.GetAvaibleJoystick()) == NULL) {
         this->keyController = _eventGame.GetAvaibleKeycodes();
         if (keyController) {
             this->_keycodes = this->keyController->getKeycodes();
         }
+    }*/
+    _joystick = dynamic_cast<MotionController*>(const_cast<AController*>(controller));
+    keyController = dynamic_cast<KeysController*>(const_cast<AController*>(controller));
+    if (keyController != nullptr)
+    {
+        _keycodes = keyController->getKeycodes();
     }
 }
 

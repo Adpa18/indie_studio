@@ -26,7 +26,7 @@ private:
 public:
   Player(std::string const &name, irr::core::vector2df const &pos,
 	 std::string const &mesh, std::string const &texture, int player,
-	 EventGame const &eventGame = EventGame());
+	 EventGame const &eventGame = EventGame(), AController const *controller = nullptr);
   virtual ~Player();
 
 public:

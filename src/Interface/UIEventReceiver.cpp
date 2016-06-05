@@ -766,3 +766,13 @@ void UIEventReceiver::UpdateMap()
         BomberMap::createMapFromSave("./tmpSaveMap/" + GameManager::ToString(m_maps->GetSelected()));
     }
 }
+
+std::map<int, MotionController *> const &UIEventReceiver::GetJoysticks() const
+{
+    return m_joysticks;
+}
+
+std::vector<KeysController *> const &UIEventReceiver::GetKeyboards() const
+{
+    return m_keymaps;
+}
