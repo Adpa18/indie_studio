@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Tue May 10 18:55:37 2016 Victor Gouet
-// Last update Wed Jun  1 14:59:12 2016 Victor Gouet
+// Last update Sun Jun  5 12:32:43 2016 Matthieu Tavernier
 //
 
 #include <iostream>
@@ -84,7 +84,6 @@ void				GameObjectTimeContainer::callTimeOutObjects()
         if (*it && (*it)->isTimeOut())
         {
             (*it)->dead();
-            // TODO segfault : On s'est pas pk
             if ((*it)->isDestructible())
             {
                 delete (*it);
@@ -93,7 +92,6 @@ void				GameObjectTimeContainer::callTimeOutObjects()
             else
             {
                 it = container.erase(it);
-            //            it = container.begin();
             }
         }
         else

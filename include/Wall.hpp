@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Wed Apr 27 18:18:28 2016 Victor Gouet
-// Last update Wed Jun  1 14:54:30 2016 Matthieu Tavernier
+// Last update Sun Jun  5 13:00:21 2016 Matthieu Tavernier
 //
 
 #ifndef WALL_HPP_
@@ -41,8 +41,6 @@ public:
 
 private:
   static const std::map<Wall::State, std::string> _types;
-  // static const std::map<int, std::string> _wallSmallMap;
-  
 
 public:
   Wall(irr::core::vector2df const &pos, State state = Destructible);

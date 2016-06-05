@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 17:27:09 2016 Victor Gouet
-// Last update Fri Jun  3 18:37:23 2016 Victor Gouet
+// Last update Sun Jun  5 12:28:16 2016 Matthieu Tavernier
 //
 
 #include "../include/AItem.hpp"
@@ -18,7 +18,6 @@ AItem::AItem(irr::core::vector2df const &pos, std::string const &mesh,
 {
     (*this)->setPosition((*this)->getPosition() + irr::core::vector3df(0, BomberMap::scale / 2, 0));
     (*this)->setRotation(irr::core::vector3df(40, 0, 0));
-    //(*this)->setScale(irr::core::vector3df(f, 0.5f, 0.5f));
     irr::scene::ISceneNodeAnimator *anim =IrrlichtController::getSceneManager()->createRotationAnimator(irr::core::vector3df(0,1,0));
     (*this)->addAnimator(anim);
     anim->drop();
@@ -50,10 +49,6 @@ void		AItem::serialize(irr::io::IXMLWriter *xmlr) const
 
     std::wstring		texture = L"";
     texture.assign(textureStr.begin(), textureStr.end());
-
-    // std::wstring		playerName = L"";
-    // playerName.assign(getName().begin(), getName().end());
-
     std::wstring		nameTypeWstr = L"";
     nameTypeWstr.assign(nameType.begin(), nameType.end());
 

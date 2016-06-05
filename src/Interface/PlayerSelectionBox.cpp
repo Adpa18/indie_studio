@@ -58,7 +58,6 @@ PlayerSelectionBox::PlayerSelectionBox(UIManager *uiManager, PlayerSelectionBoxC
         m_keySelection = new KeySelectionBox(m_manager, pos, id, playerID);
     }
     m_keySelection->SetActive(false);
-
     // Updates the selected character
     SelectNext();
     Update();
@@ -173,7 +172,6 @@ void PlayerSelectionBox::Update()
     }
     else
     {
-        //m_image->setImage(m_images.front());
         m_image->setImage(m_driver->getTexture(BomberManTexture::getModel(m_images.front()).texture.c_str()));
     }
 }

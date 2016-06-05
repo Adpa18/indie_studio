@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Thu Apr 28 16:25:11 2016 Victor Gouet
-// Last update Fri Jun  3 18:43:16 2016 Victor Gouet
+// Last update Sun Jun  5 12:16:22 2016 Matthieu Tavernier
 //
 
 #include <iostream>
@@ -42,7 +42,6 @@ ABomb::ABomb(ABomb const *other)
 
 ABomb	&ABomb::operator=(ABomb const *other)
 {
-    // timeout = other->timeout;
     characterId = other->characterId;
     _arrived = true;
     then = IrrlichtController::getDevice()->getTimer()->getTime();
@@ -115,22 +114,14 @@ void			ABomb::updateTimeOut()
 
 void                        ABomb::dead()
 {
-//    std::cout << "CHECK P2150" << std::endl;
     if (use)
     {
-//        std::cout << "CHECK P2151" << std::endl;
         SoundManager::getManager()->play("explosion.wav", (*this)->getID());
-//        std::cout << "CHECK P2152" << std::endl;
         _arrived = true;
-//        std::cout << "CHECK P2153" << std::endl;
         use = false;
-//        std::cout << "CHECK P2154" << std::endl;
         willExplose();
-//        std::cout << "CHECK P2155" << std::endl;
         disable();
-//        std::cout << "CHECK P2156" << std::endl;
     }
-//    std::cout << "CHECK P2157" << std::endl;
 }
 
 bool			ABomb::isDestructible() const

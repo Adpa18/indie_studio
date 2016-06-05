@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Thu May 12 18:24:43 2016 Victor Gouet
-// Last update Fri Jun  3 18:36:35 2016 Victor Gouet
+// Last update Sun Jun  5 12:29:24 2016 Matthieu Tavernier
 //
 
 #include "../../include/BonusInvincible.hpp"
@@ -30,12 +30,7 @@ void	        BonusInvincible::take(ACharacter &player)
 {
   std::cout << "Bonus BonusInvincible ADD" << std::endl;
   player.invincibleEnabledDuringPeriod(5000000);
-  // player.setBombPass(true);
-  // player.setLifeUp();
-  // player.setMoveSpeed(ACharacter::BASICSPEED / 2);
-  // player->setScale(irr::core::vector3df(2.5, 2.5, 2.5));
-  // BombFactory::AddBomb<FireBomb>(*(player.getBombContainer()));
-   SoundManager::getManager()->stop(player.getID());
+  SoundManager::getManager()->stop(player.getID());
   SoundManager::getManager()->play("BonusInvincible.wav", player.getID(), false, 0.8);
 }
 

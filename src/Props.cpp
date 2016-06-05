@@ -17,7 +17,7 @@ Props::Props(const std::string &mesh,
    if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
      (*this)->setScale((*this)->getScale() * 1.3);
    else if (BomberMap::getMap()->getSize() == LARGE_SIZE)
-     (*this)->setScale((*this)->getScale() * 1.5);
+     (*this)->setScale((*this)->getScale() * 1.6);
 }
 
 void Props::dead() {

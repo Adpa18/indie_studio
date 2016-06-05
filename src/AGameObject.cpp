@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:00:41 2016 Victor Gouet
-// Last update Thu Jun  2 11:34:37 2016 Victor Gouet
+// Last update Sun Jun  5 12:11:29 2016 Matthieu Tavernier
 //
 
 #include <iostream>
@@ -68,11 +68,6 @@ AGameObject::~AGameObject()
   BomberMap::getMap()->remove(this);
   GameObjectTimeContainer::SharedInstance()->remove(this);
   (*this)->remove();
-
-  // this->dead();
-  //  (*this)->remove();
-  // this->_node->removeAll();
-  // this->_node->remove();
 }
 
 

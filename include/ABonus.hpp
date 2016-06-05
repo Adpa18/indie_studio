@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 13:18:58 2016 Victor Gouet
-// Last update Fri Jun  3 18:34:38 2016 Victor Gouet
+// Last update Sun Jun  5 12:44:32 2016 Matthieu Tavernier
 //
 
 #ifndef ABONUS_HPP_
@@ -24,7 +24,6 @@ public:
 public:
   virtual void		take(ACharacter &) = 0;
   virtual bool	        isDestructible() const;
-  // virtual void	serialize() const;
   virtual void		serialize(irr::io::IXMLWriter *) const;
 
 private:

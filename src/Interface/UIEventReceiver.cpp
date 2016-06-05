@@ -123,8 +123,6 @@ void UIEventReceiver::DisplayMainMenu()
     irr::gui::IGUIImage *img = m_manager.GetEnv()->addImage(
             irr::core::rect<irr::s32>(0, 0, IrrlichtController::width, IrrlichtController::height),
             nullptr, UIElement::SPLASH_BACKGROUND,  L"", true);
-
-    //todo clear player info
     GameManager::SharedInstance()->ClearPlayers();
     img->setImage(IrrlichtController::getDevice()->getVideoDriver()->getTexture(
             BomberManTexture::getModel("playerSelection").texture.c_str()));

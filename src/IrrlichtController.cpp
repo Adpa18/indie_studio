@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Tue Apr 26 21:04:22 2016 Victor Gouet
-// Last update Tue May 31 11:45:58 2016 Victor Gouet
+// Last update Sun Jun  5 12:39:00 2016 Matthieu Tavernier
 //
 
 #include <stdexcept>
@@ -20,11 +20,6 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
 {
       if (!device)
       {
-          /*Display* disp = XOpenDisplay(NULL);s
-          Screen*  scrn = DefaultScreenOfDisplay(disp);
-          height = scrn->height;
-          width  = scrn->width;*/
-
           if (fullScreen)
           {
               device = irr::createDevice(irr::video::EDT_OPENGL,
@@ -33,8 +28,6 @@ irr::IrrlichtDevice *IrrlichtController::getDevice(bool fullScreen)
           }
           else
           {
-              /*height = 640;
-              width = 640;*/
               device = irr::createDevice(irr::video::EDT_OPENGL,
                                          irr::core::dimension2d<irr::u32>(width, height), 32,
                                          false, false, false, 0);
