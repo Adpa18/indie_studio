@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun Jun  5 16:52:51 2016 Matthieu Tavernier
+// Last update Sun Jun  5 21:10:24 2016 Victor Gouet
 //
 
 #include <sstream>
@@ -466,7 +466,7 @@ void GameManager::destroyGameOver()
     playerRanking.destroyGameOver();
 }
 
-irr::scene::ICameraSceneNode *GameManager::getCam(GameCamera cam) {
+irr::scene::ICameraSceneNode *GameManager::getCam(GameCamera cam) const {
     return m_cameras[cam];
 }
 

@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 // 
 // Started on  Mon May  9 10:38:09 2016 Victor Gouet
-// Last update Sun Jun  5 12:55:26 2016 Matthieu Tavernier
+// Last update Sun Jun  5 21:10:29 2016 Victor Gouet
 //
 
 #ifndef GAMEMANAGER_HPP_
@@ -74,7 +74,7 @@ public:
   void		destroyGameOver();
   static std::string ToString(std::wstring const& str);
   static std::wstring ToWstring(std::string const& str);
-  irr::scene::ICameraSceneNode *getCam(GameCamera cam);
+  irr::scene::ICameraSceneNode *getCam(GameCamera cam) const;
   void                          activeCam(GameCamera cam);
 
 private:
