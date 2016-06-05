@@ -302,7 +302,7 @@ void KeysController::BindAction(ACharacter::ACTION action, irr::EKEY_CODE key)
     _keycodes[action] = key;
 }
 
-const std::vector<KeysController::KeyInfo> &KeysController::ToString() const
+const std::vector<KeyInfo<irr::EKEY_CODE >> &KeysController::ToString() const
 {
     std::map<ACharacter::ACTION, irr::EKEY_CODE>::const_iterator it;
     std::string toAdd;
@@ -318,7 +318,7 @@ const std::vector<KeysController::KeyInfo> &KeysController::ToString() const
         }
         toAdd += m_keysToString[(*it).second];
         std::cout << toAdd.c_str() << std::endl;
-        m_toString.push_back(KeyInfo((*it).first, (*it).second, toAdd));
+        m_toString.push_back(KeyInfo<irr::EKEY_CODE >((*it).first, (*it).second, toAdd));
     }
     return m_toString;
 }

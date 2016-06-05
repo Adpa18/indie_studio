@@ -108,7 +108,7 @@ void KeySelectionBox::UpdateElements()
     if (k != nullptr)
     {
         m_keys = k->ToString();
-        for (std::vector<KeysController::KeyInfo>::iterator it = m_keys.begin(); it != m_keys.end(); ++it)
+        for (std::vector<KeyInfo<irr::EKEY_CODE> >::iterator it = m_keys.begin(); it != m_keys.end(); ++it)
         {
             if (isFirst)
             {
