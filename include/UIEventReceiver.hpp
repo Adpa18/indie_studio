@@ -50,6 +50,7 @@ private:
     void DisplayGameHUD();
     void UpdateMap();
     void StartGame();
+    void SkipEndScreen();
 
     /*
      * \brief Event handlers

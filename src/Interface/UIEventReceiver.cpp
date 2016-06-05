@@ -299,26 +299,7 @@ UIEventReceiver::EVENT_STATE UIEventReceiver::OnKeyInput(const irr::SEvent &even
                         GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN &&
                          event_copy.KeyInput.PressedDown)
                 {
-                    if (!GameManager::SharedInstance()->getGameOver()->getStatus())
-                    {
-                          if (BomberMap::getMap()->getSize() == SMALL_SIZE)
-                              BomberMap::newMap(BINDIR"media/smallMap/map1.xml");
-                          else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
-                              BomberMap::newMap(BINDIR"media/mediumMap/map1.xml");
-                          else
-                              BomberMap::newMap(BINDIR"media/largeMap/map1.xml");
-                        BomberMap::getMap()->genMap();
-                        fptr = &UIEventReceiver::DisplayGameHUD;
-                        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
-                        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
-                    }
-                    else
-                    {
-                        GameManager::SharedInstance()->destroyGameOver();
-                        GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
-                        fptr = &UIEventReceiver::DisplayMainMenu;
-                        return HANDELD;
-                    }
+                    SkipEndScreen();
                     return HANDELD;
                 }
                 else if (GameManager::SharedInstance()->getGameState() == GameManager::MENU_MAP
@@ -617,6 +598,11 @@ void UIEventReceiver::HandleJoysticks(irr::SEvent const& event_copy)
             {
                 StartGame();
             }
+            else if (playerID == 1 && GameManager::SharedInstance()->getGameState() == GameManager::RANKING_SCREEN
+                    && GameManager::SharedInstance()->getGameOver())
+            {
+                SkipEndScreen();
+            }
         }
 
         // Joins the party
@@ -783,4 +769,27 @@ std::map<int, MotionController *> const &UIEventReceiver::GetJoysticks() const
 std::vector<KeysController *> const &UIEventReceiver::GetKeyboards() const
 {
     return m_keymaps;
+}
+
+void UIEventReceiver::SkipEndScreen()
+{
+    if (!GameManager::SharedInstance()->getGameOver()->getStatus())
+    {
+        if (BomberMap::getMap()->getSize() == SMALL_SIZE)
+            BomberMap::newMap(BINDIR"media/smallMap/map1.xml");
+        else if (BomberMap::getMap()->getSize() == MEDIUM_SIZE)
+            BomberMap::newMap(BINDIR"media/mediumMap/map1.xml");
+        else
+            BomberMap::newMap(BINDIR"media/largeMap/map1.xml");
+        BomberMap::getMap()->genMap();
+        fptr = &UIEventReceiver::DisplayGameHUD;
+        GameManager::SharedInstance()->setFptr(&GameManager::willStartGame);
+        GameManager::SharedInstance()->setGameState(GameManager::PLAY);
+    }
+    else
+    {
+        GameManager::SharedInstance()->destroyGameOver();
+        GameManager::SharedInstance()->setGameState(GameManager::MAIN_MENU);
+        fptr = &UIEventReceiver::DisplayMainMenu;
+    }
 }
