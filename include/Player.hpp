@@ -20,13 +20,13 @@ class	Player	: public ACharacter
 private:
   EventGame	const &					_eventGame;
   std::map<ACharacter::ACTION, irr::EKEY_CODE>  _keycodes;
-  const MotionController            *_joystick;
-  const KeysController			*keyController;
+  MotionController            	*_joystick;
+  KeysController				*keyController;
 
 public:
   Player(std::string const &name, irr::core::vector2df const &pos,
 	 std::string const &mesh, std::string const &texture, int player,
-	 EventGame const &eventGame = EventGame(), AController const *controller = nullptr);
+	 EventGame &eventGame, AController const *controller = nullptr);
   virtual ~Player();
 
 public:

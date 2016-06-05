@@ -30,14 +30,13 @@ private:
     std::vector<KeysController *>       _keymaps;
 
 public:
-  EventGame ();
-  virtual ~EventGame ();
-  virtual bool  OnEvent(const irr::SEvent& event);
-  virtual bool  IsKeyDown(irr::EKEY_CODE keyCode) const;
-  bool		IsKeyDownOneTime(irr::EKEY_CODE keyCode) const;
-  const MotionController  *GetAvaibleJoystick() const;
-  const KeysController    *GetAvaibleKeycodes() const;
-  void reset();
+    EventGame ();
+    virtual ~EventGame ();
+    virtual bool    OnEvent(const irr::SEvent& event);
+    virtual bool    IsKeyDown(irr::EKEY_CODE keyCode) const;
+    bool		    IsKeyDownOneTime(irr::EKEY_CODE keyCode) const;
+    void            pushController(MotionController *controller);
+    void            reset();
 };
 
 #endif /* !EVENT_HPP */
