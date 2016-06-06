@@ -48,8 +48,12 @@ done
 
 if [ -f $confrc ]; then
     echo "$pending" "Setting path $confrc pathes"
-    echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$libdir\"" >> "$confrc"
-    echo "export PATH=\"\$PATH:$bombermandir\"" >> "$confrc"
+    if [ ! $(echo $LD_LIBRARY_PATH | grep "$libdir") ]; then
+	echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$libdir\"" >> "$confrc"
+    fi
+    if [ ! $(echo $PATH | grep "$bombermandir") ]; then
+	echo "export PATH=\"\$PATH:$bombermandir\"" >> "$confrc"
+    fi
     echo -e "$done" "$confrc successfully set"
 else
     echo "$error" "$confrc not found"
