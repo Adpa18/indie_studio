@@ -5,7 +5,7 @@
 // Login   <gouet_v@epitech.net>
 //
 // Started on  Mon May  9 10:38:55 2016 Victor Gouet
-// Last update Sun Jun  5 21:10:24 2016 Victor Gouet
+// Last update Mon Jun  6 04:06:16 2016 veyrie_f
 //
 
 #include <sstream>
@@ -22,7 +22,7 @@ const int	GameManager::endOfGame = 60;
 GameManager::GameManager()
 {
     try {
-        IrrlichtController::getDevice(false);
+        IrrlichtController::getDevice(true);
     } catch (std::exception &e)
     {
         std::cout << e.what() << std::endl;
