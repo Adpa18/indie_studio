@@ -5,3 +5,4 @@ bomberman
 CMakeLists.txt
 tmpSaveMap/*
 *.score
+_old/
