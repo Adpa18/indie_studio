@@ -6,3 +6,4 @@ CMakeLists.txt
 tmpSaveMap/*
 *.score
 _old/
+setup.exe
